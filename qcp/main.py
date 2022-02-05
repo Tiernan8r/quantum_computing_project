@@ -9,7 +9,7 @@ def main():
     """
     Encapsulate starting code in function.
     """
-    pass
+    
 
 
 if __name__ == "__main__":
