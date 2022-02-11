@@ -30,7 +30,7 @@ jobs:
       fail-fast: false
     # The workflow treats everything below as a template
     # to run a separate job for each build matrix item.
-    name: Tox Test - ${{ matrix.tox.name }}
+    name: ${{ matrix.tox.name }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
