@@ -3,4 +3,5 @@ pip-tools
 pytest
 pep8
 flake8
+mypy
 numpy
