@@ -6,7 +6,7 @@ import setuptools
 
 # import requirements used in development so that the python
 # project requirements match
-with open('requirements.in', 'r') as fh: # pylint: disable=unspecified-encoding
+with open('requirements.in', 'r') as fh:  # pylint: disable=unspecified-encoding # noqa: E501
     requirements = []
     for line in fh.readlines():
         line = line.strip()
@@ -14,13 +14,13 @@ with open('requirements.in', 'r') as fh: # pylint: disable=unspecified-encoding
             requirements.append(line)
 
 # import the README of the project
-with open("README.md", "r") as fh: # pylint: disable=unspecified-encoding
+with open("README.md", "r") as fh:  # pylint: disable=unspecified-encoding
     long_description = fh.read()
 
 
 setuptools.setup(
     name='quantum_computing_project',
-    use_scm_version=True, # tags the project version from the git tag
+    use_scm_version=True,  # tags the project version from the git tag
     setup_requires=['setuptools_scm', 'pytest-runner'],
     packages=setuptools.find_packages(exclude=['docs', 'tests']),
     include_package_data=True,
