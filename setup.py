@@ -1,9 +1,12 @@
+"""
+Setuptools configuration for the project.
+"""
 import setuptools
 
 
 # import requirements used in development so that the python
 # project requirements match
-with open('requirements.in', 'r') as fh:
+with open('requirements.in', 'r') as fh: # pylint: disable=unspecified-encoding
     requirements = []
     for line in fh.readlines():
         line = line.strip()
@@ -11,7 +14,7 @@ with open('requirements.in', 'r') as fh:
             requirements.append(line)
 
 # import the README of the project
-with open("README.md", "r") as fh:
+with open("README.md", "r") as fh: # pylint: disable=unspecified-encoding
     long_description = fh.read()
 
 
@@ -23,4 +26,3 @@ setuptools.setup(
     include_package_data=True,
     install_requires=requirements,
 )
-
