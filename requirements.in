@@ -1,0 +1,5 @@
+tox
+pip-tools
+pep8
+flake8
+numpy
