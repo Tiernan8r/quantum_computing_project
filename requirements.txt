@@ -4,6 +4,8 @@
 #
 #    pip-compile --output-file=requirements.txt requirements.in
 #
+attrs==21.4.0
+    # via pytest
 click==8.0.3
     # via pip-tools
 distlib==0.3.4
@@ -14,12 +16,16 @@ filelock==3.4.2
     #   virtualenv
 flake8==4.0.1
     # via -r requirements.in
+iniconfig==1.1.1
+    # via pytest
 mccabe==0.6.1
     # via flake8
 numpy==1.22.2
     # via -r requirements.in
 packaging==21.3
-    # via tox
+    # via
+    #   pytest
+    #   tox
 pep517==0.12.0
     # via pip-tools
 pep8==1.7.1
@@ -29,15 +35,21 @@ pip-tools==6.5.1
 platformdirs==2.5.0
     # via virtualenv
 pluggy==1.0.0
-    # via tox
+    # via
+    #   pytest
+    #   tox
 py==1.11.0
-    # via tox
+    # via
+    #   pytest
+    #   tox
 pycodestyle==2.8.0
     # via flake8
 pyflakes==2.4.0
     # via flake8
 pyparsing==3.0.7
     # via packaging
+pytest==7.0.0
+    # via -r requirements.in
 six==1.16.0
     # via
     #   tox
@@ -45,7 +57,9 @@ six==1.16.0
 toml==0.10.2
     # via tox
 tomli==2.0.1
-    # via pep517
+    # via
+    #   pep517
+    #   pytest
 tox==3.24.5
     # via -r requirements.in
 virtualenv==20.13.1
