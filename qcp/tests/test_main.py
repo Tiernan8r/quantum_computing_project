@@ -1,4 +1,4 @@
-from src import main
+from qcp import main
 
 
 def test_main():
