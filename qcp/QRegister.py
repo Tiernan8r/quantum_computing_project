@@ -1,7 +1,8 @@
-from StateVector import StateVector
+from QMatrices import QMatrices
+import consts
+
 
 class QRegister:
-
     def __init__(self, state):
         """
         Params
@@ -14,9 +15,22 @@ class QRegister:
         self.stateVec = self.makeStateVec(state)
 
     def makeStateVec(self, state):
-        stateVec = state
-        #TODO: convert states into state vector
-        assert (len(stateVec) == (2 ** len(self.initState)))
+        stateVec = QMatrices()
+
+        if state[0] == 0:
+            stateVec.setState(consts.ZERO_VECTOR.getState())
+        elif state[0] == 1:
+            stateVec.setState(consts.ONE_VECTOR.getState())
+
+        for i in range(1, len(state)):
+            if state[i] == 0:
+                stateVec.tensProduct(consts.ZERO_VECTOR)
+
+            elif state[i] == 1:
+
+                stateVec.tensProduct(consts.ONE_VECTOR)
+
+        assert (len(stateVec.state) == (2 ** len(self.initState)))
         return stateVec
 
     def setStateVec(self, stateVec):
@@ -27,10 +41,3 @@ class QRegister:
     def getStateVec(self):
         s = self.stateVec
         return s
-
-    # Manipulative Functions
-    def addState(self, arg):
-        return 4
-
-    def subtractState(self):
-        return 4
