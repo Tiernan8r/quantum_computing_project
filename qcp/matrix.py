@@ -18,6 +18,15 @@ from typing import Union
 
 class Matrix(ABC):
 
+    def __init__(self, l):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __getitem__(self, i):
+        pass
+
     def set_state(self, s: list):
         pass
 
