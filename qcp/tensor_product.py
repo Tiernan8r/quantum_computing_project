@@ -24,7 +24,8 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     :param B Matrix: Second n*n square matrix to tensor product with
     :returns: An (n^2)*(n^2) matrix of the tensor product.
     """
-    assert((len(A) == len(B)) and (len(A[0]) == len(B[0])), "A and B are required to be n*n matrices!")
+    assert len(A) == len(B), "A and B have mismatched column dimensions!"
+    assert len(A[0]) == len(B[0]), "A and B have mismatched row dimensions!"
 
     n = len(A)
 

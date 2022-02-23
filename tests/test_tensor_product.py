@@ -1,7 +1,9 @@
 from qcp.tensor_product import tensor_product
 from qcp.square_matrix import SquareMatrix
+import pytest
 
-I = SquareMatrix([[1,0],[0,1]])
+I = SquareMatrix([[1, 0], [0, 1]])
+
 
 def test_tensor_product_with_identity():
 
@@ -11,11 +13,32 @@ def test_tensor_product_with_identity():
 
     expected = SquareMatrix(
         [
-            [1,2,0,0],
-            [3,4,0,0],
-            [0,0,1,2],
-            [0,0,3,4]
+            [1, 2, 0, 0],
+            [3, 4, 0, 0],
+            [0, 0, 1, 2],
+            [0, 0, 3, 4]
         ]
     )
 
-    assert(C.get_state() == expected.get_state(), "Matrix does not return expected entries!")
+    assert(C.get_state() == expected.get_state(),
+           "Matrix does not return expected entries!")
+
+
+def test_tensor_product_mismatch_column_dimensions():
+
+    A = SquareMatrix([[1, 2], [3, 4]])
+    B = SquareMatrix([[1, 2], [3, 4], [5, 6]])
+
+    with pytest.raises(AssertionError) as ae:
+        _ = tensor_product(A, B)
+    assert ae.match("A and B have mismatched column dimensions!")
+
+
+def test_tensor_product_mismatch_row_dimensions():
+
+    A = SquareMatrix([[1, 2], [3, 4]])
+    B = SquareMatrix([[1, 2, 3], [4, 5, 6]])
+
+    with pytest.raises(AssertionError) as ae:
+        _ = tensor_product(A, B)
+    assert ae.match("A and B have mismatched row dimensions!")
