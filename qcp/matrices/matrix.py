@@ -44,3 +44,6 @@ class Matrix(ABC):
 
     def __mul__(self, other: Union[float, Matrix]):
         pass
+
+    def __str__(self) -> str:
+        pass
