@@ -12,15 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from copy import deepcopy
-from urllib.request import build_opener
 from qcp.matrices import SquareMatrix
 import pytest
 
 
 IDENTITY = SquareMatrix([[1, 0], [0, 1]])
-TEST_ONE_BY_ONE = SquareMatrix([[1]])
-TEST_TWO_BY_TWO = SquareMatrix([[1, 2], [3, 4]])
-TEST_THREE_BY_THREE = SquareMatrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+TEST_1x1 = SquareMatrix([[1]])
+TEST_2x2 = SquareMatrix([[1, 2],
+                         [3, 4]])
+TEST_3x3 = SquareMatrix([[1, 2, 3],
+                         [4, 5, 6],
+                         [7, 8, 9]])
 
 
 def test_sq_m_init():
@@ -44,29 +46,28 @@ def test_sq_m_init():
         assert sqm.get_state() == inp
 
 
-
 def test_sq_m_len():
-    assert len(TEST_ONE_BY_ONE) == 1
-    assert len(TEST_TWO_BY_TWO) == 2
-    assert len(TEST_THREE_BY_THREE) == 3
+    assert len(TEST_1x1) == 1
+    assert len(TEST_2x2) == 2
+    assert len(TEST_3x3) == 3
 
 
 def test_sq_m_get_item():
-    assert TEST_ONE_BY_ONE[0][0] == 1
-    assert TEST_TWO_BY_TWO[1][1] == 4
-    assert TEST_THREE_BY_THREE[2][2] == 9
+    assert TEST_1x1[0][0] == 1
+    assert TEST_2x2[1][1] == 4
+    assert TEST_3x3[2][2] == 9
 
     with pytest.raises(AssertionError) as ae:
-        _ = TEST_TWO_BY_TWO[3][3]
+        _ = TEST_2x2[3][3]
     assert ae.match("index out of range")
 
 
 def test_sq_m_set_item():
-    one_by_one = deepcopy(TEST_ONE_BY_ONE)
+    one_by_one = deepcopy(TEST_1x1)
     one_by_one[0] = [0]
     assert one_by_one[0][0] == 0
 
-    two_by_two = deepcopy(TEST_TWO_BY_TWO)
+    two_by_two = deepcopy(TEST_2x2)
     two_by_two[1] = [5, 6]
     assert two_by_two[1][1] == 6
 
@@ -80,16 +81,16 @@ def test_sq_m_set_item():
 
 
 def test_sq_m_get_state():
-    assert TEST_ONE_BY_ONE.get_state() == [[1]]
-    assert TEST_TWO_BY_TWO.get_state() == [[1, 2], [3, 4]]
+    assert TEST_1x1.get_state() == [[1]]
+    assert TEST_2x2.get_state() == [[1, 2], [3, 4]]
 
 
 def test_sq_m_set_state():
-    one_by_one = deepcopy(TEST_ONE_BY_ONE)
+    one_by_one = deepcopy(TEST_1x1)
 
-    with pytest.raises(AssertionError) as ae1:
+    with pytest.raises(AssertionError):
         one_by_one.set_state(None)
-    with pytest.raises(AssertionError) as ae2:
+    with pytest.raises(AssertionError):
         one_by_one.set_state([])
 
     with pytest.raises(AssertionError) as ae3:
@@ -101,33 +102,33 @@ def test_sq_m_set_state():
 
 
 def test_sq_m_rows():
-    assert TEST_ONE_BY_ONE.rows() == [[1]]
-    assert TEST_TWO_BY_TWO.rows() == [[1, 2], [3, 4]]
+    assert TEST_1x1.rows() == [[1]]
+    assert TEST_2x2.rows() == [[1, 2], [3, 4]]
 
 
 def test_sq_m_columns():
-    assert TEST_ONE_BY_ONE.columns() == [[1]]
-    assert TEST_TWO_BY_TWO.columns() == [[1, 3], [2, 4]]
-    assert TEST_THREE_BY_THREE.columns() == [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+    assert TEST_1x1.columns() == [[1]]
+    assert TEST_2x2.columns() == [[1, 3], [2, 4]]
+    assert TEST_3x3.columns() == [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
 
 
 def test_sq_m_iter():
     build_1x1 = []
-    for r1 in TEST_ONE_BY_ONE:
+    for r1 in TEST_1x1:
         build_1x1.append(r1)
     expected_1x1 = [[1]]
 
     assert build_1x1 == expected_1x1
 
     build_2x2 = []
-    for r2 in TEST_TWO_BY_TWO:
+    for r2 in TEST_2x2:
         build_2x2.append(r2)
     expected_2x2 = [[1, 2], [3, 4]]
 
     assert build_2x2 == expected_2x2
 
     build_3x3 = []
-    for r3 in TEST_THREE_BY_THREE:
+    for r3 in TEST_3x3:
         build_3x3.append(r3)
     expected_3x3 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
@@ -209,7 +210,7 @@ def test_sq_m_mul_dot_product():
     C1x1 = SquareMatrix([[6]])
 
     with pytest.raises(AssertionError) as ae2:
-        A1x1 * SquareMatrix([[1, 2],[3, 4]])
+        A1x1 * SquareMatrix([[1, 2], [3, 4]])
     assert ae2.match("matrices don't match on their row/column dimensions")
 
     assert (A1x1 * B1x1).get_state() == C1x1.get_state()
@@ -226,12 +227,13 @@ def test_sq_m_mul_dot_product():
 
     assert (A3x3 * B3x3).get_state() == C3x3.get_state()
 
+
 def test_sq_m_str():
     expected1x1 = "[ 1]"
-    assert str(TEST_ONE_BY_ONE) == expected1x1
+    assert str(TEST_1x1) == expected1x1
 
     expected2x2 = "[ 1, 2]\n[ 3, 4]"
-    assert str(TEST_TWO_BY_TWO) == expected2x2
+    assert str(TEST_2x2) == expected2x2
 
     expected3x3 = "[ 1, 2, 3]\n[ 4, 5, 6]\n[ 7, 8, 9]"
-    assert str(TEST_THREE_BY_THREE) == expected3x3
+    assert str(TEST_3x3) == expected3x3

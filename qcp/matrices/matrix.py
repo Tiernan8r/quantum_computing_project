@@ -21,7 +21,7 @@ class Matrix(ABC):
     Method stubs for an immutable implementation of a matrix.
     """
 
-    def __init__(self, state: List[List[Union[complex, float]]]):
+    def __init__(self, state: List[List[Union[complex, float, int]]]):
         pass
 
     def __len__(self) -> int:

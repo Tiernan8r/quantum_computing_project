@@ -17,9 +17,11 @@ from typing import List, Union
 
 class SquareMatrix(Matrix):
 
-    def __init__(self, state: List[List[Union[complex, float]]]):
-        assert len(state) > 0, "attempting to initialise matrix with no dimensions"
-        assert len(state) == len(state[0]), "attempting to initialise non-square matrix."
+    def __init__(self, state: List[List[Union[complex, float, int]]]):
+        assert len(
+            state) > 0, "attempting to initialise matrix with no dimensions"
+        assert len(state) == len(
+            state[0]), "attempting to initialise non-square matrix."
 
         self._state = state
 
@@ -90,14 +92,16 @@ class SquareMatrix(Matrix):
 
     def _dot(self, other: Matrix) -> Matrix:
         assert len(other) > 0, "taking dot product with empty matrix"
-        assert len(self) == len(other.columns()[0]), "matrices don't match on their row/column dimensions"
+        assert len(self) == len(other.columns()[
+            0]), "matrices don't match on their row/column dimensions"
 
         n = len(self)
         current_state = [[0 for _ in range(n)] for _ in range(n)]
 
         for i in range(n):
             for j in range(n):
-                current_state[i][j] = sum([self[i][k] * other[k][j] for k in range(n)])
+                current_state[i][j] = sum(
+                    [self[i][k] * other[k][j] for k in range(n)])
 
         return SquareMatrix(current_state)
 
