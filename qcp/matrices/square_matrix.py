@@ -43,10 +43,8 @@ class SquareMatrix(Matrix):
 
     def __str__(self):
         total_string = ""
-        for i in range(len(self._state)):
-            row_string = "["
-            for j in range(len(self._state[i])):
-                row_string += f"{self._state[i][j]:2d},"
-            row_string += "]\n"
-            total_string += row_string
+        N = len(self._state)
+        for i in range(N):
+            total_string += "[" + \
+                ",".join([f"{c:2d}" for c in self._state[i]]) + "]" + (lambda i, N: "\n" if i < N - 1 else "")(i, N)
         return total_string
