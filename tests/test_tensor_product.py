@@ -1,5 +1,5 @@
 from qcp.tensor_product import tensor_product
-from qcp.square_matrix import SquareMatrix
+from qcp.matrices import SquareMatrix
 import pytest
 
 IDENTITY = SquareMatrix([[1, 0], [0, 1]])

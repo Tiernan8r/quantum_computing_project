@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from typing import List
-from matrix import Matrix
-from square_matrix import SquareMatrix
+from matrices import Matrix, SquareMatrix
 
 
 def tensor_product(A: Matrix, B: Matrix) -> Matrix:
