@@ -39,7 +39,8 @@ class SquareMatrix(Matrix):
     def columns(self) -> List[List[Union[complex, float]]]:
         """Returns the columns of the Matrix"""
         return [
-            [self.rows[j][i] for i in range(len(self))] for j in range(len(self))
+            [self._state[j][i] for i in range(len(self))]
+            for j in range(len(self))
         ]
 
     def __iter__(self):
