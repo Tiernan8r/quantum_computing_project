@@ -11,5 +11,5 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.matrices.matrix import Matrix  # noqa: F401
-from qcp.matrices.square_matrix import SquareMatrix  # noqa: F401
+from matrices.matrix import Matrix  # noqa: F401
+from matrices.square_matrix import SquareMatrix  # noqa: F401
