@@ -11,35 +11,65 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import List
 from matrix import Matrix
 from square_matrix import SquareMatrix
 
 
-def tensor_product(A: Matrix, B: Matrix):
-    # A = m * n matrix
-    # B = n * p
-    m = len(A)
-    n = len(A[0])
-    p = len(B[0])
+def tensor_product(A: Matrix, B: Matrix) -> Matrix:
+    """
+    Compute the tensor product between two matrices, and return the resultant Matrix
 
-    row_width = n * m
-    column_width = n * p
+    :param A Matrix: An n*n square matrix
+    :param B Matrix: Second n*n square matrix to tensor product with
+    :returns: An (n^2)*(n^2) matrix of the tensor product.
+    """
+    assert((len(A) == len(B)) and (len(A[0]) == len(B[0])), "A and B are required to be n*n matrices!")
 
-    # creates an (m*n)*(n*p) list for the answer matrix
+    n = len(A)
 
-    # entries = [[None] * row_width] * column_width
-    entries = make_zeros(row_width, column_width)
-    # print("ENTRIES:")
-    # print(entries)
+    tensor_product_width = n * n
 
+    # creates an (n^2)*(n^2) list for the answer matrix
+    entries = _make_zeros(tensor_product_width)
+
+    # The tensor product is defined as follows:
     # A * B =
     # [A00 * B, A01 * B, ... A0n * B]
     # [A10 * B, A11 * B, ... A1n * B]
-    # [ ...              ...        ]
+    # [...               ...        ]
     # [An0 * B, A1n * B, ... Ann * B]
 
-    for i in range(row_width):
-        for j in range(column_width):
+    # Take a 2*2 case as an example:
+    # A =   [1, 1]
+    #       [1, 1]
+    # B =   [2, 3]
+    #       [4, 5]
+    # C = A * B =
+    #       [2, 3, 2, 3]
+    #       [4, 5, 4, 5]
+    #       [2, 3, 2, 3]
+    #       [4, 5, 4, 5]
+
+    # The values are populated by iterating over the full sized matrix (C[i][j]
+    #  in this example)
+    # To determine the A prefactor (A00/A01/etc...) the i,j are floor divided 
+    # by the size of A
+
+    # The B values need to loop over the rows and columns in subgrids, this is 
+    # achieved by taking the modulus of the i,j indices:
+
+    # i ->
+    #   __     __
+    #  /  \   /  \
+    # [2, 3,  2, 3] \   j
+    # [4, 5,  4, 5] /   |
+    #                   V
+    # [2, 3,  2, 3] \   
+    # [4, 5,  4, 5] /
+
+    for i in range(tensor_product_width):
+        for j in range(tensor_product_width):
 
             # A[k][l]:
             k = i // n
@@ -49,19 +79,21 @@ def tensor_product(A: Matrix, B: Matrix):
             p = i % n
             q = j % n
 
-            # print(f"@({i},{j}): A=({k},{l}) / B=({p},{q})")
-
             entries[i][j] = A[k][l] * B[p][q]
-            # print(entries)
 
     return SquareMatrix(entries)
 
 
-def make_zeros(n, m):
+def _make_zeros(n) -> List[List[float]]:
+    """
+    Generate an n*n nested list populated with zeros.
+
+    :param n int: The dimension of the lists.
+    """
     l = []
-    for i in range(n):
+    for _ in range(n):
         row = []
-        for j in range(m):
+        for _ in range(n):
             row.append(0)
         l.append(row)
     return l
