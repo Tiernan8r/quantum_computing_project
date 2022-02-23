@@ -18,7 +18,7 @@ from typing import Union
 
 class Matrix(ABC):
 
-    def __init__(self, l):
+    def __init__(self, state):
         pass
 
     def __len__(self):

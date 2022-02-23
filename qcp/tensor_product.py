@@ -18,7 +18,8 @@ from square_matrix import SquareMatrix
 
 def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     """
-    Compute the tensor product between two matrices, and return the resultant Matrix
+    Compute the tensor product between two matrices, and return the
+    resultant Matrix
 
     :param A Matrix: An n*n square matrix
     :param B Matrix: Second n*n square matrix to tensor product with
@@ -53,11 +54,11 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     #       [4, 5, 4, 5]
 
     # The values are populated by iterating over the full sized matrix (C[i][j]
-    #  in this example)
-    # To determine the A prefactor (A00/A01/etc...) the i,j are floor divided 
+    # in this example)
+    # To determine the A prefactor (A00/A01/etc...) the i,j are floor divided
     # by the size of A
 
-    # The B values need to loop over the rows and columns in subgrids, this is 
+    # The B values need to loop over the rows and columns in subgrids, this is
     # achieved by taking the modulus of the i,j indices:
 
     # i ->
@@ -66,7 +67,7 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     # [2, 3,  2, 3] \   j
     # [4, 5,  4, 5] /   |
     #                   V
-    # [2, 3,  2, 3] \   
+    # [2, 3,  2, 3] \
     # [4, 5,  4, 5] /
 
     for i in range(tensor_product_width):
@@ -74,7 +75,7 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
 
             # A[k][l]:
             k = i // n
-            l = j // n
+            l = j // n  # noqa: E741
 
             # B[p][q]
             p = i % n
@@ -85,16 +86,16 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     return SquareMatrix(entries)
 
 
-def _make_zeros(n) -> List[List[float]]:
+def _make_zeros(n) -> List[List[int]]:
     """
     Generate an n*n nested list populated with zeros.
 
     :param n int: The dimension of the lists.
     """
-    l = []
+    vals = []
     for _ in range(n):
         row = []
         for _ in range(n):
             row.append(0)
-        l.append(row)
-    return l
+        vals.append(row)
+    return vals

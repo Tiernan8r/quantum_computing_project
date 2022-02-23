@@ -17,20 +17,20 @@ from matrix import Matrix
 
 class SquareMatrix(Matrix):
 
-    def __init__(self, l):
-        self.state = l
+    def __init__(self, state):
+        self._state = state
 
     def __len__(self):
-        return len(self.state)
+        return len(self._state)
 
     def __getitem__(self, i):
-        return self.state[i]
+        return self._state[i]
 
     def set_state(self, s: list):
         pass
 
     def get_state(self) -> list:
-        return self.state
+        return self._state
 
     def __add__(self, other: Matrix):
         pass
@@ -43,10 +43,10 @@ class SquareMatrix(Matrix):
 
     def __str__(self):
         total_string = ""
-        for i in range(len(self.state)):
+        for i in range(len(self._state)):
             row_string = "["
-            for j in range(len(self.state[i])):
-                row_string += f"{self.state[i][j]:2d},"
+            for j in range(len(self._state[i])):
+                row_string += f"{self._state[i][j]:2d},"
             row_string += "]\n"
             total_string += row_string
         return total_string

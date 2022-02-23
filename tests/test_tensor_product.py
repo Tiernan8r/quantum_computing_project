@@ -2,14 +2,14 @@ from qcp.tensor_product import tensor_product
 from qcp.square_matrix import SquareMatrix
 import pytest
 
-I = SquareMatrix([[1, 0], [0, 1]])
+IDENTITY = SquareMatrix([[1, 0], [0, 1]])
 
 
 def test_tensor_product_with_identity():
 
     A = SquareMatrix([[1, 2], [3, 4]])
 
-    C = tensor_product(I, A)
+    C = tensor_product(IDENTITY, A)
 
     expected = SquareMatrix(
         [
@@ -20,8 +20,7 @@ def test_tensor_product_with_identity():
         ]
     )
 
-    assert(C.get_state() == expected.get_state(),
-           "Matrix does not return expected entries!")
+    assert C.get_state() == expected.get_state()
 
 
 def test_tensor_product_mismatch_column_dimensions():
