@@ -13,24 +13,27 @@
 # limitations under the License.
 from __future__ import annotations
 from abc import ABC
-from typing import Union
+from typing import List, Union
 
 
 class Matrix(ABC):
 
-    def __init__(self, state):
+    def __init__(self, state: List[List[float]]):
         pass
 
-    def __len__(self):
+    def __len__(self) -> int:
         pass
 
-    def __getitem__(self, i):
+    def __getitem__(self, i: int) -> List[float]:
         pass
 
-    def set_state(self, s: list):
+    def __setitem__(self, i: int, v: float):
         pass
 
-    def get_state(self) -> list:
+    def set_state(self, s: List[List[float]]):
+        pass
+
+    def get_state(self) -> List[List[float]]:
         pass
 
     def __add__(self, other: Matrix):
