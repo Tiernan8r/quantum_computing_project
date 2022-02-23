@@ -32,7 +32,9 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     tensor_product_width = n * n
 
     # creates an (n^2)*(n^2) list for the answer matrix
-    entries = _make_zeros(tensor_product_width)
+    entries = [
+        [0.0 for _ in range(n * n)] for _ in range(n * n)
+    ]
 
     # The tensor product is defined as follows:
     # A * B =
@@ -83,14 +85,3 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
             entries[i][j] = A[k][l] * B[p][q]
 
     return SquareMatrix(entries)
-
-
-def _make_zeros(n) -> List[List[float]]:
-    """
-    Generate an n*n nested list populated with zeros.
-
-    :param n int: The dimension of the lists.
-    """
-    return [
-        [0.0 for _ in range(n)] for _ in range(n)
-    ]
