@@ -1,4 +1,4 @@
-import matrix
+from matrix import matrix
 
 IDENTITY = matrix([[1, 0], [0, 1]])
 TWO_HADAMARD = matrix([[1, 1], [1, -1]])
