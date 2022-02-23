@@ -85,16 +85,12 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     return SquareMatrix(entries)
 
 
-def _make_zeros(n) -> List[List[int]]:
+def _make_zeros(n) -> List[List[float]]:
     """
     Generate an n*n nested list populated with zeros.
 
     :param n int: The dimension of the lists.
     """
-    vals = []
-    for _ in range(n):
-        row = []
-        for _ in range(n):
-            row.append(0)
-        vals.append(row)
-    return vals
+    return [
+        [0.0 for _ in range(n)] for _ in range(n)
+    ]
