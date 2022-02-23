@@ -11,11 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
--c requirements.txt
-mypy
-pytest
-pytest-cov
-pytest-flake8
-pytest-mock
-pytest-optional-tests
-pylint
+from qcp import main
+
+
+def test_main():
+    try:
+        main.main()
+    except Exception:
+        assert False, "main() raised an exception."
+
+
+if __name__ == '__main__':
+    test_main()
