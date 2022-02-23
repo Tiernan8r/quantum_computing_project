@@ -24,11 +24,25 @@ TEST_THREE_BY_THREE = SquareMatrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 
 
 def test_sq_m_init():
-    input = [[1]]
+    input1 = []
+    with pytest.raises(AssertionError) as ae1:
+        _ = SquareMatrix(input1)
+    assert ae1.match("attempting to initialise matrix with no dimensions")
 
-    sqm = SquareMatrix(input)
+    input2 = [[1], [2, 3]]
+    with pytest.raises(AssertionError) as ae2:
+        _ = SquareMatrix(input2)
+    assert ae2.match("attempting to initialise non-square matrix.")
 
-    assert sqm.get_state() == input
+    test_input_types = [
+        [[1]],
+        [[2.0]],
+        [[3+3j]]
+    ]
+    for inp in test_input_types:
+        sqm = SquareMatrix(inp)
+        assert sqm.get_state() == inp
+
 
 
 def test_sq_m_len():
@@ -189,9 +203,14 @@ def test_sq_m_mul_scalar():
 
 
 def test_sq_m_mul_dot_product():
+    # Test the assertions for the 1x1 case
     A1x1 = SquareMatrix([[2]])
     B1x1 = SquareMatrix([[3]])
     C1x1 = SquareMatrix([[6]])
+
+    with pytest.raises(AssertionError) as ae2:
+        A1x1 * SquareMatrix([[1, 2],[3, 4]])
+    assert ae2.match("matrices don't match on their row/column dimensions")
 
     assert (A1x1 * B1x1).get_state() == C1x1.get_state()
 
