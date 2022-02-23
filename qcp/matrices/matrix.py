@@ -17,32 +17,38 @@ from typing import List, Union
 
 
 class Matrix(ABC):
+    """
+    Method stubs for an immutable implementation of a matrix.
+    """
 
-    def __init__(self, state: List[List[float]]):
+    def __init__(self, state: List[List[Union[complex, float]]]):
         pass
 
     def __len__(self) -> int:
         pass
 
-    def __getitem__(self, i: int) -> List[float]:
+    def __getitem__(self, i: int) -> List[Union[complex, float]]:
         pass
 
-    def __setitem__(self, i: int, v: float):
+    def __setitem__(self, i: int, v: Union[complex, float]):
         pass
 
-    def set_state(self, s: List[List[float]]):
+    def get_state(self) -> List[List[Union[complex, float]]]:
         pass
 
-    def get_state(self) -> List[List[float]]:
+    def set_state(self, s: List[List[Union[complex, float]]]):
         pass
 
-    def __add__(self, other: Matrix):
+    def __add__(self, other: Matrix) -> Matrix:
         pass
 
-    def __sub__(self, other: Matrix):
+    def __sub__(self, other: Matrix) -> Matrix:
         pass
 
-    def __mul__(self, other: Union[float, Matrix]):
+    def columns(self) -> List[List[Union[complex, float]]]:
+        pass
+
+    def __mul__(self, other: Union[complex, float, int, Matrix]) -> Matrix:
         pass
 
     def __str__(self) -> str:
