@@ -1,4 +1,4 @@
-class QMatrices:
+class Matrix:
 
     def __init__(self, state=None):
         self.state = state
@@ -8,11 +8,11 @@ class QMatrices:
 
         self.conjugated = False
 
-    def setState(self, s):
+    def set_state(self, s):
         self.state = s
         return
 
-    def getState(self):
+    def get_state(self):
         s = self.state
         return s
 
@@ -26,9 +26,6 @@ class QMatrices:
 
         return
 
-    def tensProduct(self, other):
-        return
-
     def conjugate(self):
         return
 
@@ -37,6 +34,6 @@ class QMatrices:
         if isinstance(other, int):
 
             return
-        elif isinstance(other, QMatrices):
+        elif isinstance(other, Matrix):
 
             return

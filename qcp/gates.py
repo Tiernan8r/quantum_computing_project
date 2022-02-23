@@ -1,8 +1,8 @@
-from QMatrices import QMatrices
+from Matrix import Matrix
 
 
 def hadamards(nBits, targets):
-    ret = QMatrices()
+    ret = Matrix()
 
     return ret
 
