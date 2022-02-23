@@ -13,7 +13,8 @@
 # limitations under the License.
 from __future__ import annotations
 from abc import ABC
-from typing import List, Union
+from typing import Union
+from ._types import SCALARS, VECTOR, MATRIX
 
 
 class Matrix(ABC):
@@ -21,22 +22,22 @@ class Matrix(ABC):
     Method stubs for an immutable implementation of a matrix.
     """
 
-    def __init__(self, state: List[List[Union[complex, float, int]]]):
+    def __init__(self, state: MATRIX):
         pass
 
     def __len__(self) -> int:
         pass
 
-    def __getitem__(self, i: int) -> List[Union[complex, float]]:
+    def __getitem__(self, i: int) -> VECTOR:
         pass
 
-    def __setitem__(self, i: int, v: Union[complex, float]):
+    def __setitem__(self, i: int, v: SCALARS):
         pass
 
-    def get_state(self) -> List[List[Union[complex, float]]]:
+    def get_state(self) -> MATRIX:
         pass
 
-    def set_state(self, s: List[List[Union[complex, float]]]):
+    def set_state(self, s: MATRIX):
         pass
 
     def __add__(self, other: Matrix) -> Matrix:
@@ -45,10 +46,10 @@ class Matrix(ABC):
     def __sub__(self, other: Matrix) -> Matrix:
         pass
 
-    def columns(self) -> List[List[Union[complex, float]]]:
+    def columns(self) -> MATRIX:
         pass
 
-    def __mul__(self, other: Union[complex, float, int, Matrix]) -> Matrix:
+    def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
         pass
 
     def __str__(self) -> str:

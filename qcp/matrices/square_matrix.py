@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from . import Matrix
-from typing import List, Union
+from ._types import SCALARS, VECTOR, MATRIX
+from typing import Union
 
 
 class SquareMatrix(Matrix):
 
-    def __init__(self, state: List[List[Union[complex, float, int]]]):
+    def __init__(self, state: MATRIX):
         assert len(
             state) > 0, "attempting to initialise matrix with no dimensions"
         assert len(state) == len(
@@ -28,30 +29,30 @@ class SquareMatrix(Matrix):
     def __len__(self) -> int:
         return len(self._state)
 
-    def __getitem__(self, i: int) -> List[Union[complex, float]]:
+    def __getitem__(self, i: int) -> VECTOR:
         assert i < len(self), "index out of range"
         return self._state[i]
 
-    def __setitem__(self, i: int, v: List[Union[complex, float]]):
+    def __setitem__(self, i: int, v: VECTOR):
         assert i < len(self), "index out of range"
         assert len(v) == len(self), "row dimension does not match"
 
         self._state[i] = v
 
-    def get_state(self) -> List[List[Union[complex, float]]]:
+    def get_state(self) -> MATRIX:
         return self._state
 
-    def set_state(self, s: List[List[Union[complex, float]]]):
+    def set_state(self, s: MATRIX):
         assert s is not None
         assert len(s) > 0
         assert len(s) == len(s[0]), "non square matrix state"
         self._state = s
 
-    def rows(self) -> List[List[Union[complex, float]]]:
+    def rows(self) -> MATRIX:
         """Return the rows of the Matrix."""
         return self.get_state()
 
-    def columns(self) -> List[List[Union[complex, float]]]:
+    def columns(self) -> MATRIX:
         """Returns the columns of the Matrix"""
         return [
             [self._state[i][j] for i in range(len(self))]
@@ -76,7 +77,7 @@ class SquareMatrix(Matrix):
     def __sub__(self, other: Matrix) -> Matrix:
         return self + (other * -1)
 
-    def __mul__(self, other: Union[complex, float, int, Matrix]) -> Matrix:
+    def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
         if isinstance(other, (complex, float, int)):
             current_state = self.get_state().copy()
@@ -96,7 +97,7 @@ class SquareMatrix(Matrix):
             0]), "matrices don't match on their row/column dimensions"
 
         n = len(self)
-        current_state = [[0 for _ in range(n)] for _ in range(n)]
+        current_state: MATRIX = [[0 for _ in range(n)] for _ in range(n)]
 
         for i in range(n):
             for j in range(n):
