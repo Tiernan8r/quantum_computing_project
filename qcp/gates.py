@@ -1,7 +1,9 @@
+import cmath
+
 from matrix import Matrix
 import constants as c
 from tensor_product import tensor_product
-import math
+
 
 '''
 Multi_Gates: constructs a large circuit matrix which acts as a gate that applies a specific gate to one or more qubits 
@@ -111,7 +113,7 @@ def control_phase(size, control, target, phi):
         row = zeros_list(2 ** size)
 
         if binary[-control] == "1" and binary[-target] == "1":
-            row[i] = math.e ** (1j * phi)
+            row[i] = cmath.exp(1j * phi)
         else:
             row[i] = 1
         m.append(row)
@@ -120,15 +122,34 @@ def control_phase(size, control, target, phi):
 
 
 def toffoli(size, control1, control2, target):
-    pass
+    m = []
+
+    for i in range(0, 2 ** size):
+        f = '0' + str(size) + 'b'
+        binary = list(format(i, f))
+
+        if binary[-control1] == "1" and binary[-control2] == "1":
+            if binary[-target] == "0":
+                binary[-target] = "1"
+            else:
+                binary[-target] = "0"
+
+        num = "".join(binary)
+        number = int(num, 2)
+
+        row = zeros_list(2 ** size)
+        row[number] = 1
+        m.append(row)
+    x = Matrix(m)
+    return x
 
 
 def zeros_list(n):
     x = []
     for i in range(n):
-        x.append(0)
+        x.append(0 + 0j)
     return x
 
 
 def phase_shift(phi):
-    return Matrix([[1, 0], [0, math.e ** (1j * phi)]])
+    return Matrix([[1, 0], [0, cmath.exp(1j * phi)]])
