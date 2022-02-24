@@ -22,6 +22,8 @@ def multi_gate(size, targets, gate, phi=complex(0)):
         g = c.PAULI_Z
     elif gate == "p":
         g = phase_shift(phi)
+    else:
+        return
 
     m = Matrix([1])
     t = [x - 1 for x in targets]
@@ -34,14 +36,16 @@ def multi_gate(size, targets, gate, phi=complex(0)):
     return m
 
 
-def control_x(size, control, target):
+def control_x(size, controls, target):
     m = []
 
     for i in range(0, 2 ** size):
         f = '0' + str(size) + 'b'
         binary = list(format(i, f))
 
-        if binary[-control] == "1":
+        conditions = [binary[-i] == "1" for i in controls]
+
+        if all(conditions):
             if binary[-target] == "0":
                 binary[-target] = "1"
             else:
@@ -57,7 +61,7 @@ def control_x(size, control, target):
     return x
 
 
-def control_z(size, control, target):
+def control_z(size, controls, target):
     m = []
 
     for i in range(0, 2 ** size):
@@ -65,8 +69,9 @@ def control_z(size, control, target):
         binary = list(format(i, f))
 
         row = zeros_list(2 ** size)
+        conditions = [binary[-i] == "1" for i in controls]
 
-        if binary[-control] == "1" and binary[-target] == "1":
+        if all(conditions) and binary[-target] == "1":
             row[i] = -1
         else:
             row[i] = 1
@@ -75,7 +80,7 @@ def control_z(size, control, target):
     return z
 
 
-def control_phase(size, control, target, phi):
+def control_phase(size, controls, target, phi):
     m = []
 
     for i in range(0, 2 ** size):
@@ -83,37 +88,15 @@ def control_phase(size, control, target, phi):
         binary = list(format(i, f))
 
         row = zeros_list(2 ** size)
+        conditions = [binary[-i] == "1" for i in controls]
 
-        if binary[-control] == "1" and binary[-target] == "1":
+        if all(conditions) and binary[-target] == "1":
             row[i] = cmath.exp(1j * phi)
         else:
             row[i] = 1
         m.append(row)
     p = Matrix(m)
     return p
-
-
-def toffoli(size, control1, control2, target):
-    m = []
-
-    for i in range(0, 2 ** size):
-        f = '0' + str(size) + 'b'
-        binary = list(format(i, f))
-
-        if binary[-control1] == "1" and binary[-control2] == "1":
-            if binary[-target] == "0":
-                binary[-target] = "1"
-            else:
-                binary[-target] = "0"
-
-        num = "".join(binary)
-        number = int(num, 2)
-
-        row = zeros_list(2 ** size)
-        row[number] = 1
-        m.append(row)
-    x = Matrix(m)
-    return x
 
 
 def zeros_list(n):
