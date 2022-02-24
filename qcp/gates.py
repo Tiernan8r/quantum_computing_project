@@ -4,16 +4,22 @@ from matrix import Matrix
 import constants as c
 from tensor_product import tensor_product
 
-'''
-Multi_Gates: constructs a large circuit matrix which acts as a gate that applies a specific gate to one or more qubits 
-Params:
-    size - total number of qubits we're working with
-    targets - the specific qubits the gate is applied to (starting from the 1st qubit)
-'''
 
+# Notation note : |001> represents a 3 qubit system where the first qubit is |1> and the second and third qubit is |0>
+# Targets and Controls work off this notation
 
-def multi_gate(size, targets, gate, phi=complex(0)):
-    g = None
+def multi_gate(size: int, targets: list[int], gate: str, phi=complex(0)):
+    """
+    Constructs a (2**size by 2**size) gate matrix that applies a specific gate to one or more specified qubits
+
+    :param size: total number of qubits in circuit -> int
+    :param targets: list of qubits the specified gate will be applied to -> List[int]
+    :param gate: string character representing which specified gate we want to apply;
+                                h = hadamard, x = Pauli x, z = Pauli z, p = Phase gate
+    :param phi: Phase angle for the phase gate -> complex number
+    :return: Matrix([int])
+    """
+
     if gate == "h":
         g = c.TWO_HADAMARD
     elif gate == "x":
@@ -37,6 +43,13 @@ def multi_gate(size, targets, gate, phi=complex(0)):
 
 
 def control_x(size, controls, target):
+    """
+    Constructs a (2**size by 2**size) control-x gate with given controls and target
+    :param size: total number of qubits in circuit ->
+    :param controls: List of control qubits -> List[int]
+    :param target: target qubit the x gate will be applied to -> int
+    :return: Matrix(int)
+    """
     m = []
 
     for i in range(0, 2 ** size):
@@ -62,6 +75,13 @@ def control_x(size, controls, target):
 
 
 def control_z(size, controls, target):
+    """
+    Constructs a (2**size by 2**size) control-z gate with given controls and target
+    :param size: total number of qubits in circuit ->
+    :param controls: List of control qubits -> List[int]
+    :param target: target qubit the z gate will be applied to -> int
+    :return: Matrix(int)
+    """
     m = []
 
     for i in range(0, 2 ** size):
@@ -81,6 +101,15 @@ def control_z(size, controls, target):
 
 
 def control_phase(size, controls, target, phi):
+    """
+    Constructs a (2**size by 2**size) control-phase gate with given controls and target
+    :param size: total number of qubits in circuit ->
+    :param controls: List of control qubits -> List[int]
+    :param target: target qubit the phase gate will be applied to -> int
+    :param phi: angle the target qubit will be phase shifted by -> complex
+    :return: Matrix(complex)
+    """
+
     m = []
 
     for i in range(0, 2 ** size):
@@ -100,6 +129,11 @@ def control_phase(size, controls, target, phi):
 
 
 def zeros_list(n):
+    """
+    Creates a list of size n full of zeros
+    :param n: size of list
+    :return: list[int]
+    """
     x = []
     for i in range(n):
         x.append(0 + 0j)
@@ -107,4 +141,9 @@ def zeros_list(n):
 
 
 def phase_shift(phi):
+    """
+    Creates a 2 x 2 phase shift matrix
+    :param phi: angle the qubit is phase shifted by
+    :return: Matrix(complex)
+    """
     return Matrix([[1, 0], [0, cmath.exp(1j * phi)]])
