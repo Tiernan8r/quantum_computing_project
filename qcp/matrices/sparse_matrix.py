@@ -16,58 +16,39 @@ import cmath
 from io import UnsupportedOperation
 from typing_extensions import Self
 from . import Matrix
-from ._types import SCALARS, VECTOR, MATRIX
-from typing import List, Union
-
-
-class _Entry:
-
-    def __init__(self, i: int, j: int, val: SCALARS, next: _Entry):
-        self._row = i
-        self._col = j
-        self._value = val
-        self.next = next
-
-    def __iter__(self) -> _Entry:
-        return self
-
-    def __next__(self) -> _Entry:
-        if self.next is None:
-            raise StopIteration
-        else:
-            return self.next
+from ._types import SCALARS, SPARSE, VECTOR, MATRIX
+from typing import Dict, List, Union
 
 
 class SparseVector:
-    """A subset of the SparseMatrix containing only entries found in a row"""
 
-    def __init__(self, entries: List[_Entry], size: int):
-        self._start, self._end = None, None
+    def __init__(self, entries: Dict[SCALARS], size: int):
+        self._entries = entries
         self._size = size
-
-        # all _Entry types in entries are assumed to be correctly linked already
-        if len(entries) > 0:
-            self._start = entries[0]
-            self._end = entries[-1]
 
     def __len__(self):
         return self._size
 
-    def __iter__(self):
-        return self._start
+    def __getitem__(self, i: int) -> SCALARS:
+        assert i < self._size, "index out of range"
+        if i not in self._entries:
+            return 0
+        return self._entries[i]
 
 
 class SparseMatrix(Matrix):
 
     def __init__(self, state: MATRIX):
-        self._start, self._end = None, None
-
         n = len(state)
         m = 0
         if n > 0:
             m = len(state[0])
         self._row = n
         self._col = m
+
+        self._entries: SPARSE = {
+            k: {} for k in range(n)
+        }
 
         for i in range(len(state)):
             for j in range(len(state[i])):
@@ -77,13 +58,7 @@ class SparseMatrix(Matrix):
                 if cmath.isclose(entry, 0):
                     continue
 
-                tmp = _Entry(i, j, entry, None)
-                if self._start is None:
-                    self._start = tmp
-                    self._end = tmp
-                else:
-                    self._end.next = tmp
-                    self._end = tmp
+                self._entries[i][j] = entry
 
     @staticmethod
     def identity(n: int) -> Matrix:
@@ -100,11 +75,10 @@ class SparseMatrix(Matrix):
 
         assert n > 0, "Matrix dimension must be positive"
 
-        I = SparseMatrix([[1]])  # initialise as 1x1 to begin with
-        for i in range(n):
-            node = _Entry(i, i, 1, None)
-            I._end.next = node
-            I._end = node
+        I = SparseMatrix()
+        I._row = n
+        I._col = n
+        I._entries = {i: {i: 1} for i in range(n)}
 
         return I
 
@@ -114,12 +88,7 @@ class SparseMatrix(Matrix):
     def _get_row(self, i: int) -> SparseVector:
         assert i < len(self), "index out of range"
 
-        entries = []
-        for itr in self._start:
-            if itr._row == i:
-                entries.append(itr)
-
-        return SparseVector(entries, self._row)
+        return SparseVector(self._entries[i], self._row)
 
     def __getitem__(self, i: int) -> SparseVector:
         assert i < len(self), "index out of range"
@@ -129,29 +98,16 @@ class SparseMatrix(Matrix):
         assert i < len(self), "index out of range"
         assert len(v) == len(self), "row dimension does not match"
 
-        for itr in self._start:
-            # ignore all existing entries not referencing the desired row to modify
-            current_next = itr.next
-            if current_next._row != i:
-                continue
-
-            prev_row = itr
-
-            # Find where the row after the one we're modifying starts
-            next_row = current_next.next
-            while next_row._row == i:
-                next_row = next_row.next
-
-            prev_row.next = v._start
-            v._end.next = next_row
+        self._entries[i] = v._entries
 
     def _as_list(self) -> Matrix():
         list_representation = [
-            [0 for i in range(self._row)] for j in range(self._col)
+            [0 for _ in range(self._row)] for _ in range(self._col)
         ]
 
-        for e in self._start:
-            list_representation[e._row][e._col] = e._value
+        for i, row in self._entries.items():
+            for j, v in row.items():
+                list_representation[i][j] = v
 
         return list_representation
 
@@ -167,36 +123,37 @@ class SparseMatrix(Matrix):
 
     def columns(self) -> MATRIX:
         """Returns the columns of the Matrix"""
-        pass
+        list_representation = [
+            [0 for _ in range(self._row)] for _ in range(self._col)
+        ]
 
-    def __iter__(self):
-        return iter(self._start)
+        for i, row in self._entries.items():
+            for j, v in row.items():
+                list_representation[j][i] = v
+
+        return list_representation
 
     def __add__(self, other: Matrix) -> Matrix:
-        assert self._row == len(other) and self._other == len(
+        assert self._row == len(other) and self._col == len(
             other[0]), "Matrix dimensions must be equal for addition"
-
-        current_state = self.get_state().copy()
 
         for i in range(len(self)):
             for j in range(len(self[i])):
-                current_state[i][j] += other[i][j]
+                self._entries[i][j] += other[i][j]
 
-        return SparseMatrix(current_state)
+        return self
 
     def __sub__(self, other: Matrix) -> Matrix:
         return self + (other * -1)
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
-        if isinstance(other, (complex, float, int)):
-            current_state = self.get_state().copy()
+        if isinstance(other, SCALARS):
+            for i, row in self._entries:
+                for j in row.keys():
+                    self._entries[i][j] *= other
 
-            for i in range(len(current_state)):
-                for j in range(len(current_state[i])):
-                    current_state[i][j] *= other
-
-            return SquareMatrix(current_state)
+            return self
 
         elif isinstance(other, Matrix):
             return self._dot(other)
@@ -206,21 +163,34 @@ class SparseMatrix(Matrix):
         assert len(self) == len(other.columns()[
             0]), "matrices don't match on their row/column dimensions"
 
-        n = len(self)
-        current_state: MATRIX = [[0 for _ in range(n)] for _ in range(n)]
+        new_matrix = SparseMatrix()
+        new_matrix._row = self._col
+        new_matrix._col = len(other[0])
 
-        for i in range(n):
-            for j in range(n):
-                current_state[i][j] = sum(
-                    [self[i][k] * other[k][j] for k in range(n)])
+        entries = {
+            i: {} for i in range(self._col)
+        }
+        for i, row in self._entries.items():
+            for j in range(new_matrix._col):
+                # only need to calculate using non-zero entries
+                entries[i][j] = sum([other[i][k] * row[k] for k in row.keys()])
 
-        return SquareMatrix(current_state)
+        new_matrix._entries = entries
+        # return SquareMatrix(current_state)
+        return new_matrix
 
     def __str__(self) -> str:
         total_string = ""
-        N = len(self._state)
-        for i in range(N):
+
+        def determine_val(i, j) -> SCALARS:
+            if i not in self._entries and j not in self._entries[i]:
+                return 0
+            return self._entries[i][j]
+
+        for i in range(self._row):
+            row_repr = [
+                f"{determine_val(i, j):3.3g}" for j in range(self._col)]
             total_string += "[" + \
-                ",".join([f"{c:3.3g}" for c in self._state[i]]) + "]" + \
-                (lambda i, N: "\n" if i < N - 1 else "")(i, N)
+                ",".join(row_repr) + "]" + \
+                (lambda i, N: "\n" if i < N - 1 else "")(i, self._row)
         return total_string

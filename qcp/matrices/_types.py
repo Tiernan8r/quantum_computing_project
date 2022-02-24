@@ -11,8 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List, Union
+from typing import Dict, List, Tuple, Union
 
 SCALARS = Union[complex, float, int]
 VECTOR = List[SCALARS]
 MATRIX = List[VECTOR]
+SPARSE = Dict[Dict[SCALARS]]
