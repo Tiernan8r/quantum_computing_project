@@ -28,13 +28,6 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     n = len(A[0])
     p = len(B)
     q = len(B[0])
-    # print(f"A: {m}x{n}")
-    # print(f"B: {p}x{q}")
-    # assert nA == nB, "Matrix A row width and B column width are mismatched!"
-
-    # assert len(A[0]) == len(B), "Matrix A row width and B column width are mismatched!"
-
-    # n = nA # is the same as nB
 
     row_width = m * p
     column_width = n * q
@@ -79,8 +72,6 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     # [2, 3,  2, 3] \
     # [4, 5,  4, 5] /
 
-    # print(f"{row_width}x{column_width}")
-
     for i in range(row_width):
         for j in range(column_width):
 
@@ -92,10 +83,8 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
             r = i % p
             s = j % q
 
-            # print(f"@({i},{j})=({k},{l}) & ({r},{s})")
-            t1 = A[k][l]
-            t2 = B[r][s]
-            val = t1 * t2
+            val = A[k][l] * B[r][s]
+            # Round values close to zero within 1e-9
             if cmath.isclose(val, 0):
                 val = 0
 

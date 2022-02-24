@@ -133,6 +133,6 @@ class SquareMatrix(Matrix):
         N = len(self._state)
         for i in range(N):
             total_string += "[" + \
-                ",".join([f"{c:6.3g}" for c in self._state[i]]) + "]" + \
+                ",".join([f"{c:3.3g}" for c in self._state[i]]) + "]" + \
                 (lambda i, N: "\n" if i < N - 1 else "")(i, N)
         return total_string

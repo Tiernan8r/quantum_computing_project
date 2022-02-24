@@ -248,11 +248,11 @@ def test_sq_m_mul_dot_product():
 
 
 def test_sq_m_str():
-    expected1x1 = "[ 1]"
+    expected1x1 = "[  1]"
     assert str(TEST_1x1) == expected1x1
 
-    expected2x2 = "[ 1, 2]\n[ 3, 4]"
+    expected2x2 = "[  1,  2]\n[  3,  4]"
     assert str(TEST_2x2) == expected2x2
 
-    expected3x3 = "[ 1, 2, 3]\n[ 4, 5, 6]\n[ 7, 8, 9]"
+    expected3x3 = "[  1,  2,  3]\n[  4,  5,  6]\n[  7,  8,  9]"
     assert str(TEST_3x3) == expected3x3

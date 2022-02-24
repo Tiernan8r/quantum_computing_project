@@ -13,9 +13,8 @@
 # limitations under the License.
 from qcp.tensor_product import tensor_product
 from qcp.matrices import SquareMatrix
-import pytest
 
-IDENTITY = SquareMatrix([[1, 0], [0, 1]])
+IDENTITY = SquareMatrix.identity(2)
 
 
 def test_tensor_product_with_identity():
@@ -34,13 +33,3 @@ def test_tensor_product_with_identity():
     )
 
     assert C.get_state() == expected.get_state()
-
-
-def test_tensor_product_mismatch_dimensions_square_matrix():
-
-    A = SquareMatrix([[1, 2], [3, 4]])
-    B = SquareMatrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-
-    with pytest.raises(AssertionError) as ae:
-        _ = tensor_product(A, B)
-    assert ae.match("A and B have mismatched column dimensions!")
