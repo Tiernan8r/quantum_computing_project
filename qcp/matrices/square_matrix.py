@@ -26,6 +26,28 @@ class SquareMatrix(Matrix):
 
         self._state = state
 
+    @staticmethod
+    def identity(n: int) -> Matrix:
+        """
+        Create the identity matrix with the given dimensions
+
+        :param n int: The matrix dimension
+        :raises TypeError: If input dimension is not convertable to int.
+        """
+        try:
+            n = int(n)
+        except TypeError:
+            raise
+
+        assert n > 0, "Matrix dimension must be positive"
+
+        def determine_entry(a, b): return 1 if a == b else 0
+        return SquareMatrix([
+            [
+                determine_entry(i, j) for i in range(n)
+            ] for j in range(n)
+        ])
+
     def __len__(self) -> int:
         return len(self._state)
 

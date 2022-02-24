@@ -16,13 +16,32 @@ from qcp.matrices import SquareMatrix
 import pytest
 
 
-IDENTITY = SquareMatrix([[1, 0], [0, 1]])
 TEST_1x1 = SquareMatrix([[1]])
 TEST_2x2 = SquareMatrix([[1, 2],
                          [3, 4]])
 TEST_3x3 = SquareMatrix([[1, 2, 3],
                          [4, 5, 6],
                          [7, 8, 9]])
+
+
+def test_sq_m_identity():
+    # Non-integer dimension:
+    with pytest.raises(TypeError) as ve:
+        _ = SquareMatrix.identity(2+2j)
+    assert ve.match("can't convert .* to int")
+
+    # Negative dimension:
+    with pytest.raises(AssertionError) as ae1:
+        _ = SquareMatrix.identity(-1)
+    assert ae1.match("Matrix dimension must be positive")
+
+    expected1x1 = [[1]]
+    i1x1 = SquareMatrix.identity(1)
+    assert i1x1.get_state() == expected1x1
+
+    expected3x3 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+    i3x3 = SquareMatrix.identity(3)
+    assert i3x3.get_state() == expected3x3
 
 
 def test_sq_m_init():
