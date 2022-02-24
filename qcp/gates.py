@@ -4,7 +4,6 @@ from matrix import Matrix
 import constants as c
 from tensor_product import tensor_product
 
-
 '''
 Multi_Gates: constructs a large circuit matrix which acts as a gate that applies a specific gate to one or more qubits 
 Params:
@@ -13,53 +12,26 @@ Params:
 '''
 
 
-def multi_hadamard(size: int, targets: list[int]):
-    h = Matrix([[1]])
+def multi_gate(size, targets, gate, phi=complex(0)):
+    g = None
+    if gate == "h":
+        g = c.TWO_HADAMARD
+    elif gate == "x":
+        g = c.PAULI_X
+    elif gate == "z":
+        g = c.PAULI_Z
+    elif gate == "p":
+        g = phase_shift(phi)
 
-    t = [x - 1 for x in targets]
-    for i in range(size):
-        if i in t:
-            h = tensor_product(c.TWO_HADAMARD, h)
-        else:
-            h = tensor_product(c.IDENTITY, h)
-
-    return h
-
-
-def multi_x(size: int, targets: list[int]):
-    x = Matrix([1])
-
-    t = [x - 1 for x in targets]
-    for i in range(size):
-        if i in t:
-            x = tensor_product(c.PAULI_X, x)
-        else:
-            x = tensor_product(c.IDENTITY, x)
-    return x
-
-
-def multi_z(size: int, targets: list[int]):
-    z = Matrix([1])
+    m = Matrix([1])
     t = [x - 1 for x in targets]
 
     for i in range(size):
         if i in t:
-            z = tensor_product(c.PAULI_Z, z)
+            m = tensor_product(g, m)
         else:
-            z = tensor_product(c.IDENTITY, z)
-    return z
-
-
-def multi_phase_shift(size, targets, phi):
-    p = Matrix([1])
-    t = [x - 1 for x in targets]
-
-    for i in range(size):
-        if i in t:
-            p = tensor_product(phase_shift(phi), p)
-        else:
-            p = tensor_product(c.IDENTITY, p)
-    return p
+            m = tensor_product(c.IDENTITY, m)
+    return m
 
 
 def control_x(size, control, target):
