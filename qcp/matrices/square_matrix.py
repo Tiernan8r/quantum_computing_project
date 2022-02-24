@@ -101,7 +101,7 @@ class SquareMatrix(Matrix):
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
-        if isinstance(other, (complex, float, int)):
+        if isinstance(other, SCALARS):
             current_state = self.get_state().copy()
 
             for i in range(len(current_state)):
