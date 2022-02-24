@@ -11,29 +11,31 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List
 from matrix import Matrix
 from square_matrix import SquareMatrix
+import cmath
 
 
 def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     """
     Compute the tensor product between two matrices, and return the
     resultant Matrix
-
-    :param A Matrix: An n*n square matrix
-    :param B Matrix: Second n*n square matrix to tensor product with
-    :returns: An (n^2)*(n^2) matrix of the tensor product.
+    :param A Matrix: An m*n matrix
+    :param B Matrix: Second p*q matrix to tensor product with
+    :returns: An (m*p)*(n*q) matrix of the tensor product.
     """
-    assert len(A) == len(B), "A and B have mismatched column dimensions!"
-    assert len(A[0]) == len(B[0]), "A and B have mismatched row dimensions!"
+    m = len(A)
+    n = len(A[0])
+    p = len(B)
+    q = len(B[0])
 
-    n = len(A)
+    row_width = m * p
+    column_width = n * q
 
-    tensor_product_width = n * n
-
-    # creates an (n^2)*(n^2) list for the answer matrix
-    entries = _make_zeros(tensor_product_width)
+    # creates an (m*p)*(n*q) list for the answer matrix
+    entries = [
+        [0.0 for _ in range(row_width)] for _ in range(column_width)
+    ]
 
     # The tensor product is defined as follows:
     # A * B =
@@ -70,32 +72,22 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     # [2, 3,  2, 3] \
     # [4, 5,  4, 5] /
 
-    for i in range(tensor_product_width):
-        for j in range(tensor_product_width):
+    for i in range(row_width):
+        for j in range(column_width):
 
             # A[k][l]:
-            k = i // n
-            l = j // n  # noqa: E741
+            k = (i // m) % m
+            l = (j // n) % n  # noqa: E741
 
-            # B[p][q]
-            p = i % n
-            q = j % n
+            # B[r][s]
+            r = i % p
+            s = j % q
 
-            entries[i][j] = A[k][l] * B[p][q]
+            val = A[k][l] * B[r][s]
+            # Round values close to zero within 1e-9
+            if cmath.isclose(val, 0):
+                val = 0
+
+            entries[i][j] = val
 
     return SquareMatrix(entries)
-
-
-def _make_zeros(n) -> List[List[int]]:
-    """
-    Generate an n*n nested list populated with zeros.
-
-    :param n int: The dimension of the lists.
-    """
-    vals = []
-    for _ in range(n):
-        row = []
-        for _ in range(n):
-            row.append(0)
-        vals.append(row)
-    return vals
