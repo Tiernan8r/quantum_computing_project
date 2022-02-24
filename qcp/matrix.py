@@ -1,4 +1,4 @@
-class matrix:
+class Matrix:
 
     def __init__(self, state):
         pass

@@ -1,4 +1,4 @@
-from matrix import matrix
+from matrix import Matrix
 import constants as c
 from tensor_product import tensor_product
 
@@ -10,8 +10,8 @@ Params:
 '''
 
 
-def multi_hadamard(size, targets):
-    h = matrix([[1]])
+def multi_hadamard(size: int, targets: list[int]):
+    h = Matrix([[1]])
 
     for i in range(size):
         if i in targets:
@@ -22,8 +22,8 @@ def multi_hadamard(size, targets):
     return h
 
 
-def multi_x(size, targets):
-    x = matrix([1])
+def multi_x(size: int, targets: list[int]):
+    x = Matrix([1])
 
     for i in range(size):
         if i in targets:
@@ -33,8 +33,8 @@ def multi_x(size, targets):
     return x
 
 
-def multi_z(size, targets):
-    z = matrix([1])
+def multi_z(size: int, targets: list[int]):
+    z = Matrix([1])
 
     for i in range(size):
         if i in targets:
@@ -45,7 +45,26 @@ def multi_z(size, targets):
 
 
 def control_x(size, control, target):
-    pass
+    m = []
+
+    for i in range(0, 2 ** size):
+        f = '0' + str(size) + 'b'
+        binary = list(format(i, f))
+
+        if binary[-control] == "1":
+            if binary[-target] == "0":
+                binary[-target] = "1"
+            else:
+                binary[-target] = "0"
+
+        num = "".join(binary)
+        number = int(num, 2)
+
+        row = zeros_list(number)
+        row[number] = 1
+        m.append(row)
+    x = Matrix(m)
+    return x
 
 
 def control_z(size, control, target):
@@ -54,3 +73,10 @@ def control_z(size, control, target):
 
 def toffoli(size, control1, control2, target):
     pass
+
+
+def zeros_list(n):
+    x = []
+    for i in range(n):
+        x.append(0)
+    return x
