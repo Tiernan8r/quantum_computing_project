@@ -13,11 +13,12 @@ Params:
 def multi_hadamard(size: int, targets: list[int]):
     h = Matrix([[1]])
 
+    t = [x - 1 for x in targets]
     for i in range(size):
-        if i in targets:
-            h = tensor_product(h, c.TWO_HADAMARD)
+        if i in t:
+            h = tensor_product(c.TWO_HADAMARD, h)
         else:
-            h = tensor_product(h, c.IDENTITY)
+            h = tensor_product(c.IDENTITY, h)
 
     return h
 
@@ -25,23 +26,30 @@ def multi_hadamard(size: int, targets: list[int]):
 def multi_x(size: int, targets: list[int]):
     x = Matrix([1])
 
+    t = [x - 1 for x in targets]
     for i in range(size):
-        if i in targets:
-            x = tensor_product(x, c.PAULI_X)
+        if i in t:
+            x = tensor_product(c.PAULI_X, x)
         else:
-            x = tensor_product(x, c.IDENTITY)
+            x = tensor_product(c.IDENTITY, x)
     return x
 
 
 def multi_z(size: int, targets: list[int]):
     z = Matrix([1])
+    t = [x - 1 for x in targets]
 
     for i in range(size):
-        if i in targets:
-            z = tensor_product(z, c.PAULI_Z)
+        if i in t:
+            z = tensor_product(c.PAULI_Z, z)
         else:
-            z = tensor_product(z, c.IDENTITY)
+            z = tensor_product(c.IDENTITY, z)
     return z
+
+
+def multi_phase_shift(size, phi):
+
+    return
 
 
 def control_x(size, control, target):
@@ -60,7 +68,7 @@ def control_x(size, control, target):
         num = "".join(binary)
         number = int(num, 2)
 
-        row = zeros_list(number)
+        row = zeros_list(2 ** size)
         row[number] = 1
         m.append(row)
     x = Matrix(m)
@@ -68,11 +76,26 @@ def control_x(size, control, target):
 
 
 def control_z(size, control, target):
-    pass
+    m = []
+
+    for i in range(0, 2 ** size):
+        f = '0' + str(size) + 'b'
+        binary = list(format(i, f))
+
+        row = zeros_list(2 ** size)
+
+        if binary[-control] == "1" and binary[-target] == "1":
+            row[i] = -1
+        else:
+            row[i] = 1
+        m.append(row)
+    z = Matrix(m)
+    return z
 
 
 def toffoli(size, control1, control2, target):
     pass
+
 
 
 def zeros_list(n):
@@ -80,3 +103,8 @@ def zeros_list(n):
     for i in range(n):
         x.append(0)
     return x
+
+
+def phase_shift(size, phi):
+
+    return
