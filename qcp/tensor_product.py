@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from matrices import Matrix, SquareMatrix
+import cmath
 
 
 def tensor_product(A: Matrix, B: Matrix) -> Matrix:
@@ -19,20 +20,28 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     Compute the tensor product between two matrices, and return the
     resultant Matrix
 
-    :param A Matrix: An n*n square matrix
-    :param B Matrix: Second n*n square matrix to tensor product with
-    :returns: An (n^2)*(n^2) matrix of the tensor product.
+    :param A Matrix: An m*n matrix
+    :param B Matrix: Second p*q matrix to tensor product with
+    :returns: An (m*p)*(n*q) matrix of the tensor product.
     """
-    assert len(A) == len(B), "A and B have mismatched column dimensions!"
-    assert len(A[0]) == len(B[0]), "A and B have mismatched row dimensions!"
+    m = len(A)
+    n = len(A[0])
+    p = len(B)
+    q = len(B[0])
+    # print(f"A: {m}x{n}")
+    # print(f"B: {p}x{q}")
+    # assert nA == nB, "Matrix A row width and B column width are mismatched!"
 
-    n = len(A)
+    # assert len(A[0]) == len(B), "Matrix A row width and B column width are mismatched!"
 
-    tensor_product_width = n * n
+    # n = nA # is the same as nB
 
-    # creates an (n^2)*(n^2) list for the answer matrix
+    row_width = m * p
+    column_width = n * q
+
+    # creates an (m*p)*(n*q) list for the answer matrix
     entries = [
-        [0.0 for _ in range(n * n)] for _ in range(n * n)
+        [0.0 for _ in range(row_width)] for _ in range(column_width)
     ]
 
     # The tensor product is defined as follows:
@@ -70,17 +79,26 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     # [2, 3,  2, 3] \
     # [4, 5,  4, 5] /
 
-    for i in range(tensor_product_width):
-        for j in range(tensor_product_width):
+    # print(f"{row_width}x{column_width}")
+
+    for i in range(row_width):
+        for j in range(column_width):
 
             # A[k][l]:
-            k = i // n
-            l = j // n  # noqa: E741
+            k = (i // m) % m
+            l = (j // n) % n  # noqa: E741
 
-            # B[p][q]
-            p = i % n
-            q = j % n
+            # B[r][s]
+            r = i % p
+            s = j % q
 
-            entries[i][j] = A[k][l] * B[p][q]
+            # print(f"@({i},{j})=({k},{l}) & ({r},{s})")
+            t1 = A[k][l]
+            t2 = B[r][s]
+            val = t1 * t2
+            if cmath.isclose(val, 0):
+                val = 0
+
+            entries[i][j] = val
 
     return SquareMatrix(entries)
