@@ -11,27 +11,26 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from __future__ import annotations
-from abc import ABC
 from typing import Union
+from matrix import Matrix
 
 
-class Matrix(ABC):
+class SquareMatrix(Matrix):
 
     def __init__(self, state):
-        pass
+        self._state = state
 
     def __len__(self):
-        pass
+        return len(self._state)
 
     def __getitem__(self, i):
-        pass
+        return self._state[i]
 
     def set_state(self, s: list):
         pass
 
     def get_state(self) -> list:
-        pass
+        return self._state
 
     def __add__(self, other: Matrix):
         pass
@@ -41,3 +40,13 @@ class Matrix(ABC):
 
     def __mul__(self, other: Union[float, Matrix]):
         pass
+
+    def __str__(self):
+        total_string = ""
+        for i in range(len(self._state)):
+            row_string = "["
+            for j in range(len(self._state[i])):
+                row_string += f"{self._state[i][j]:2d},"
+            row_string += "]\n"
+            total_string += row_string
+        return total_string
