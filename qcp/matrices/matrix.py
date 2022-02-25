@@ -14,30 +14,43 @@
 from __future__ import annotations
 from abc import ABC
 from typing import Union
+from ._types import SCALARS, VECTOR, MATRIX
 
 
 class Matrix(ABC):
+    """
+    Method stubs for an immutable implementation of a matrix.
+    """
 
-    def __init__(self, state):
+    def __init__(self, state: MATRIX):
         pass
 
-    def __len__(self):
+    def __len__(self) -> int:
         pass
 
-    def __getitem__(self, i):
+    def __getitem__(self, i: int) -> VECTOR:
         pass
 
-    def set_state(self, s: list):
+    def __setitem__(self, i: int, v: SCALARS):
         pass
 
-    def get_state(self) -> list:
+    def get_state(self) -> MATRIX:
         pass
 
-    def __add__(self, other: Matrix):
+    def set_state(self, s: MATRIX):
         pass
 
-    def __sub__(self, other: Matrix):
+    def __add__(self, other: Matrix) -> Matrix:
         pass
 
-    def __mul__(self, other: Union[float, Matrix]):
+    def __sub__(self, other: Matrix) -> Matrix:
+        pass
+
+    def columns(self) -> MATRIX:
+        pass
+
+    def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
+        pass
+
+    def __str__(self) -> str:
         pass

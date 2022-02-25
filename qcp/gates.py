@@ -1,6 +1,5 @@
 import cmath
-
-from matrix import Matrix
+from matrices import Matrix, DefaultMatrix
 import constants as c
 from tensor_product import tensor_product
 from typing import List
@@ -38,7 +37,7 @@ def multi_gate(size: int, targets: List[int], gate: str, phi=complex(0)) \
     else:
         return c.IDENTITY
 
-    m = Matrix([1])
+    m = DefaultMatrix([1])
     t = [x - 1 for x in targets]
 
     for i in range(size):
@@ -49,7 +48,7 @@ def multi_gate(size: int, targets: List[int], gate: str, phi=complex(0)) \
     return m
 
 
-def control_x(size: int, controls: List[int], target: int):
+def control_x(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-x gate with
     given controls and target
@@ -78,11 +77,11 @@ def control_x(size: int, controls: List[int], target: int):
         row = zeros_list(2 ** size)
         row[number] = 1
         m.append(row)
-    x = Matrix(m)
+    x = DefaultMatrix(m)
     return x
 
 
-def control_z(size: int, controls: List[int], target: int):
+def control_z(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-z gate with
      given controls and target
@@ -106,12 +105,12 @@ def control_z(size: int, controls: List[int], target: int):
         else:
             row[i] = 1
         m.append(row)
-    z = Matrix(m)
+    z = DefaultMatrix(m)
     return z
 
 
 def control_phase(size: int, controls: List[int], target: int,
-                  phi: complex):
+                  phi: complex) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-phase gate with
      given controls and target
@@ -138,7 +137,7 @@ def control_phase(size: int, controls: List[int], target: int,
         else:
             row[i] = 1
         m.append(row)
-    p = Matrix(m)
+    p = DefaultMatrix(m)
     return p
 
 
@@ -151,10 +150,10 @@ def zeros_list(n: int):
     return [(0 + 0j) for _ in range(n)]
 
 
-def phase_shift(phi: complex):
+def phase_shift(phi: complex) -> Matrix:
     """
     Creates a 2 x 2 phase shift matrix
     :param phi: angle the qubit is phase shifted by
     :return: Matrix(complex)
     """
-    return Matrix([[1, 0], [0, cmath.exp(1j * phi)]])
+    return DefaultMatrix([[1, 0], [0, cmath.exp(1j * phi)]])
