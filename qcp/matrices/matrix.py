@@ -52,5 +52,8 @@ class Matrix(ABC):
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
         pass
 
+    def __rmul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
+        return self.__mul__(other)
+
     def __str__(self) -> str:
         pass
