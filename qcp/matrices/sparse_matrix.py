@@ -77,12 +77,13 @@ class SparseMatrix(Matrix):
         self._row = n
         self._col = m
 
-        self._entries: SPARSE = {
+        entries: SPARSE = {
             k: {} for k in range(n)
         }
 
         for i in range(len(state)):
-            self._entries[i] = _list_to_dict(state[i])
+            entries[i] = _list_to_dict(state[i])
+        self._entries = entries
 
     @staticmethod
     def identity(n: int) -> Matrix:
@@ -146,8 +147,8 @@ class SparseMatrix(Matrix):
 
         self._entries[i] = sv._entries
 
-    def _as_list(self) -> Matrix():
-        list_representation = [
+    def _as_list(self) -> Matrix:
+        list_representation: MATRIX = [
             [0 for _ in range(self.num_columns)] for _ in range(self.num_rows)
         ]
 
@@ -169,7 +170,7 @@ class SparseMatrix(Matrix):
 
     def columns(self) -> MATRIX:
         """Returns the columns of the Matrix"""
-        list_representation = [
+        list_representation: MATRIX = [
             [0 for _ in range(self._row)] for _ in range(self._col)
         ]
 
@@ -218,7 +219,7 @@ class SparseMatrix(Matrix):
         new_matrix._row = self._col
         new_matrix._col = len(other[0])
 
-        entries = {
+        entries: SPARSE = {
             i: {} for i in range(self._col)
         }
         for i, row in self._entries.items():
