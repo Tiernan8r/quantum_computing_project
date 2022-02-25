@@ -3,12 +3,14 @@ import cmath
 from matrix import Matrix
 import constants as c
 from tensor_product import tensor_product
+from typing import List
 
 
-# Notation note : |001> represents a 3 qubit system where the first qubit is |1> and the second and third qubit is |0>
-# Targets and Controls work off this notation
-
-def multi_gate(size: int, targets: list[int], gate: str, phi=complex(0)):
+# Notation note : |001> represents a 3 qubit system where the first qubit is |1> and the second and third qubit is
+# |0>
+# Targets and Controls work off this notation but you only need to enter the number of the qubit you want to
+# target/control
+def multi_gate(size: int, targets: list[int], gate: str, phi=complex(0)) -> Matrix:
     """
     Constructs a (2**size by 2**size) gate matrix that applies a specific gate to one or more specified qubits
 
@@ -29,7 +31,7 @@ def multi_gate(size: int, targets: list[int], gate: str, phi=complex(0)):
     elif gate == "p":
         g = phase_shift(phi)
     else:
-        return
+        return c.IDENTITY
 
     m = Matrix([1])
     t = [x - 1 for x in targets]
@@ -56,7 +58,7 @@ def control_x(size, controls, target):
         f = '0' + str(size) + 'b'
         binary = list(format(i, f))
 
-        conditions = [binary[-i] == "1" for i in controls]
+        conditions = [binary[-j] == "1" for j in controls]
 
         if all(conditions):
             if binary[-target] == "0":
@@ -65,7 +67,7 @@ def control_x(size, controls, target):
                 binary[-target] = "0"
 
         num = "".join(binary)
-        number = int(num, 2)
+        number = int(num, base=2)
 
         row = zeros_list(2 ** size)
         row[number] = 1
@@ -89,7 +91,7 @@ def control_z(size, controls, target):
         binary = list(format(i, f))
 
         row = zeros_list(2 ** size)
-        conditions = [binary[-i] == "1" for i in controls]
+        conditions = [binary[-j] == "1" for j in controls]
 
         if all(conditions) and binary[-target] == "1":
             row[i] = -1
@@ -117,7 +119,7 @@ def control_phase(size, controls, target, phi):
         binary = list(format(i, f))
 
         row = zeros_list(2 ** size)
-        conditions = [binary[-i] == "1" for i in controls]
+        conditions = [binary[-j] == "1" for j in controls]
 
         if all(conditions) and binary[-target] == "1":
             row[i] = cmath.exp(1j * phi)
@@ -134,10 +136,7 @@ def zeros_list(n):
     :param n: size of list
     :return: list[int]
     """
-    x = []
-    for i in range(n):
-        x.append(0 + 0j)
-    return x
+    return [(0 + 0j) for _ in range(n)]
 
 
 def phase_shift(phi):
