@@ -176,7 +176,7 @@ class SparseMatrix(Matrix):
                 entries[i][j] = sum([other[i][k] * row[k] for k in row.keys()])
 
         new_matrix._entries = entries
-        # return SquareMatrix(current_state)
+
         return new_matrix
 
     def __str__(self) -> str:

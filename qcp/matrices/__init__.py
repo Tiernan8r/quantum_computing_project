@@ -13,3 +13,4 @@
 # limitations under the License.
 from matrices.matrix import Matrix  # noqa: F401
 from matrices.square_matrix import SquareMatrix  # noqa: F401
+from matrices.sparse_matrix import SparseMatrix  # noqa: F401
