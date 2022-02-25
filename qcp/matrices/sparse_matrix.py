@@ -15,7 +15,7 @@ from __future__ import annotations
 import cmath
 from io import UnsupportedOperation
 from . import Matrix
-from ._types import SCALARS, SCALARS_TYPES, SPARSE, VECTOR, MATRIX
+from ._types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
 from typing import Dict, List, Union
 
 
@@ -35,7 +35,8 @@ def _list_to_dict(vals: List[SCALARS]) -> Dict[int, SCALARS]:
 
 class SparseVector:
 
-    def __init__(self, entries: Union[List[SCALARS], Dict[int, SCALARS]], size: int):
+    def __init__(self, entries:
+                 Union[List[SCALARS], Dict[int, SCALARS]], size: int):
         if isinstance(entries, list):
             self._entries = _list_to_dict(entries)
         else:
@@ -98,12 +99,12 @@ class SparseMatrix(Matrix):
 
         assert n > 0, "Matrix dimension must be positive"
 
-        I = SparseMatrix([])
-        I._row = n
-        I._col = n
-        I._entries = {i: {i: 1} for i in range(n)}
+        id = SparseMatrix([])
+        id._row = n
+        id._col = n
+        id._entries = {i: {i: 1} for i in range(n)}
 
-        return I
+        return id
 
     @property
     def num_rows(self) -> int:
@@ -129,7 +130,9 @@ class SparseMatrix(Matrix):
         assert i < len(self), "index out of range"
         return self._get_row(i)
 
-    def __setitem__(self, i: int, v: Union[SparseVector, List[SCALARS], Dict[int, SCALARS]]):
+    def __setitem__(self, i: int, v:
+                    Union[SparseVector, List[SCALARS], Dict[int, SCALARS]]
+                    ):
         assert i < len(self), "index out of range"
         sv = None
         if isinstance(v, list):
@@ -177,7 +180,10 @@ class SparseMatrix(Matrix):
         return list_representation
 
     def __add__(self, other: Matrix) -> Matrix:
-        assert self.num_rows == other.num_rows and self.num_columns == other.num_columns, "Matrix dimensions must be equal for addition"
+        row_match = self.num_rows == other.num_rows
+        column_match = self.num_columns == other.num_columns
+        assert row_match and \
+            column_match, "Matrix dimensions must be equal for addition"
 
         for i in range(other.num_rows):
             for j in range(other.num_columns):
