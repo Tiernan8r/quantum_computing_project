@@ -11,33 +11,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from __future__ import annotations
-from abc import ABC
-from typing import Union
+from qcp.tensor_product import tensor_product
+from qcp.square_matrix import SquareMatrix
+
+IDENTITY = SquareMatrix([[1, 0], [0, 1]])
 
 
-class Matrix(ABC):
+def test_tensor_product_with_identity():
 
-    def __init__(self, state):
-        pass
+    A = SquareMatrix([[1, 2], [3, 4]])
 
-    def __len__(self):
-        pass
+    C = tensor_product(IDENTITY, A)
 
-    def __getitem__(self, i):
-        pass
+    expected = SquareMatrix(
+        [
+            [1, 2, 0, 0],
+            [3, 4, 0, 0],
+            [0, 0, 1, 2],
+            [0, 0, 3, 4]
+        ]
+    )
 
-    def set_state(self, s: list):
-        pass
-
-    def get_state(self) -> list:
-        pass
-
-    def __add__(self, other: Matrix):
-        pass
-
-    def __sub__(self, other: Matrix):
-        pass
-
-    def __mul__(self, other: Union[float, Matrix]):
-        pass
+    assert C.get_state() == expected.get_state()
