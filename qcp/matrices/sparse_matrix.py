@@ -19,9 +19,22 @@ from ._types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
 from typing import Dict, List, Union
 
 
-def _list_to_dict(vals: List[SCALARS]) -> Dict[int, SCALARS]:
+def _list_to_dict(vals: List[SCALARS], limit: int = -1) -> Dict[int, SCALARS]:
+    """Convert a given list of values into a dictionary mapping indices
+    to non-zero values
+
+    :param vals list: List of vector values.
+    :param limit int: Optional iteration limit for fixed sized rows.
+    :returns dict: dict of key/value pairs for non-zero entries in the list.
+    """
+    # If the SparseMatrix dimensions have been explicitly set, will only
+    # convert list entries up to that hard limit into the dict.
+    lim = limit if limit > 0 else len(vals)
+
     d = {}
-    for i in range(len(vals)):
+    for i in range(lim):
+        if i >= len(vals):
+            continue
         entry = vals[i]
 
         # ignore floating points that are within 1e-9 to 0
@@ -34,11 +47,12 @@ def _list_to_dict(vals: List[SCALARS]) -> Dict[int, SCALARS]:
 
 
 class SparseVector:
+    """Sparse representation of a row vector"""
 
     def __init__(self, entries:
                  Union[List[SCALARS], Dict[int, SCALARS]], size: int):
         if isinstance(entries, list):
-            self._entries = _list_to_dict(entries)
+            self._entries = _list_to_dict(entries, limit=size)
         else:
             self._entries = entries
         self._size = size
@@ -55,34 +69,58 @@ class SparseVector:
 
 class SparseMatrix(Matrix):
 
-    def __init__(self, state: Union[MATRIX, SPARSE]):
+    def __init__(self, state: Union[MATRIX, SPARSE], w: int = -1, h: int = -1):
+        """Initialise a SparseMatrix, using either a List[List[]] object,
+        or a pre-indexed dictionary mapping indices to non-zero values.
 
+        :param state: List[List[SCALAR]] or Dict[int, Dict[int, SCALAR]] used
+                        to determine the matrix content
+        :param w int: Optional overload of the Matrix width dimension
+        :param h int: Optional overload of the Matrix height dimension
+        """
+        given_width = w > 0
+        if given_width:
+            self._col = w
+        given_height = h > 0
+        if given_height:
+            self._row = h
+
+        # If the given 'state' is already a dict mapping, no need
+        # to convert it
         if isinstance(state, dict):
 
             self._entries = state
 
-            self._row = max(state.keys()) + 1  # indexes from 0...
-            self._col = 0
-            for i in range(self._row):
-                if i in self._entries:
-                    width = max(self._entries[i].keys()) + 1
-                    self._col = width if width > self._col else self._col
+            if not given_height:
+                self._row = max(state.keys()) + 1  # indexes from 0...
+
+            if not given_width:
+                self._col = 0
+                # Find the highest row index in the dictionary, and assume
+                # that the matrix is that wide
+                for i in range(self._row):
+                    if i in self._entries:
+                        width = max(self._entries[i].keys()) + 1
+                        self._col = width if width > self._col else self._col
 
             return
 
-        n = len(state)
-        m = 0
-        if n > 0:
-            m = len(state[0])
-        self._row = n
-        self._col = m
+        if not given_height:
+            n = len(state)
+            self._row = n
+        if not given_width:
+            m = len(state[0]) if self._row > 0 else 0
+            self._col = m
 
         entries: SPARSE = {
-            k: {} for k in range(n)
+            k: {} for k in range(self._row)
         }
 
-        for i in range(len(state)):
-            entries[i] = _list_to_dict(state[i])
+        for i in range(self._row):
+            s = []
+            if i < len(state):
+                s = state[i]
+            entries[i] = _list_to_dict(s, limit=self._col)
         self._entries = entries
 
     @staticmethod
@@ -100,12 +138,7 @@ class SparseMatrix(Matrix):
 
         assert n > 0, "Matrix dimension must be positive"
 
-        id = SparseMatrix([])
-        id._row = n
-        id._col = n
-        id._entries = {i: {i: 1} for i in range(n)}
-
-        return id
+        return SparseMatrix({i: {i: 1} for i in range(n)}, w=n, h=n)
 
     @property
     def num_rows(self) -> int:
@@ -125,7 +158,11 @@ class SparseMatrix(Matrix):
     def _get_row(self, i: int) -> SparseVector:
         assert i < len(self), "index out of range"
 
-        return SparseVector(self._entries[i], self._row)
+        entry = {}
+        if i in self._entries:
+            entry = self._entries[i]
+
+        return SparseVector(entry, self._row)
 
     def __getitem__(self, i: int) -> SparseVector:
         assert i < len(self), "index out of range"
@@ -162,7 +199,9 @@ class SparseMatrix(Matrix):
         return self._as_list()
 
     def set_state(self, s: MATRIX):
-        raise UnsupportedOperation("SparseMatrix is immutable")
+        raise UnsupportedOperation(
+            "SparseMatrix is immutable using List[List[]],"
+            " create a new SparseMatrix instead!")
 
     def rows(self) -> MATRIX:
         """Return the rows of the Matrix."""
@@ -180,6 +219,20 @@ class SparseMatrix(Matrix):
 
         return list_representation
 
+    def transpose(self):
+        t = self.num_rows
+        self._rows = self.num_columns
+        self._col = t
+
+        self._entries = {j: {i: v} for i, row in self._entries.items()
+                         for j, v in row.items()}
+
+    def conjugate(self):
+        for i, row in self._entries.items():
+            for j, v in row.items():
+                if isinstance(v, complex):
+                    self._entries[i][j] = v.conjugate()
+
     def __add__(self, other: Matrix) -> Matrix:
         row_match = self.num_rows == other.num_rows
         column_match = self.num_columns == other.num_columns
@@ -188,15 +241,21 @@ class SparseMatrix(Matrix):
 
         for i in range(other.num_rows):
             for j in range(other.num_columns):
+                # Don't bother trying to add zero values
+                other_val = other[i][j]
+                if cmath.isclose(other_val, 0):
+                    continue
+                # Since the SparseMatrix only keeps track of non-zero
+                # entries, track this new entry if it becomes non-zero
                 if j not in self._entries[i]:
-                    self._entries[i][j] = other[i][j]
+                    self._entries[i][j] = other_val
                 else:
-                    self._entries[i][j] += other[i][j]
+                    self._entries[i][j] += other_val
 
         return self
 
     def __sub__(self, other: Matrix) -> Matrix:
-        return self + (other * -1)
+        return self + (-1 * other)
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
@@ -215,16 +274,16 @@ class SparseMatrix(Matrix):
         assert len(self) == len(other.columns()[
             0]), "matrices don't match on their row/column dimensions"
 
-        new_matrix = SparseMatrix([])
-        new_matrix._row = self._col
-        new_matrix._col = len(other[0])
+        new_matrix = SparseMatrix([], w=len(other[0]), h=self._col)
 
         entries: SPARSE = {
             i: {} for i in range(self._col)
         }
         for i, row in self._entries.items():
             for j in range(new_matrix._col):
-                # only need to calculate using non-zero entries
+                # only need to calculate using the non-zero entries of self
+                # TODO: Can further optimise this 'other' is also a
+                # SparseMatrix by only using it's non-zero entries too
                 entries[i][j] = sum([other[k][j] * row[k] for k in row.keys()])
 
         new_matrix._entries = entries
@@ -234,15 +293,12 @@ class SparseMatrix(Matrix):
     def __str__(self) -> str:
         total_string = ""
 
-        def determine_val(i, j) -> SCALARS:
-            if i not in self._entries or j not in self._entries[i]:
-                return 0
-            return self._entries[i][j]
-
         for i in range(self._row):
             row_repr = [
-                f"{determine_val(i, j):3.3g}" for j in range(self._col)]
+                f"{self[i][j]:3.3g}" for j in range(self._col)]
             total_string += "[" + \
-                ",".join(row_repr) + "]" + \
-                (lambda i, N: "\n" if i < N - 1 else "")(i, self._row)
+                ",".join(row_repr) + "]"
+            # Don't add newline for last row:
+            total_string += (lambda i, N: "\n" if i <
+                             N - 1 else "")(i, self._row)
         return total_string
