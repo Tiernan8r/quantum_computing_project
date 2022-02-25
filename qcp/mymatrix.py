@@ -72,15 +72,15 @@ class MyMatrix(Matrix):
 
     def __mul__(self, other):
         # Multiplication
-        # Check if the dimensions of the two matrices are compatible
-        assert self.dim()[1] == other.dim()[
-            0], 'Cannot add matrices with different dimensions'
         # If the other input is an integer, multiply directly
         if isinstance(other, int):
             nrow, ncol = self.dim()
             new = Matrix(
                 [[self.state[i][j] * other for i in range(nrow)] for j in range(ncol)])
             return new
+        # Check if the dimensions of the two matrices are compatible
+        assert self.dim()[1] == other.dim()[
+            0], 'Cannot add matrices with different dimensions'    
         # Product matrix is of (nrow, ncol)
         nrow = self.dim()[0]
         ncol = other.dim()[1]
