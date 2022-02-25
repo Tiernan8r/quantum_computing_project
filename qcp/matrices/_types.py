@@ -11,25 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.tensor_product import tensor_product
-from qcp.matrices import SquareMatrix
+from typing import List, Union
 
-IDENTITY = SquareMatrix.identity(2)
-
-
-def test_tensor_product_with_identity():
-
-    A = SquareMatrix([[1, 2], [3, 4]])
-
-    C = tensor_product(IDENTITY, A)
-
-    expected = SquareMatrix(
-        [
-            [1, 2, 0, 0],
-            [3, 4, 0, 0],
-            [0, 0, 1, 2],
-            [0, 0, 3, 4]
-        ]
-    )
-
-    assert C.get_state() == expected.get_state()
+SCALARS = Union[complex, float, int]
+VECTOR = List[SCALARS]
+MATRIX = List[VECTOR]
