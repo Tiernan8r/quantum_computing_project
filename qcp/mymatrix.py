@@ -82,7 +82,7 @@ class MyMatrix(Matrix):
             ])
         # Check if the dimensions of the two matrices are compatible
         assert self.dim()[1] == other.dim()[
-            0], 'Cannot add matrices with different dimensions'    
+            0], 'Cannot add matrices with different dimensions'
         # Product matrix is of (nrow, ncol)
         nrow = self.dim()[0]
         ncol = other.dim()[1]
