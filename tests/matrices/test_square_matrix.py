@@ -184,42 +184,56 @@ def test_sq_m_sub():
 
 def test_sq_m_mul_scalar():
     # Testing with ints:
-    A1x1 = SquareMatrix([[1]])
+    A1x1_1 = SquareMatrix([[1]])
+    A1x1_2 = deepcopy(A1x1_1)
     B1x1 = SquareMatrix([[2]])
 
-    assert (A1x1 * 2).get_state() == B1x1.get_state()
+    assert (A1x1_1 * 2).get_state() == B1x1.get_state()
+    assert (2 * A1x1_2).get_state() == B1x1.get_state()
 
-    A2x2 = SquareMatrix([[1, 2], [3, 4]])
+    A2x2_1 = SquareMatrix([[1, 2], [3, 4]])
+    A2x2_2 = deepcopy(A2x2_1)
     B2x2 = SquareMatrix([[3, 6], [9, 12]])
 
-    assert (A2x2 * 3).get_state() == B2x2.get_state()
+    assert (A2x2_1 * 3).get_state() == B2x2.get_state()
+    assert (3 * A2x2_2).get_state() == B2x2.get_state()
 
     # Testing with floats:
-    A1x1 = SquareMatrix([[1.0]])
+    A1x1_1 = SquareMatrix([[1.0]])
+    A1x1_2 = deepcopy(A1x1_1)
     B1x1 = SquareMatrix([[0.5]])
 
-    assert (A1x1 * 0.5).get_state() == B1x1.get_state()
+    assert (A1x1_1 * 0.5).get_state() == B1x1.get_state()
+    assert (0.5 * A1x1_2).get_state() == B1x1.get_state()
 
-    A2x2 = SquareMatrix([[1.5, 2.5], [3.5, 4.5]])
+    A2x2_1 = SquareMatrix([[1.5, 2.5], [3.5, 4.5]])
+    A2x2_2 = deepcopy(A2x2_1)
     B2x2 = SquareMatrix([[2.25, 3.75], [5.25, 6.75]])
 
-    assert (A2x2 * 1.5).get_state() == B2x2.get_state()
+    assert (A2x2_1 * 1.5).get_state() == B2x2.get_state()
+    assert (1.5 * A2x2_2).get_state() == B2x2.get_state()
 
     # Testing with complex:
-    A1x1 = SquareMatrix([[1]])
+    A1x1_1 = SquareMatrix([[1]])
+    A1x1_2 = deepcopy(A1x1_1)
     B1x1 = SquareMatrix([[1 + 0j]])
 
-    assert (A1x1 * (1+0j)).get_state() == B1x1.get_state()
+    assert (A1x1_1 * (1+0j)).get_state() == B1x1.get_state()
+    assert ((1+0j) * A1x1_2).get_state() == B1x1.get_state()
 
-    A2x2 = SquareMatrix([[1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j]])
+    A2x2_1 = SquareMatrix([[1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j]])
+    A2x2_2 = deepcopy(A2x2_1)
     B2x2 = SquareMatrix([[2 + 2j, 4 + 4j], [6 + 6j, 8 + 8j]])
 
-    assert (A2x2 * 2).get_state() == B2x2.get_state()
+    assert (A2x2_1 * 2).get_state() == B2x2.get_state()
+    assert (2 * A2x2_2).get_state() == B2x2.get_state()
 
-    C2x2 = SquareMatrix([[1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j]])
+    C2x2_1 = SquareMatrix([[1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j]])
+    C2x2_2 = deepcopy(C2x2_1)
     D2x2 = SquareMatrix([[4j, 8j], [12j, 16j]])
 
-    assert (C2x2 * (2+2j)).get_state() == D2x2.get_state()
+    assert (C2x2_1 * (2+2j)).get_state() == D2x2.get_state()
+    assert ((2+2j) * C2x2_2).get_state() == D2x2.get_state()
 
 
 def test_sq_m_mul_dot_product():
