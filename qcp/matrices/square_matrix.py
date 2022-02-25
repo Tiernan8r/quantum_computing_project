@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from . import Matrix
-from ._types import SCALARS, VECTOR, MATRIX
+from ._types import SCALARS, SCALARS_TYPES, VECTOR, MATRIX
 from typing import Union
 
 
@@ -49,6 +49,14 @@ class SquareMatrix(Matrix):
         ])
 
     def __len__(self) -> int:
+        return len(self._state)
+
+    @property
+    def num_rows(self) -> int:
+        return len(self._state[0]) if len(self._state) > 0 else 0
+
+    @property
+    def num_columns(self) -> int:
         return len(self._state)
 
     def __getitem__(self, i: int) -> VECTOR:
@@ -101,7 +109,7 @@ class SquareMatrix(Matrix):
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
-        if isinstance(other, (complex, float, int)):
+        if isinstance(other, SCALARS_TYPES):
             current_state = self.get_state().copy()
 
             for i in range(len(current_state)):
