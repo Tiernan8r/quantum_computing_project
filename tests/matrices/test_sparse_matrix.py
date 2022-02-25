@@ -54,8 +54,8 @@ def test_sp_m_init():
     input1 = {0: {0: 1, 1: 1}, 1: {0: 1, 1: 1}}
     sp1 = SparseMatrix(input1)
 
-    assert sp1.row_width == 2
-    assert sp1.column_width == 2
+    assert sp1.num_rows == 2
+    assert sp1.num_columns == 2
 
     assert sp1.get_state() == [[1, 1], [1, 1]]
 
@@ -63,21 +63,21 @@ def test_sp_m_init():
     input2 = [[1, 2], [3, 4]]
     sp2 = SparseMatrix(input2)
 
-    assert sp2.row_width == 2
-    assert sp2.column_width == 2
+    assert sp2.num_rows == 2
+    assert sp2.num_columns == 2
 
     assert sp2.get_state() == [[1, 2], [3, 4]]
 
 
 def test_sp_m_len():
-    assert TEST_1x1.row_width == 1
-    assert TEST_1x1.column_width == 1
-    assert TEST_2x2.row_width == 2
-    assert TEST_2x2.column_width == 2
-    assert TEST_3x3.row_width == 3
-    assert TEST_3x3.column_width == 3
-    assert TEST_4x4.row_width == 4
-    assert TEST_4x4.column_width == 4
+    assert TEST_1x1.num_rows == 1
+    assert TEST_1x1.num_columns == 1
+    assert TEST_2x2.num_rows == 2
+    assert TEST_2x2.num_columns == 2
+    assert TEST_3x3.num_rows == 3
+    assert TEST_3x3.num_columns == 3
+    assert TEST_4x4.num_rows == 4
+    assert TEST_4x4.num_columns == 4
 
 
 def test_sp_square():
@@ -104,6 +104,7 @@ def test_sp_m_get_item():
 
 
 def test_sp_m_set_item():
+    two_by_two = deepcopy(TEST_2x2)
     with pytest.raises(AssertionError) as ae1:
         two_by_two[2] = [5, 6]
     assert ae1.match("index out of range")
@@ -118,6 +119,7 @@ def test_sp_m_set_item():
 
     two_by_two = deepcopy(TEST_2x2)
     two_by_two[1] = [5, 6]
+    assert two_by_two.get_state() == [[1, 0], [5, 6]]
     assert two_by_two[1][1] == 6
 
 
@@ -208,49 +210,56 @@ def test_sp_m_sub():
 
 def test_sp_m_mul_scalar():
     # Testing with ints:
-    A1x1 = SparseMatrix([[1]])
+    A1x1_1 = SparseMatrix([[1]])
+    A1x1_2 = deepcopy(A1x1_1)
     B1x1 = SparseMatrix([[2]])
 
-    assert (A1x1 * 2).get_state() == B1x1.get_state()
-    assert (2 * A1x1).get_state() == B1x1.get_state()
+    assert (A1x1_1 * 2).get_state() == B1x1.get_state()
+    assert (2 * A1x1_2).get_state() == B1x1.get_state()
 
-    A2x2 = SparseMatrix([[1, 2], [3, 4]])
+    A2x2_1 = SparseMatrix([[1, 2], [3, 4]])
+    A2x2_2 = deepcopy(A2x2_1)
     B2x2 = SparseMatrix([[3, 6], [9, 12]])
 
-    assert (A2x2 * 3).get_state() == B2x2.get_state()
-    assert (3 * A2x2).get_state() == B2x2.get_state()
+    assert (A2x2_1 * 3).get_state() == B2x2.get_state()
+    assert (3 * A2x2_2).get_state() == B2x2.get_state()
 
     # Testing with floats:
-    A1x1 = SparseMatrix([[1.0]])
+    A1x1_1 = SparseMatrix([[1.0]])
+    A1x1_2 = deepcopy(A1x1_1)
     B1x1 = SparseMatrix([[0.5]])
 
-    assert (A1x1 * 0.5).get_state() == B1x1.get_state()
-    assert (0.5 * A1x1).get_state() == B1x1.get_state()
+    assert (A1x1_1 * 0.5).get_state() == B1x1.get_state()
+    assert (0.5 * A1x1_2).get_state() == B1x1.get_state()
 
-    A2x2 = SparseMatrix([[1.5, 2.5], [3.5, 4.5]])
+    A2x2_1 = SparseMatrix([[1.5, 2.5], [3.5, 4.5]])
+    A2x2_2 = deepcopy(A2x2_1)
     B2x2 = SparseMatrix([[2.25, 3.75], [5.25, 6.75]])
 
-    assert (A2x2 * 1.5).get_state() == B2x2.get_state()
-    assert (1.5 * A2x2).get_state() == B2x2.get_state()
+    assert (A2x2_1 * 1.5).get_state() == B2x2.get_state()
+    assert (1.5 * A2x2_2).get_state() == B2x2.get_state()
 
     # Testing with complex:
-    A1x1 = SparseMatrix([[1]])
+    A1x1_1 = SparseMatrix([[1]])
+    A1x1_2 = deepcopy(A1x1_1)
     B1x1 = SparseMatrix([[1 + 0j]])
 
-    assert (A1x1 * (1+0j)).get_state() == B1x1.get_state()
-    assert ((1+0j) * A1x1).get_state() == B1x1.get_state()
+    assert (A1x1_1 * (1+0j)).get_state() == B1x1.get_state()
+    assert ((1+0j) * A1x1_2).get_state() == B1x1.get_state()
 
-    A2x2 = SparseMatrix([[1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j]])
+    A2x2_1 = SparseMatrix([[1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j]])
+    A2x2_2 = deepcopy(A2x2_1)
     B2x2 = SparseMatrix([[2 + 2j, 4 + 4j], [6 + 6j, 8 + 8j]])
 
-    assert (A2x2 * 2).get_state() == B2x2.get_state()
-    assert (2 * A2x2).get_state() == B2x2.get_state()
+    assert (A2x2_1 * 2).get_state() == B2x2.get_state()
+    assert (2 * A2x2_2).get_state() == B2x2.get_state()
 
-    C2x2 = SparseMatrix([[1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j]])
+    C2x2_1 = SparseMatrix([[1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j]])
+    C2x2_2 = deepcopy(C2x2_1)
     D2x2 = SparseMatrix([[4j, 8j], [12j, 16j]])
 
-    assert (C2x2 * (2+2j)).get_state() == D2x2.get_state()
-    assert ((2+2j) * C2x2).get_state() == D2x2.get_state()
+    assert (C2x2_1 * (2+2j)).get_state() == D2x2.get_state()
+    assert ((2+2j) * C2x2_2).get_state() == D2x2.get_state()
 
 
 def test_sp_m_mul_dot_product():

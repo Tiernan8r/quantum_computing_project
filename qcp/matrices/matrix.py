@@ -28,6 +28,14 @@ class Matrix(ABC):
     def __len__(self) -> int:
         pass
 
+    @property
+    def num_rows(self) -> int:
+        pass
+
+    @property
+    def num_columns(self) -> int:
+        pass
+
     def __getitem__(self, i: int) -> VECTOR:
         pass
 

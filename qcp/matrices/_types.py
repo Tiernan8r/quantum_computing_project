@@ -14,6 +14,7 @@
 from typing import Dict, List, Tuple, Union
 
 SCALARS = Union[complex, float, int]
+SCALARS_TYPES = (complex, float, int)
 VECTOR = List[SCALARS]
 MATRIX = List[VECTOR]
-SPARSE = Dict[Dict[SCALARS]]
+SPARSE = Dict[int, Dict[int, SCALARS]]

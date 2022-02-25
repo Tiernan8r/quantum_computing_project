@@ -14,16 +14,32 @@
 from __future__ import annotations
 import cmath
 from io import UnsupportedOperation
-from typing_extensions import Self
 from . import Matrix
-from ._types import SCALARS, SPARSE, VECTOR, MATRIX
+from ._types import SCALARS, SCALARS_TYPES, SPARSE, VECTOR, MATRIX
 from typing import Dict, List, Union
+
+
+def _list_to_dict(vals: List[SCALARS]) -> Dict[int, SCALARS]:
+    d = {}
+    for i in range(len(vals)):
+        entry = vals[i]
+
+        # ignore floating points that are within 1e-9 to 0
+        if cmath.isclose(entry, 0):
+            continue
+
+        d[i] = entry
+
+    return d
 
 
 class SparseVector:
 
-    def __init__(self, entries: Dict[SCALARS], size: int):
-        self._entries = entries
+    def __init__(self, entries: Union[List[SCALARS], Dict[int, SCALARS]], size: int):
+        if isinstance(entries, list):
+            self._entries = _list_to_dict(entries)
+        else:
+            self._entries = entries
         self._size = size
 
     def __len__(self):
@@ -40,14 +56,15 @@ class SparseMatrix(Matrix):
 
     def __init__(self, state: Union[MATRIX, SPARSE]):
 
-        if isinstance(state, SPARSE):
+        if isinstance(state, dict):
 
             self._entries = state
 
-            self._row = max(state.keys())
+            self._row = max(state.keys()) + 1  # indexes from 0...
+            self._col = 0
             for i in range(self._row):
                 if i in self._entries:
-                    width = max(self._entries[i].keys())
+                    width = max(self._entries[i].keys()) + 1
                     self._col = width if width > self._col else self._col
 
             return
@@ -64,14 +81,7 @@ class SparseMatrix(Matrix):
         }
 
         for i in range(len(state)):
-            for j in range(len(state[i])):
-                entry = state[i][j]
-
-                # ignore floating points that are within 1e-9 to 0
-                if cmath.isclose(entry, 0):
-                    continue
-
-                self._entries[i][j] = entry
+            self._entries[i] = _list_to_dict(state[i])
 
     @staticmethod
     def identity(n: int) -> Matrix:
@@ -88,7 +98,7 @@ class SparseMatrix(Matrix):
 
         assert n > 0, "Matrix dimension must be positive"
 
-        I = SparseMatrix()
+        I = SparseMatrix([])
         I._row = n
         I._col = n
         I._entries = {i: {i: 1} for i in range(n)}
@@ -96,11 +106,11 @@ class SparseMatrix(Matrix):
         return I
 
     @property
-    def row_width(self) -> int:
+    def num_rows(self) -> int:
         return self._row
 
     @property
-    def column_width(self) -> int:
+    def num_columns(self) -> int:
         return self._col
 
     @property
@@ -119,15 +129,23 @@ class SparseMatrix(Matrix):
         assert i < len(self), "index out of range"
         return self._get_row(i)
 
-    def __setitem__(self, i: int, v: SparseVector):
+    def __setitem__(self, i: int, v: Union[SparseVector, List[SCALARS], Dict[int, SCALARS]]):
         assert i < len(self), "index out of range"
-        assert len(v) == len(self), "row dimension does not match"
+        sv = None
+        if isinstance(v, list):
+            assert len(v) == len(self[i]), "row dimension does not match"
+            sv = SparseVector(v, self.num_rows)
+        elif isinstance(v, dict):
+            assert max(v.keys()) + 1 < self.num_rows, "row too wide"
+            sv = SparseVector(v, self.num_rows)
+        else:
+            sv = v
 
-        self._entries[i] = v._entries
+        self._entries[i] = sv._entries
 
     def _as_list(self) -> Matrix():
         list_representation = [
-            [0 for _ in range(self._row)] for _ in range(self._col)
+            [0 for _ in range(self.num_columns)] for _ in range(self.num_rows)
         ]
 
         for i, row in self._entries.items():
@@ -159,12 +177,14 @@ class SparseMatrix(Matrix):
         return list_representation
 
     def __add__(self, other: Matrix) -> Matrix:
-        assert self._row == len(other) and self._col == len(
-            other[0]), "Matrix dimensions must be equal for addition"
+        assert self.num_rows == other.num_rows and self.num_columns == other.num_columns, "Matrix dimensions must be equal for addition"
 
-        for i in range(len(self)):
-            for j in range(len(self[i])):
-                self._entries[i][j] += other[i][j]
+        for i in range(other.num_rows):
+            for j in range(other.num_columns):
+                if j not in self._entries[i]:
+                    self._entries[i][j] = other[i][j]
+                else:
+                    self._entries[i][j] += other[i][j]
 
         return self
 
@@ -173,8 +193,8 @@ class SparseMatrix(Matrix):
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
-        if isinstance(other, SCALARS):
-            for i, row in self._entries:
+        if isinstance(other, SCALARS_TYPES):
+            for i, row in self._entries.items():
                 for j in row.keys():
                     self._entries[i][j] *= other
 
@@ -188,7 +208,7 @@ class SparseMatrix(Matrix):
         assert len(self) == len(other.columns()[
             0]), "matrices don't match on their row/column dimensions"
 
-        new_matrix = SparseMatrix()
+        new_matrix = SparseMatrix([])
         new_matrix._row = self._col
         new_matrix._col = len(other[0])
 
@@ -198,7 +218,7 @@ class SparseMatrix(Matrix):
         for i, row in self._entries.items():
             for j in range(new_matrix._col):
                 # only need to calculate using non-zero entries
-                entries[i][j] = sum([other[i][k] * row[k] for k in row.keys()])
+                entries[i][j] = sum([other[k][j] * row[k] for k in row.keys()])
 
         new_matrix._entries = entries
 
@@ -208,7 +228,7 @@ class SparseMatrix(Matrix):
         total_string = ""
 
         def determine_val(i, j) -> SCALARS:
-            if i not in self._entries and j not in self._entries[i]:
+            if i not in self._entries or j not in self._entries[i]:
                 return 0
             return self._entries[i][j]
 
