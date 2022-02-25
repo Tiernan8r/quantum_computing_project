@@ -73,7 +73,7 @@ class MyMatrix(Matrix):
     def __mul__(self, other):
         # Multiplication
         # If the other input is an integer, multiply directly
-        if isinstance(other, int):
+        if isinstance(other, (complex, float, int)):
             nrow, ncol = self.dim()
             return Matrix([
                 [
