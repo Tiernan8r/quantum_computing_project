@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from matrices import Matrix, SquareMatrix
+from matrices import Matrix, DefaultMatrix
 import cmath
 
 
@@ -93,4 +93,4 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
 
             entries[i][j] = val
 
-    return SquareMatrix(entries)
+    return DefaultMatrix(entries)
