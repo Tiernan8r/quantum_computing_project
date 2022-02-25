@@ -10,7 +10,8 @@ from typing import List
 # |1> and the second and third qubit is |0>
 # Targets and Controls work off this notation but you only need to enter the
 # number of the qubit you want to target/control
-def multi_gate(size: int, targets: list[int], gate: str, phi=complex(0)) -> Matrix:
+def multi_gate(size: int, targets: List[int], gate: str, phi=complex(0)) \
+        -> Matrix:
     """
     Constructs a (2**size by 2**size) gate matrix that applies a
     specific gate to one or more specified qubits
@@ -48,7 +49,7 @@ def multi_gate(size: int, targets: list[int], gate: str, phi=complex(0)) -> Matr
     return m
 
 
-def control_x(size, controls, target):
+def control_x(size: int, controls: List[int], target: int):
     """
     Constructs a (2**size by 2**size) control-x gate with
     given controls and target
@@ -81,7 +82,7 @@ def control_x(size, controls, target):
     return x
 
 
-def control_z(size, controls, target):
+def control_z(size: int, controls: List[int], target: int):
     """
     Constructs a (2**size by 2**size) control-z gate with
      given controls and target
@@ -109,7 +110,8 @@ def control_z(size, controls, target):
     return z
 
 
-def control_phase(size, controls, target, phi):
+def control_phase(size: int, controls: List[int], target: int,
+                  phi: complex):
     """
     Constructs a (2**size by 2**size) control-phase gate with
      given controls and target
@@ -140,7 +142,7 @@ def control_phase(size, controls, target, phi):
     return p
 
 
-def zeros_list(n):
+def zeros_list(n: int):
     """
     Creates a list of size n full of zeros
     :param n: size of list
@@ -149,7 +151,7 @@ def zeros_list(n):
     return [(0 + 0j) for _ in range(n)]
 
 
-def phase_shift(phi):
+def phase_shift(phi: complex):
     """
     Creates a 2 x 2 phase shift matrix
     :param phi: angle the qubit is phase shifted by
