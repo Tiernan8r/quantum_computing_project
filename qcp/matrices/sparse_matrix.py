@@ -38,7 +38,20 @@ class SparseVector:
 
 class SparseMatrix(Matrix):
 
-    def __init__(self, state: MATRIX):
+    def __init__(self, state: Union[MATRIX, SPARSE]):
+
+        if isinstance(state, SPARSE):
+
+            self._entries = state
+
+            self._row = max(state.keys())
+            for i in range(self._row):
+                if i in self._entries:
+                    width = max(self._entries[i].keys())
+                    self._col = width if width > self._col else self._col
+
+            return
+
         n = len(state)
         m = 0
         if n > 0:
@@ -81,6 +94,18 @@ class SparseMatrix(Matrix):
         I._entries = {i: {i: 1} for i in range(n)}
 
         return I
+
+    @property
+    def row_width(self) -> int:
+        return self._row
+
+    @property
+    def column_width(self) -> int:
+        return self._col
+
+    @property
+    def square(self) -> bool:
+        return self._row == self._col
 
     def __len__(self) -> int:
         return self._row
