@@ -13,7 +13,7 @@
 # limitations under the License.
 from copy import deepcopy
 from io import UnsupportedOperation
-from qcp.matrices import SparseMatrix
+from src.matrices import SparseMatrix
 import pytest
 
 

@@ -11,8 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.tensor_product import tensor_product
-from qcp.matrices import SquareMatrix
+from src.tensor_product import tensor_product
+from src.matrices import SquareMatrix
 
 IDENTITY = SquareMatrix.identity(2)
 

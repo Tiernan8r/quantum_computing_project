@@ -32,8 +32,8 @@ setuptools.setup(
     name='quantum_computing_project',
     use_scm_version=True,  # tags the project version from the git tag
     setup_requires=['setuptools_scm', 'pytest-runner'],
-    packages=setuptools.find_packages(where="qcp", exclude=['docs', 'tests']),
-    package_dir={"": "qcp"},
+    packages=setuptools.find_packages(where="src", exclude=['docs', 'tests']),
+    package_dir={"": "src"},
     include_package_data=True,
     install_requires=requirements,
 )
