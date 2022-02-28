@@ -280,8 +280,6 @@ class SparseMatrix(Matrix):
             i: {} for i in range(self.num_columns)
         }
 
-        print(entries)
-
         for i, row in self._entries.items():
             for j in range(new_matrix.num_columns):
                 # only need to calculate using the non-zero entries of self
