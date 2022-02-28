@@ -271,7 +271,8 @@ class SparseMatrix(Matrix):
 
     def _dot(self, other: Matrix) -> Matrix:
         assert other.num_rows > 0, "taking dot product with empty matrix"
-        assert self.num_columns == other.num_rows, "matrices don't match on their row/column dimensions"
+        assert self.num_columns == other.num_rows, \
+            "matrices don't match on their row/column dimensions"
 
         new_matrix = SparseMatrix([], w=other.num_columns, h=self.num_rows)
 
