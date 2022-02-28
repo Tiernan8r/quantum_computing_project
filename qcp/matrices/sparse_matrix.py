@@ -270,17 +270,18 @@ class SparseMatrix(Matrix):
             return self._dot(other)
 
     def _dot(self, other: Matrix) -> Matrix:
-        assert len(other) > 0, "taking dot product with empty matrix"
-        assert len(self) == len(other.columns()[
-            0]), "matrices don't match on their row/column dimensions"
+        assert other.num_rows > 0, "taking dot product with empty matrix"
+        assert self.num_columns == other.num_rows, \
+            "matrices don't match on their row/column dimensions"
 
-        new_matrix = SparseMatrix([], w=len(other[0]), h=self._col)
+        new_matrix = SparseMatrix([], w=other.num_columns, h=self.num_rows)
 
         entries: SPARSE = {
-            i: {} for i in range(self._col)
+            i: {} for i in range(self.num_columns)
         }
+
         for i, row in self._entries.items():
-            for j in range(new_matrix._col):
+            for j in range(new_matrix.num_columns):
                 # only need to calculate using the non-zero entries of self
                 # TODO: Can further optimise this 'other' is also a
                 # SparseMatrix by only using it's non-zero entries too
