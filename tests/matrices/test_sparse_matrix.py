@@ -290,6 +290,18 @@ def test_sp_m_mul_dot_product():
     assert (TEST_4x4 * TEST_4x4).get_state() == C4x4.get_state()
 
 
+def test_sp_m_column_mul():
+
+    A = SparseMatrix([[1, 1], [1, -1]])
+    B = SparseMatrix([[1], [0]])
+
+    C = A * B
+
+    expected = SparseMatrix([[1], [1]])
+
+    assert C.get_state() == expected.get_state()
+
+
 def test_sp_m_str():
     expected1x1 = "[  1]"
     assert str(TEST_1x1) == expected1x1
