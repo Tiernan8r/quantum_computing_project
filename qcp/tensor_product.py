@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from matrices import Matrix, DefaultMatrix
+from matrices import DefaultMatrix, Matrix, SparseMatrix
 import cmath
 
 
@@ -23,6 +23,10 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     :param B Matrix: Second p*q matrix to tensor product with
     :returns: An (m*p)*(n*q) matrix of the tensor product.
     """
+
+    if isinstance(A, SparseMatrix) and isinstance(B, SparseMatrix):
+        return _tensor_product_sparse(A, B)
+
     m = A.num_rows
     n = A.num_columns
     p = B.num_rows
@@ -90,3 +94,6 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
             entries[i][j] = val
 
     return DefaultMatrix(entries)
+
+
+def _tensor_product_sparse(A: SparseMatrix, B: SparseMatrix) -> Matrix:
