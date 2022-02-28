@@ -11,17 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.tensor_product import tensor_product
-from qcp.matrices import SquareMatrix
-
-IDENTITY = SquareMatrix.identity(2)
+import qcp.tensor_product as tp
+from qcp.matrices import SquareMatrix, SparseMatrix
 
 
-def test_tensor_product_with_identity():
+def test_tensor_product_square_with_identity():
 
     A = SquareMatrix([[1, 2], [3, 4]])
+    ID = SquareMatrix.identity(2)
 
-    C = tensor_product(IDENTITY, A)
+    C = tp.tensor_product(ID, A)
 
     expected = SquareMatrix(
         [
@@ -31,5 +30,22 @@ def test_tensor_product_with_identity():
             [0, 0, 3, 4]
         ]
     )
+
+    assert C.get_state() == expected.get_state()
+
+
+def test_tensor_product_sparse_with_identity():
+
+    A = SparseMatrix({0: {0: 1, 1: 2}, 1: {0: 3, 1: 4}})
+    ID = SparseMatrix.identity(2)
+
+    C = tp.tensor_product(ID, A)
+
+    expected = SparseMatrix({
+        0: {0: 1, 1: 2},
+        1: {0: 3, 1: 4},
+        2: {2: 1, 3: 2},
+        3: {2: 3, 3: 4}
+    })
 
     assert C.get_state() == expected.get_state()
