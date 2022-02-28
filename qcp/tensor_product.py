@@ -118,23 +118,36 @@ def _tensor_product_sparse(A: SparseMatrix, B: SparseMatrix) -> Matrix:
         i: {} for i in range(num_rows)
     }
 
-    # Follow a similar reasoning to that used in the general tensor product code
-    for i in range(num_columns):
-        for j in range(num_rows):
+    # # Follow a similar reasoning to that used in the general tensor product code
+    # for i in range(num_columns):
+    #     for j in range(num_rows):
 
-            # A[k][l]:
-            k = (i // m) % m
-            l = (j // n) % n  # noqa: E741
+    #         # A[k][l]:
+    #         k = (i // m) % m
+    #         l = (j // n) % n  # noqa: E741
 
-            # B[r][s]
-            r = i % p
-            s = j % q
+    #         # B[r][s]
+    #         r = i % p
+    #         s = j % q
 
-            val = A[k][l] * B[r][s]
-            # Round values close to zero within 1e-9
-            if cmath.isclose(val, 0):
-                continue
+    #         val = A[k][l] * B[r][s]
+    #         # Round values close to zero within 1e-9
+    #         if cmath.isclose(val, 0):
+    #             continue
 
-            entries[i][j] = val
+    #         entries[i][j] = val
+
+    for k, row_a in A._entries.items():
+        for l, v_a in row_a.items():
+
+            for r, row_b in B._entries.items():
+                for s, v_b in row_b.items():
+
+                    i = l * n + q
+                    j = k * m + p
+
+                    print(f"@({i},{j})")
+
+                    entries[i][j] = v_a * v_b
 
     return SparseMatrix(entries)
