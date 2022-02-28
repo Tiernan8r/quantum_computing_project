@@ -23,14 +23,10 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     :param B Matrix: Second p*q matrix to tensor product with
     :returns: An (m*p)*(n*q) matrix of the tensor product.
     """
-    m = len(A)
-    n = 0
-    if m > 0:
-        n = len(A[0])
-    p = len(B)
-    q = 0
-    if p > 0:
-        q = len(B[0])
+    m = A.num_rows
+    n = A.num_columns
+    p = B.num_rows
+    q = B.num_columns
 
     row_width = m * p
     column_width = n * q
