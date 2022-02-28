@@ -97,3 +97,44 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
 
 
 def _tensor_product_sparse(A: SparseMatrix, B: SparseMatrix) -> Matrix:
+    """
+    Compute the tensor product between two SparseMatrices, and return the
+    resultant Matrix
+    :param A SparseMatrix: An m*n matrix
+    :param B SparseMatrix: Second p*q matrix to tensor product with
+    :returns: An (m*p)*(n*q) matrix of the tensor product.
+    """
+
+    m = A.num_rows
+    n = A.num_columns
+    p = B.num_rows
+    q = B.num_columns
+
+    num_columns = m * p
+    num_rows = n * q
+
+    # creates a dictionary to store the (m*p)*(n*q) entries
+    entries = {
+        i: {} for i in range(num_rows)
+    }
+
+    # Follow a similar reasoning to that used in the general tensor product code
+    for i in range(num_columns):
+        for j in range(num_rows):
+
+            # A[k][l]:
+            k = (i // m) % m
+            l = (j // n) % n  # noqa: E741
+
+            # B[r][s]
+            r = i % p
+            s = j % q
+
+            val = A[k][l] * B[r][s]
+            # Round values close to zero within 1e-9
+            if cmath.isclose(val, 0):
+                continue
+
+            entries[i][j] = val
+
+    return SparseMatrix(entries)
