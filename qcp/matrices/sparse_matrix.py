@@ -100,6 +100,9 @@ class SparseMatrix(Matrix):
                 # that the matrix is that wide
                 for i in range(self._row):
                     if i in self._entries:
+                        # max() errors on calls with empty lists
+                        if len(self._entries[i].keys()) == 0:
+                            continue
                         width = max(self._entries[i].keys()) + 1
                         self._col = width if width > self._col else self._col
 
@@ -162,7 +165,7 @@ class SparseMatrix(Matrix):
         if i in self._entries:
             entry = self._entries[i]
 
-        return SparseVector(entry, self._row)
+        return SparseVector(entry, self.num_columns)
 
     def __getitem__(self, i: int) -> SparseVector:
         assert i < len(self), "index out of range"
