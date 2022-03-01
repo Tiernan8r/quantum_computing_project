@@ -88,7 +88,7 @@ def test_tensor_sparse():
 
     F = tp.tensor_product(D, E)
 
-    # Disgusting comoplicated, and I realise the irony of using "SparseMatrix"
+    # Disgustingly complicated, and I realise the irony of using "SparseMatrix"
     # with such a dense matrix...
     expected2 = SparseMatrix([
         [1, 2, 3, 4, 5, 6, 7, 2, 4, 6, 8, 10, 12, 14, 3, 6, 9, 12, 15,
