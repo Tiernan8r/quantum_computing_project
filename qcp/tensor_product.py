@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from matrices import DefaultMatrix, Matrix, SparseMatrix
+from typing import Dict, Union
 import cmath
 
 
@@ -114,7 +115,8 @@ def _tensor_product_sparse(A: SparseMatrix, B: SparseMatrix) -> Matrix:
     num_rows = m * p
 
     # creates a dictionary to store the (m*p)*(n*q) entries
-    entries = {
+    entries_type = Dict[int, Dict[int, Union[complex, float, int]]]
+    entries: entries_type = {
         i: {} for i in range(num_rows)
     }
 
