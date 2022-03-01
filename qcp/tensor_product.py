@@ -119,7 +119,7 @@ def _tensor_product_sparse(A: SparseMatrix, B: SparseMatrix) -> Matrix:
     }
 
     for k, row_a in A._entries.items():
-        for l, v_a in row_a.items():
+        for l, v_a in row_a.items():  # noqa: E741
 
             for r, row_b in B._entries.items():
                 for s, v_b in row_b.items():
