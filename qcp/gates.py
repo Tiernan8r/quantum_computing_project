@@ -87,7 +87,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
         num = "".join(binary)
         number = int(num, base=2)
 
-        row = zeros_list(2 ** size)
+        row = _zeros_list(2 ** size)
         row[number] = 1
         m.append(row)
     x = DefaultMatrix(m)
@@ -110,7 +110,7 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
         f = '0' + str(size) + 'b'
         binary = list(format(i, f))
 
-        row = zeros_list(2 ** size)
+        row = _zeros_list(2 ** size)
         conditions = [binary[-j] == "1" for j in controls]
 
         if all(conditions) and binary[-target] == "1":
@@ -142,7 +142,7 @@ def control_phase(size: int, controls: List[int], target: int,
         f = '0' + str(size) + 'b'
         binary = list(format(i, f))
 
-        row = zeros_list(2 ** size)
+        row = _zeros_list(2 ** size)
         conditions = [binary[-j] == "1" for j in controls]
 
         if all(conditions) and binary[-target] == "1":
@@ -154,13 +154,13 @@ def control_phase(size: int, controls: List[int], target: int,
     return p
 
 
-def zeros_list(n: int):
+def _zeros_list(n: int) -> List[complex]:
     """
     Creates a list of size n full of zeros
     :param n: size of list
     :return: list[int]
     """
-    return [(0 + 0j) for _ in range(n)]
+    return [0j for _ in range(n)]
 
 
 def phase_shift(phi: complex) -> Matrix:
