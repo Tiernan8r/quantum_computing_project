@@ -100,6 +100,9 @@ class SparseMatrix(Matrix):
                 # that the matrix is that wide
                 for i in range(self._row):
                     if i in self._entries:
+                        # max() errors on calls with empty lists
+                        if len(self._entries[i].keys()) == 0:
+                            continue
                         width = max(self._entries[i].keys()) + 1
                         self._col = width if width > self._col else self._col
 
