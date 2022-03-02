@@ -65,10 +65,10 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-x gate with
     given controls and target
-    :param size: total number of qubits in circuit ->
-    :param controls: List of control qubits -> List[int]
-    :param target: target qubit the x gate will be applied to -> int
-    :return: Matrix(int)
+    :param size int: total number of qubits in circuit
+    :param controls List[int]: List of control qubits
+    :param target int: target qubit the x gate will be applied to
+    :returns Matrix: Matrix representing the gate
     """
     m = {}
     n = 2 ** size
