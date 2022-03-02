@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from qcp.matrices import SparseMatrix
 import qcp.gates as gts
 import pytest
 
@@ -40,14 +41,36 @@ def test_control_x():
         gts.control_x(2, [0], 0)
     assert ae4.match("control bits and target bit cannot be the same")
 
-    control_x_4x4 = gts.control_x(2, [0], 1)
+    cx_4x4 = gts.control_x(2, [0], 1)
     expected_4x4 = SparseMatrix([
         [1, 0, 0, 0],
         [0, 1, 0, 0],
         [0, 0, 0, 1],
         [0, 0, 1, 0]
     ])
-    assert control_x_4x4.get_state() == expected_4x4.get_state()
+    assert cx_4x4.get_state() == expected_4x4.get_state()
+
+    # Create a |00> + |10> qbit state:
+    two_qubits = SparseMatrix({0: {0: 1}, 1: {}, 2: {0: 1}, 3: {}})
+
+    # The first qbit should be untouched, the second should be flipped
+    transformed_qbits = cx_4x4 * two_qubits
+    expected_2_qbits = SparseMatrix({0: {0: 1}, 1: {}, 2: {}, 3: {0: 1}})
+    assert transformed_qbits.get_state() == expected_2_qbits.get_state()
+
+    cx_8x8 = gts.control_x(3, [1], 3)
+    print(cx_8x8)
+    print()
+    # | 000 >
+    three_qbits = SparseMatrix({
+        0: {0: 1}, 1: {}, 2: {}, 3: {},
+        4: {}, 5: {}, 6: {}, 7: {}})
+    transform_3qbits = cx_8x8 * three_qbits
+    expected_3qbits = SparseMatrix({
+        0: {0: 1}, 1: {}, 2: {}, 3: {},
+        4: {}, 5: {}, 6: {}, 7: {}})
+
+    assert transform_3qbits.get_state() == expected_3qbits.get_state()
 
 
 def test_control_z():
