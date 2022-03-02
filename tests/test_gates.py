@@ -26,7 +26,10 @@ def test_control_x():
     assert ae1.match("need minimum of two qubits")
 
     # Target qbit needs to be not one of the control bits:
+    # Control bits need to be within qubit range:
     with pytest.raises(AssertionError) as ae2:
+        gts.control_x(2, [5], 0)
+    assert ae2.match("control bit out of range")
         gts.control_x(2, [0], 0)
     assert ae2.match("control bits and target bit cannot be the same")
 
