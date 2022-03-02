@@ -70,7 +70,6 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     :param target int: target qubit the x gate will be applied to
     :returns Matrix: Matrix representing the gate
     """
-    m = {}
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
     assert isinstance(controls, list)
@@ -79,6 +78,8 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     assert len(controls) <= n, "too many control bits provided."
 
     assert target not in controls, "control bits and target bit cannot be the same"
+
+    m = {}
     for i in range(0, n):
         f = '0' + str(size) + 'b'
         binary = list(format(i, f))
