@@ -70,9 +70,9 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     :param target: target qubit the x gate will be applied to -> int
     :return: Matrix(int)
     """
-    m = []
-
-    for i in range(0, 2 ** size):
+    m = {}
+    n = 2 ** size
+    for i in range(0, n):
         f = '0' + str(size) + 'b'
         binary = list(format(i, f))
 
@@ -87,10 +87,8 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
         num = "".join(binary)
         number = int(num, base=2)
 
-        row = _zeros_list(2 ** size)
-        row[number] = 1
-        m.append(row)
-    x = DefaultMatrix(m)
+        m[i] = {number: 1}
+    x = DefaultMatrix(m, h=n, w=n)
     return x
 
 
