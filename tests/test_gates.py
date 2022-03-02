@@ -30,6 +30,12 @@ def test_control_x():
     with pytest.raises(AssertionError) as ae2:
         gts.control_x(2, [5], 0)
     assert ae2.match("control bit out of range")
+
+    # More control bits indexed than there are qubits:
+    with pytest.raises(AssertionError) as ae3:
+        gts.control_x(2, [1, 1, 1, 1, 1, 1], 0)
+    assert ae3.match("too many control bits provided")
+
         gts.control_x(2, [0], 0)
     assert ae2.match("control bits and target bit cannot be the same")
 
