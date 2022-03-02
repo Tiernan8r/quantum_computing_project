@@ -19,4 +19,3 @@ def test_main():
         main.main()
     except Exception:
         assert False, "main() raised an exception."
-
