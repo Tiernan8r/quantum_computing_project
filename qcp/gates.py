@@ -76,6 +76,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     assert isinstance(controls, list)
     for c in controls:
         assert c < n, "control bit out of range"
+    assert len(controls) <= n, "too many control bits provided."
 
     assert target not in controls, "control bits and target bit cannot be the same"
     for i in range(0, n):
