@@ -73,6 +73,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     m = {}
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
+    assert target not in controls, "control bits and target bit cannot be the same"
     for i in range(0, n):
         f = '0' + str(size) + 'b'
         binary = list(format(i, f))
