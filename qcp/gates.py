@@ -71,6 +71,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     :returns Matrix: Matrix representing the gate
     """
     m = {}
+    assert size > 1, "need minimum of two qubits"
     n = 2 ** size
     for i in range(0, n):
         f = '0' + str(size) + 'b'

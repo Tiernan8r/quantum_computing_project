@@ -11,13 +11,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import qcp.gates as gts
+import pytest
+
 
 def test_multi_gate():
     pass
 
 
 def test_control_x():
-    pass
+    # Gate needs a minimum of two qubits to make sense
+    with pytest.raises(AssertionError) as ae1:
+        gts.control_x(1, [], 0)
+    assert ae1.match("need minimum of two qubits")
 
 
 def test_control_z():
