@@ -81,7 +81,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
 
     m = {}
     for i in range(0, n):
-        f = '0' + str(size) + 'b'
+        f = f'0{size}b'
         binary = list(format(i, f))
 
         conditions = [binary[-j] == "1" for j in controls]
