@@ -12,18 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from qcp.tensor_product import tensor_product
-from qcp.matrices import SquareMatrix
+from qcp.matrices import DefaultMatrix
 
-IDENTITY = SquareMatrix.identity(2)
+IDENTITY = DefaultMatrix.identity(2)
 
 
 def test_tensor_product_with_identity():
 
-    A = SquareMatrix([[1, 2], [3, 4]])
+    A = DefaultMatrix([[1, 2], [3, 4]])
 
     C = tensor_product(IDENTITY, A)
 
-    expected = SquareMatrix(
+    expected = DefaultMatrix(
         [
             [1, 2, 0, 0],
             [3, 4, 0, 0],
