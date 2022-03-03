@@ -13,6 +13,7 @@
 # limitations under the License.
 from __future__ import annotations
 import cmath
+from copy import deepcopy
 from qcp.matrices import Matrix
 from qcp.matrices._types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
 from typing import Dict, List, Union
@@ -224,11 +225,14 @@ class SparseMatrix(Matrix):
         return SparseMatrix(entries, h=self.num_columns, w=self.num_rows)
 
     def conjugate(self) -> Matrix:
+        entries = deepcopy(self._entries)
         for i, row in self._entries.items():
             for j, v in row.items():
                 if isinstance(v, complex):
-                    self._entries[i][j] = v.conjugate()
-        return self
+                    entries[i][j] = v.conjugate()
+                else:
+                    entries[i][j] = v
+        return SparseMatrix(entries, h=self.num_rows, w=self.num_columns)
 
     def __add__(self, other: Matrix) -> Matrix:
         row_match = self.num_rows == other.num_rows

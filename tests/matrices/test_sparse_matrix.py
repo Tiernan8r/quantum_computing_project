@@ -154,6 +154,16 @@ def test_sp_m_transpose():
 
     assert A.transpose().get_state() == B.get_state()
 
+def test_sp_m_conjugate():
+    # Non-complex values shoule be unchanged.
+    A = SparseMatrix([[1,2],[3,4]])
+    assert A.conjugate().get_state() == A.get_state()
+
+    # complex should be conjugated
+    B = SparseMatrix([[1j, 0], [0, 1j]])
+    C = SparseMatrix([[-1j, 0], [0, -1j]])
+
+    assert B.conjugate().get_state() == C.get_state()
 
 def test_sp_m_add():
     with pytest.raises(AssertionError) as ae:
