@@ -155,7 +155,13 @@ class GeneralMatrix(Matrix):
         return GeneralMatrix(current_state)
 
     def __str__(self) -> str:
-        pass
+        total_string = ""
+        N = len(self._state)
+        for i in range(N):
+            total_string += "[" + \
+                ",".join([f"{c:3.3g}" for c in self._state[i]]) + "]" + \
+                (lambda i, N: "\n" if i < N - 1 else "")(i, N)
+        return total_string
 
     def conjugate(self):
         # conjugation of matrix
