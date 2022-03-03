@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from matrices import Matrix, DefaultMatrix
+from qcp.matrices import Matrix, DefaultMatrix
 from constants import TWO_HADAMARD, IDENTITY
 import cmath
 
@@ -38,8 +38,10 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
 
     # creates an (m*p)*(n*q) list for the answer matrix
     entries = [
-        [0.0 for _ in range(row_width)] for _ in range(column_width)
+        [0.0 for _ in range(column_width)] for _ in range(row_width)
     ]
+    if row_width == 1:
+        entries = [[0.0 for _ in range(column_width)]]
 
     # The tensor product is defined as follows:
     # A * B =
@@ -95,7 +97,6 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
             entries[i][j] = val
 
     return DefaultMatrix(entries)
-
 
 
 print(tensor_product(TWO_HADAMARD, IDENTITY))
