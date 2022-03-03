@@ -14,5 +14,6 @@
 from matrices.matrix import Matrix  # noqa: F401
 from matrices.square_matrix import SquareMatrix  # noqa: F401
 from matrices.sparse_matrix import SparseMatrix  # noqa: F401
+from matrices.general_matrix import GeneralMatrix  # noqa: F401
 
 DefaultMatrix = SparseMatrix

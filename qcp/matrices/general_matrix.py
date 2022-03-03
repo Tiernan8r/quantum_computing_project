@@ -15,7 +15,7 @@ from . import Matrix
 from ._types import MATRIX, VECTOR, SCALARS
 
 
-class MyMatrix(Matrix):
+class GeneralMatrix(Matrix):
 
     def __init__(self, state: MATRIX):
         self.state = state
