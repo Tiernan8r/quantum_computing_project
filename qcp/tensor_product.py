@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from qcp.matrices import Matrix, DefaultMatrix
-from constants import TWO_HADAMARD, IDENTITY
+from qcp.matrices.types import MATRIX
 import cmath
 
 

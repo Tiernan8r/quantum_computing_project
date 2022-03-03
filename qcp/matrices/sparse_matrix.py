@@ -15,7 +15,7 @@ from __future__ import annotations
 import cmath
 from copy import deepcopy
 from qcp.matrices import Matrix
-from qcp.matrices._types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
+from qcp.matrices.types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
 from typing import Dict, List, Union
 
 
