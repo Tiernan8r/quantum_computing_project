@@ -198,11 +198,6 @@ class SparseMatrix(Matrix):
     def get_state(self) -> MATRIX:
         return self._as_list()
 
-    def set_state(self, s: MATRIX):
-        raise UnsupportedOperation(
-            "SparseMatrix is immutable using List[List[]],"
-            " create a new SparseMatrix instead!")
-
     def rows(self) -> MATRIX:
         """Return the rows of the Matrix."""
         return self.get_state()

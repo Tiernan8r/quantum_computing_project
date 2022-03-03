@@ -67,12 +67,6 @@ class DenseMatrix(Matrix):
     def get_state(self) -> MATRIX:
         return self._state
 
-    def set_state(self, s: MATRIX):
-        assert s is not None
-        assert len(s) > 0
-        assert len(s) == len(s[0]), "non square matrix state"
-        self._state = s
-
     def rows(self) -> MATRIX:
         """Return the rows of the Matrix."""
         return self.get_state()

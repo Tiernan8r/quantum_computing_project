@@ -45,9 +45,6 @@ class Matrix(ABC):
     def get_state(self) -> MATRIX:
         pass
 
-    def set_state(self, s: MATRIX):
-        pass
-
     def __add__(self, other: Matrix) -> Matrix:
         pass
 
