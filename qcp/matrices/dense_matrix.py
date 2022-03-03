@@ -35,13 +35,8 @@ class DenseMatrix(Matrix):
         Create the identity matrix with the given dimensions
 
         :param n int: The matrix dimension
-        :raises TypeError: If input dimension is not convertable to int.
         """
-        try:
-            n = int(n)
-        except TypeError:
-            raise
-
+        assert isinstance(n, int), "must provide integer dimension"
         assert n > 0, "Matrix dimension must be positive"
 
         def determine_entry(a, b): return 1 if a == b else 0
