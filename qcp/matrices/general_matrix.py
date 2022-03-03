@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from . import Matrix
-from ._types import MATRIX, VECTOR, SCALARS
+from ._types import MATRIX, VECTOR, SCALARS, SCALARS_TYPES
+from typing import Union
 
 
 class GeneralMatrix(Matrix):
