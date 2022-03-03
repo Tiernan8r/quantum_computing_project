@@ -13,9 +13,9 @@
 # limitations under the License.
 from __future__ import annotations
 import cmath
-from io import UnsupportedOperation
-from . import Matrix
-from ._types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
+from copy import deepcopy
+from qcp.matrices import Matrix
+from qcp.matrices._types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
 from typing import Dict, List, Union
 
 
@@ -158,7 +158,7 @@ class SparseMatrix(Matrix):
     def __len__(self) -> int:
         return self._row
 
-    def _get_row(self, i: int) -> SparseVector:
+    def _get_row(self, i: int) -> SparseVector:  # type: ignore[override]
         assert i < len(self), "index out of range"
 
         entry = {}
@@ -167,11 +167,11 @@ class SparseMatrix(Matrix):
 
         return SparseVector(entry, self.num_columns)
 
-    def __getitem__(self, i: int) -> SparseVector:
+    def __getitem__(self, i: int) -> SparseVector:  # type: ignore[override]
         assert i < len(self), "index out of range"
         return self._get_row(i)
 
-    def __setitem__(self, i: int, v:
+    def __setitem__(self, i: int, v:  # type: ignore[override]
                     Union[SparseVector, List[SCALARS], Dict[int, SCALARS]]
                     ):
         assert i < len(self), "index out of range"
@@ -187,7 +187,7 @@ class SparseMatrix(Matrix):
 
         self._entries[i] = sv._entries
 
-    def _as_list(self) -> Matrix:
+    def _as_list(self) -> MATRIX:
         list_representation: MATRIX = [
             [0 for _ in range(self.num_columns)] for _ in range(self.num_rows)
         ]
@@ -200,11 +200,6 @@ class SparseMatrix(Matrix):
 
     def get_state(self) -> MATRIX:
         return self._as_list()
-
-    def set_state(self, s: MATRIX):
-        raise UnsupportedOperation(
-            "SparseMatrix is immutable using List[List[]],"
-            " create a new SparseMatrix instead!")
 
     def rows(self) -> MATRIX:
         """Return the rows of the Matrix."""
@@ -222,19 +217,25 @@ class SparseMatrix(Matrix):
 
         return list_representation
 
-    def transpose(self):
-        t = self.num_rows
-        self._rows = self.num_columns
-        self._col = t
+    def transpose(self) -> Matrix:
+        entries = {}
+        for i, row in self._entries.items():
+            for j, v in row.items():
+                if j not in entries:
+                    entries[j] = {i: v}
+                else:
+                    entries[j][i] = v
+        return SparseMatrix(entries, h=self.num_columns, w=self.num_rows)
 
-        self._entries = {j: {i: v} for i, row in self._entries.items()
-                         for j, v in row.items()}
-
-    def conjugate(self):
+    def conjugate(self) -> Matrix:
+        entries = deepcopy(self._entries)
         for i, row in self._entries.items():
             for j, v in row.items():
                 if isinstance(v, complex):
-                    self._entries[i][j] = v.conjugate()
+                    entries[i][j] = v.conjugate()
+                else:
+                    entries[i][j] = v
+        return SparseMatrix(entries, h=self.num_rows, w=self.num_columns)
 
     def __add__(self, other: Matrix) -> Matrix:
         row_match = self.num_rows == other.num_rows
@@ -297,12 +298,12 @@ class SparseMatrix(Matrix):
     def __str__(self) -> str:
         total_string = ""
 
-        for i in range(self._row):
+        for i in range(self.num_rows):
             row_repr = [
-                f"{self[i][j]:3.3g}" for j in range(self._col)]
+                f"{self[i][j]:3.3g}" for j in range(self.num_columns)]
             total_string += "[" + \
                 ",".join(row_repr) + "]"
             # Don't add newline for last row:
             total_string += (lambda i, N: "\n" if i <
-                             N - 1 else "")(i, self._row)
+                             N - 1 else "")(i, self.num_rows)
         return total_string

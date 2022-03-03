@@ -12,17 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import qcp.tensor_product as tp
-from qcp.matrices import SquareMatrix, SparseMatrix
+from qcp.matrices import DenseMatrix, SparseMatrix
+
+IDENTITY = SparseMatrix.identity(2)
 
 
-def test_tensor_product_square_with_identity():
+def test_tensor_product_dense_with_identity():
 
-    A = SquareMatrix([[1, 2], [3, 4]])
-    ID = SquareMatrix.identity(2)
+    A = DenseMatrix([[1, 2], [3, 4]])
 
-    C = tp.tensor_product(ID, A)
+    C = tp.tensor_product(IDENTITY, A)
 
-    expected = SquareMatrix(
+    expected = DenseMatrix(
         [
             [1, 2, 0, 0],
             [3, 4, 0, 0],
