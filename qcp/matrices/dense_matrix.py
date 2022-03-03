@@ -151,10 +151,3 @@ class DenseMatrix(Matrix):
     def transpose(self) -> Matrix:
         """Create a new Matrix that is the transpose of the current one."""
         return DenseMatrix(self.columns())
-
-    def adjoint(self) -> Matrix:
-        """
-        Shortcut operation to calculate the transpose and conjugate of the
-        current matrix.
-        """
-        return self.transpose().conjugate()

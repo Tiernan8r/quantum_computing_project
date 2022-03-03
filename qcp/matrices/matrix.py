@@ -60,6 +60,13 @@ class Matrix(ABC):
     def conjugate(self) -> Matrix:
         pass
 
+    def adjoint(self) -> Matrix:
+        """
+        Shortcut operation to calculate the transpose and conjugate of the
+        current matrix.
+        """
+        return self.transpose().conjugate()
+
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
         pass
 
