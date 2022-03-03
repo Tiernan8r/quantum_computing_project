@@ -11,18 +11,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from . import Matrix
-from ._types import SCALARS, SCALARS_TYPES, VECTOR, MATRIX
+from src.matrices import Matrix
+from src.matrices._types import MATRIX, VECTOR, SCALARS, SCALARS_TYPES
 from typing import Union
 
 
-class SquareMatrix(Matrix):
+class DenseMatrix(Matrix):
 
     def __init__(self, state: MATRIX):
         assert len(
             state) > 0, "attempting to initialise matrix with no dimensions"
-        assert len(state) == len(
-            state[0]), "attempting to initialise non-square matrix."
+
+        row_widths = [len(row) for row in state]
+        for i in range(len(row_widths)):
+            assert row_widths[0] ==\
+                row_widths[i], "matrix rows must have equal dimension"
 
         self._state = state
 
@@ -32,24 +35,19 @@ class SquareMatrix(Matrix):
         Create the identity matrix with the given dimensions
 
         :param n int: The matrix dimension
-        :raises TypeError: If input dimension is not convertable to int.
         """
-        try:
-            n = int(n)
-        except TypeError:
-            raise
-
+        assert isinstance(n, int), "must provide integer dimension"
         assert n > 0, "Matrix dimension must be positive"
 
         def determine_entry(a, b): return 1 if a == b else 0
-        return SquareMatrix([
+        return DenseMatrix([
             [
                 determine_entry(i, j) for i in range(n)
             ] for j in range(n)
         ])
 
     def __len__(self) -> int:
-        return len(self._state)
+        return self.num_columns
 
     @property
     def num_rows(self) -> int:
@@ -72,12 +70,6 @@ class SquareMatrix(Matrix):
     def get_state(self) -> MATRIX:
         return self._state
 
-    def set_state(self, s: MATRIX):
-        assert s is not None
-        assert len(s) > 0
-        assert len(s) == len(s[0]), "non square matrix state"
-        self._state = s
-
     def rows(self) -> MATRIX:
         """Return the rows of the Matrix."""
         return self.get_state()
@@ -86,8 +78,14 @@ class SquareMatrix(Matrix):
         """Returns the columns of the Matrix"""
         return [
             [self._state[i][j] for i in range(len(self))]
-            for j in range(len(self))
+            for j in range(len(self[0]))
         ]
+
+    @classmethod
+    def zeros(cls, nrow, ncol=1):
+        # Create zero matrix with dimension (nrow,ncol)
+        # Class method used to handle the creation of new object
+        return cls([[0 for _ in range(ncol)] for _ in range(nrow)])
 
     def __iter__(self):
         return iter(self.get_state())
@@ -96,27 +94,27 @@ class SquareMatrix(Matrix):
         assert len(self) == len(other) and len(self[0]) == len(
             other[0]), "Matrix dimensions must be equal for addition"
 
-        current_state = self.get_state().copy()
+        state = self.get_state().copy()
 
         for i in range(len(self)):
             for j in range(len(self[i])):
-                current_state[i][j] += other[i][j]
+                state[i][j] += other[i][j]
 
-        return SquareMatrix(current_state)
+        return DenseMatrix(state)
 
     def __sub__(self, other: Matrix) -> Matrix:
-        return self + (other * -1)
+        return self + (-1 * other)
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
         if isinstance(other, SCALARS_TYPES):
-            current_state = self.get_state().copy()
+            state = self.get_state().copy()
 
-            for i in range(len(current_state)):
-                for j in range(len(current_state[i])):
-                    current_state[i][j] *= other
+            for i in range(len(state)):
+                for j in range(len(state[i])):
+                    state[i][j] *= other
 
-            return SquareMatrix(current_state)
+            return DenseMatrix(state)
 
         elif isinstance(other, Matrix):
             return self._dot(other)
@@ -127,14 +125,14 @@ class SquareMatrix(Matrix):
             0]), "matrices don't match on their row/column dimensions"
 
         n = len(self)
-        current_state: MATRIX = [[0 for _ in range(n)] for _ in range(n)]
+        state: MATRIX = [[0 for _ in range(n)] for _ in range(n)]
 
         for i in range(n):
             for j in range(n):
-                current_state[i][j] = sum(
+                state[i][j] = sum(
                     [self[i][k] * other[k][j] for k in range(n)])
 
-        return SquareMatrix(current_state)
+        return DenseMatrix(state)
 
     def __str__(self) -> str:
         total_string = ""
@@ -144,3 +142,17 @@ class SquareMatrix(Matrix):
                 ",".join([f"{c:3.3g}" for c in self._state[i]]) + "]" + \
                 (lambda i, N: "\n" if i < N - 1 else "")(i, N)
         return total_string
+
+    def conjugate(self) -> Matrix:
+        """Calculate the conjugate of the matrix"""
+        state = self.get_state().copy()
+
+        for i in range(self.num_rows):
+            for j in range(self.num_columns):
+                if isinstance(state[i][j], complex):
+                    state[i][j] = state[i][j].conjugate()
+        return DenseMatrix(state)
+
+    def transpose(self) -> Matrix:
+        """Create a new Matrix that is the transpose of the current one."""
+        return DenseMatrix(self.columns())

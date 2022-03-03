@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from copy import deepcopy
-from io import UnsupportedOperation
 from src.matrices import SparseMatrix
 import pytest
 
@@ -131,14 +130,6 @@ def test_sp_m_get_state():
         0, 0, 3, 0], [0, 0, 0, 4]]
 
 
-def test_sp_m_set_state():
-    one_by_one = deepcopy(TEST_1x1)
-
-    with pytest.raises(UnsupportedOperation) as uo:
-        one_by_one.set_state(None)
-    uo.match("immutable")
-
-
 def test_sp_m_rows():
     assert TEST_1x1.rows() == [[1]]
     assert TEST_2x2.rows() == [[1, 0], [0, 2]]
@@ -154,6 +145,33 @@ def test_sp_m_columns():
 
     A = SparseMatrix([[1, 2, 0], [0, 3, 4], [0, 0, 5]])
     assert A.columns() == [[1, 0, 0], [2, 3, 0], [0, 4, 5]]
+
+
+def test_sp_m_transpose():
+    A = SparseMatrix([[1], [2], [3], [4]])
+    B = SparseMatrix([[1, 2, 3, 4]])
+
+    assert A.transpose().get_state() == B.get_state()
+
+
+def test_sp_m_conjugate():
+    # Non-complex values shoule be unchanged.
+    A = SparseMatrix([[1, 2], [3, 4]])
+    assert A.conjugate().get_state() == A.get_state()
+
+    # complex should be conjugated
+    B = SparseMatrix([[1j, 0], [0, 1j]])
+    C = SparseMatrix([[-1j, 0], [0, -1j]])
+
+    assert B.conjugate().get_state() == C.get_state()
+
+
+def test_d_m_adjoint():
+    # Should be transposed, and conjugated
+    A = SparseMatrix([[1j, 2j], [3j, 4j]])
+    B = SparseMatrix([[-1j, -3j], [-2j, -4j]])
+
+    assert A.adjoint().get_state() == B.get_state()
 
 
 def test_sp_m_add():
@@ -288,6 +306,18 @@ def test_sp_m_mul_dot_product():
 
     C4x4 = SparseMatrix({0: {0: 1}, 1: {1: 4}, 2: {2: 9}, 3: {3: 16}})
     assert (TEST_4x4 * TEST_4x4).get_state() == C4x4.get_state()
+
+
+def test_sp_m_column_mul():
+
+    A = SparseMatrix([[1, 1], [1, -1]])
+    B = SparseMatrix([[1], [0]])
+
+    C = A * B
+
+    expected = SparseMatrix([[1], [1]])
+
+    assert C.get_state() == expected.get_state()
 
 
 def test_sp_m_str():

@@ -11,8 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from matrices.matrix import Matrix  # noqa: F401
-from matrices.square_matrix import SquareMatrix  # noqa: F401
-from matrices.sparse_matrix import SparseMatrix  # noqa: F401
+from src.matrices.matrix import Matrix  # noqa: F401
+from src.matrices.sparse_matrix import SparseMatrix  # noqa: F401
+from src.matrices.dense_matrix import DenseMatrix  # noqa: F401
 
 DefaultMatrix = SparseMatrix

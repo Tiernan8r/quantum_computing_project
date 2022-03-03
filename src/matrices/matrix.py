@@ -14,7 +14,7 @@
 from __future__ import annotations
 from abc import ABC
 from typing import Union
-from ._types import SCALARS, VECTOR, MATRIX
+from src.matrices._types import SCALARS, VECTOR, MATRIX
 
 
 class Matrix(ABC):
@@ -39,13 +39,10 @@ class Matrix(ABC):
     def __getitem__(self, i: int) -> VECTOR:
         pass
 
-    def __setitem__(self, i: int, v: SCALARS):
+    def __setitem__(self, i: int, v: VECTOR):
         pass
 
     def get_state(self) -> MATRIX:
-        pass
-
-    def set_state(self, s: MATRIX):
         pass
 
     def __add__(self, other: Matrix) -> Matrix:
@@ -56,6 +53,19 @@ class Matrix(ABC):
 
     def columns(self) -> MATRIX:
         pass
+
+    def transpose(self) -> Matrix:
+        pass
+
+    def conjugate(self) -> Matrix:
+        pass
+
+    def adjoint(self) -> Matrix:
+        """
+        Shortcut operation to calculate the transpose and conjugate of the
+        current matrix.
+        """
+        return self.transpose().conjugate()
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
         pass
