@@ -48,6 +48,17 @@ class GeneralMatrix(Matrix):
             ] for j in range(n)
         ])
 
+    def __len__(self) -> int:
+        return len(self._state)
+
+    @property
+    def num_rows(self) -> int:
+        return len(self._state[0]) if len(self._state) > 0 else 0
+
+    @property
+    def num_columns(self) -> int:
+        return len(self._state)
+
     def dim(self):
         # Return the dimension of matrix, in (row,col) tuple
         # __len__ cannot return tuple, only integer
