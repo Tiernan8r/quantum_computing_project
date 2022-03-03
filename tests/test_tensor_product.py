@@ -13,7 +13,7 @@
 # limitations under the License.
 import qcp.tensor_product as tp
 from qcp.matrices import DefaultMatrix, DenseMatrix, SparseMatrix
-from qcp.tensor_product import tensor_product
+import tests.test_helpers as h
 
 IDENTITY = SparseMatrix.identity(2)
 
@@ -33,7 +33,7 @@ def test_tensor_product_dense_with_identity():
         ]
     )
 
-    assert C.get_state() == expected.get_state()
+    h.compare_matrices(C, expected)
 
 
 def test_tensor_product_sparse_with_identity():
@@ -177,9 +177,13 @@ def test_tensor_product_non_square():
                           [28, 4, 8, 63, 9, 18, 7, 1, 2],
                           [8, 20, 12, 18, 45, 27, 2, 5, 3]])
 
-    assert tp.tensor_product(mat1_1, mat2_1).get_state() == ans1.get_state()
-    assert tp.tensor_product(mat1_2, mat2_2).get_state() == ans2.get_state()
-    assert tp.tensor_product(mat1_3, mat2_3).get_state() == ans3.get_state()
+    tens1 = tp.tensor_product(mat1_1, mat2_1)
+    tens2 = tp.tensor_product(mat1_2, mat2_2)
+    tens3 = tp.tensor_product(mat1_3, mat2_3)
+
+    h.compare_matrices(tens1, ans1)
+    h.compare_matrices(tens2, ans2)
+    h.compare_matrices(tens3, ans3)
 
 
 def test_tensor_product_square():
@@ -237,13 +241,6 @@ def test_tensor_product_square():
                           [0, 0, 0, 12, 6, 0, 14, 7, 0],
                           [0, 0, 0, 54, 12, 6, 63, 14, 7]])
 
-    assert tp.tensor_product(m1_1, m2_1).get_state() == ans1.get_state()
-    assert tp.tensor_product(m1_2, m2_2).get_state() == ans2.get_state()
-    assert tp.tensor_product(m1_3, m2_3).get_state() == ans3.get_state()
-    assert tp.tensor_product(m1_4, m2_4).get_state() == ans4.get_state()
-    assert tp.tensor_product(m1_5, m2_5).get_state() == ans5.get_state()
-
-
 def test_tensor_product_square_numbers():
 
     ret = True
@@ -257,3 +254,14 @@ def test_tensor_product_square_numbers():
             ret = ret and (tp.tensor_product(Ques, Ques) == Ans)
 
     return ret
+    tens1 = tp.tensor_product(m1_1, m2_1)
+    tens2 = tp.tensor_product(m1_2, m2_2)
+    tens3 = tp.tensor_product(m1_3, m2_3)
+    tens4 = tp.tensor_product(m1_4, m2_4)
+    tens5 = tp.tensor_product(m1_5, m2_5)
+
+    h.compare_matrices(tens1, ans1)
+    h.compare_matrices(tens2, ans2)
+    h.compare_matrices(tens3, ans3)
+    h.compare_matrices(tens4, ans4)
+    h.compare_matrices(tens5, ans5)
