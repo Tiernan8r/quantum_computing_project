@@ -270,3 +270,13 @@ def test_d_m_transpose():
     assert A.transpose().get_state() == B.get_state()
 
 
+def test_d_m_conjugate():
+    # Non-complex values shoule be unchanged.
+    A = DenseMatrix([[1, 2], [3, 4]])
+    assert A.conjugate().get_state() == A.get_state()
+
+    # complex should be conjugated
+    B = DenseMatrix([[1j, 0], [0, 1j]])
+    C = DenseMatrix([[-1j, 0], [0, -1j]])
+
+    assert B.conjugate().get_state() == C.get_state()
