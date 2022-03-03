@@ -140,28 +140,23 @@ class DenseMatrix(Matrix):
                 (lambda i, N: "\n" if i < N - 1 else "")(i, N)
         return total_string
 
-    def conjugate(self):
-        # conjugation of matrix
-        nrow, ncol = self.dim()
-        for i in range(nrow):
-            for j in range(ncol):
-                if isinstance(self.state[i][j], complex):
-                    self.state[i][j] = self.state[i][j].conjugate()
-        return self.state
+    def conjugate(self) -> Matrix:
+        """Calculate the conjugate of the matrix"""
+        state = self.get_state().copy()
 
-    def transpose(self):
-        # transpose of matrix
-        nrow, ncol = self.dim()
-        self.state = \
-            [[self.state[j][i] for i in range(nrow)] for j in range(ncol)]
-        return self
+        for i in range(self.num_rows):
+            for j in range(self.num_columns):
+                if isinstance(state[i][j], complex):
+                    state[i][j] = state[i][j].conjugate()
+        return DenseMatrix(state)
 
-    def adjoint(self):
-        # dagger operation
-        self.transpose()
-        self.conjugate()
-        return self
+    def transpose(self) -> Matrix:
+        """Create a new Matrix that is the transpose of the current one."""
+        return DenseMatrix(self.columns())
 
-    def __repr__(self):
-        # print list instead of object address
-        return (f"{self.state}")
+    def adjoint(self) -> Matrix:
+        """
+        Shortcut operation to calculate the transpose and conjugate of the
+        current matrix.
+        """
+        return self.transpose().conjugate()

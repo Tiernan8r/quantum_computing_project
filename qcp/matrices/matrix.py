@@ -54,6 +54,12 @@ class Matrix(ABC):
     def columns(self) -> MATRIX:
         pass
 
+    def transpose(self) -> Matrix:
+        pass
+
+    def conjugate(self) -> Matrix:
+        pass
+
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
         pass
 
