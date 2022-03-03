@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from qcp.matrices import Matrix, DefaultMatrix
-from qcp.gates import phase_shift
+import qcp.gates as gts
 from qcp.constants import TWO_HADAMARD
 from math import pi, sqrt
 import cmath
@@ -25,10 +25,10 @@ def test_phase_gate():
            DefaultMatrix([[1,0],[0,-1]]), 
            DefaultMatrix([[1,0],[0,-1j]]) ] 
        
-       assert cmath.isclose(phase_shift(0)[1][1], ms[0][1][1])
-       assert cmath.isclose(phase_shift(pi/2)[1][1], ms[1][1][1])
-       assert cmath.isclose(phase_shift(pi)[1][1], ms[2][1][1])
-       assert cmath.isclose(phase_shift(3*pi/2)[1][1], ms[3][1][1])
+       assert cmath.isclose(gts.phase_shift(0)[1][1], ms[0][1][1])
+       assert cmath.isclose(gts.phase_shift(pi/2)[1][1], ms[1][1][1])
+       assert cmath.isclose(gts.phase_shift(pi)[1][1], ms[2][1][1])
+       assert cmath.isclose(gts.phase_shift(3*pi/2)[1][1], ms[3][1][1])
 
 def test_hadamard_gate():
 
@@ -41,15 +41,38 @@ def test_hadamard_gate():
        expected0 = (1/(sqrt(2))) * DefaultMatrix([[1],[1]])
        expected1 = (1/(sqrt(2))) * DefaultMatrix([[1],[-1]])
 
-       print(TWO_HADAMARD)
-       print()
-       print(qubit0)
-       print()
-       print(ans0)
-       print()
-       print(expected0)
+       assert expected0.get_state() == ans0.get_state()
+       assert expected1.get_state() == ans1.get_state()
+
+def test_cnot_gate():
+
+       qubit0 = DefaultMatrix([[1],[0],[0],[0]])
+       qubit1 = DefaultMatrix([[0],[1],[0],[0]])
+       qubit2 = DefaultMatrix([[0],[0],[1],[0]])
+       qubit3 = DefaultMatrix([[0],[0],[0],[1]])
+
+       ans0 = gts.control_x(qubit0)
+       ans1 = gts.control_x(qubit1)
+       ans2 = gts.control_x(qubit2)
+       ans3 = gts.control_x(qubit3)
+
+       expected0 = DefaultMatrix([[1],[0],[0],[0]])
+       expected1 = DefaultMatrix([[0],[0],[0],[1]])
+       expected2 = DefaultMatrix([[0],[1],[0],[0]])
+       expected3 = DefaultMatrix([[0],[0],[1],[0]])
 
        assert expected0.get_state() == ans0.get_state()
        assert expected1.get_state() == ans1.get_state()
+       assert expected2.get_state() == ans2.get_state()
+       assert expected3.get_state() == ans3.get_state()
+
+
+ 
+
+
+
+       
+
+
 
 

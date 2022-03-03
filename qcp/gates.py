@@ -169,4 +169,4 @@ def phase_shift(phi: complex) -> Matrix:
     :param phi: angle the qubit is phase shifted by
     :return: Matrix(complex)
     """
-    return DefaultMatrix([[1, 0], [0, cmath.exp(1j * phi)]])
+    return DefaultMatrix( [[1, 0], [0, cmath.exp(1j * phi)]] )
