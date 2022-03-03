@@ -26,9 +26,6 @@ class DenseMatrix(Matrix):
 
         self._state = state
 
-        self._col = len(state)
-        self._row = len(state[0]) if len(state) > 0 else 0
-
     @staticmethod
     def identity(n: int) -> Matrix:
         """
@@ -51,11 +48,11 @@ class DenseMatrix(Matrix):
 
     @property
     def num_rows(self) -> int:
-        return self._row
+        return len(self._state[0]) if len(self._state) > 0 else 0
 
     @property
     def num_columns(self) -> int:
-        return self._col
+        return len(self._state)
 
     def __getitem__(self, i: int) -> VECTOR:
         assert i < len(self), "index out of range"
