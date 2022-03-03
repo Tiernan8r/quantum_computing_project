@@ -280,3 +280,11 @@ def test_d_m_conjugate():
     C = DenseMatrix([[-1j, 0], [0, -1j]])
 
     assert B.conjugate().get_state() == C.get_state()
+
+
+def test_d_m_adjoint():
+    # Should be transposed, and conjugated
+    A = DenseMatrix([[1j, 2j], [3j, 4j]])
+    B = DenseMatrix([[-1j, -3j], [-2j, -4j]])
+
+    assert A.adjoint().get_state() == B.get_state()
