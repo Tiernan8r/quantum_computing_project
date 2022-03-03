@@ -19,7 +19,12 @@ from typing import Union
 class GeneralMatrix(Matrix):
 
     def __init__(self, state: MATRIX):
-        self.state = state
+        assert len(
+            state) > 0, "attempting to initialise matrix with no dimensions"
+        assert len(state) == len(
+            state[0]), "attempting to initialise non-square matrix."
+
+        self._state = state
 
     def dim(self):
         # Return the dimension of matrix, in (row,col) tuple
