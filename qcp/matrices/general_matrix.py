@@ -125,35 +125,34 @@ class GeneralMatrix(Matrix):
     def columns(self) -> MATRIX:
         pass
 
-    def __mul__(self, other):
-        # Multiplication
-        # If the other input is an integer, multiply directly
-        if isinstance(other, (complex, float, int)):
-            nrow, ncol = self.dim()
-            return Matrix([
-                [
-                    self.state[i][j] * other for i in range(nrow)
-                ] for j in range(ncol)
-            ])
-        # Check if the dimensions of the two matrices are compatible
-        assert self.dim()[1] == other.dim()[
-            0], 'Cannot add matrices with different dimensions'
-        # Product matrix is of (nrow, ncol)
-        nrow = self.dim()[0]
-        ncol = other.dim()[1]
-        n = self.dim()[1]
-        # declare empty matrix
-        mul = Matrix.zeros(nrow, ncol)
-        for i in range(nrow):
-            for j in range(ncol):
-                for k in range(n):
-                    mul[i][j] += self.state[i][k] * other.state[k][j]
-        return mul
+    def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
-# Handle right multiplication, e.g. 5*M
-# Since rmul is not called if two matrices multiply,
-# no need to worry about commutation
-    __rmul__ = __mul__
+        if isinstance(other, SCALARS_TYPES):
+            current_state = self.get_state().copy()
+
+            for i in range(len(current_state)):
+                for j in range(len(current_state[i])):
+                    current_state[i][j] *= other
+
+            return GeneralMatrix(current_state)
+
+        elif isinstance(other, Matrix):
+            return self._dot(other)
+
+    def _dot(self, other: Matrix) -> Matrix:
+        assert len(other) > 0, "taking dot product with empty matrix"
+        assert len(self) == len(other.columns()[
+            0]), "matrices don't match on their row/column dimensions"
+
+        n = len(self)
+        current_state: MATRIX = [[0 for _ in range(n)] for _ in range(n)]
+
+        for i in range(n):
+            for j in range(n):
+                current_state[i][j] = sum(
+                    [self[i][k] * other[k][j] for k in range(n)])
+
+        return GeneralMatrix(current_state)
 
     def __str__(self) -> str:
         pass
