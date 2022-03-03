@@ -13,6 +13,6 @@
 # limitations under the License.
 from matrices.matrix import Matrix  # noqa: F401
 from matrices.sparse_matrix import SparseMatrix  # noqa: F401
-from matrices.general_matrix import GeneralMatrix  # noqa: F401
+from qcp.matrices.dense_matrix import DenseMatrix  # noqa: F401
 
 DefaultMatrix = SparseMatrix

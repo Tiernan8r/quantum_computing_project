@@ -16,7 +16,7 @@ from ._types import MATRIX, VECTOR, SCALARS, SCALARS_TYPES
 from typing import Union
 
 
-class GeneralMatrix(Matrix):
+class DenseMatrix(Matrix):
 
     def __init__(self, state: MATRIX):
         assert len(
@@ -42,7 +42,7 @@ class GeneralMatrix(Matrix):
         assert n > 0, "Matrix dimension must be positive"
 
         def determine_entry(a, b): return 1 if a == b else 0
-        return GeneralMatrix([
+        return DenseMatrix([
             [
                 determine_entry(i, j) for i in range(n)
             ] for j in range(n)
@@ -117,7 +117,7 @@ class GeneralMatrix(Matrix):
             for j in range(len(self[i])):
                 current_state[i][j] += other[i][j]
 
-        return GeneralMatrix(current_state)
+        return DenseMatrix(current_state)
 
     def __sub__(self, other: Matrix) -> Matrix:
         return self + (other * -1)
@@ -134,7 +134,7 @@ class GeneralMatrix(Matrix):
                 for j in range(len(current_state[i])):
                     current_state[i][j] *= other
 
-            return GeneralMatrix(current_state)
+            return DenseMatrix(current_state)
 
         elif isinstance(other, Matrix):
             return self._dot(other)
@@ -152,7 +152,7 @@ class GeneralMatrix(Matrix):
                 current_state[i][j] = sum(
                     [self[i][k] * other[k][j] for k in range(n)])
 
-        return GeneralMatrix(current_state)
+        return DenseMatrix(current_state)
 
     def __str__(self) -> str:
         total_string = ""
