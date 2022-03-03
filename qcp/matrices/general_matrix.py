@@ -104,24 +104,24 @@ class GeneralMatrix(Matrix):
         # Class method used to handle the creation of new object
         return cls([[0 for _ in range(nrow)] for _ in range(ncol)])
 
-    def __add__(self, other: Matrix, sign=1) -> Matrix:
-        # Addition between two matrices with same dimension
-        assert(isinstance(other, type(self)))
-        assert self.dim() == other.dim(), \
-            'Cannot add matrices with different dimensions'
-        nrow, ncol = self.dim()
-        sum = self
-        for i in range(nrow):
-            for j in range(ncol):
-                sum[i][j] = self.state[i][j] + sign * other.state[i][j]
-        return sum
     def __iter__(self):
         return iter(self.get_state())
 
+    def __add__(self, other: Matrix) -> Matrix:
+        assert len(self) == len(other) and len(self[0]) == len(
+            other[0]), "Matrix dimensions must be equal for addition"
+
+        current_state = self.get_state().copy()
 
     def __sub__(self, other: Matrix):
         # Take advantage of addition method
         return self.__add__(other, -1)
+        for i in range(len(self)):
+            for j in range(len(self[i])):
+                current_state[i][j] += other[i][j]
+
+        return GeneralMatrix(current_state)
+
 
     def columns(self) -> MATRIX:
         pass
