@@ -91,13 +91,13 @@ class DenseMatrix(Matrix):
         assert len(self) == len(other) and len(self[0]) == len(
             other[0]), "Matrix dimensions must be equal for addition"
 
-        current_state = self.get_state().copy()
+        state = self.get_state().copy()
 
         for i in range(len(self)):
             for j in range(len(self[i])):
-                current_state[i][j] += other[i][j]
+                state[i][j] += other[i][j]
 
-        return DenseMatrix(current_state)
+        return DenseMatrix(state)
 
     def __sub__(self, other: Matrix) -> Matrix:
         return self + (-1 * other)
@@ -105,13 +105,13 @@ class DenseMatrix(Matrix):
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
         if isinstance(other, SCALARS_TYPES):
-            current_state = self.get_state().copy()
+            state = self.get_state().copy()
 
-            for i in range(len(current_state)):
-                for j in range(len(current_state[i])):
-                    current_state[i][j] *= other
+            for i in range(len(state)):
+                for j in range(len(state[i])):
+                    state[i][j] *= other
 
-            return DenseMatrix(current_state)
+            return DenseMatrix(state)
 
         elif isinstance(other, Matrix):
             return self._dot(other)
@@ -122,14 +122,14 @@ class DenseMatrix(Matrix):
             0]), "matrices don't match on their row/column dimensions"
 
         n = len(self)
-        current_state: MATRIX = [[0 for _ in range(n)] for _ in range(n)]
+        state: MATRIX = [[0 for _ in range(n)] for _ in range(n)]
 
         for i in range(n):
             for j in range(n):
-                current_state[i][j] = sum(
+                state[i][j] = sum(
                     [self[i][k] * other[k][j] for k in range(n)])
 
-        return DenseMatrix(current_state)
+        return DenseMatrix(state)
 
     def __str__(self) -> str:
         total_string = ""
