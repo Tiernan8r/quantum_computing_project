@@ -101,11 +101,11 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-z gate with
      given controls and target
-    :param size: total number of qubits in circuit ->
-    :param controls: List of control qubits -> List[int]
-    :param target: target qubit the z gate will be
-                    applied to -> int
-    :return: Matrix(int)
+    :param size int: total number of qubits in circuit
+    :param controls List[int]: List of control qubits
+    :param target int: target qubit the z gate will be
+                    applied to
+    :return Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
