@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from src.matrices import Matrix, DefaultMatrix
-from src.matrices._types import MATRIX
+from matrices.types import MATRIX
 import cmath
 
 

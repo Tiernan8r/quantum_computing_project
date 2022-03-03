@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from src.matrices import Matrix
-from src.matrices._types import MATRIX, VECTOR, SCALARS, SCALARS_TYPES
+from src.matrices.types import MATRIX, VECTOR, SCALARS, SCALARS_TYPES
 from typing import Union
 
 

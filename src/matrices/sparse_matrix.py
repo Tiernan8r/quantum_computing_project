@@ -15,7 +15,7 @@ from __future__ import annotations
 import cmath
 from copy import deepcopy
 from src.matrices import Matrix
-from src.matrices._types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
+from src.matrices.types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
 from typing import Dict, List, Union
 
 
