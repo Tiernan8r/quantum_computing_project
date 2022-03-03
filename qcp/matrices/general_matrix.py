@@ -87,6 +87,16 @@ class GeneralMatrix(Matrix):
         assert len(s) == len(s[0]), "non square matrix state"
         self._state = s
 
+    def rows(self) -> MATRIX:
+        """Return the rows of the Matrix."""
+        return self.get_state()
+
+    def columns(self) -> MATRIX:
+        """Returns the columns of the Matrix"""
+        return [
+            [self._state[i][j] for i in range(len(self))]
+            for j in range(len(self))
+        ]
 
     @classmethod
     def zeros(cls, nrow, ncol=1):
