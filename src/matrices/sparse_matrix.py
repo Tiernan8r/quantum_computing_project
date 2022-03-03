@@ -15,7 +15,7 @@ from __future__ import annotations
 import cmath
 from copy import deepcopy
 from src.matrices import Matrix
-from src.matrices.types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
+from src.matrices.types import SCALARS, SCALARS_T, SPARSE, MATRIX
 from typing import Dict, List, Union
 
 
@@ -260,7 +260,7 @@ class SparseMatrix(Matrix):
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
-        if isinstance(other, SCALARS_TYPES):
+        if isinstance(other, SCALARS_T):
             for i, row in self._entries.items():
                 for j in row.keys():
                     self._entries[i][j] *= other

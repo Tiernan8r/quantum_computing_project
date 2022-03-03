@@ -15,7 +15,7 @@ from src.matrices.matrix import Matrix  # noqa: F401
 from src.matrices.sparse_matrix import SparseMatrix  # noqa: F401
 from src.matrices.dense_matrix import DenseMatrix  # noqa: F401
 
-from src.matrices.types import SCALARS, SCALARS_TYPES, \
+from src.matrices.types import SCALARS, SCALARS_T, \
     VECTOR, MATRIX, SPARSE  # noqa: F401
 
 DefaultMatrix = SparseMatrix
