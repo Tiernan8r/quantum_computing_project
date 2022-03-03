@@ -69,8 +69,8 @@ class GeneralMatrix(Matrix):
             return (len(self.state), len(self.state[0]))
 
     def __getitem__(self, i: int) -> VECTOR:
-        # TODO after discussion
-        pass
+        assert i < len(self), "index out of range"
+        return self._state[i]
 
     def __setitem__(self, i: int, v: SCALARS):
         # TODO after discussion
