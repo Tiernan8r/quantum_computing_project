@@ -214,19 +214,21 @@ class SparseMatrix(Matrix):
 
         return list_representation
 
-    def transpose(self):
+    def transpose(self) -> Matrix:
         t = self.num_rows
         self._rows = self.num_columns
         self._col = t
 
         self._entries = {j: {i: v} for i, row in self._entries.items()
                          for j, v in row.items()}
+        return self
 
-    def conjugate(self):
+    def conjugate(self) -> Matrix:
         for i, row in self._entries.items():
             for j, v in row.items():
                 if isinstance(v, complex):
                     self._entries[i][j] = v.conjugate()
+        return self
 
     def __add__(self, other: Matrix) -> Matrix:
         row_match = self.num_rows == other.num_rows
