@@ -107,6 +107,16 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
                     applied to -> int
     :return: Matrix(int)
     """
+    assert size > 1, "need minimum of two qubits"
+    n = 2 ** size
+    assert isinstance(controls, list)
+    for con in controls:
+        assert con < n, "control bit out of range"
+    assert len(controls) <= n, "too many control bits provided."
+
+    assert target not in \
+        controls, "control bits and target bit cannot be the same"
+
     m = []
 
     for i in range(0, 2 ** size):
