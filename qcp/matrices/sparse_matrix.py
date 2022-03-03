@@ -215,13 +215,14 @@ class SparseMatrix(Matrix):
         return list_representation
 
     def transpose(self) -> Matrix:
-        t = self.num_rows
-        self._rows = self.num_columns
-        self._col = t
-
-        self._entries = {j: {i: v} for i, row in self._entries.items()
-                         for j, v in row.items()}
-        return self
+        entries = {}
+        for i, row in self._entries.items():
+            for j, v in row.items():
+                if j not in entries:
+                    entries[j] = {i: v}
+                else:
+                    entries[j][i] = v
+        return SparseMatrix(entries, h=self.num_columns, w=self.num_rows)
 
     def conjugate(self) -> Matrix:
         for i, row in self._entries.items():
