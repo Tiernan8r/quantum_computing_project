@@ -57,15 +57,6 @@ class DenseMatrix(Matrix):
     def num_columns(self) -> int:
         return self._col
 
-    def dim(self):
-        # Return the dimension of matrix, in (row,col) tuple
-        # __len__ cannot return tuple, only integer
-        assert not len(self.state) == 0, "Matrix cannot be empty!"
-        if not isinstance(self.state[0], list):
-            return (len(self.state), 1)
-        else:
-            return (len(self.state), len(self.state[0]))
-
     def __getitem__(self, i: int) -> VECTOR:
         assert i < len(self), "index out of range"
         return self._state[i]
