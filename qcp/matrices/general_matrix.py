@@ -113,15 +113,14 @@ class GeneralMatrix(Matrix):
 
         current_state = self.get_state().copy()
 
-    def __sub__(self, other: Matrix):
-        # Take advantage of addition method
-        return self.__add__(other, -1)
         for i in range(len(self)):
             for j in range(len(self[i])):
                 current_state[i][j] += other[i][j]
 
         return GeneralMatrix(current_state)
 
+    def __sub__(self, other: Matrix) -> Matrix:
+        return self + (other * -1)
 
     def columns(self) -> MATRIX:
         pass
