@@ -92,6 +92,15 @@ def test_control_z():
         gts.control_z(2, [0], 0)
     assert ae4.match("control bits and target bit cannot be the same")
 
+    cz_4x4 = gts.control_z(2, [0], 1)
+    expected_4x4 = SparseMatrix([
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, -1]
+    ])
+    assert cz_4x4.get_state() == expected_4x4.get_state()
+
 
 def test_control_phase():
     pass
