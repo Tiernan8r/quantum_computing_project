@@ -100,7 +100,7 @@ class DenseMatrix(Matrix):
         return DenseMatrix(current_state)
 
     def __sub__(self, other: Matrix) -> Matrix:
-        return self + (other * -1)
+        return self + (-1 * other)
 
     def columns(self) -> MATRIX:
         pass
