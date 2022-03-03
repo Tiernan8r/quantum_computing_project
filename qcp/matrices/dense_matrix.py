@@ -21,8 +21,6 @@ class DenseMatrix(Matrix):
     def __init__(self, state: MATRIX):
         assert len(
             state) > 0, "attempting to initialise matrix with no dimensions"
-        assert len(state) == len(
-            state[0]), "attempting to initialise non-square matrix."
 
         self._state = state
 
