@@ -14,6 +14,7 @@
 from qcp.matrices import Matrix
 import cmath
 
+
 def compare_matrices(A: Matrix, B: Matrix, e=1E-9):
     assert A.num_rows == B.num_rows
     assert A.num_columns == B.num_columns
