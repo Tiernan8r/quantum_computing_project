@@ -65,9 +65,10 @@ def test_tensor_product_non_square():
 
 
 def test_tensor_product_square():
-    # M1 and M2 Define matrices that were choosen at random to test the tensor product function,and (tensor_product(transpose(M1[n]),transpose(M2[n])) == transpose(Ans[n]))
-    # each M1 matrix has the operation applied to the corresponding M2 matrix
-    # the result of the tensor product function is then compared with the seperatly calculated answer key stored in Ans
+    # M1 and M2 Define matrices that were choosen at random to test the tensor
+    # product function each M1 matrix has the operation applied to the
+    # corresponding M2 matrix the result of the tensor product function is then
+    # compared with the seperatly calculated answer key stored in Ans
     m1_1 = DefaultMatrix([[2, 3],
                           [5, 3]])
     m1_2 = DefaultMatrix([[6, 5],
@@ -75,7 +76,7 @@ def test_tensor_product_square():
     m1_3 = DefaultMatrix([[3.6, 9.8],
                           [2.1, 5.3]])
     m1_4 = DefaultMatrix([[7.6, 8.0],
-                          [complex(3, 2), 2.4]])
+                          [3+2j, 2.4]])
     m1_5 = DefaultMatrix([[4, 6, 9],
                           [0, 1, 0],
                           [0, 6, 7]])
@@ -86,10 +87,8 @@ def test_tensor_product_square():
                           [3, 7]])
     m2_3 = DefaultMatrix([[7.6, 8.0],
                           [9.9, 2.4]])
-    m2_4 = DefaultMatrix(
-        [[complex(1, 1), 9.8],
-         [2.1, complex(0, 2)]])
-
+    m2_4 = DefaultMatrix([[1+1j, 9.8],
+                          [2.1, 2j]])
     m2_5 = DefaultMatrix([[5, 7, 8],
                           [2, 1, 0],
                           [9, 2, 1]])
@@ -98,23 +97,18 @@ def test_tensor_product_square():
                           [6, 8, 9, 12],
                           [20, 30, 12, 18],
                           [15, 20, 9, 12]])
-    ans2 = DefaultMatrix(
-        [[24, 54, 20, 45],
-         [18, 42, 15, 35],
-         [12, 27, 4, 9],
-         [9, 21, 3, 7]])
-    ans3 = DefaultMatrix(
-        [[27.36, 28.8, 74.48, 78.4],
-         [35.64, 8.64, 97.02, 23.52],
-         [15.96, 16.8, 40.28, 42.4],
-         [20.79, 5.04, 52.47, 12.72]])
-
-    ans4 = DefaultMatrix([[complex(7.6, 7.6), complex(8, 8), 74.48, 78.4],
-                          [complex(1, 5), complex(2.4, 2.4),
-                           complex(29.4, 19.6), 23.52],
-                          [15.96, 16.8, complex(0, 15.2), complex(0, 16)],
-                          [complex(6.3, 4.2), 5.04, complex(-4, 6), complex(0, 4.8)]])
-
+    ans2 = DefaultMatrix([[24, 54, 20, 45],
+                          [18, 42, 15, 35],
+                          [12, 27, 4, 9],
+                          [9, 21, 3, 7]])
+    ans3 = DefaultMatrix([[27.36, 28.8, 74.48, 78.4],
+                          [35.64, 8.64, 97.02, 23.52],
+                          [15.96, 16.8, 40.28, 42.4],
+                          [20.79, 5.04, 52.47, 12.72]])
+    ans4 = DefaultMatrix([[7.6+7.6j, 8+8j, 74.48, 78.4],
+                          [1+5j, 2.4+2.4j, 29.4+19.6j, 23.52],
+                          [15.96, 16.8, 15.2j, 16j],
+                          [6.3+4.2j, 5.04, -4+6j, 4.8j]])
     ans5 = DefaultMatrix([[20, 28, 32, 30, 42, 48, 45, 63, 72],
                           [8, 4, 0, 12, 6, 0, 18, 9, 0],
                           [36, 8, 4, 54, 12, 6, 81, 18, 9],
