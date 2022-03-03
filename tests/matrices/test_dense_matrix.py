@@ -18,10 +18,10 @@ import pytest
 
 TEST_1x1 = DenseMatrix([[1]])
 TEST_2x2 = DenseMatrix([[1, 2],
-                         [3, 4]])
+                        [3, 4]])
 TEST_3x3 = DenseMatrix([[1, 2, 3],
-                         [4, 5, 6],
-                         [7, 8, 9]])
+                        [4, 5, 6],
+                        [7, 8, 9]])
 
 
 def test_d_m_identity():
@@ -102,22 +102,6 @@ def test_d_m_set_item():
 def test_d_m_get_state():
     assert TEST_1x1.get_state() == [[1]]
     assert TEST_2x2.get_state() == [[1, 2], [3, 4]]
-
-
-def test_d_m_set_state():
-    one_by_one = deepcopy(TEST_1x1)
-
-    with pytest.raises(AssertionError):
-        one_by_one.set_state(None)
-    with pytest.raises(AssertionError):
-        one_by_one.set_state([])
-
-    with pytest.raises(AssertionError) as ae3:
-        one_by_one.set_state([[1], [2, 3]])
-    assert ae3.match("non square matrix")
-
-    one_by_one.set_state([[1, 2], [3, 4]])
-    assert one_by_one.get_state() == [[1, 2], [3, 4]]
 
 
 def test_d_m_rows():
