@@ -115,6 +115,9 @@ class GeneralMatrix(Matrix):
             for j in range(ncol):
                 sum[i][j] = self.state[i][j] + sign * other.state[i][j]
         return sum
+    def __iter__(self):
+        return iter(self.get_state())
+
 
     def __sub__(self, other: Matrix):
         # Take advantage of addition method
