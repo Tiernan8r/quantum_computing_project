@@ -15,19 +15,13 @@ import qcp.tensor_product as tp
 from qcp.matrices import DefaultMatrix
 import tests.test_helpers as h
 
-IDENTITY = DefaultMatrix.identity(2)
-
-
-def transpose(m):
-    ret = [[m[j][i] for j in range(len(m))] for i in range(len(m[0]))]
-    return ret
-
 
 def test_tensor_product_with_identity():
 
     A = DefaultMatrix([[1, 2], [3, 4]])
+    id = DefaultMatrix.identity(2)
 
-    C = tp.tensor_product(IDENTITY, A)
+    C = tp.tensor_product(id, A)
 
     expected = DefaultMatrix(
         [
@@ -124,19 +118,6 @@ def test_tensor_product_square():
                           [0, 0, 0, 12, 6, 0, 14, 7, 0],
                           [0, 0, 0, 54, 12, 6, 63, 14, 7]])
 
-def test_tensor_product_square_numbers():
-
-    ret = True
-
-    # Tests Square matrices that have a definiative and easliy computable answer
-    # this allows for more tests with fewer numbers stored on larger matrices
-    for size in range(0, 10):
-        for index in range(0, 10):
-            Ques = [[index] * size]*size
-            Ans = [[index**2]*(size**2)]*(size**2)
-            ret = ret and (tp.tensor_product(Ques, Ques) == Ans)
-
-    return ret
     tens1 = tp.tensor_product(m1_1, m2_1)
     tens2 = tp.tensor_product(m1_2, m2_2)
     tens3 = tp.tensor_product(m1_3, m2_3)
