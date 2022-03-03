@@ -73,22 +73,23 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
     assert isinstance(controls, list)
-    for c in controls:
-        assert c < n, "control bit out of range"
+    for con in controls:
+        assert con < n, "control bit out of range"
     assert len(controls) <= n, "too many control bits provided."
 
-    assert target not in controls, "control bits and target bit cannot be the same"
+    assert target not in \
+        controls, "control bits and target bit cannot be the same"
 
     m = {}
-    c = sum(2**c for c in controls)
-    dif = size - c.bit_length()
-    c <<= dif
+    mask = sum(2**c for c in controls)
+    dif = size - mask.bit_length()
+    mask <<= dif
 
     for i in range(0, n):
-        con = i & c
+        condition = i & mask
 
         x = i
-        if (con >> dif) % 2:
+        if (condition >> dif) % 2:
             x = i ^ (1 << (target - 1))
 
         m[i] = {x: 1}
