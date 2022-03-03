@@ -59,8 +59,6 @@ def test_control_x():
     assert transformed_qbits.get_state() == expected_2_qbits.get_state()
 
     cx_8x8 = gts.control_x(3, [1], 3)
-    print(cx_8x8)
-    print()
     # | 000 >
     three_qbits = SparseMatrix({
         0: {0: 1}, 1: {}, 2: {}, 3: {},
