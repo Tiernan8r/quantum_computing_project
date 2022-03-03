@@ -261,3 +261,12 @@ def test_d_m_str():
 
     expected3x3 = "[  1,  2,  3]\n[  4,  5,  6]\n[  7,  8,  9]"
     assert str(TEST_3x3) == expected3x3
+
+
+def test_d_m_transpose():
+    A = DenseMatrix([[1], [2], [3], [4]])
+    B = DenseMatrix([[1, 2, 3, 4]])
+
+    assert A.transpose().get_state() == B.get_state()
+
+
