@@ -14,7 +14,7 @@
 from __future__ import annotations
 from abc import ABC
 from typing import Union
-from ._types import SCALARS, VECTOR, MATRIX
+from qcp.matrices._types import SCALARS, VECTOR, MATRIX
 
 
 class Matrix(ABC):

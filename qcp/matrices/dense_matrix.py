@@ -11,8 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from . import Matrix
-from ._types import MATRIX, VECTOR, SCALARS, SCALARS_TYPES
+from qcp.matrices import Matrix
+from qcp.matrices._types import MATRIX, VECTOR, SCALARS, SCALARS_TYPES
 from typing import Union
 
 

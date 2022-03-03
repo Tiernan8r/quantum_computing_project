@@ -13,9 +13,8 @@
 # limitations under the License.
 from __future__ import annotations
 import cmath
-from io import UnsupportedOperation
-from . import Matrix
-from ._types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
+from qcp.matrices import Matrix
+from qcp.matrices._types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
 from typing import Dict, List, Union
 
 
