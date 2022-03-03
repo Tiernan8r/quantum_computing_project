@@ -18,7 +18,7 @@ def compare_matrices(A: Matrix, B: Matrix, e=1E-9):
     assert A.num_rows == B.num_rows
     assert A.num_columns == B.num_columns
 
-    for i in range(A.num_columns):
-        for j in range(A.num_rows):
+    for i in range(A.num_rows):
+        for j in range(A.num_columns):
 
             assert cmath.isclose(A[i][j], B[i][j], rel_tol=e)
