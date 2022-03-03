@@ -14,6 +14,7 @@
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix
 import constants as c
+from qcp.matrices.types import SPARSE
 from tensor_product import tensor_product
 from typing import List
 
@@ -50,7 +51,7 @@ def multi_gate(size: int, targets: List[int], gate: str, phi=complex(0)) \
     else:
         return c.IDENTITY
 
-    m = DefaultMatrix([1])
+    m = DefaultMatrix([[1]])
     t = [x - 1 for x in targets]
 
     for i in range(size):
@@ -80,7 +81,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     assert target not in \
         controls, "control bits and target bit cannot be the same"
 
-    m = {}
+    m: SPARSE = {}
     mask = sum(2**c for c in controls)
     dif = size - mask.bit_length()
     mask <<= dif
@@ -93,8 +94,8 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
             x = i ^ (1 << (target - 1))
 
         m[i] = {x: 1}
-    x = DefaultMatrix(m, h=n, w=n)
-    return x
+
+    return DefaultMatrix(m, h=n, w=n)
 
 
 def control_z(size: int, controls: List[int], target: int) -> Matrix:
@@ -117,7 +118,7 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     assert target not in \
         controls, "control bits and target bit cannot be the same"
 
-    m = {}
+    m: SPARSE = {}
     n = 2**size
 
     for i in range(0, n):
@@ -130,8 +131,8 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
         if all(conditions) and binary[-target] == "1":
             val = -1
         m[i] = {i: val}
-    z = DefaultMatrix(m, h=n, w=n)
-    return z
+
+    return DefaultMatrix(m, h=n, w=n)
 
 
 def control_phase(size: int, controls: List[int], target: int,

@@ -37,7 +37,7 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     column_width = n * q
 
     # creates an (m*p)*(n*q) list for the answer matrix
-    entries = [
+    entries: MATRIX = [
         [0.0 for _ in range(column_width)] for _ in range(row_width)
     ]
     if row_width == 1:
@@ -97,6 +97,3 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
             entries[i][j] = val
 
     return DefaultMatrix(entries)
-
-
-print(tensor_product(TWO_HADAMARD, IDENTITY))
