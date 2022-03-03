@@ -24,7 +24,8 @@ class DenseMatrix(Matrix):
 
         row_widths = [len(row) for row in state]
         for i in range(len(row_widths)):
-            assert row_widths[0] == row_widths[i], "matrix rows must have equal dimension"
+            assert row_widths[0] ==\
+                row_widths[i], "matrix rows must have equal dimension"
 
         self._state = state
 

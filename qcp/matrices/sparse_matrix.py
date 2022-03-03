@@ -15,7 +15,7 @@ from __future__ import annotations
 import cmath
 from copy import deepcopy
 from qcp.matrices import Matrix
-from qcp.matrices._types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX
+from qcp.matrices._types import SCALARS, SCALARS_TYPES, SPARSE, MATRIX, VECTOR
 from typing import Dict, List, Union
 
 
@@ -155,7 +155,7 @@ class SparseMatrix(Matrix):
     def __len__(self) -> int:
         return self._row
 
-    def _get_row(self, i: int) -> SparseVector:
+    def _get_row(self, i: int) -> SparseVector:  # type: ignore[override]
         assert i < len(self), "index out of range"
 
         entry = {}
@@ -164,11 +164,11 @@ class SparseMatrix(Matrix):
 
         return SparseVector(entry, self.num_columns)
 
-    def __getitem__(self, i: int) -> SparseVector:
+    def __getitem__(self, i: int) -> SparseVector:  # type: ignore[override]
         assert i < len(self), "index out of range"
         return self._get_row(i)
 
-    def __setitem__(self, i: int, v:
+    def __setitem__(self, i: int, v:  # type: ignore[override]
                     Union[SparseVector, List[SCALARS], Dict[int, SCALARS]]
                     ):
         assert i < len(self), "index out of range"
@@ -184,7 +184,7 @@ class SparseMatrix(Matrix):
 
         self._entries[i] = sv._entries
 
-    def _as_list(self) -> Matrix:
+    def _as_list(self) -> MATRIX:
         list_representation: MATRIX = [
             [0 for _ in range(self.num_columns)] for _ in range(self.num_rows)
         ]

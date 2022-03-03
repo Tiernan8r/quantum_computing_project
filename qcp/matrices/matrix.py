@@ -39,7 +39,7 @@ class Matrix(ABC):
     def __getitem__(self, i: int) -> VECTOR:
         pass
 
-    def __setitem__(self, i: int, v: SCALARS):
+    def __setitem__(self, i: int, v: VECTOR):
         pass
 
     def get_state(self) -> MATRIX:

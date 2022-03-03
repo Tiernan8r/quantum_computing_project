@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from copy import deepcopy
-from io import UnsupportedOperation
 from qcp.matrices import SparseMatrix
 import pytest
 
