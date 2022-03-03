@@ -131,14 +131,6 @@ def test_sp_m_get_state():
         0, 0, 3, 0], [0, 0, 0, 4]]
 
 
-def test_sp_m_set_state():
-    one_by_one = deepcopy(TEST_1x1)
-
-    with pytest.raises(UnsupportedOperation) as uo:
-        one_by_one.set_state(None)
-    uo.match("immutable")
-
-
 def test_sp_m_rows():
     assert TEST_1x1.rows() == [[1]]
     assert TEST_2x2.rows() == [[1, 0], [0, 2]]
