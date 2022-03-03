@@ -75,7 +75,7 @@ class DenseMatrix(Matrix):
         """Returns the columns of the Matrix"""
         return [
             [self._state[i][j] for i in range(len(self))]
-            for j in range(len(self))
+            for j in range(len(self[0]))
         ]
 
     @classmethod
@@ -101,9 +101,6 @@ class DenseMatrix(Matrix):
 
     def __sub__(self, other: Matrix) -> Matrix:
         return self + (-1 * other)
-
-    def columns(self) -> MATRIX:
-        pass
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
