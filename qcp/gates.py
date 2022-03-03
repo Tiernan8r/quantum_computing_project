@@ -124,15 +124,11 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
         f = '0' + str(size) + 'b'
         binary = list(format(i, f))
 
-        row = _zeros_list(2 ** size)
         conditions = [binary[-j] == "1" for j in controls]
 
         val = 1
         if all(conditions) and binary[-target] == "1":
-            row[i] = -1
             val = -1
-        else:
-            row[i] = 1
         m[i] = {i: val}
     z = DefaultMatrix(m, h=n, w=n)
     return z
