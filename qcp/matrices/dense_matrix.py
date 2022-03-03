@@ -80,7 +80,7 @@ class DenseMatrix(Matrix):
     def zeros(cls, nrow, ncol=1):
         # Create zero matrix with dimension (nrow,ncol)
         # Class method used to handle the creation of new object
-        return cls([[0 for _ in range(nrow)] for _ in range(ncol)])
+        return cls([[0 for _ in range(ncol)] for _ in range(nrow)])
 
     def __iter__(self):
         return iter(self.get_state())

@@ -104,6 +104,13 @@ def test_d_m_get_state():
     assert TEST_2x2.get_state() == [[1, 2], [3, 4]]
 
 
+def test_d_m_zeros():
+    A = DenseMatrix.zeros(2, 3)
+    expected = DenseMatrix([[0 for _ in range(3)] for _ in range(2)])
+
+    assert A.get_state() == expected.get_state()
+
+
 def test_d_m_rows():
     assert TEST_1x1.rows() == [[1]]
     assert TEST_2x2.rows() == [[1, 2], [3, 4]]
