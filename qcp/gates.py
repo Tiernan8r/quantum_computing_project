@@ -80,47 +80,16 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     assert target not in controls, "control bits and target bit cannot be the same"
 
     m = {}
-    # c = 1
-    # for a in controls:
-    #     c &= a
     c = sum(2**c for c in controls)
     dif = size - c.bit_length()
     c <<= dif
-    # tmp1 = bin(c)
-    # # reverse the bit mask:
-    # rev = 0
-    # while n > 0:
-    #     rev <<= 1
-    #     if n & 1 == 1:
-    #         rev ^= 1
-    #     n >>= 1
-    # c = rev
-    # # c >>= (size - c.bit_length())
-    # tmp2 = bin(c)
-    # # fs = f"0{size}b"
-    # # c = format(c, fs)
-    # # c = c[:-2:-1]
-    # # c = int(c, base=2)
 
     for i in range(0, n):
-        f = f'0{size}b'
-        binary = list(format(i, f))
-
-        conditions = [binary[-j] == "1" for j in controls]
         con = i & c
 
-        a = all(conditions)
-        b = (con >> dif) % 2
         x = i
-        if b:
+        if (con >> dif) % 2:
             x = i ^ (1 << (target - 1))
-            if binary[-target] == "0":
-                binary[-target] = "1"
-            else:
-                binary[-target] = "0"
-
-        num = "".join(binary)
-        number = int(num, base=2)
 
         m[i] = {x: 1}
     x = DefaultMatrix(m, h=n, w=n)
