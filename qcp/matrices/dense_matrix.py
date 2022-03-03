@@ -26,6 +26,9 @@ class DenseMatrix(Matrix):
 
         self._state = state
 
+        self._col = len(state)
+        self._row = len(state[0]) if len(state) > 0 else 0
+
     @staticmethod
     def identity(n: int) -> Matrix:
         """
@@ -49,15 +52,15 @@ class DenseMatrix(Matrix):
         ])
 
     def __len__(self) -> int:
-        return len(self._state)
+        return self.num_columns
 
     @property
     def num_rows(self) -> int:
-        return len(self._state[0]) if len(self._state) > 0 else 0
+        return self._row
 
     @property
     def num_columns(self) -> int:
-        return len(self._state)
+        return self._col
 
     def dim(self):
         # Return the dimension of matrix, in (row,col) tuple
