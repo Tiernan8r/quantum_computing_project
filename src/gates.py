@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import cmath
-from matrices import Matrix, DefaultMatrix
-import constants as c
-from tensor_product import tensor_product
+from src.matrices import Matrix, DefaultMatrix
+import src.constants as c
+from src.tensor_product import tensor_product
 from typing import List
 
 
