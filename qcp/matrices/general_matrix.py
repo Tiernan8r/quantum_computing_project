@@ -79,8 +79,7 @@ class GeneralMatrix(Matrix):
         self._state[i] = v
 
     def get_state(self) -> MATRIX:
-        # Ignored, not sure what is this intended for
-        return self.state
+        return self._state
 
     def set_state(self, s: MATRIX):
         # Ignored, not sure what is this intended for
