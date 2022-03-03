@@ -186,54 +186,54 @@ def test_tensor_product_square():
     # M1 and M2 Define matrices that were choosen at random to test the tensor product function,and (tensor_product(transpose(M1[n]),transpose(M2[n])) == transpose(Ans[n]))
     # each M1 matrix has the operation applied to the corresponding M2 matrix
     # the result of the tensor product function is then compared with the seperatly calculated answer key stored in Ans
-    M1_1 = DefaultMatrix([[2, 3],
+    m1_1 = DefaultMatrix([[2, 3],
                           [5, 3]])
-    M1_2 = DefaultMatrix([[6, 5],
+    m1_2 = DefaultMatrix([[6, 5],
                           [3, 1]])
-    M1_3 = DefaultMatrix([[3.6, 9.8],
+    m1_3 = DefaultMatrix([[3.6, 9.8],
                           [2.1, 5.3]])
-    M1_4 = DefaultMatrix([[7.6, 8.0],
+    m1_4 = DefaultMatrix([[7.6, 8.0],
                           [complex(3, 2), 2.4]])
-    M1_5 = DefaultMatrix([[4, 6, 9],
+    m1_5 = DefaultMatrix([[4, 6, 9],
                           [0, 1, 0],
                           [0, 6, 7]])
 
-    M2_1 = DefaultMatrix([[4, 6],
+    m2_1 = DefaultMatrix([[4, 6],
                           [3, 4]])
-    M2_2 = DefaultMatrix([[4, 9],
+    m2_2 = DefaultMatrix([[4, 9],
                           [3, 7]])
-    M2_3 = DefaultMatrix([[7.6, 8.0],
+    m2_3 = DefaultMatrix([[7.6, 8.0],
                           [9.9, 2.4]])
-    M2_4 = DefaultMatrix(
+    m2_4 = DefaultMatrix(
         [[complex(1, 1), 9.8],
          [2.1, complex(0, 2)]])
 
-    M2_5 = DefaultMatrix([[5, 7, 8],
+    m2_5 = DefaultMatrix([[5, 7, 8],
                           [2, 1, 0],
                           [9, 2, 1]])
 
-    Ans1 = DefaultMatrix([[8, 12, 12, 18],
+    ans1 = DefaultMatrix([[8, 12, 12, 18],
                           [6, 8, 9, 12],
                           [20, 30, 12, 18],
                           [15, 20, 9, 12]])
-    Ans2 = DefaultMatrix(
+    ans2 = DefaultMatrix(
         [[24, 54, 20, 45],
          [18, 42, 15, 35],
          [12, 27, 4, 9],
          [9, 21, 3, 7]])
-    Ans3 = DefaultMatrix(
+    ans3 = DefaultMatrix(
         [[27.36, 28.8, 74.48, 78.4],
          [35.64, 8.64, 97.02, 23.52],
          [15.96, 16.8, 40.28, 42.4],
          [20.79, 5.04, 52.47, 12.72]])
 
-    Ans4 = DefaultMatrix([[complex(7.6, 7.6), complex(8, 8), 74.48, 78.4],
+    ans4 = DefaultMatrix([[complex(7.6, 7.6), complex(8, 8), 74.48, 78.4],
                           [complex(1, 5), complex(2.4, 2.4),
                            complex(29.4, 19.6), 23.52],
                           [15.96, 16.8, complex(0, 15.2), complex(0, 16)],
                           [complex(6.3, 4.2), 5.04, complex(-4, 6), complex(0, 4.8)]])
 
-    Ans5 = DefaultMatrix([[20, 28, 32, 30, 42, 48, 45, 63, 72],
+    ans5 = DefaultMatrix([[20, 28, 32, 30, 42, 48, 45, 63, 72],
                           [8, 4, 0, 12, 6, 0, 18, 9, 0],
                           [36, 8, 4, 54, 12, 6, 81, 18, 9],
                           [0, 0, 0, 5, 7, 8, 0, 0, 0],
@@ -243,11 +243,11 @@ def test_tensor_product_square():
                           [0, 0, 0, 12, 6, 0, 14, 7, 0],
                           [0, 0, 0, 54, 12, 6, 63, 14, 7]])
 
-    assert tp.tensor_product(M1_1, M2_1).get_state() == Ans1.get_state()
-    assert tp.tensor_product(M1_2, M2_2).get_state() == Ans2.get_state()
-    assert tp.tensor_product(M1_3, M2_3).get_state() == Ans3.get_state()
-    assert tp.tensor_product(M1_4, M2_4).get_state() == Ans4.get_state()
-    assert tp.tensor_product(M1_5, M2_5).get_state() == Ans5.get_state()
+    assert tp.tensor_product(m1_1, m2_1).get_state() == ans1.get_state()
+    assert tp.tensor_product(m1_2, m2_2).get_state() == ans2.get_state()
+    assert tp.tensor_product(m1_3, m2_3).get_state() == ans3.get_state()
+    assert tp.tensor_product(m1_4, m2_4).get_state() == ans4.get_state()
+    assert tp.tensor_product(m1_5, m2_5).get_state() == ans5.get_state()
 
 
 def test_tensor_product_square_numbers():
