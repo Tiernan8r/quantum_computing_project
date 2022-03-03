@@ -14,7 +14,7 @@
 import cmath
 from src.matrices import Matrix, DefaultMatrix
 import src.constants as c
-from src.tensor_product import tensor_product
+import src.tensor_product as tp
 from typing import List
 
 
@@ -50,14 +50,14 @@ def multi_gate(size: int, targets: List[int], gate: str, phi=complex(0)) \
     else:
         return c.IDENTITY
 
-    m = DefaultMatrix([1])
+    m: Matrix = DefaultMatrix([[1]])
     t = [x - 1 for x in targets]
 
     for i in range(size):
         if i in t:
-            m = tensor_product(g, m)
+            m = tp.tensor_product(g, m)
         else:
-            m = tensor_product(c.IDENTITY, m)
+            m = tp.tensor_product(c.IDENTITY, m)
     return m
 
 
