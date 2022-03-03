@@ -11,13 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from matrix import Matrix, MATRIX, VECTOR, SCALARS
+from . import Matrix
+from ._types import MATRIX, VECTOR, SCALARS
 
 
 class MyMatrix(Matrix):
+
     def __init__(self, state: MATRIX):
         self.state = state
-        self.conjugated = False
 
     def dim(self):
         # Return the dimension of matrix, in (row,col) tuple
@@ -104,13 +105,12 @@ class MyMatrix(Matrix):
         pass
 
     def conjugate(self):
-        # conjugation of matrix, the state "conjugated" is reversed
+        # conjugation of matrix
         nrow, ncol = self.dim()
         for i in range(nrow):
             for j in range(ncol):
                 if isinstance(self.state[i][j], complex):
                     self.state[i][j] = self.state[i][j].conjugate()
-        self.conjugated = not self.conjugated
         return self.state
 
     def transpose(self):
