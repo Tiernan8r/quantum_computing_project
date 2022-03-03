@@ -161,7 +161,7 @@ class SparseMatrix(Matrix):
         if i in self._entries:
             entry = self._entries[i]
 
-        return SparseVector(entry, self._row)
+        return SparseVector(entry, self.num_columns)
 
     def __getitem__(self, i: int) -> SparseVector:
         assert i < len(self), "index out of range"
@@ -291,12 +291,12 @@ class SparseMatrix(Matrix):
     def __str__(self) -> str:
         total_string = ""
 
-        for i in range(self._row):
+        for i in range(self.num_rows):
             row_repr = [
-                f"{self[i][j]:3.3g}" for j in range(self._col)]
+                f"{self[i][j]:3.3g}" for j in range(self.num_columns)]
             total_string += "[" + \
                 ",".join(row_repr) + "]"
             # Don't add newline for last row:
             total_string += (lambda i, N: "\n" if i <
-                             N - 1 else "")(i, self._row)
+                             N - 1 else "")(i, self.num_rows)
         return total_string
