@@ -82,9 +82,11 @@ class GeneralMatrix(Matrix):
         return self._state
 
     def set_state(self, s: MATRIX):
-        # Ignored, not sure what is this intended for
-        self.state = s
-        return
+        assert s is not None
+        assert len(s) > 0
+        assert len(s) == len(s[0]), "non square matrix state"
+        self._state = s
+
 
     @classmethod
     def zeros(cls, nrow, ncol=1):
