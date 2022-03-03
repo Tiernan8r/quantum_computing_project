@@ -53,7 +53,7 @@ def test_d_m_init():
     input2 = [[1], [2, 3]]
     with pytest.raises(AssertionError) as ae2:
         _ = DenseMatrix(input2)
-    assert ae2.match("attempting to initialise non-square matrix.")
+    assert ae2.match("matrix rows must have equal dimension")
 
     test_input_types = [
         [[1]],

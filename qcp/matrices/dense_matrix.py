@@ -22,6 +22,10 @@ class DenseMatrix(Matrix):
         assert len(
             state) > 0, "attempting to initialise matrix with no dimensions"
 
+        row_widths = [len(row) for row in state]
+        for i in range(len(row_widths)):
+            assert row_widths[0] == row_widths[i], "matrix rows must have equal dimension"
+
         self._state = state
 
     @staticmethod
