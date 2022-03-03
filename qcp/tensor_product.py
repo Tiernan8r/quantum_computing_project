@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from matrices import Matrix, DefaultMatrix
+from constants import TWO_HADAMARD, IDENTITY
 import cmath
 
 
@@ -94,3 +95,7 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
             entries[i][j] = val
 
     return DefaultMatrix(entries)
+
+
+
+print(tensor_product(TWO_HADAMARD, IDENTITY))
