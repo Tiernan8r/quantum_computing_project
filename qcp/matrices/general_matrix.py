@@ -72,9 +72,11 @@ class GeneralMatrix(Matrix):
         assert i < len(self), "index out of range"
         return self._state[i]
 
-    def __setitem__(self, i: int, v: SCALARS):
-        # TODO after discussion
-        pass
+    def __setitem__(self, i: int, v: VECTOR):
+        assert i < len(self), "index out of range"
+        assert len(v) == len(self), "row dimension does not match"
+
+        self._state[i] = v
 
     def get_state(self) -> MATRIX:
         # Ignored, not sure what is this intended for
