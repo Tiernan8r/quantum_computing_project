@@ -150,7 +150,7 @@ def test_sp_m_columns():
 
 def test_sp_m_transpose():
     A = SparseMatrix([[1], [2], [3], [4]])
-    B= SparseMatrix([[1, 2, 3, 4]])
+    B = SparseMatrix([[1, 2, 3, 4]])
 
     assert A.transpose().get_state() == B.get_state()
 
