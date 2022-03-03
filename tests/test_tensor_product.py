@@ -11,10 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+<<<<<<< HEAD
 import qcp.tensor_product as tp
 from qcp.matrices import DenseMatrix, SparseMatrix
 
 IDENTITY = SparseMatrix.identity(2)
+=======
+from qcp.tensor_product import tensor_product
+from qcp.matrices import DefaultMatrix
+>>>>>>> remove .DS_Store
 
 
 def test_tensor_product_dense_with_identity():

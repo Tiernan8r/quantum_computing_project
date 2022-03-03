@@ -167,11 +167,3 @@ def test_cnot_gate():
 
 
  
-
-
-
-       
-
-
-
-    
