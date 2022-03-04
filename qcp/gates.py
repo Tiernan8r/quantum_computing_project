@@ -141,13 +141,13 @@ def control_phase(size: int, controls: List[int], target: int,
     """
     Constructs a (2**size by 2**size) control-phase gate with
      given controls and target
-    :param size: total number of qubits in circuit ->
-    :param controls: List of control qubits -> List[int]
-    :param target: target qubit the phase gate will be
-                    applied to -> int
-    :param phi: angle the target qubit will be phase
-                    shifted by -> complex
-    :return: Matrix(complex)
+    :param size int: total number of qubits in circuit
+    :param controls List[int]: List of control qubits
+    :param target int: target qubit the phase gate will be
+                    applied to
+    :param phi complex: angle the target qubit will be phase
+                    shifted by
+    :return Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
