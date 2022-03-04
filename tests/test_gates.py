@@ -106,7 +106,10 @@ def test_control_z():
 
 
 def test_control_phase():
-    pass
+    # Gate needs a minimum of two qubits to make sense
+    with pytest.raises(AssertionError) as ae1:
+        gts.control_phase(1, [], 0, 0j)
+    assert ae1.match("need minimum of two qubits")
 
 
 def test_phase_shift():
