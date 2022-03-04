@@ -14,7 +14,7 @@
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix
 import constants as c
-from qcp.matrices.types import SPARSE
+from qcp.matrices import SPARSE
 from tensor_product import tensor_product
 from typing import List
 
