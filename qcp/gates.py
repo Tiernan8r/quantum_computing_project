@@ -15,7 +15,7 @@ import cmath
 from qcp.matrices import Matrix, DefaultMatrix
 import constants as c
 from qcp.matrices import SPARSE
-from tensor_product import tensor_product
+import tensor_product as tp
 from typing import List
 from enum import Enum
 
@@ -41,7 +41,7 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
 
     :param size int: total number of qubits in circuit
     :param targets List[int]: list of qubits the specified gate will be
-                    applied to
+                    applied to, indexing from 0.
     :param gate Gate: Enum of which gate we want to apply
     :param phi complex: Phase angle for the phase gate
     :return Matrix: Matrix representing the composite gate
@@ -59,13 +59,12 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
         return DefaultMatrix.identity(2**size)
 
     m = DefaultMatrix([[1]])
-    t = [x - 1 for x in targets]
 
     for i in range(size):
-        if i in t:
-            m = tensor_product(g, m)
+        if i in targets:
+            m = tp.tensor_product(m, g)
         else:
-            m = tensor_product(c.IDENTITY, m)
+            m = tp.tensor_product(m, c.IDENTITY)
     return m
 
 
