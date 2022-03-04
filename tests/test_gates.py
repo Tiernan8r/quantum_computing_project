@@ -169,15 +169,15 @@ def test_control_phase():
 
 
 def test_phase_shift():
-    ms1 = DefaultMatrix([[1, 0], [0, 1]])
-    ms2 = DefaultMatrix([[1, 0], [0, 1j]])
-    ms3 = DefaultMatrix([[1, 0], [0, -1]])
-    ms4 = DefaultMatrix([[1, 0], [0, -1j]])
+    expected1 = DefaultMatrix([[1, 0], [0, 1]])
+    expected2 = DefaultMatrix([[1, 0], [0, 1j]])
+    expected3 = DefaultMatrix([[1, 0], [0, -1]])
+    expected4 = DefaultMatrix([[1, 0], [0, -1j]])
 
-    h.compare_matrices(gts.phase_shift(0), ms1)
-    h.compare_matrices(gts.phase_shift(pi/2), ms2)
-    h.compare_matrices(gts.phase_shift(pi), ms3)
-    h.compare_matrices(gts.phase_shift(3*pi/2), ms4)
+    h.compare_matrices(gts.phase_shift(0), expected1)
+    h.compare_matrices(gts.phase_shift(pi/2), expected2)
+    h.compare_matrices(gts.phase_shift(pi), expected3)
+    h.compare_matrices(gts.phase_shift(3*pi/2), expected4)
 
 
 def test_hadamard_gate():
