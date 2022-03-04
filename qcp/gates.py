@@ -50,7 +50,7 @@ def multi_gate(size: int, targets: List[int], gate: str, phi=complex(0)) \
     else:
         return c.IDENTITY
 
-    m = DefaultMatrix([1])
+    m = DefaultMatrix([[1]])
     t = [x - 1 for x in targets]
 
     for i in range(size):
