@@ -11,7 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.matrices import Matrix, DefaultMatrix, MATRIX
+from qcp.matrices import Matrix, DefaultMatrix, SparseMatrix, MATRIX
+from typing import Dict, Union
 import cmath
 
 
@@ -23,14 +24,14 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     :param B Matrix: Second p*q matrix to tensor product with
     :returns: An (m*p)*(n*q) matrix of the tensor product.
     """
-    m = len(A)
-    n = 0
-    if m > 0:
-        n = len(A[0])
-    p = len(B)
-    q = 0
-    if p > 0:
-        q = len(B[0])
+
+    if isinstance(A, SparseMatrix) and isinstance(B, SparseMatrix):
+        return _tensor_product_sparse(A, B)
+
+    m = A.num_rows
+    n = A.num_columns
+    p = B.num_rows
+    q = B.num_columns
 
     row_width = m * p
     column_width = n * q
@@ -94,3 +95,40 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
             entries[i][j] = val
 
     return DefaultMatrix(entries)
+
+
+def _tensor_product_sparse(A: SparseMatrix, B: SparseMatrix) -> Matrix:
+    """
+    Compute the tensor product between two SparseMatrices, and return the
+    resultant Matrix
+    :param A SparseMatrix: An m*n matrix
+    :param B SparseMatrix: Second p*q matrix to tensor product with
+    :returns: An (m*p)*(n*q) matrix of the tensor product.
+    """
+
+    m = A.num_rows
+    n = A.num_columns
+    p = B.num_rows
+    q = B.num_columns
+
+    num_columns = n * q
+    num_rows = m * p
+
+    # creates a dictionary to store the (m*p)*(n*q) entries
+    entries_type = Dict[int, Dict[int, Union[complex, float, int]]]
+    entries: entries_type = {
+        i: {} for i in range(num_rows)
+    }
+
+    for k, row_a in A._entries.items():
+        for l, v_a in row_a.items():  # noqa: E741
+
+            for r, row_b in B._entries.items():
+                for s, v_b in row_b.items():
+
+                    i = k * p + r
+                    j = l * q + s
+
+                    entries[i][j] = v_a * v_b
+
+    return SparseMatrix(entries, w=num_columns, h=num_rows)
