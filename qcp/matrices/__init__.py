@@ -15,7 +15,7 @@ from qcp.matrices.matrix import Matrix  # noqa: F401
 from qcp.matrices.sparse_matrix import SparseMatrix  # noqa: F401
 from qcp.matrices.dense_matrix import DenseMatrix  # noqa: F401
 
-from qcp.matrices.types import SCALARS, SCALARS_TYPES, VECTOR, \
+from qcp.matrices.types import SCALARS, SCALARS_T, VECTOR, \
     MATRIX, SPARSE  # noqa: F401
 
 DefaultMatrix = SparseMatrix
