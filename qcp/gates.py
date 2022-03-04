@@ -82,15 +82,16 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
         controls, "control bits and target bit cannot be the same"
 
     m: SPARSE = {}
+
     mask = sum(2**c for c in controls)
-    dif = size - mask.bit_length()
-    mask <<= dif
+    diff = size - mask.bit_length()
+    mask <<= diff
 
     for i in range(0, n):
         condition = i & mask
 
         x = i
-        if (condition >> dif) % 2:
+        if (condition >> diff) % 2:
             x = i ^ (1 << (target - 1))
 
         m[i] = {x: 1}
@@ -119,16 +120,16 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
         controls, "control bits and target bit cannot be the same"
 
     m: SPARSE = {}
-    n = 2**size
+
+    mask = sum(2**c for c in controls)
+    diff = size - mask.bit_length()
+    mask <<= diff
 
     for i in range(0, n):
-        f = '0' + str(size) + 'b'
-        binary = list(format(i, f))
-
-        conditions = [binary[-j] == "1" for j in controls]
+        condition = i | mask
 
         val = 1
-        if all(conditions) and binary[-target] == "1":
+        if condition % 2 and ((i ^ target) >> diff) % 2:
             val = -1
         m[i] = {i: val}
 
