@@ -11,13 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.matrices import SparseMatrix, DefaultMatrix
-import qcp.gates as gts
+from qcp.matrices import DefaultMatrix, SparseMatrix
+import qcp.constants as const
+import math
+from qcp.matrices import SparseMatrix
 import tests.test_helpers as h
+import qcp.gates as gts
 import pytest
-import cmath
-from math import pi, sqrt
-from qcp.constants import TWO_HADAMARD
 
 
 def test_multi_gate():
@@ -145,7 +145,7 @@ def test_control_phase():
     ])
     h.compare_matrices(cp_4x4_1, expected_4x4_1)
 
-    cp_4x4_2 = gts.control_phase(2, [0], 1, pi)
+    cp_4x4_2 = gts.control_phase(2, [0], 1, math.pi)
     expected_4x4_2 = SparseMatrix([
         [1, 0, 0, 0],
         [0, 1, 0, 0],
@@ -154,7 +154,7 @@ def test_control_phase():
     ])
     h.compare_matrices(cp_4x4_2, expected_4x4_2)
 
-    cp_4x4_3 = gts.control_phase(2, [0], 1, 3 * pi / 2)
+    cp_4x4_3 = gts.control_phase(2, [0], 1, 3 * math.pi / 2)
     expected_4x4_3 = SparseMatrix([
         [1, 0, 0, 0],
         [0, 1, 0, 0],
@@ -164,15 +164,15 @@ def test_control_phase():
     h.compare_matrices(cp_4x4_3, expected_4x4_3)
 
     # a 2 * pi rotation should be same as a 0 rotation:
-    cp_4x4_4 = gts.control_phase(2, [0], 1, 2 * pi)
+    cp_4x4_4 = gts.control_phase(2, [0], 1, 2 * math.pi)
     h.compare_matrices(cp_4x4_4, expected_4x4_0)
 
 
 def test_phase_shift():
     ps1 = gts.phase_shift(0)
-    ps2 = gts.phase_shift(pi/2)
-    ps3 = gts.phase_shift(pi)
-    ps4 = gts.phase_shift(3*pi/2)
+    ps2 = gts.phase_shift(math.pi/2)
+    ps3 = gts.phase_shift(math.pi)
+    ps4 = gts.phase_shift(3*math.pi/2)
 
     expected1 = DefaultMatrix([[1, 0], [0, 1]])
     expected2 = DefaultMatrix([[1, 0], [0, 1j]])
@@ -190,18 +190,24 @@ def test_hadamard_gate():
     qubit0 = DefaultMatrix([[1], [0]])
     qubit1 = DefaultMatrix([[0], [1]])
 
-    ans0 = TWO_HADAMARD * qubit0
-    ans1 = TWO_HADAMARD * qubit1
+    ans0 = const.TWO_HADAMARD * qubit0
+    ans1 = const.TWO_HADAMARD * qubit1
 
-    expected0 = (1/(sqrt(2))) * DefaultMatrix([[1], [1]])
-    expected1 = (1/(sqrt(2))) * DefaultMatrix([[1], [-1]])
-    print(TWO_HADAMARD)
-    print()
-    print(qubit0)
-    print()
-    print(ans0)
-    print()
-    print(expected0)
 
-    assert expected0.get_state() == ans0.get_state()
-    assert expected1.get_state() == ans1.get_state()
+<< << << < HEAD
+expected0 = (1/(sqrt(2))) * DefaultMatrix([[1], [1]])
+expected1 = (1/(sqrt(2))) * DefaultMatrix([[1], [-1]])
+print(TWO_HADAMARD)
+print()
+print(qubit0)
+print()
+print(ans0)
+print()
+print(expected0)
+== == == =
+expected0 = (1/(math.sqrt(2))) * DefaultMatrix([[1], [1]])
+expected1 = (1/(math.sqrt(2))) * DefaultMatrix([[1], [-1]])
+>>>>>> > tidy imports in test file
+
+assert expected0.get_state() == ans0.get_state()
+assert expected1.get_state() == ans1.get_state()
