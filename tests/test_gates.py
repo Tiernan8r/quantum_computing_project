@@ -21,7 +21,26 @@ import pytest
 
 
 def test_multi_gate():
-    pass
+    # Verify each of the enums:
+    # HADAMARD Gate:
+    had = gts.multi_gate(1, [0], gts.Gate.H)
+    assert had.get_state() == const.TWO_HADAMARD.get_state()
+
+    # PAULI-X Gate:
+    pauli_x = gts.multi_gate(1, [0], gts.Gate.X)
+    assert pauli_x.get_state() == const.PAULI_X.get_state()
+
+    # PAULI-Z Gate:
+    pauli_z = gts.multi_gate(1, [0], gts.Gate.Z)
+    assert pauli_z.get_state() == const.PAULI_Z.get_state()
+
+    # PHASE SHIFT Gate:
+    phase = gts.multi_gate(1, [0], gts.Gate.P)
+    assert phase.get_state() == gts.phase_shift(0j).get_state()
+
+    # UNSPECIFIED/IDENTITY:
+    id = gts.multi_gate(1, [0], gts.Gate.I)
+    assert id.get_state() == DefaultMatrix.identity(2**1).get_state()
 
 
 def test_control_x():
@@ -136,7 +155,7 @@ def test_control_phase():
     ])
     assert cp_4x4_0.get_state() == expected_4x4_0.get_state()
 
-    cp_4x4_1 = gts.control_phase(2, [0], 1, pi / 2)
+    cp_4x4_1 = gts.control_phase(2, [0], 1, math.pi / 2)
     expected_4x4_1 = SparseMatrix([
         [1, 0, 0, 0],
         [0, 1, 0, 0],
