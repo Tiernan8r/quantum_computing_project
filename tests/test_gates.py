@@ -170,11 +170,6 @@ def test_control_phase():
 
 
 def test_phase_shift():
-    pass
-
-
-def test_phase_gate():
-
     ms = [DefaultMatrix([[1, 0], [0, 1]]),
           DefaultMatrix([[1, 0], [0, 1j]]),
           DefaultMatrix([[1, 0], [0, -1]]),
