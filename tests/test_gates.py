@@ -117,6 +117,11 @@ def test_control_phase():
         gts.control_phase(2, [5], 0, 0j)
     assert ae2.match("control bit out of range")
 
+    # More control bits indexed than there are qubits:
+    with pytest.raises(AssertionError) as ae3:
+        gts.control_phase(2, [1, 1, 1, 1, 1, 1], 0, 0j)
+    assert ae3.match("too many control bits provided")
+
 
 def test_phase_shift():
     pass
