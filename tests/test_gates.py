@@ -111,6 +111,11 @@ def test_control_phase():
         gts.control_phase(1, [], 0, 0j)
     assert ae1.match("need minimum of two qubits")
 
+    # Control bits need to be within qubit range:
+    with pytest.raises(AssertionError) as ae2:
+        gts.control_phase(2, [5], 0, 0j)
+    assert ae2.match("control bit out of range")
+
 
 def test_phase_shift():
     ms = [DefaultMatrix([[1, 0], [0, 1]]),
