@@ -164,6 +164,10 @@ def test_control_phase():
     ])
     h.compare_matrices(cp_4x4_3, expected_4x4_3)
 
+    # a 2 * pi rotation should be same as a 0 rotation:
+    cp_4x4_4 = gts.control_phase(2, [0], 1, 2 * pi)
+    h.compare_matrices(cp_4x4_4, expected_4x4_0)
+
 
 def test_phase_shift():
     pass
