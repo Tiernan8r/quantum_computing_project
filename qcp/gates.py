@@ -161,14 +161,15 @@ def control_phase(size: int, controls: List[int], target: int,
 
     m: SPARSE = {}
 
-    for i in range(0, n):
-        f = '0' + str(size) + 'b'
-        binary = list(format(i, f))
+    mask = sum(2**c for c in set(controls))
+    diff = size - mask.bit_length()
+    mask <<= diff
 
-        conditions = [binary[-j] == "1" for j in controls]
+    for i in range(0, n):
+        condition = i | mask
 
         val = 1
-        if all(conditions) and binary[-target] == "1":
+        if condition % 2 and ((i ^ target) >> diff) % 2:
             val = cmath.exp(1j * phi)
         m[i] = {i: val}
     return DefaultMatrix(m, h=n, w=n)
