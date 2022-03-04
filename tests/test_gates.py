@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from qcp.matrices import DefaultMatrix
-import cmath
 from math import pi, sqrt
 from qcp.constants import TWO_HADAMARD
 from qcp.matrices import SparseMatrix
