@@ -13,6 +13,7 @@
 # limitations under the License.
 from qcp.matrices import SparseMatrix, DefaultMatrix
 import qcp.gates as gts
+import tests.test_helpers as h
 import pytest
 import cmath
 from math import pi, sqrt
@@ -134,6 +135,16 @@ def test_control_phase():
         [0, 0, 0, 1+0j]
     ])
     assert cp_4x4_0.get_state() == expected_4x4_0.get_state()
+
+    cp_4x4_1 = gts.control_phase(2, [0], 1, pi / 2)
+    expected_4x4_1 = SparseMatrix([
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1j]
+    ])
+    h.compare_matrices(cp_4x4_1, expected_4x4_1)
+
 
 def test_phase_shift():
     ms = [DefaultMatrix([[1, 0], [0, 1]]),
