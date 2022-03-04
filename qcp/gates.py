@@ -17,13 +17,24 @@ import constants as c
 from qcp.matrices import SPARSE
 from tensor_product import tensor_product
 from typing import List
+from enum import Enum
 
+
+class Gate(Enum):
+    """Enum class to encode gate options in multi_gates"""
+    H = "h"
+    X = "x"
+    Z = "z"
+    P = "p"
+    I = "i"  # noqa: E741
 
 # Notation note : |001> represents a 3 qubit system where the first qubit is
 # |1> and the second and third qubit is |0>
 # Targets and Controls work off this notation but you only need to enter the
 # number of the qubit you want to target/control
-def multi_gate(size: int, targets: List[int], gate: str, phi=complex(0)) \
+
+
+def multi_gate(size: int, targets: List[int], gate: Gate, phi=complex(0)) \
         -> Matrix:
     """
     Constructs a (2**size by 2**size) gate matrix that applies a
@@ -40,13 +51,13 @@ def multi_gate(size: int, targets: List[int], gate: str, phi=complex(0)) \
     :return: Matrix([int])
     """
 
-    if gate == "h":
+    if gate == Gate.H:
         g = c.TWO_HADAMARD
-    elif gate == "x":
+    elif gate == Gate.X:
         g = c.PAULI_X
-    elif gate == "z":
+    elif gate == Gate.Z:
         g = c.PAULI_Z
-    elif gate == "p":
+    elif gate == Gate.P:
         g = phase_shift(phi)
     else:
         return c.IDENTITY
