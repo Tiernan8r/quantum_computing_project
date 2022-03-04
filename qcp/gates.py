@@ -159,22 +159,19 @@ def control_phase(size: int, controls: List[int], target: int,
     assert target not in \
         controls, "control bits and target bit cannot be the same"
 
-    m = []
+    m: SPARSE = {}
 
-    for i in range(0, 2 ** size):
+    for i in range(0, n):
         f = '0' + str(size) + 'b'
         binary = list(format(i, f))
 
-        row = _zeros_list(2 ** size)
         conditions = [binary[-j] == "1" for j in controls]
 
+        val = 1
         if all(conditions) and binary[-target] == "1":
-            row[i] = cmath.exp(1j * phi)
-        else:
-            row[i] = 1
-        m.append(row)
-    p = DefaultMatrix(m)
-    return p
+            val = cmath.exp(1j * phi)
+        m[i] = {i: val}
+    return DefaultMatrix(m, h=n, w=n)
 
 
 def _zeros_list(n: int) -> List[complex]:
