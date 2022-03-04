@@ -168,7 +168,7 @@ def control_phase(size: int, controls: List[int], target: int,
     for i in range(0, n):
         condition = i | mask
 
-        val = 1
+        val = 1+0j
         if condition % 2 and ((i ^ target) >> diff) % 2:
             val = cmath.exp(1j * phi)
         m[i] = {i: val}
