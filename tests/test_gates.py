@@ -121,6 +121,11 @@ def test_control_phase():
         gts.control_phase(2, [1, 1, 1, 1, 1, 1], 0, 0j)
     assert ae3.match("too many control bits provided")
 
+    # Target qbit needs to be not one of the control bits:
+    with pytest.raises(AssertionError) as ae4:
+        gts.control_phase(2, [0], 0, 0j)
+    assert ae4.match("control bits and target bit cannot be the same")
+
 
 def test_phase_shift():
     ms = [DefaultMatrix([[1, 0], [0, 1]]),
