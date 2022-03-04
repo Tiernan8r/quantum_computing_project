@@ -169,15 +169,15 @@ def test_control_phase():
 
 
 def test_phase_shift():
-    ms = [DefaultMatrix([[1, 0], [0, 1]]),
-          DefaultMatrix([[1, 0], [0, 1j]]),
-          DefaultMatrix([[1, 0], [0, -1]]),
-          DefaultMatrix([[1, 0], [0, -1j]])]
+    ms1 = DefaultMatrix([[1, 0], [0, 1]])
+    ms2 = DefaultMatrix([[1, 0], [0, 1j]])
+    ms3 = DefaultMatrix([[1, 0], [0, -1]])
+    ms4 = DefaultMatrix([[1, 0], [0, -1j]])
 
-    assert cmath.isclose(gts.phase_shift(0)[1][1], ms[0][1][1])
-    assert cmath.isclose(gts.phase_shift(pi/2)[1][1], ms[1][1][1])
-    assert cmath.isclose(gts.phase_shift(pi)[1][1], ms[2][1][1])
-    assert cmath.isclose(gts.phase_shift(3*pi/2)[1][1], ms[3][1][1])
+    h.compare_matrices(gts.phase_shift(0), ms1)
+    h.compare_matrices(gts.phase_shift(pi/2), ms2)
+    h.compare_matrices(gts.phase_shift(pi), ms3)
+    h.compare_matrices(gts.phase_shift(3*pi/2), ms4)
 
 
 def test_hadamard_gate():
