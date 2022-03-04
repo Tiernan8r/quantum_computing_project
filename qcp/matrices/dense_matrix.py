@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from qcp.matrices import Matrix
-from qcp.matrices.types import MATRIX, VECTOR, SCALARS, SCALARS_TYPES
+from qcp.matrices.types import MATRIX, VECTOR, SCALARS, SCALARS_T
 from typing import Union
 
 
@@ -107,7 +107,7 @@ class DenseMatrix(Matrix):
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
 
-        if isinstance(other, SCALARS_TYPES):
+        if isinstance(other, SCALARS_T):
             state = self.get_state().copy()
 
             for i in range(len(state)):

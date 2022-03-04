@@ -11,8 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.matrices import Matrix, DefaultMatrix
-from qcp.matrices.types import MATRIX
+from qcp.matrices import Matrix, DefaultMatrix, MATRIX
 import cmath
 
 
