@@ -34,21 +34,17 @@ class Gate(Enum):
 # number of the qubit you want to target/control
 
 
-def multi_gate(size: int, targets: List[int], gate: Gate, phi=complex(0)) \
-        -> Matrix:
+def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
     """
     Constructs a (2**size by 2**size) gate matrix that applies a
     specific gate to one or more specified qubits
 
-    :param size: total number of qubits in circuit -> int
-    :param targets: list of qubits the specified gate will be
-                    applied to -> List[int]
-    :param gate: string character representing which specified gate we
-            want to apply;
-                h = hadamard, x = Pauli x, z = Pauli z, p = Phase gate
-
-    :param phi: Phase angle for the phase gate -> complex number
-    :return: Matrix([int])
+    :param size int: total number of qubits in circuit
+    :param targets List[int]: list of qubits the specified gate will be
+                    applied to
+    :param gate Gate: Enum of which gate we want to apply
+    :param phi complex: Phase angle for the phase gate
+    :return Matrix: Matrix representing the composite gate
     """
 
     if gate == Gate.H:
