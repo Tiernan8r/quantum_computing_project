@@ -174,15 +174,6 @@ def control_phase(size: int, controls: List[int], target: int,
     return DefaultMatrix(m, h=n, w=n)
 
 
-def _zeros_list(n: int) -> List[complex]:
-    """
-    Creates a list of size n full of zeros
-    :param n: size of list
-    :return: list[int]
-    """
-    return [0j for _ in range(n)]
-
-
 def phase_shift(phi: complex) -> Matrix:
     """
     Creates a 2 x 2 phase shift matrix
