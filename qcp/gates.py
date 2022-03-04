@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import cmath
-from matrices import Matrix, DefaultMatrix
+from qcp.matrices import Matrix, DefaultMatrix
 import constants as c
 from tensor_product import tensor_product
 from typing import List
@@ -50,7 +50,7 @@ def multi_gate(size: int, targets: List[int], gate: str, phi=complex(0)) \
     else:
         return c.IDENTITY
 
-    m = DefaultMatrix([1])
+    m = DefaultMatrix([[1]])
     t = [x - 1 for x in targets]
 
     for i in range(size):

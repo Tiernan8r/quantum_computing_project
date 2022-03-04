@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from matrices import DefaultMatrix, Matrix, SparseMatrix
+from qcp.matrices import Matrix, DefaultMatrix, SparseMatrix, MATRIX
 from typing import Dict, Union
 import cmath
 
@@ -37,7 +37,7 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     column_width = n * q
 
     # creates an (m*p)*(n*q) list for the answer matrix
-    entries = [
+    entries: MATRIX = [
         [0.0 for _ in range(row_width)] for _ in range(column_width)
     ]
 
