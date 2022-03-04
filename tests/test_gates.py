@@ -154,6 +154,15 @@ def test_control_phase():
     ])
     h.compare_matrices(cp_4x4_2, expected_4x4_2)
 
+    cp_4x4_3 = gts.control_phase(2, [0], 1, 3 * pi / 2)
+    expected_4x4_3 = SparseMatrix([
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, -1j]
+    ])
+    h.compare_matrices(cp_4x4_3, expected_4x4_3)
+
 
 def test_phase_shift():
     ms = [DefaultMatrix([[1, 0], [0, 1]]),
