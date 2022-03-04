@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from src.tensor_product import tensor_product
+import src.tensor_product as tp
 from src.matrices import DefaultMatrix
 
 IDENTITY = DefaultMatrix.identity(2)
@@ -21,7 +21,7 @@ def test_tensor_product_with_identity():
 
     A = DefaultMatrix([[1, 2], [3, 4]])
 
-    C = tensor_product(IDENTITY, A)
+    C = tp.tensor_product(IDENTITY, A)
 
     expected = DefaultMatrix(
         [
