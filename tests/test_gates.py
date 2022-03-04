@@ -132,7 +132,7 @@ def test_control_phase():
         [1, 0, 0, 0],
         [0, 1, 0, 0],
         [0, 0, 1, 0],
-        [0, 0, 0, 1+0j]
+        [0, 0, 0, 1]
     ])
     assert cp_4x4_0.get_state() == expected_4x4_0.get_state()
 
@@ -144,6 +144,15 @@ def test_control_phase():
         [0, 0, 0, 1j]
     ])
     h.compare_matrices(cp_4x4_1, expected_4x4_1)
+
+    cp_4x4_2 = gts.control_phase(2, [0], 1, pi)
+    expected_4x4_2 = SparseMatrix([
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, -1]
+    ])
+    h.compare_matrices(cp_4x4_2, expected_4x4_2)
 
 
 def test_phase_shift():
