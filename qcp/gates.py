@@ -83,7 +83,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
 
     m: SPARSE = {}
 
-    mask = sum(2**c for c in controls)
+    mask = sum(2**c for c in set(controls))
     diff = size - mask.bit_length()
     mask <<= diff
 
@@ -121,7 +121,7 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
 
     m: SPARSE = {}
 
-    mask = sum(2**c for c in controls)
+    mask = sum(2**c for c in set(controls))
     diff = size - mask.bit_length()
     mask <<= diff
 
