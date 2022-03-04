@@ -56,7 +56,7 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
     elif gate == Gate.P:
         g = phase_shift(phi)
     else:
-        return c.IDENTITY
+        return DefaultMatrix.identity(2**size)
 
     m = DefaultMatrix([[1]])
     t = [x - 1 for x in targets]
