@@ -149,6 +149,15 @@ def control_phase(size: int, controls: List[int], target: int,
                     shifted by -> complex
     :return: Matrix(complex)
     """
+    assert size > 1, "need minimum of two qubits"
+    n = 2 ** size
+    assert isinstance(controls, list)
+    for con in controls:
+        assert con < n, "control bit out of range"
+    assert len(controls) <= n, "too many control bits provided."
+
+    assert target not in \
+        controls, "control bits and target bit cannot be the same"
 
     m = []
 
