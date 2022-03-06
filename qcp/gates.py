@@ -93,6 +93,19 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     x = DefaultMatrix(m)
     return x
 
+# NOTE:
+# The way the control/target bit is indexed is by indexing the
+# control bit in the byte notation:
+# E.g: 13 = 1101 in bit notation, so this is indexed as
+#       +---+---+---+---+
+# BITS  | 1 | 1 | 0 | 1 |
+#       +---+---+---+---+
+# INDEX | 3 | 2 | 1 | 0 |
+#       +---+---+---+---+
+# in the usual little endian indexing notation
+# Therefore, in this example, the target/control bits are in the index
+# range [0, 3]
+
 
 def control_z(size: int, controls: List[int], target: int) -> Matrix:
     """
@@ -107,25 +120,42 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
     assert isinstance(controls, list)
+
+    # Make sure the control/target bits are within the qbit size
+    bit_bounds = range(size)
     for con in controls:
-        assert con < n, "control bit out of range"
-    assert target < n, "target bit out of range"
-    assert len(controls) <= n, "too many control bits provided."
+        assert con in bit_bounds, "control bit out of range"
+    assert target in bit_bounds, "target bit out of range"
 
     assert target not in \
         controls, "control bits and target bit cannot be the same"
 
     m: SPARSE = {}
 
+    # Use set() to ignore repeat control bits, as we are only interested in
+    # unique control bits
+    # since the controls are the bit positions, we can convert this to a
+    # bitmask by summing them at 2**idx
+    # EG: controls = [0, 2, 4]
+    # corresponds to 0, 4, 16 as numbers,
+    # bitmask is 10101 in binary notation
     mask = sum(2**c for c in set(controls))
-    diff = size - mask.bit_length()
-    mask <<= diff
+
+    # Invert all bits in place in the bitmask
+    flip_mask = sum(2**i for i in range(size))
+    mask ^= flip_mask
 
     for i in range(0, n):
-        condition = i | mask
+        condition = (i | mask) >> target
 
         val = 1
-        if condition % 2 and ((i ^ target) >> diff) % 2:
+        # Modulo 2 filters out an bits that don't meet the condition,
+        # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
+        # Can be determined by taking their modulus with 2, since binary is in
+        # powers of 2.
+        # We bitshift right by the target index, as we want to ignore that bit
+        shift = size - 1 - target
+        if condition % 2 and ((i ^ target) >> shift) % 2:
             val = -1
         m[i] = {i: val}
 

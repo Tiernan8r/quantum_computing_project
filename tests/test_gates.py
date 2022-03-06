@@ -40,16 +40,13 @@ def test_control_z():
         gts.control_z(2, [1], 4)
     assert ae3.match("target bit out of range")
 
-    # More control bits indexed than there are qubits:
-    with pytest.raises(AssertionError) as ae4:
-        gts.control_z(2, [1, 1, 1, 1, 1, 1], 0)
-    assert ae4.match("too many control bits provided")
-
     # Target qbit needs to be not one of the control bits:
-    with pytest.raises(AssertionError) as ae5:
+    with pytest.raises(AssertionError) as ae4:
         gts.control_z(2, [0], 0)
-    assert ae5.match("control bits and target bit cannot be the same")
+    assert ae4.match("control bits and target bit cannot be the same")
 
+    # Two qbit state has two options for the control/target position:
+    # Test for 1st expected result
     cz_4x4 = gts.control_z(2, [0], 1)
     expected_4x4 = SparseMatrix([
         [1, 0, 0, 0],
@@ -58,6 +55,16 @@ def test_control_z():
         [0, 0, 0, -1]
     ])
     assert cz_4x4.get_state() == expected_4x4.get_state()
+
+    # Test for second:
+    cz_4x4_2 = gts.control_z(2, [1], 0)
+    expected_4x4_2 = SparseMatrix([
+        [1, 0, 0, 0],
+        [0, 0, 0, 1],
+        [0, 0, 1, 0],
+        [0, 1, 0, 0]
+    ])
+    assert cz_4x4_2.get_state() == expected_4x4_2.get_state()
 
 
 def test_control_phase():
