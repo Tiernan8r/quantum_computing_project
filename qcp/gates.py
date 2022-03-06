@@ -82,6 +82,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     assert isinstance(controls, list)
     for con in controls:
         assert con < n, "control bit out of range"
+    assert target < n, "target bit out of range"
     assert len(controls) <= n, "too many control bits provided."
 
     assert target not in \
@@ -120,6 +121,7 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     assert isinstance(controls, list)
     for con in controls:
         assert con < n, "control bit out of range"
+    assert target < n, "target bit out of range"
     assert len(controls) <= n, "too many control bits provided."
 
     assert target not in \
@@ -160,6 +162,7 @@ def control_phase(size: int, controls: List[int], target: int,
     assert isinstance(controls, list)
     for con in controls:
         assert con < n, "control bit out of range"
+    assert target < n, "target bit out of range"
     assert len(controls) <= n, "too many control bits provided."
 
     assert target not in \
