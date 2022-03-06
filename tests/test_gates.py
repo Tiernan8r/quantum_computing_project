@@ -36,16 +36,13 @@ def test_control_x():
         gts.control_x(2, [1], 4)
     assert ae3.match("target bit out of range")
 
-    # More control bits indexed than there are qubits:
-    with pytest.raises(AssertionError) as ae4:
-        gts.control_x(2, [1, 1, 1, 1, 1, 1], 0)
-    assert ae4.match("too many control bits provided")
-
     # Target qbit needs to be not one of the control bits:
-    with pytest.raises(AssertionError) as ae5:
+    with pytest.raises(AssertionError) as ae4:
         gts.control_x(2, [0], 0)
-    assert ae5.match("control bits and target bit cannot be the same")
+    assert ae4.match("control bits and target bit cannot be the same")
 
+    # Two qbit state has two options for the control/target position:
+    # Test for 1st expected result
     cx_4x4 = gts.control_x(2, [0], 1)
     expected_4x4 = SparseMatrix([
         [1, 0, 0, 0],
@@ -54,6 +51,26 @@ def test_control_x():
         [0, 0, 1, 0]
     ])
     assert cx_4x4.get_state() == expected_4x4.get_state()
+
+    # Test for second:
+    cx_4x4_2 = gts.control_x(2, [1], 0)
+    expected_4x4_2 = SparseMatrix([
+        [1, 0, 0, 0],
+        [0, 0, 0, 1],
+        [0, 0, 1, 0],
+        [0, 1, 0, 0]
+    ])
+    assert cx_4x4_2.get_state() == expected_4x4_2.get_state()
+
+    # n = 3
+    # for i in range(n):
+    #     st = [j for j in range(n) if j != i]
+    #     for j in range(len(st)):
+    #         a = st[:j+1]
+    #         print(f"TARGET={i} : CONTROLS={a}")
+    #         cx = gts.control_x(n, a, i)
+    #         print(cx)
+    #         print()
 
     # Create a |00> + |10> qbit state (non-normalised as that doesn't matter
     # for tests):
@@ -74,11 +91,11 @@ def test_control_x():
     ])
     assert transformed_qbits.get_state() == expected_2_qbits.get_state()
 
-    cx_8x8 = gts.control_x(3, [1], 7)
-    # Set the 3 qbit state to initially be in |000>
+    cx_8x8 = gts.control_x(3, [1], 0)
+    # Set the 3 qbit state to initially be in |001> state
     three_qbits = SparseMatrix([
-        [1],  # |000>
-        [0],  # |001>
+        [0],  # |000>
+        [1],  # |001>
         [0],  # |010>
         [0],  # |011>
         [0],  # |100>
@@ -88,12 +105,12 @@ def test_control_x():
     ])
     transform_3qbits = cx_8x8 * three_qbits
     expected_3qbits = SparseMatrix([
-        [1],  # |000>
+        [0],  # |000>
         [0],  # |001>
         [0],  # |010>
         [0],  # |011>
         [0],  # |100>
-        [0],  # |101>
+        [1],  # |101>
         [0],  # |110>
         [0]  # |111>
     ])
