@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from qcp.matrices import SparseMatrix
-from qcp.matrices import SparseMatrix
 import qcp.gates as gts
 import pytest
 
