@@ -78,23 +78,48 @@ def test_control_x():
     ])
     assert cx_4x4.get_state() == expected_4x4.get_state()
 
-    # Create a |00> + |10> qbit state:
-    two_qubits = SparseMatrix({0: {0: 1}, 1: {}, 2: {0: 1}, 3: {}})
+    # Create a |00> + |10> qbit state (non-normalised as that doesn't matter
+    # for tests):
+    two_qubits = SparseMatrix([
+        [1],  # |00>
+        [0],  # |01>
+        [1],  # |10>
+        [0]  # |11>
+    ])
 
     # The first qbit should be untouched, the second should be flipped
     transformed_qbits = cx_4x4 * two_qubits
-    expected_2_qbits = SparseMatrix({0: {0: 1}, 1: {}, 2: {}, 3: {0: 1}})
+    expected_2_qbits = SparseMatrix([
+        [1],  # |00>
+        [0],  # |01>
+        [0],  # |10>
+        [1]  # |11>
+    ])
     assert transformed_qbits.get_state() == expected_2_qbits.get_state()
 
-    cx_8x8 = gts.control_x(3, [1], 3)
-    # | 000 >
-    three_qbits = SparseMatrix({
-        0: {0: 1}, 1: {}, 2: {}, 3: {},
-        4: {}, 5: {}, 6: {}, 7: {}})
+    cx_8x8 = gts.control_x(3, [1], 7)
+    # Set the 3 qbit state to initially be in |000>
+    three_qbits = SparseMatrix([
+        [1],  # |000>
+        [0],  # |001>
+        [0],  # |010>
+        [0],  # |011>
+        [0],  # |100>
+        [0],  # |101>
+        [0],  # |110>
+        [0]  # |111>
+    ])
     transform_3qbits = cx_8x8 * three_qbits
-    expected_3qbits = SparseMatrix({
-        0: {0: 1}, 1: {}, 2: {}, 3: {},
-        4: {}, 5: {}, 6: {}, 7: {}})
+    expected_3qbits = SparseMatrix([
+        [1],  # |000>
+        [0],  # |001>
+        [0],  # |010>
+        [0],  # |011>
+        [0],  # |100>
+        [0],  # |101>
+        [0],  # |110>
+        [0]  # |111>
+    ])
 
     assert transform_3qbits.get_state() == expected_3qbits.get_state()
 
