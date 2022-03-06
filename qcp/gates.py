@@ -14,7 +14,6 @@
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix
 import constants as c
-from qcp.matrices import SPARSE
 import tensor_product as tp
 from typing import List
 from enum import Enum
@@ -72,76 +71,61 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-x gate with
     given controls and target
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
-    :param target int: target qubit the x gate will be applied to
-    :returns Matrix: Matrix representing the gate
+    :param size: total number of qubits in circuit ->
+    :param controls: List of control qubits -> List[int]
+    :param target: target qubit the x gate will be applied to -> int
+    :return: Matrix(int)
     """
-    assert size > 1, "need minimum of two qubits"
-    n = 2 ** size
-    assert isinstance(controls, list)
-    for con in controls:
-        assert con < n, "control bit out of range"
-    assert target < n, "target bit out of range"
-    assert len(controls) <= n, "too many control bits provided."
+    m = []
 
-    assert target not in \
-        controls, "control bits and target bit cannot be the same"
+    for i in range(0, 2 ** size):
+        f = '0' + str(size) + 'b'
+        binary = list(format(i, f))
 
-    m: SPARSE = {}
+        conditions = [binary[-j] == "1" for j in controls]
 
-    mask = sum(2**c for c in set(controls))
-    diff = size - mask.bit_length()
-    mask <<= diff
+        if all(conditions):
+            if binary[-target] == "0":
+                binary[-target] = "1"
+            else:
+                binary[-target] = "0"
 
-    for i in range(0, n):
-        condition = i & mask
+        num = "".join(binary)
+        number = int(num, base=2)
 
-        x = i
-        if (condition >> diff) % 2:
-            x = i ^ (1 << (target - 1))
-
-        m[i] = {x: 1}
-
-    return DefaultMatrix(m, h=n, w=n)
+        row = zeros_list(2 ** size)
+        row[number] = 1
+        m.append(row)
+    x = DefaultMatrix(m)
+    return x
 
 
 def control_z(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-z gate with
      given controls and target
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
-    :param target int: target qubit the z gate will be
-                    applied to
-    :return Matrix: Matrix representing the gate
+    :param size: total number of qubits in circuit ->
+    :param controls: List of control qubits -> List[int]
+    :param target: target qubit the z gate will be
+                    applied to -> int
+    :return: Matrix(int)
     """
-    assert size > 1, "need minimum of two qubits"
-    n = 2 ** size
-    assert isinstance(controls, list)
-    for con in controls:
-        assert con < n, "control bit out of range"
-    assert target < n, "target bit out of range"
-    assert len(controls) <= n, "too many control bits provided."
+    m = []
 
-    assert target not in \
-        controls, "control bits and target bit cannot be the same"
+    for i in range(0, 2 ** size):
+        f = '0' + str(size) + 'b'
+        binary = list(format(i, f))
 
-    m: SPARSE = {}
+        row = zeros_list(2 ** size)
+        conditions = [binary[-j] == "1" for j in controls]
 
-    mask = sum(2**c for c in set(controls))
-    diff = size - mask.bit_length()
-    mask <<= diff
-
-    for i in range(0, n):
-        condition = i | mask
-
-        val = 1
-        if condition % 2 and ((i ^ target) >> diff) % 2:
-            val = -1
-        m[i] = {i: val}
-
-    return DefaultMatrix(m, h=n, w=n)
+        if all(conditions) and binary[-target] == "1":
+            row[i] = -1
+        else:
+            row[i] = 1
+        m.append(row)
+    z = DefaultMatrix(m)
+    return z
 
 
 def control_phase(size: int, controls: List[int], target: int,
@@ -149,39 +133,40 @@ def control_phase(size: int, controls: List[int], target: int,
     """
     Constructs a (2**size by 2**size) control-phase gate with
      given controls and target
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
-    :param target int: target qubit the phase gate will be
-                    applied to
-    :param phi complex: angle the target qubit will be phase
-                    shifted by
-    :return Matrix: Matrix representing the gate
+    :param size: total number of qubits in circuit ->
+    :param controls: List of control qubits -> List[int]
+    :param target: target qubit the phase gate will be
+                    applied to -> int
+    :param phi: angle the target qubit will be phase
+                    shifted by -> complex
+    :return: Matrix(complex)
     """
-    assert size > 1, "need minimum of two qubits"
-    n = 2 ** size
-    assert isinstance(controls, list)
-    for con in controls:
-        assert con < n, "control bit out of range"
-    assert target < n, "target bit out of range"
-    assert len(controls) <= n, "too many control bits provided."
 
-    assert target not in \
-        controls, "control bits and target bit cannot be the same"
+    m = []
 
-    m: SPARSE = {}
+    for i in range(0, 2 ** size):
+        f = '0' + str(size) + 'b'
+        binary = list(format(i, f))
 
-    mask = sum(2**c for c in set(controls))
-    diff = size - mask.bit_length()
-    mask <<= diff
+        row = zeros_list(2 ** size)
+        conditions = [binary[-j] == "1" for j in controls]
 
-    for i in range(0, n):
-        condition = i | mask
+        if all(conditions) and binary[-target] == "1":
+            row[i] = cmath.exp(1j * phi)
+        else:
+            row[i] = 1
+        m.append(row)
+    p = DefaultMatrix(m)
+    return p
 
-        val = 1+0j
-        if condition % 2 and ((i ^ target) >> diff) % 2:
-            val = cmath.exp(1j * phi)
-        m[i] = {i: val}
-    return DefaultMatrix(m, h=n, w=n)
+
+def zeros_list(n: int):
+    """
+    Creates a list of size n full of zeros
+    :param n: size of list
+    :return: list[int]
+    """
+    return [(0 + 0j) for _ in range(n)]
 
 
 def phase_shift(phi: complex) -> Matrix:
