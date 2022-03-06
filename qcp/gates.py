@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import cmath
-from qcp.matrices import Matrix, DefaultMatrix
+from qcp.matrices import Matrix, DefaultMatrix, SPARSE
 import constants as c
 from tensor_product import tensor_product
 from typing import List
