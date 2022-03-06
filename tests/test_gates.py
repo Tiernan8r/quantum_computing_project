@@ -62,16 +62,6 @@ def test_control_x():
     ])
     assert cx_4x4_2.get_state() == expected_4x4_2.get_state()
 
-    # n = 3
-    # for i in range(n):
-    #     st = [j for j in range(n) if j != i]
-    #     for j in range(len(st)):
-    #         a = st[:j+1]
-    #         print(f"TARGET={i} : CONTROLS={a}")
-    #         cx = gts.control_x(n, a, i)
-    #         print(cx)
-    #         print()
-
     # Create a |00> + |10> qbit state (non-normalised as that doesn't matter
     # for tests):
     two_qubits = SparseMatrix([
