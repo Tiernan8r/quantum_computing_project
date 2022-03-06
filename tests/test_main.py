@@ -19,3 +19,7 @@ def test_main():
         main.main()
     except Exception:
         assert False, "main() raised an exception."
+
+
+if __name__ == '__main__':
+    test_main()
