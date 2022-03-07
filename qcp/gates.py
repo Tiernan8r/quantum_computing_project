@@ -182,10 +182,6 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     # bitmask is 10101 in binary notation
     mask = sum(2**c for c in set(controls))
 
-    # Invert all bits in place in the bitmask
-    # flip_mask = sum(2**i for i in range(size))
-    # mask ^= flip_mask
-
     target_bit = 2**target
 
     for i in range(0, n):
@@ -196,10 +192,7 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
         # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
         # Can be determined by taking their modulus with 2, since binary is in
         # powers of 2.
-        # We bitshift right by the target index, as we want to ignore that bit
-        shift = size - 1 - target
-        # if condition % 2 and ((i ^ target) >> shift) % 2:
-        if condition % 2 and condition != target:
+        if condition % 2 and i//size not in controls:
             val = -1
         m[i] = {i: val}
 
