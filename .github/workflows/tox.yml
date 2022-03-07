@@ -14,7 +14,7 @@ jobs:
       envlist: ${{ steps.generate-envlist.outputs.envlist }}
     steps:
       # Checkout project code to get tox.ini:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # Install tox and tox-gh-matrix:
       - run: python -m pip install tox tox-gh-matrix
       # Run `tox --gh-matrix` to generate the JSON list:
@@ -37,11 +37,11 @@ jobs:
     name: ${{ matrix.tox.name }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # Install the required Python version if necessary:
       - name: Setup Python ${{ matrix.tox.python.version }}
         if: matrix.tox.python.spec && ! matrix.tox.python.installed
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.tox.python.spec }}
       # Install tox (you don't need tox-gh-matrix at this point):
