@@ -14,6 +14,7 @@
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix, SPARSE
 import constants as c
+from qcp.matrices.types import VECTOR
 from tensor_product import tensor_product
 from typing import List
 
@@ -197,6 +198,33 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
         m[i] = {i: val}
 
     return DefaultMatrix(m, h=n, w=n)
+
+# class Gate(Matrix):
+#     _sm: DenseMatrix
+#     _smDim: int
+#     _qbpos: List[int]
+
+#     def apply(self, v: VECTOR):
+#         w: VECTOR = Vector(Dimension)
+#         for i in range(Dimension):
+#             r = self.gather(i)
+#             i0 = i & ~self.scatter(r)
+#             for c in range(self._smDim):
+#                 j = i0 | self.scatter(c)
+#                 w[i] += self._sm[r][c] * v[j]
+#         return w
+
+#     def gather(self, i):
+#         j = 0
+#         for k in range(len(self._qbpos)):
+#             j |= ((i >> self._qbpos[k]) & 1) << k
+#         return j
+
+#     def scatter(self, j):
+#         i = 0
+#         for k in range(len(self._qbpos)):
+#             i |= ((j >> k) & 1) << self._qbpos[k]
+#         return i
 
 
 def control_phase(size: int, controls: List[int], target: int,
