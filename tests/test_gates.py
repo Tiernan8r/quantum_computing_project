@@ -24,7 +24,6 @@ def test_control_x():
     # Gate needs a minimum of two qubits to make sense
     with pytest.raises(AssertionError) as ae1:
         gts.control_x(1, [], 0)
-
     assert ae1.match("need minimum of two qubits")
 
     # Control bits need to be within qubit range:
@@ -145,9 +144,9 @@ def test_control_z():
     cz_4x4_2 = gts.control_z(2, [1], 0)
     expected_4x4_2 = SparseMatrix([
         [1, 0, 0, 0],
-        [0, 0, 0, 1],
+        [0, -1, 0, 0],
         [0, 0, 1, 0],
-        [0, 1, 0, 0]
+        [0, 0, 0, 1]
     ])
     assert cz_4x4_2.get_state() == expected_4x4_2.get_state()
 

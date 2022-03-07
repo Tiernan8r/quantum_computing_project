@@ -183,11 +183,13 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     mask = sum(2**c for c in set(controls))
 
     # Invert all bits in place in the bitmask
-    flip_mask = sum(2**i for i in range(size))
-    mask ^= flip_mask
+    # flip_mask = sum(2**i for i in range(size))
+    # mask ^= flip_mask
+
+    target_bit = 2**target
 
     for i in range(0, n):
-        condition = (i | mask) >> target
+        condition = i & (mask | target_bit)
 
         val = 1
         # Modulo 2 filters out an bits that don't meet the condition,
@@ -196,7 +198,8 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
         # powers of 2.
         # We bitshift right by the target index, as we want to ignore that bit
         shift = size - 1 - target
-        if condition % 2 and ((i ^ target) >> shift) % 2:
+        # if condition % 2 and ((i ^ target) >> shift) % 2:
+        if condition % 2 and condition != target:
             val = -1
         m[i] = {i: val}
 
