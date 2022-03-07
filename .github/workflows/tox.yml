@@ -41,7 +41,7 @@ jobs:
       # Install the required Python version if necessary:
       - name: Setup Python ${{ matrix.tox.python.version }}
         if: matrix.tox.python.spec && ! matrix.tox.python.installed
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.tox.python.spec }}
       # Install tox (you don't need tox-gh-matrix at this point):
