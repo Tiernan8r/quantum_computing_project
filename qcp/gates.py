@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import cmath
-from qcp.matrices import Matrix, DefaultMatrix
+from qcp.matrices import Matrix, DefaultMatrix, SPARSE
 import constants as c
-from qcp.matrices import SPARSE
 import tensor_product as tp
 from typing import List
 from enum import Enum
@@ -67,39 +66,75 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
             m = tp.tensor_product(m, c.IDENTITY)
     return m
 
+# NOTE:
+# The way the control/target bit is indexed is by indexing the
+# control bit in the byte notation:
+# E.g: 13 = 1101 in bit notation, so this is indexed as
+#       +---+---+---+---+
+# BITS  | 1 | 1 | 0 | 1 |
+#       +---+---+---+---+
+# INDEX | 3 | 2 | 1 | 0 |
+#       +---+---+---+---+
+# in the usual little endian indexing notation
+# Therefore, in this example, the target/control bits are in the index
+# range [0, 3]
+
 
 def control_x(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-x gate with
     given controls and target
     :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
+    :param controls List[int]: List of control qubits, if empty, 0th bit is
+                                used as the control.
     :param target int: target qubit the x gate will be applied to
     :returns Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
     assert isinstance(controls, list)
+
+    # Make sure the control/target bits are within the qbit size
+    bit_bounds = range(size)
     for con in controls:
-        assert con < n, "control bit out of range"
-    assert target < n, "target bit out of range"
-    assert len(controls) <= n, "too many control bits provided."
+        assert con in bit_bounds, "control bit out of range"
+    assert target in bit_bounds, "target bit out of range"
 
     assert target not in \
         controls, "control bits and target bit cannot be the same"
 
     m: SPARSE = {}
 
+    # Use set() to ignore repeat control bits, as we are only interested in
+    # unique control bits
+    # since the controls are the bit positions, we can convert this to a
+    # bitmask by summing them at 2**idx
+    # EG: controls = [0, 2, 4]
+    # corresponds to 0, 4, 16 as numbers,
+    # bitmask is 10101 in binary notation
     mask = sum(2**c for c in set(controls))
-    diff = size - mask.bit_length()
-    mask <<= diff
 
+    # Invert all bits in place in the bitmask
+    flip_mask = sum(2**i for i in range(size))
+    mask ^= flip_mask
+
+    # Iterate over states in the gate
     for i in range(0, n):
-        condition = i & mask
+        # If the bits pass the mask condition, they need to be flipped
+        condition = (i & mask) >> target
 
         x = i
-        if (condition >> diff) % 2:
-            x = i ^ (1 << (target - 1))
+        # Modulo 2 filters out an bits that don't meet the condition,
+        # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
+        # Can be determined by taking their modulus with 2, since binary is in
+        # powers of 2.
+        # We bitshift right by the target index, as we want to ignore that bit
+        if condition % 2:
+            # The bit to target is indexed in Big Endian notation,
+            # so need to shift the target relative to the last bit index
+            shift = size - 1 - target
+            # bit flip the targetted bit when it meets the criteria
+            x = i ^ (1 << shift)
 
         m[i] = {x: 1}
 
