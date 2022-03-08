@@ -20,23 +20,23 @@ import pytest
 def test_multi_gate():
     # Verify each of the enums:
     # HADAMARD Gate:
-    had = gts.multi_gate(1, [0], gts.Gate.H)
+    had = gts.multi_gate(1, [0], const.Gate.H)
     assert had.get_state() == const.TWO_HADAMARD.get_state()
 
     # PAULI-X Gate:
-    pauli_x = gts.multi_gate(1, [0], gts.Gate.X)
+    pauli_x = gts.multi_gate(1, [0], const.Gate.X)
     assert pauli_x.get_state() == const.PAULI_X.get_state()
 
     # PAULI-Z Gate:
-    pauli_z = gts.multi_gate(1, [0], gts.Gate.Z)
+    pauli_z = gts.multi_gate(1, [0], const.Gate.Z)
     assert pauli_z.get_state() == const.PAULI_Z.get_state()
 
     # PHASE SHIFT Gate:
-    phase = gts.multi_gate(1, [0], gts.Gate.P)
+    phase = gts.multi_gate(1, [0], const.Gate.P)
     assert phase.get_state() == gts.phase_shift(0j).get_state()
 
     # UNSPECIFIED/IDENTITY:
-    id = gts.multi_gate(1, [0], gts.Gate.I)
+    id = gts.multi_gate(1, [0], const.Gate.I)
     assert id.get_state() == DefaultMatrix.identity(2**1).get_state()
 
 

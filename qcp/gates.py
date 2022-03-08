@@ -19,21 +19,13 @@ from typing import List
 from enum import Enum
 
 
-class Gate(Enum):
-    """Enum class to encode gate options in multi_gates"""
-    H = "h"
-    X = "x"
-    Z = "z"
-    P = "p"
-    I = "i"  # noqa: E741
-
 # Notation note : |001> represents a 3 qubit system where the first qubit is
 # |1> and the second and third qubit is |0>
 # Targets and Controls work off this notation but you only need to enter the
 # number of the qubit you want to target/control
 
 
-def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
+def multi_gate(size: int, targets: List[int], gate: c.Gate, phi=0j) -> Matrix:
     """
     Constructs a (2**size by 2**size) gate matrix that applies a
     specific gate to one or more specified qubits
@@ -46,13 +38,13 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
     :return Matrix: Matrix representing the composite gate
     """
 
-    if gate == Gate.H:
+    if gate == c.Gate.H:
         g = c.TWO_HADAMARD
-    elif gate == Gate.X:
+    elif gate == c.Gate.X:
         g = c.PAULI_X
-    elif gate == Gate.Z:
+    elif gate == c.Gate.Z:
         g = c.PAULI_Z
-    elif gate == Gate.P:
+    elif gate == c.Gate.P:
         g = phase_shift(phi)
     else:
         return DefaultMatrix.identity(2**size)
