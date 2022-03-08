@@ -123,7 +123,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
         # Can be determined by taking their modulus with 2, since binary is in
         # powers of 2.
         # We bitshift right by the target index, as we want to ignore that bit
-        if condition % 2:
+        if condition % 2 == 1:
             # The bit to target is indexed in Big Endian notation,
             # so need to shift the target relative to the last bit index
             shift = size - 1 - target
@@ -162,6 +162,19 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     z = DefaultMatrix(m)
     return z
 
+# NOTE:
+# The way the control/target bit is indexed is by indexing the
+# control bit in the byte notation:
+# E.g: 13 = 1101 in bit notation, so this is indexed as
+#       +---+---+---+---+
+# BITS  | 1 | 1 | 0 | 1 |
+#       +---+---+---+---+
+# INDEX | 3 | 2 | 1 | 0 |
+#       +---+---+---+---+
+# in the usual little endian indexing notation
+# Therefore, in this example, the target/control bits are in the index
+# range [0, 3]
+
 
 def control_phase(size: int, controls: List[int], target: int,
                   phi: complex) -> Matrix:
@@ -179,27 +192,37 @@ def control_phase(size: int, controls: List[int], target: int,
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
     assert isinstance(controls, list)
+
+    # Make sure the control/target bits are within the qbit size
+    bit_bounds = range(size)
     for con in controls:
-        assert con < n, "control bit out of range"
-    assert target < n, "target bit out of range"
-    assert len(controls) <= n, "too many control bits provided."
+        assert con in bit_bounds, "control bit out of range"
+    assert target in bit_bounds, "target bit out of range"
 
     assert target not in \
         controls, "control bits and target bit cannot be the same"
 
     m: SPARSE = {}
 
+    # Use set() to ignore repeat control bits, as we are only interested in
+    # unique control bits
+    # since the controls are the bit positions, we can convert this to a
+    # bitmask by summing them at 2**idx
+    # EG: controls = [0, 2, 4]
+    # corresponds to 0, 4, 16 as numbers,
+    # bitmask is 10101 in binary notation
     mask = sum(2**c for c in set(controls))
-    diff = size - mask.bit_length()
-    mask <<= diff
+
+    target_bit = 2**target
 
     for i in range(0, n):
-        condition = i | mask
+        condition = i & (mask | target_bit)
 
         val = 1+0j
-        if condition % 2 and ((i ^ target) >> diff) % 2:
+        if condition % 2 and i//size not in controls:
             val = cmath.exp(1j * phi)
         m[i] = {i: val}
+
     return DefaultMatrix(m, h=n, w=n)
 
 
