@@ -175,6 +175,19 @@ def test_control_phase():
     cp_4x4_4 = gts.control_phase(2, [0], 1, 2 * math.pi)
     h.compare_matrices(cp_4x4_4, expected_4x4_0)
 
+    cp_8x8 = gts.control_phase(3, [0], 1, math.pi)
+    expected_8x8 = SparseMatrix([
+        [1, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, -1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, -1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, -1]
+    ])
+    h.compare_matrices(cp_8x8, expected_8x8)
+
 
 def test_phase_shift():
     pass
