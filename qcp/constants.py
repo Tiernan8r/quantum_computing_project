@@ -13,20 +13,10 @@
 # limitations under the License.
 from qcp.matrices import DefaultMatrix
 import math
-import enum
 
 IDENTITY = DefaultMatrix([[1, 0], [0, 1]])
-TWO_HADAMARD = DefaultMatrix([[1, 1], [1, -1]]) * (1/math.sqrt(2))
+TWO_HADAMARD = (1/math.sqrt(2)) * DefaultMatrix([[1, 1], [1, -1]])
 ZERO_VECTOR = DefaultMatrix([[1], [0]])
 ONE_VECTOR = DefaultMatrix([[0], [1]])
 PAULI_X = DefaultMatrix([[0, 1], [1, 0]])
 PAULI_Z = DefaultMatrix([[1, 0], [0, -1]])
-
-
-class Gate(enum.Enum):
-    """Enum class to encode gate options in multi_gates"""
-    H = "h"
-    X = "x"
-    Z = "z"
-    P = "p"
-    I = "i"  # noqa: E741

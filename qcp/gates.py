@@ -16,8 +16,16 @@ from qcp.matrices import Matrix, DefaultMatrix, SPARSE
 import constants as c
 import tensor_product as tp
 from typing import List
-from enum import Enum
+import enum
 
+
+class Gate(enum.Enum):
+    """Enum class to encode gate options in multi_gates"""
+    H = "h"
+    X = "x"
+    Z = "z"
+    P = "p"
+    I = "i"  # noqa: E741
 
 # Notation note : |001> represents a 3 qubit system where the first qubit is
 # |1> and the second and third qubit is |0>
@@ -25,7 +33,7 @@ from enum import Enum
 # number of the qubit you want to target/control
 
 
-def multi_gate(size: int, targets: List[int], gate: c.Gate, phi=0j) -> Matrix:
+def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
     """
     Constructs a (2**size by 2**size) gate matrix that applies a
     specific gate to one or more specified qubits
@@ -38,13 +46,13 @@ def multi_gate(size: int, targets: List[int], gate: c.Gate, phi=0j) -> Matrix:
     :return Matrix: Matrix representing the composite gate
     """
 
-    if gate == c.Gate.H:
+    if gate is Gate.H:
         g = c.TWO_HADAMARD
-    elif gate == c.Gate.X:
+    elif gate is Gate.X:
         g = c.PAULI_X
-    elif gate == c.Gate.Z:
+    elif gate is Gate.Z:
         g = c.PAULI_Z
-    elif gate == c.Gate.P:
+    elif gate is Gate.P:
         g = phase_shift(phi)
     else:
         return DefaultMatrix.identity(2**size)
@@ -53,9 +61,9 @@ def multi_gate(size: int, targets: List[int], gate: c.Gate, phi=0j) -> Matrix:
 
     for i in range(size):
         if i in targets:
-            m = tp.tensor_product(m, g)
+            m = tp.tensor_product(g, m)
         else:
-            m = tp.tensor_product(m, c.IDENTITY)
+            m = tp.tensor_product(c.IDENTITY, m)
     return m
 
 # NOTE:
