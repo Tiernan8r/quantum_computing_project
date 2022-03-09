@@ -38,8 +38,10 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
 
     # creates an (m*p)*(n*q) list for the answer matrix
     entries: MATRIX = [
-        [0.0 for _ in range(row_width)] for _ in range(column_width)
+        [0.0 for _ in range(column_width)] for _ in range(row_width)
     ]
+    if row_width == 1:
+        entries = [[0.0 for _ in range(column_width)]]
 
     # The tensor product is defined as follows:
     # A * B =
