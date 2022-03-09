@@ -280,25 +280,57 @@ class SparseMatrix(Matrix):
         assert self.num_columns == other.num_rows, \
             "matrices don't match on their row/column dimensions"
 
-        new_matrix = SparseMatrix([], w=other.num_columns, h=self.num_rows)
+        if isinstance(other, SparseMatrix):
+            return self._dot_sparse(other)
 
         entries: SPARSE = {
             i: {} for i in range(self.num_rows)
         }
 
         for i, row in self._entries.items():
-            for j in range(new_matrix.num_columns):
+            for j in range(other.num_columns):
                 # only need to calculate using the non-zero entries of self
-                # TODO: Can further optimise this 'other' is also a
-                # SparseMatrix by only using it's non-zero entries too
+                # Don't save entries that are ~= 0
                 val = sum([other[k][j] * row[k] for k in row.keys()])
                 if cmath.isclose(val, 0):
                     continue
                 entries[i][j] = val
 
-        new_matrix._entries = entries
+        return SparseMatrix(entries, w=other.num_columns, h=self.num_rows)
 
-        return new_matrix
+    def _dot_sparse(self, other: SparseMatrix) -> SparseMatrix:
+        # Don't need to check dimensions, as the _dot() method has already
+        # done it for us.
+        entries: SPARSE = {
+            i: {} for i in range(self.num_rows)
+        }
+
+        other_entries = other._entries
+
+        # Multiply entries in row/columns by each other
+        for i, row in self._entries.items():
+            for j in range(other.num_columns):
+
+                for k in row.keys():
+                    # If the entry doesn't exist in the other
+                    # dictionary row/column, skip the entry
+                    if k not in other_entries:
+                        continue
+                    if j not in other_entries[k]:
+                        continue
+                    # row[k] is guaranteed to be non-zero since we're iterating
+                    # over row.keys()
+                    val = other_entries[k][j] * row[k]
+                    # Don't add on the value if it is ~= 0
+                    if cmath.isclose(val, 0):
+                        continue
+
+                    if j not in entries[i]:
+                        entries[i][j] = val
+                    else:
+                        entries[i][j] += val
+
+        return SparseMatrix(entries, w=other.num_columns, h=self.num_rows)
 
     def __str__(self) -> str:
         total_string = ""
