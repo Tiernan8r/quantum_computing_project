@@ -18,13 +18,15 @@ def pull_set_bits(n):
 
 class Grovers:
     def __init__(self, size, target_state):
+        assert(target_state < (2**size))
+
         self.size = size
         self.target = target_state
         self.state = self.initial_state()
 
         self.oracle = self.single_target_oracle()
         self.diffuser = self.diffusion()
-        self.max_reflections = self.size - 1
+        self.max_reflections = self.size - 1  # can only reflect size-1 times for maximum probability
 
         self.circuit = self.construct_circuit()
 
@@ -38,7 +40,6 @@ class Grovers:
 
         not_placement = (2 ** self.size) - 1 - self.target
         t = pull_set_bits(not_placement)
-
         cz = g.control_z(self.size, [i for i in range(0, self.size - 1)], self.size - 1)
         selector = g.multi_gate(self.size, t, g.Gate.X)
         oracle = selector * cz
@@ -56,13 +57,19 @@ class Grovers:
         circuit = g.multi_gate(self.size, [i for i in range(0, self.size)], g.Gate.H)
 
         while self.max_reflections > 0:
-            circuit *= self.oracle
-            circuit *= self.diffuser
+            circuit = self.oracle * circuit
+            circuit = self.diffuser * circuit
             self.max_reflections -= 1
         return circuit
 
     def probabilities(self):
         pass
 
+    def run(self):
+        result = self.circuit * self.state
+        return result
 
-x = Grovers(3, 4)
+
+grovs = Grovers(4, 3)
+r = grovs.run()
+print(r)
