@@ -51,7 +51,7 @@ class Grovers:
         Creates a state vector corresponding to |0..0>
         :return: returns state vector
         """
-        entries = [[0] for _ in range(self.size)]
+        entries = [[0] for _ in range(2 ** self.size)]
         entries[0][0] = 1
         return DefaultMatrix(entries)
 
