@@ -57,7 +57,7 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
     else:
         return DefaultMatrix.identity(2**size)
 
-    m = DefaultMatrix([[1]])
+    m: Matrix = DefaultMatrix([[1]])
 
     for i in range(size):
         if i in targets:
