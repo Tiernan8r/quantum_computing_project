@@ -11,7 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.matrices import SparseMatrix
+from qcp.matrices import DefaultMatrix, SparseMatrix
+import math
+import tests.test_helpers as h
 import qcp.gates as gts
 import pytest
 
@@ -156,4 +158,17 @@ def test_control_phase():
 
 
 def test_phase_shift():
-    pass
+    ps1 = gts.phase_shift(0)
+    ps2 = gts.phase_shift(math.pi/2)
+    ps3 = gts.phase_shift(math.pi)
+    ps4 = gts.phase_shift(3*math.pi/2)
+
+    expected1 = DefaultMatrix([[1, 0], [0, 1]])
+    expected2 = DefaultMatrix([[1, 0], [0, 1j]])
+    expected3 = DefaultMatrix([[1, 0], [0, -1]])
+    expected4 = DefaultMatrix([[1, 0], [0, -1j]])
+
+    h.compare_matrices(ps1, expected1)
+    h.compare_matrices(ps2, expected2)
+    h.compare_matrices(ps3, expected3)
+    h.compare_matrices(ps4, expected4)
