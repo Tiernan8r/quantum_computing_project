@@ -109,7 +109,46 @@ def test_control_x():
 
 
 def test_control_z():
-    pass
+    # Gate needs a minimum of two qubits to make sense
+    with pytest.raises(AssertionError) as ae1:
+        gts.control_z(1, [], 0)
+    assert ae1.match("need minimum of two qubits")
+
+    # Control bits need to be within qubit range:
+    with pytest.raises(AssertionError) as ae2:
+        gts.control_z(2, [5], 0)
+    assert ae2.match("control bit out of range")
+
+    # Target bit needs to be within qubit range:
+    with pytest.raises(AssertionError) as ae3:
+        gts.control_z(2, [1], 4)
+    assert ae3.match("target bit out of range")
+
+    # Target qbit needs to be not one of the control bits:
+    with pytest.raises(AssertionError) as ae4:
+        gts.control_z(2, [0], 0)
+    assert ae4.match("control bits and target bit cannot be the same")
+
+    # Two qbit state has two options for the control/target position:
+    # Test for 1st expected result
+    cz_4x4 = gts.control_z(2, [0], 1)
+    expected_4x4 = SparseMatrix([
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, -1]
+    ])
+    assert cz_4x4.get_state() == expected_4x4.get_state()
+
+    # Test for second:
+    cz_4x4_2 = gts.control_z(2, [1], 0)
+    expected_4x4_2 = SparseMatrix([
+        [1, 0, 0, 0],
+        [0, -1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ])
+    assert cz_4x4_2.get_state() == expected_4x4_2.get_state()
 
 
 def test_control_phase():

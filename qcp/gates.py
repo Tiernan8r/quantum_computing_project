@@ -134,33 +134,69 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
 
     return DefaultMatrix(m, h=n, w=n)
 
+# NOTE:
+# The way the control/target bit is indexed is by indexing the
+# control bit in the byte notation:
+# E.g: 13 = 1101 in bit notation, so this is indexed as
+#       +---+---+---+---+
+# BITS  | 1 | 1 | 0 | 1 |
+#       +---+---+---+---+
+# INDEX | 3 | 2 | 1 | 0 |
+#       +---+---+---+---+
+# in the usual little endian indexing notation
+# Therefore, in this example, the target/control bits are in the index
+# range [0, 3]
+
 
 def control_z(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-z gate with
      given controls and target
-    :param size: total number of qubits in circuit ->
-    :param controls: List of control qubits -> List[int]
-    :param target: target qubit the z gate will be
-                    applied to -> int
-    :return: Matrix(int)
+    :param size int: total number of qubits in circuit
+    :param controls List[int]: List of control qubits
+    :param target int: target qubit the z gate will be
+                    applied to
+    :return Matrix: Matrix representing the gate
     """
-    m = []
+    assert size > 1, "need minimum of two qubits"
+    n = 2 ** size
+    assert isinstance(controls, list)
 
-    for i in range(0, 2 ** size):
-        f = '0' + str(size) + 'b'
-        binary = list(format(i, f))
+    # Make sure the control/target bits are within the qbit size
+    bit_bounds = range(size)
+    for con in controls:
+        assert con in bit_bounds, "control bit out of range"
+    assert target in bit_bounds, "target bit out of range"
 
-        row = zeros_list(2 ** size)
-        conditions = [binary[-j] == "1" for j in controls]
+    assert target not in \
+        controls, "control bits and target bit cannot be the same"
 
-        if all(conditions) and binary[-target] == "1":
-            row[i] = -1
-        else:
-            row[i] = 1
-        m.append(row)
-    z = DefaultMatrix(m)
-    return z
+    m: SPARSE = {}
+
+    # Use set() to ignore repeat control bits, as we are only interested in
+    # unique control bits
+    # since the controls are the bit positions, we can convert this to a
+    # bitmask by summing them at 2**idx
+    # EG: controls = [0, 2, 4]
+    # corresponds to 0, 4, 16 as numbers,
+    # bitmask is 10101 in binary notation
+    mask = sum(2**c for c in set(controls))
+
+    target_bit = 2**target
+
+    for i in range(0, n):
+        condition = i & (mask | target_bit)
+
+        val = 1
+        # Modulo 2 filters out an bits that don't meet the condition,
+        # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
+        # Can be determined by taking their modulus with 2, since binary is in
+        # powers of 2.
+        if condition % 2 and i//size not in controls:
+            val = -1
+        m[i] = {i: val}
+
+    return DefaultMatrix(m, h=n, w=n)
 
 
 def control_phase(size: int, controls: List[int], target: int,
