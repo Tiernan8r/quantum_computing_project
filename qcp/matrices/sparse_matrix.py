@@ -322,7 +322,11 @@ class SparseMatrix(Matrix):
                     # Don't add on the value if it is ~= 0
                     if cmath.isclose(val, 0):
                         continue
-                    entries[i][j] += val
+
+                    if j not in entries[i]:
+                        entries[i][j] = val
+                    else:
+                        entries[i][j] += val
 
         return SparseMatrix(entries, w=other.num_columns, h=self.num_rows)
 
