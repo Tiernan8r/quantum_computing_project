@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.matrices import SparseMatrix
+from qcp.matrices import DefaultMatrix, SparseMatrix
 import math
 import tests.test_helpers as h
 import qcp.gates as gts
@@ -111,7 +111,46 @@ def test_control_x():
 
 
 def test_control_z():
-    pass
+    # Gate needs a minimum of two qubits to make sense
+    with pytest.raises(AssertionError) as ae1:
+        gts.control_z(1, [], 0)
+    assert ae1.match("need minimum of two qubits")
+
+    # Control bits need to be within qubit range:
+    with pytest.raises(AssertionError) as ae2:
+        gts.control_z(2, [5], 0)
+    assert ae2.match("control bit out of range")
+
+    # Target bit needs to be within qubit range:
+    with pytest.raises(AssertionError) as ae3:
+        gts.control_z(2, [1], 4)
+    assert ae3.match("target bit out of range")
+
+    # Target qbit needs to be not one of the control bits:
+    with pytest.raises(AssertionError) as ae4:
+        gts.control_z(2, [0], 0)
+    assert ae4.match("control bits and target bit cannot be the same")
+
+    # Two qbit state has two options for the control/target position:
+    # Test for 1st expected result
+    cz_4x4 = gts.control_z(2, [0], 1)
+    expected_4x4 = SparseMatrix([
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, -1]
+    ])
+    assert cz_4x4.get_state() == expected_4x4.get_state()
+
+    # Test for second:
+    cz_4x4_2 = gts.control_z(2, [1], 0)
+    expected_4x4_2 = SparseMatrix([
+        [1, 0, 0, 0],
+        [0, -1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ])
+    assert cz_4x4_2.get_state() == expected_4x4_2.get_state()
 
 
 def test_control_phase():
@@ -190,4 +229,17 @@ def test_control_phase():
 
 
 def test_phase_shift():
-    pass
+    ps1 = gts.phase_shift(0)
+    ps2 = gts.phase_shift(math.pi/2)
+    ps3 = gts.phase_shift(math.pi)
+    ps4 = gts.phase_shift(3*math.pi/2)
+
+    expected1 = DefaultMatrix([[1, 0], [0, 1]])
+    expected2 = DefaultMatrix([[1, 0], [0, 1j]])
+    expected3 = DefaultMatrix([[1, 0], [0, -1]])
+    expected4 = DefaultMatrix([[1, 0], [0, -1j]])
+
+    h.compare_matrices(ps1, expected1)
+    h.compare_matrices(ps2, expected2)
+    h.compare_matrices(ps3, expected3)
+    h.compare_matrices(ps4, expected4)
