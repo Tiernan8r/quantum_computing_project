@@ -2,6 +2,7 @@ from qcp.matrices import Matrix, DefaultMatrix, SPARSE
 import constants as c
 import tensor_product as tp
 import gates as g
+import random
 
 
 def pull_set_bits(n: int):
@@ -108,7 +109,20 @@ class Grovers:
         self.state = result
         return result
 
+    def measure(self):
+        p = list(map(lambda x: x ** 2, self.state.transpose().get_state()[0]))
+
+        observed = random.choices([i for i in range(len(p))], p, k=1)
+        probability = p[observed[0]]
+        return observed[0], probability
+
 
 grovs = Grovers(5, 6)
-r = grovs.run()
-print(r)
+v = grovs.run()
+
+m, p = grovs.measure()
+print("Observed state: ¦" + str(m) + ">")
+print("With probability: " + str(p))
+
+
+
