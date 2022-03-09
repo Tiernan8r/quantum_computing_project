@@ -13,8 +13,8 @@
 # limitations under the License.
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix, SPARSE
-import constants as c
-import tensor_product as tp
+import qcp.constants as c
+import qcp.tensor_product as tp
 from typing import List
 import enum
 
