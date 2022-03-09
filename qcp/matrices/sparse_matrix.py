@@ -278,22 +278,22 @@ class SparseMatrix(Matrix):
         assert self.num_columns == other.num_rows, \
             "matrices don't match on their row/column dimensions"
 
-        new_matrix = SparseMatrix([], w=other.num_columns, h=self.num_rows)
 
         entries: SPARSE = {
             i: {} for i in range(self.num_columns)
         }
 
         for i, row in self._entries.items():
-            for j in range(new_matrix.num_columns):
+            for j in range(other.num_columns):
                 # only need to calculate using the non-zero entries of self
                 # TODO: Can further optimise this 'other' is also a
                 # SparseMatrix by only using it's non-zero entries too
                 entries[i][j] = sum([other[k][j] * row[k] for k in row.keys()])
 
-        new_matrix._entries = entries
+        return SparseMatrix(entries, w=other.num_columns, h=self.num_rows)
 
-        return new_matrix
+
+
 
     def __str__(self) -> str:
         total_string = ""
