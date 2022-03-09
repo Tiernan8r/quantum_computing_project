@@ -1,7 +1,5 @@
 from qcp.matrices import DefaultMatrix
 import random
-import qcp.constants as c
-import qcp.tensor_product as tp
 import qcp.gates as g
 
 
