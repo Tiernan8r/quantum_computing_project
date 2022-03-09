@@ -1,4 +1,4 @@
-from qcp.matrices import Matrix, DefaultMatrix, SPARSE
+from qcp.matrices import DefaultMatrix
 import constants as c
 import tensor_product as tp
 import gates as g
