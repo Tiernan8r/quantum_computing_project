@@ -193,7 +193,7 @@ def test_control_z():
 
     # Test for second:
     # According to "Quantum Computation & Quantum Information"
-    # Nielsen & Chuang p179, should be the same as before
+    # Nielsen & Chuang p179 Ex4.18, should be the same as before
     cz_4x4_2 = gts.control_z(2, [1], 0)
     expected_4x4_2 = SparseMatrix([
         [1, 0, 0, 0],
@@ -227,37 +227,37 @@ def test_control_phase():
 
     cp_4x4_0 = gts.control_phase(2, [0], 1, 0)
     expected_4x4_0 = SparseMatrix([
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1]
+        [1, 0, 0, 0],  # |00>
+        [0, 1, 0, 0],  # |01>
+        [0, 0, 1, 0],  # |10>
+        [0, 0, 0, 1]  # |11>
     ])
     assert cp_4x4_0.get_state() == expected_4x4_0.get_state()
 
     cp_4x4_1 = gts.control_phase(2, [0], 1, math.pi / 2)
     expected_4x4_1 = SparseMatrix([
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1j]
+        [1, 0, 0, 0],  # |00>
+        [0, 1, 0, 0],  # |01>
+        [0, 0, 1j, 0],  # |10>
+        [0, 0, 0, 1j]  # |11>
     ])
     h.compare_matrices(cp_4x4_1, expected_4x4_1)
 
     cp_4x4_2 = gts.control_phase(2, [0], 1, math.pi)
     expected_4x4_2 = SparseMatrix([
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, -1]
+        [1, 0, 0, 0],  # |00>
+        [0, 1, 0, 0],  # |01>
+        [0, 0, -1, 0],  # |10>
+        [0, 0, 0, -1]  # |11>
     ])
     h.compare_matrices(cp_4x4_2, expected_4x4_2)
 
     cp_4x4_3 = gts.control_phase(2, [0], 1, 3 * math.pi / 2)
     expected_4x4_3 = SparseMatrix([
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, -1j]
+        [1, 0, 0, 0],  # |00>
+        [0, 1, 0, 0],  # |01>
+        [0, 0, -1j, 0],  # |10>
+        [0, 0, 0, -1j]  # |11>
     ])
     h.compare_matrices(cp_4x4_3, expected_4x4_3)
 
@@ -267,14 +267,14 @@ def test_control_phase():
 
     cp_8x8 = gts.control_phase(3, [0], 1, math.pi)
     expected_8x8 = SparseMatrix([
-        [1, 0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, -1, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, -1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1, 0],
-        [0, 0, 0, 0, 0, 0, 0, -1]
+        [1, 0, 0, 0, 0, 0, 0, 0],  # |000>
+        [0, 1, 0, 0, 0, 0, 0, 0],  # |001>
+        [0, 0, -1, 0, 0, 0, 0, 0],  # |010>
+        [0, 0, 0, -1, 0, 0, 0, 0],  # |011>
+        [0, 0, 0, 0, 1, 0, 0, 0],  # |100>
+        [0, 0, 0, 0, 0, 1, 0, 0],  # |101>
+        [0, 0, 0, 0, 0, 0, -1, 0],  # |110>
+        [0, 0, 0, 0, 0, 0, 0, -1]  # |111>
     ])
     h.compare_matrices(cp_8x8, expected_8x8)
 

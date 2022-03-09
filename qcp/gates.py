@@ -244,22 +244,13 @@ def control_phase(size: int, controls: List[int], target: int,
 
     m: SPARSE = {}
 
-    # Use set() to ignore repeat control bits, as we are only interested in
-    # unique control bits
-    # since the controls are the bit positions, we can convert this to a
-    # bitmask by summing them at 2**idx
-    # EG: controls = [0, 2, 4]
-    # corresponds to 0, 4, 16 as numbers,
-    # bitmask is 10101 in binary notation
-    mask = sum(2**c for c in set(controls))
-
     target_bit = 2**target
 
     for i in range(0, n):
-        condition = i & (mask | target_bit)
+        condition = (i & target_bit) == target_bit
 
         val = 1+0j
-        if condition % 2 == 1 and i // size not in controls:
+        if condition:
             val = cmath.exp(1j * phi)
         m[i] = {i: val}
 
