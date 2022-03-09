@@ -218,7 +218,9 @@ class SparseMatrix(Matrix):
         return list_representation
 
     def transpose(self) -> Matrix:
-        entries = {}
+        entries: SPARSE = {
+            k: {} for k in range(self._col)
+        }
         for i, row in self._entries.items():
             for j, v in row.items():
                 if j not in entries:
@@ -281,7 +283,7 @@ class SparseMatrix(Matrix):
         new_matrix = SparseMatrix([], w=other.num_columns, h=self.num_rows)
 
         entries: SPARSE = {
-            i: {} for i in range(self.num_columns)
+            i: {} for i in range(self.num_rows)
         }
 
         for i, row in self._entries.items():
