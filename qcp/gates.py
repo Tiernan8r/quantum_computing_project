@@ -13,8 +13,8 @@
 # limitations under the License.
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix, SPARSE
-import constants as c
-import tensor_product as tp
+import qcp.constants as c
+import qcp.tensor_product as tp
 from typing import List
 import enum
 
@@ -57,7 +57,7 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
     else:
         return DefaultMatrix.identity(2**size)
 
-    m = DefaultMatrix([[1]])
+    m: Matrix = DefaultMatrix([[1]])
 
     for i in range(size):
         if i in targets:
