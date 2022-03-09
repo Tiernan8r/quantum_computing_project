@@ -17,7 +17,7 @@ from grovers_algorithm import Grovers
 
 def main():
     grover = Grovers(5, 6)
-    v = grover.run()
+    grover.run()
 
     m, p = grover.measure()
     print("Observed state: " + str(m) + ">")

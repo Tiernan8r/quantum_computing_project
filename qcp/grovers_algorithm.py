@@ -124,5 +124,3 @@ class Grovers:
         observed = random.choices([i for i in range(len(p))], p, k=1)
         probability = p[observed[0]]
         return observed[0], probability
-
-
