@@ -198,7 +198,7 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
         # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
         # Can be determined by taking their modulus with 2, since binary is in
         # powers of 2.
-        if condition % 2 and i//size not in controls:
+        if condition % 2 == 1 and i // size not in controls:
             val = -1
         m[i] = {i: val}
 
@@ -261,7 +261,7 @@ def control_phase(size: int, controls: List[int], target: int,
         condition = i & (mask | target_bit)
 
         val = 1+0j
-        if condition % 2 and i//size not in controls:
+        if condition % 2 == 1 and i // size not in controls:
             val = cmath.exp(1j * phi)
         m[i] = {i: val}
 
