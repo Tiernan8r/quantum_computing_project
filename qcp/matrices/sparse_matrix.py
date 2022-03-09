@@ -289,7 +289,10 @@ class SparseMatrix(Matrix):
                 # only need to calculate using the non-zero entries of self
                 # TODO: Can further optimise this 'other' is also a
                 # SparseMatrix by only using it's non-zero entries too
-                entries[i][j] = sum([other[k][j] * row[k] for k in row.keys()])
+                val = sum([other[k][j] * row[k] for k in row.keys()])
+                if cmath.isclose(val, 0):
+                    continue
+                entries[i][j] = val
 
         new_matrix._entries = entries
 
