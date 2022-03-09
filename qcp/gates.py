@@ -115,26 +115,22 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     mask = sum(2**c for c in set(controls))
 
     # Invert all bits in place in the bitmask
-    flip_mask = sum(2**i for i in range(size))
-    mask ^= flip_mask
+    invertor = sum(2**i for i in range(size))
+    flip_mask = mask ^ invertor
+
+    # Find the bit index of the target
+    target_bit = 2**target
 
     # Iterate over states in the gate
     for i in range(0, n):
-        # If the bits pass the mask condition, they need to be flipped
-        condition = (i & mask) >> target
+        # If the bits are targeted and meet the mask condition, it needs
+        # to be flipped
+        condition = (i & target_bit) & flip_mask
 
         x = i
-        # Modulo 2 filters out an bits that don't meet the condition,
-        # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
-        # Can be determined by taking their modulus with 2, since binary is in
-        # powers of 2.
-        # We bitshift right by the target index, as we want to ignore that bit
-        if condition % 2 == 1:
-            # The bit to target is indexed in Big Endian notation,
-            # so need to shift the target relative to the last bit index
-            shift = size - 1 - target
-            # bit flip the targetted bit when it meets the criteria
-            x = i ^ (1 << shift)
+        if condition:
+            # bit flip the targetted bit by the control bits
+            x ^= mask
 
         m[i] = {x: 1}
 
@@ -187,18 +183,20 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     # corresponds to 0, 4, 16 as numbers,
     # bitmask is 10101 in binary notation
     mask = sum(2**c for c in set(controls))
+    invertor = sum(2**i for i in range(size))
+    flip_mask = mask ^ invertor
 
     target_bit = 2**target
 
     for i in range(0, n):
-        condition = i & (mask | target_bit)
+        condition = (i & target_bit) == target_bit and i ^ mask == flip_mask
 
         val = 1
         # Modulo 2 filters out an bits that don't meet the condition,
         # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
         # Can be determined by taking their modulus with 2, since binary is in
         # powers of 2.
-        if condition % 2 and i//size not in controls:
+        if condition:
             val = -1
         m[i] = {i: val}
 
@@ -246,35 +244,17 @@ def control_phase(size: int, controls: List[int], target: int,
 
     m: SPARSE = {}
 
-    # Use set() to ignore repeat control bits, as we are only interested in
-    # unique control bits
-    # since the controls are the bit positions, we can convert this to a
-    # bitmask by summing them at 2**idx
-    # EG: controls = [0, 2, 4]
-    # corresponds to 0, 4, 16 as numbers,
-    # bitmask is 10101 in binary notation
-    mask = sum(2**c for c in set(controls))
-
     target_bit = 2**target
 
     for i in range(0, n):
-        condition = i & (mask | target_bit)
+        condition = (i & target_bit) == target_bit
 
         val = 1+0j
-        if condition % 2 and i//size not in controls:
+        if condition:
             val = cmath.exp(1j * phi)
         m[i] = {i: val}
 
     return DefaultMatrix(m, h=n, w=n)
-
-
-def zeros_list(n: int):
-    """
-    Creates a list of size n full of zeros
-    :param n: size of list
-    :return: List[int]
-    """
-    return [(0+0j) for _ in range(n)]
 
 
 def phase_shift(phi: complex) -> Matrix:
