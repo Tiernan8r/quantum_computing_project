@@ -183,18 +183,20 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     # corresponds to 0, 4, 16 as numbers,
     # bitmask is 10101 in binary notation
     mask = sum(2**c for c in set(controls))
+    invertor = sum(2**i for i in range(size))
+    flip_mask = mask ^ invertor
 
     target_bit = 2**target
 
     for i in range(0, n):
-        condition = i & (mask | target_bit)
+        condition = (i & target_bit) == target_bit and i ^ mask == flip_mask
 
         val = 1
         # Modulo 2 filters out an bits that don't meet the condition,
         # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
         # Can be determined by taking their modulus with 2, since binary is in
         # powers of 2.
-        if condition % 2 == 1 and i // size not in controls:
+        if condition:
             val = -1
         m[i] = {i: val}
 

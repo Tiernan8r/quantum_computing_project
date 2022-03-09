@@ -192,12 +192,14 @@ def test_control_z():
     assert cz_4x4.get_state() == expected_4x4.get_state()
 
     # Test for second:
+    # According to "Quantum Computation & Quantum Information"
+    # Nielsen & Chuang p179, should be the same as before
     cz_4x4_2 = gts.control_z(2, [1], 0)
     expected_4x4_2 = SparseMatrix([
         [1, 0, 0, 0],
-        [0, -1, 0, 0],
+        [0, 1, 0, 0],
         [0, 0, 1, 0],
-        [0, 0, 0, 1]
+        [0, 0, 0, -1]
     ])
     assert cz_4x4_2.get_state() == expected_4x4_2.get_state()
 
