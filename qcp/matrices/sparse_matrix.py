@@ -288,9 +288,11 @@ class SparseMatrix(Matrix):
         for i, row in self._entries.items():
             for j in range(other.num_columns):
                 # only need to calculate using the non-zero entries of self
-                # TODO: Can further optimise this 'other' is also a
-                # SparseMatrix by only using it's non-zero entries too
-                entries[i][j] = sum([other[k][j] * row[k] for k in row.keys()])
+                # Don't save entries that are ~= 0
+                val = sum([other[k][j] * row[k] for k in row.keys()])
+                if cmath.isclose(val, 0):
+                    continue
+                entries[i][j] = val
 
         return SparseMatrix(entries, w=other.num_columns, h=self.num_rows)
 
