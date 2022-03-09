@@ -218,7 +218,9 @@ class SparseMatrix(Matrix):
         return list_representation
 
     def transpose(self) -> Matrix:
-        entries = {}
+        entries: SPARSE = {
+            k: {} for k in range(self._col)
+        }
         for i, row in self._entries.items():
             for j, v in row.items():
                 if j not in entries:
@@ -282,7 +284,7 @@ class SparseMatrix(Matrix):
             return self._dot_sparse(other)
 
         entries: SPARSE = {
-            i: {} for i in range(self.num_columns)
+            i: {} for i in range(self.num_rows)
         }
 
         for i, row in self._entries.items():
@@ -300,7 +302,7 @@ class SparseMatrix(Matrix):
         # Don't need to check dimensions, as the _dot() method has already
         # done it for us.
         entries: SPARSE = {
-            i: {} for i in range(self.num_columns)
+            i: {} for i in range(self.num_rows)
         }
 
         other_entries = other._entries

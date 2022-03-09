@@ -153,6 +153,23 @@ def test_sp_m_transpose():
 
     assert A.transpose().get_state() == B.get_state()
 
+    # Verify an edge case in column vector multiplication is solved
+    v = SparseMatrix([[1], [2], [3], [4]])
+    # column x row vectors produce a matrix
+    C = v * v.transpose()
+    expected1 = SparseMatrix([[1, 2, 3, 4],
+                              [2, 4, 6, 8],
+                              [3, 6, 9, 12],
+                              [4, 8, 12, 16]])
+
+    assert C.get_state() == expected1.get_state()
+
+    # row x column vector produces a scalar (1x1 matrix in this case...)
+    D = v.transpose() * v
+    expected2 = SparseMatrix([[30]])
+
+    assert D.get_state() == expected2.get_state()
+
 
 def test_sp_m_conjugate():
     # Non-complex values shoule be unchanged.
