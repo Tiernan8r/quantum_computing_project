@@ -41,6 +41,35 @@ def test_multi_gate():
     id = gts.multi_gate(1, [0], gts.Gate.I)
     assert id.get_state() == DefaultMatrix.identity(2**1).get_state()
 
+    # Test for a two hadamard system applied to the first qbit and third qbit
+    # but not the second
+    # Using the info from the lecture notes, compare this composite gate
+    # applied to a 3 qbit system to what is expected according to the notes.
+    h_gate = gts.multi_gate(3, [0, 2], gts.Gate.H)
+    qbit_initial_state = DefaultMatrix([
+        [1],  # |000>
+        [0],  # |001>
+        [0],  # |010>
+        [0],  # |011>
+        [0],  # |100>
+        [0],  # |101>
+        [0],  # |110>
+        [0]  # |111>
+    ])
+    applied_state = h_gate * qbit_initial_state
+    expected_qbit_state = 0.5 * DefaultMatrix([
+        [1],  # |000>
+        [1],  # |001>
+        [0],  # |010>
+        [0],  # |011>
+        [1],  # |100>
+        [1],  # |101>
+        [0],  # |110>
+        [0]  # |111>
+    ])
+
+    h.compare_matrices(applied_state, expected_qbit_state)
+
 
 def test_control_x():
     # Gate needs a minimum of two qubits to make sense
@@ -146,16 +175,13 @@ def test_control_z():
         gts.control_z(2, [1], 4)
     assert ae3.match("target bit out of range")
 
-    # More control bits indexed than there are qubits:
-    with pytest.raises(AssertionError) as ae4:
-        gts.control_z(2, [1, 1, 1, 1, 1, 1], 0)
-    assert ae4.match("too many control bits provided")
-
     # Target qbit needs to be not one of the control bits:
-    with pytest.raises(AssertionError) as ae5:
+    with pytest.raises(AssertionError) as ae4:
         gts.control_z(2, [0], 0)
-    assert ae5.match("control bits and target bit cannot be the same")
+    assert ae4.match("control bits and target bit cannot be the same")
 
+    # Two qbit state has two options for the control/target position:
+    # Test for 1st expected result
     cz_4x4 = gts.control_z(2, [0], 1)
     expected_4x4 = SparseMatrix([
         [1, 0, 0, 0],
@@ -164,6 +190,16 @@ def test_control_z():
         [0, 0, 0, -1]
     ])
     assert cz_4x4.get_state() == expected_4x4.get_state()
+
+    # Test for second:
+    cz_4x4_2 = gts.control_z(2, [1], 0)
+    expected_4x4_2 = SparseMatrix([
+        [1, 0, 0, 0],
+        [0, -1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ])
+    assert cz_4x4_2.get_state() == expected_4x4_2.get_state()
 
 
 def test_control_phase():
@@ -182,15 +218,10 @@ def test_control_phase():
         gts.control_phase(2, [1], 4, 0j)
     assert ae3.match("target bit out of range")
 
-    # More control bits indexed than there are qubits:
-    with pytest.raises(AssertionError) as ae4:
-        gts.control_phase(2, [1, 1, 1, 1, 1, 1], 0, 0j)
-    assert ae4.match("too many control bits provided")
-
     # Target qbit needs to be not one of the control bits:
-    with pytest.raises(AssertionError) as ae5:
+    with pytest.raises(AssertionError) as ae4:
         gts.control_phase(2, [0], 0, 0j)
-    assert ae5.match("control bits and target bit cannot be the same")
+    assert ae4.match("control bits and target bit cannot be the same")
 
     cp_4x4_0 = gts.control_phase(2, [0], 1, 0)
     expected_4x4_0 = SparseMatrix([
@@ -232,6 +263,19 @@ def test_control_phase():
     cp_4x4_4 = gts.control_phase(2, [0], 1, 2 * math.pi)
     h.compare_matrices(cp_4x4_4, expected_4x4_0)
 
+    cp_8x8 = gts.control_phase(3, [0], 1, math.pi)
+    expected_8x8 = SparseMatrix([
+        [1, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, -1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, -1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, -1]
+    ])
+    h.compare_matrices(cp_8x8, expected_8x8)
+
 
 def test_phase_shift():
     ps1 = gts.phase_shift(0)
@@ -248,18 +292,3 @@ def test_phase_shift():
     h.compare_matrices(ps2, expected2)
     h.compare_matrices(ps3, expected3)
     h.compare_matrices(ps4, expected4)
-
-
-def test_hadamard_gate():
-
-    qubit0 = DefaultMatrix([[1], [0]])
-    qubit1 = DefaultMatrix([[0], [1]])
-
-    ans0 = const.TWO_HADAMARD * qubit0
-    ans1 = const.TWO_HADAMARD * qubit1
-
-    expected0 = (1/(math.sqrt(2))) * DefaultMatrix([[1], [1]])
-    expected1 = (1/(math.sqrt(2))) * DefaultMatrix([[1], [-1]])
-
-    assert expected0.get_state() == ans0.get_state()
-    assert expected1.get_state() == ans1.get_state()
