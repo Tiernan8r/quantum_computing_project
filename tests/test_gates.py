@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from qcp.matrices import DefaultMatrix, SparseMatrix
+import qcp.constants as const
 import math
 import tests.test_helpers as h
 import qcp.gates as gts
@@ -19,7 +20,55 @@ import pytest
 
 
 def test_multi_gate():
-    pass
+    # Verify each of the enums:
+    # HADAMARD Gate:
+    had = gts.multi_gate(1, [0], gts.Gate.H)
+    assert had.get_state() == const.TWO_HADAMARD.get_state()
+
+    # PAULI-X Gate:
+    pauli_x = gts.multi_gate(1, [0], gts.Gate.X)
+    assert pauli_x.get_state() == const.PAULI_X.get_state()
+
+    # PAULI-Z Gate:
+    pauli_z = gts.multi_gate(1, [0], gts.Gate.Z)
+    assert pauli_z.get_state() == const.PAULI_Z.get_state()
+
+    # PHASE SHIFT Gate:
+    phase = gts.multi_gate(1, [0], gts.Gate.P)
+    assert phase.get_state() == gts.phase_shift(0j).get_state()
+
+    # UNSPECIFIED/IDENTITY:
+    id = gts.multi_gate(1, [0], gts.Gate.I)
+    assert id.get_state() == DefaultMatrix.identity(2**1).get_state()
+
+    # Test for a two hadamard system applied to the first qbit and third qbit
+    # but not the second
+    # Using the info from the lecture notes, compare this composite gate
+    # applied to a 3 qbit system to what is expected according to the notes.
+    h_gate = gts.multi_gate(3, [0, 2], gts.Gate.H)
+    qbit_initial_state = DefaultMatrix([
+        [1],  # |000>
+        [0],  # |001>
+        [0],  # |010>
+        [0],  # |011>
+        [0],  # |100>
+        [0],  # |101>
+        [0],  # |110>
+        [0]  # |111>
+    ])
+    applied_state = h_gate * qbit_initial_state
+    expected_qbit_state = 0.5 * DefaultMatrix([
+        [1],  # |000>
+        [1],  # |001>
+        [0],  # |010>
+        [0],  # |011>
+        [1],  # |100>
+        [1],  # |101>
+        [0],  # |110>
+        [0]  # |111>
+    ])
+
+    h.compare_matrices(applied_state, expected_qbit_state)
 
 
 def test_control_x():

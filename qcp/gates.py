@@ -14,50 +14,56 @@
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix, SPARSE
 import constants as c
-from tensor_product import tensor_product
+import tensor_product as tp
 from typing import List
+import enum
 
+
+class Gate(enum.Enum):
+    """Enum class to encode gate options in multi_gates"""
+    H = "h"
+    X = "x"
+    Z = "z"
+    P = "p"
+    I = "i"  # noqa: E741
 
 # Notation note : |001> represents a 3 qubit system where the first qubit is
 # |1> and the second and third qubit is |0>
 # Targets and Controls work off this notation but you only need to enter the
 # number of the qubit you want to target/control
-def multi_gate(size: int, targets: List[int], gate: str, phi=complex(0)) \
-        -> Matrix:
+
+
+def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
     """
     Constructs a (2**size by 2**size) gate matrix that applies a
     specific gate to one or more specified qubits
 
-    :param size: total number of qubits in circuit -> int
-    :param targets: list of qubits the specified gate will be
-                    applied to -> List[int]
-    :param gate: string character representing which specified gate we
-            want to apply;
-                h = hadamard, x = Pauli x, z = Pauli z, p = Phase gate
-
-    :param phi: Phase angle for the phase gate -> complex number
-    :return: Matrix([int])
+    :param size int: total number of qubits in circuit
+    :param targets List[int]: list of qubits the specified gate will be
+                    applied to, indexing from 0.
+    :param gate Gate: Enum of which gate we want to apply
+    :param phi complex: Phase angle for the phase gate
+    :return Matrix: Matrix representing the composite gate
     """
 
-    if gate == "h":
+    if gate is Gate.H:
         g = c.TWO_HADAMARD
-    elif gate == "x":
+    elif gate is Gate.X:
         g = c.PAULI_X
-    elif gate == "z":
+    elif gate is Gate.Z:
         g = c.PAULI_Z
-    elif gate == "p":
+    elif gate is Gate.P:
         g = phase_shift(phi)
     else:
-        return c.IDENTITY
+        return DefaultMatrix.identity(2**size)
 
     m = DefaultMatrix([[1]])
-    t = [x - 1 for x in targets]
 
     for i in range(size):
-        if i in t:
-            m = tensor_product(g, m)
+        if i in targets:
+            m = tp.tensor_product(g, m)
         else:
-            m = tensor_product(c.IDENTITY, m)
+            m = tp.tensor_product(c.IDENTITY, m)
     return m
 
 # NOTE:
