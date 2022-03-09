@@ -1,8 +1,8 @@
 from qcp.matrices import DefaultMatrix
-import constants as c
-import tensor_product as tp
-import gates as g
 import random
+import qcp.constants as c
+import qcp.tensor_product as tp
+import qcp.gates as g
 
 
 def pull_set_bits(n: int):
@@ -50,7 +50,7 @@ class Grovers:
 
     def initial_state(self):
         """
-        Creates a state vector corresponding to ¦0..0>
+        Creates a state vector corresponding to |0..0>
         :return: returns state vector
         """
         m = DefaultMatrix([[1]])
@@ -108,21 +108,21 @@ class Grovers:
         Multiplies our Grover's circuit with the initial state
         :return: Final state
         """
-        result = self.circuit * self.state
-        self.state = result
-        return result
+        self.state = self.circuit * self.state
+        return self.state
 
     def measure(self):
+        """
+        'measures' self.state by selecting a state weighted by its
+        (amplitude ** 2)
+        :return: the state observed and the probability of measuring
+                said state
+        """
         p = list(map(lambda x: x ** 2, self.state.transpose().get_state()[0]))
+        # list of weighted probabilities with the index representing the state
 
         observed = random.choices([i for i in range(len(p))], p, k=1)
         probability = p[observed[0]]
         return observed[0], probability
 
 
-grovs = Grovers(5, 6)
-v = grovs.run()
-
-m, p = grovs.measure()
-print("Observed state: ¦" + str(m) + ">")
-print("With probability: " + str(p))
