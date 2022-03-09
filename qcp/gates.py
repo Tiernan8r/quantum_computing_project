@@ -118,19 +118,16 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     invertor = sum(2**i for i in range(size))
     flip_mask = mask ^ invertor
 
+    # Find the bit index of the target
     target_bit = 2**target
 
     # Iterate over states in the gate
     for i in range(0, n):
-        # If the bits pass the mask condition, they need to be flipped
+        # If the bits are targeted and meet the mask condition, it needs
+        # to be flipped
         condition = (i & target_bit) & flip_mask
 
         x = i
-        # Modulo 2 filters out an bits that don't meet the condition,
-        # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
-        # Can be determined by taking their modulus with 2, since binary is in
-        # powers of 2.
-        # We bitshift right by the target index, as we want to ignore that bit
         if condition:
             # bit flip the targetted bit by the control bits
             x ^= mask
