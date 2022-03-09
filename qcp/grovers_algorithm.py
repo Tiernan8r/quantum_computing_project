@@ -53,10 +53,9 @@ class Grovers:
         Creates a state vector corresponding to |0..0>
         :return: returns state vector
         """
-        m = DefaultMatrix([[1]])
-        for i in range(self.size):
-            m = tp.tensor_product(m, c.ZERO_VECTOR)
-        return m
+        entries = [[0] for _ in range(self.size)]
+        entries[0][0] = 1
+        return DefaultMatrix(entries)
 
     def single_target_oracle(self):
         """
