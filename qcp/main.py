@@ -23,8 +23,6 @@ def main():
     print("Observed state: " + str(m) + ">")
     print("With probability: " + str(p))
 
-    return
-
 
 if __name__ == "__main__":
     main()
