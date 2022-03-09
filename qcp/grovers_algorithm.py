@@ -67,7 +67,8 @@ class Grovers:
         """
         not_placement = (2 ** self.size) - 1 - self.target
         t = pull_set_bits(not_placement)
-        cz = g.control_z(self.size, [i for i in range(0, self.size - 1)], self.size - 1)
+        cz = g.control_z(self.size, [i for i in range(0, self.size - 1)],
+                         self.size - 1)
         selector = g.multi_gate(self.size, t, g.Gate.X)
         oracle = selector * cz
         oracle *= selector
@@ -80,7 +81,8 @@ class Grovers:
         :return: Matrix representing diffusion gate
         """
         h = g.multi_gate(self.size, [i for i in range(0, self.size)], g.Gate.H)
-        cz = g.control_z(self.size, [i for i in range(0, self.size - 1)], self.size - 1)
+        cz = g.control_z(self.size, [i for i in range(0, self.size - 1)],
+                         self.size - 1)
         x = g.multi_gate(self.size, [i for i in range(0, self.size)], g.Gate.X)
         diff = h * (x * (cz * (x * h)))
         return diff
@@ -92,7 +94,8 @@ class Grovers:
         until our target state is close to 1 in terms of probability
         :return: Matrix representing our completed Grover's algorithm
         """
-        circuit = g.multi_gate(self.size, [i for i in range(0, self.size)], g.Gate.H)
+        circuit = g.multi_gate(self.size, [i for i in range(0, self.size)],
+                               g.Gate.H)
 
         while self.max_reflections > 0:
             circuit = self.oracle * circuit
@@ -123,6 +126,3 @@ v = grovs.run()
 m, p = grovs.measure()
 print("Observed state: ¦" + str(m) + ">")
 print("With probability: " + str(p))
-
-
-
