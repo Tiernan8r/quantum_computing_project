@@ -13,4 +13,4 @@
 # limitations under the License.
 tox
 pip-tools
-numpy
+click
