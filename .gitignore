@@ -158,5 +158,5 @@ cython_debug/
 test-reports
 
 # LaTeX related files:
-docs/reports/*.gz
-docs/reports/*.pdf
+docs/report/*.gz
+docs/report/*.pdf
