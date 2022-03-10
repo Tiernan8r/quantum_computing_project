@@ -13,14 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from qcp.grovers_algorithm import Grovers
+import click
 
-
-def main():
-    grover = Grovers(5, 6)
+@click.command()
+@click.option("-n", "--nqbits", default=5, help="Number of qbits in the system.")
+@click.option("-t", "--target", default=6, help="The qbit state to target")
+def main(nqbits: int, target: int):
+    grover = Grovers(nqbits, target)
     grover.run()
 
     m, p = grover.measure()
-    print("Observed state: " + str(m) + ">")
+    print("Observed state: |" + bin(m)[2:] + ">")
     print("With probability: " + str(p))
 
 
