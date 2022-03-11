@@ -1,25 +1,37 @@
 # File: main.py
 import sys
+import os
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import QFile, QIODevice
+from qcp.ui.constants import UI_FILENAME
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
 
-    ui_file_name = "form.ui"
-    ui_file = QFile(ui_file_name)
-    if not ui_file.open(QIODevice.ReadOnly):
-        print(f"Cannot open {ui_file_name}: {ui_file.errorString()}")
-        sys.exit(-1)
-    loader = QUiLoader()
-    window = loader.load(ui_file)
-    ui_file.close()
-    if not window:
-        print(loader.errorString())
-        sys.exit(-1)
+class MainWindow(QMainWindow):
 
-    window.setWindowTitle("Grover's Algorithm")
-    window.show()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-    sys.exit(app.exec())
+        self.ui_window = self.load_ui()
+        self.ui_window.setWindowTitle("Grover's Algorithm")
+
+    def show(self):
+        # super().show()
+        self.ui_window.show()
+
+    def load_ui(self):
+        path = os.path.join(os.path.dirname(__file__), UI_FILENAME)
+        ui_file = QFile(path)
+
+        if not ui_file.open(QIODevice.ReadOnly):
+            print(f"Cannot open {UI_FILENAME}: {ui_file.errorString()}")
+            sys.exit(-1)
+
+        loader = QUiLoader()
+        ui_window = loader.load(ui_file)
+        ui_file.close()
+        if not ui_window:
+            print(loader.errorString())
+            sys.exit(-1)
+
+        return ui_window
