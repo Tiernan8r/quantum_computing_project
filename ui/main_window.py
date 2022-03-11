@@ -18,6 +18,8 @@ if __name__ == "__main__":
     if not window:
         print(loader.errorString())
         sys.exit(-1)
+
+    window.setWindowTitle("Grover's Algorithm")
     window.show()
 
     sys.exit(app.exec())
