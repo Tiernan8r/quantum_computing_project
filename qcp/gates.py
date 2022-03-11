@@ -170,3 +170,20 @@ def phase_shift(phi: complex) -> Matrix:
     :return: Matrix(complex)
     """
     return DefaultMatrix( [[1, 0], [0, cmath.exp(1j * phi)]] )
+
+def identity(n):
+    ret  = []
+    for i in range(0,n):
+        ap = zeros_list(n)
+        ap[i] = 1
+        ret.append(ap)
+    return ret
+
+def oracle(size, w):
+    ret = identity(size)
+    ret[w][w] = -1
+    return DefaultMatrix(ret)
+
+     
+
+    
