@@ -36,6 +36,10 @@ class Matrix(ABC):
     def num_columns(self) -> int:
         pass
 
+    @property
+    def square(self) -> bool:
+        return self.num_columns == self.num_rows
+
     def __getitem__(self, i: int) -> VECTOR:
         pass
 
@@ -66,6 +70,9 @@ class Matrix(ABC):
         current matrix.
         """
         return self.transpose().conjugate()
+
+    def trace(self) -> SCALARS:
+        pass
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
         pass
