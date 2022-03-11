@@ -14,6 +14,7 @@
 from qcp import main
 import pytest
 
+
 def test_main():
     with pytest.raises(SystemExit) as se:
         main.main()

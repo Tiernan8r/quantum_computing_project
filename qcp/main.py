@@ -56,7 +56,7 @@ def parse_cli(args) -> Tuple[int, int]:
                 exit(1)
             try:
                 targ = int(args[i+1])
-            except:
+            except ValueError:
                 print("target state must be an integer")
                 exit(1)
             i += 1
@@ -70,7 +70,7 @@ def parse_cli(args) -> Tuple[int, int]:
         try:
             print(vals[0])
             nqbits = int(vals[0])
-        except:
+        except ValueError:
             print("number of qbits must be an integer")
             exit(1)
     else:
