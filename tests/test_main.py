@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from qcp import main
-
+import pytest
 
 def test_main():
-    try:
+    with pytest.raises(SystemExit) as se:
         main.main()
-    except Exception:
-        assert False, "main() raised an exception."
+    assert se.match("1")
