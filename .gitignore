@@ -156,3 +156,5 @@ cython_debug/
 
 # test coverage reports:
 test-reports
+# PyProject files:
+*.pyproject.user*
