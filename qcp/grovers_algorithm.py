@@ -23,7 +23,7 @@ def pull_set_bits(n: int):
 
 class Grovers:
 
-    def __init__(self, size, target_state):
+    def __init__(self, size: int, target_state: int):
         """
         This is an implementation of Grover's algorithm which efficiently
         finds a specific item in a list of items. In this implementation
