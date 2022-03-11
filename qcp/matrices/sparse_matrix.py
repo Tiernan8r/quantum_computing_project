@@ -151,10 +151,6 @@ class SparseMatrix(Matrix):
     def num_columns(self) -> int:
         return self._col
 
-    @property
-    def square(self) -> bool:
-        return self._row == self._col
-
     def __len__(self) -> int:
         return self._row
 
@@ -238,6 +234,18 @@ class SparseMatrix(Matrix):
                 else:
                     entries[i][j] = v
         return SparseMatrix(entries, h=self.num_rows, w=self.num_columns)
+
+    def trace(self) -> SCALARS:
+        assert self.square, "can only take the trace of square matrices"
+        tr: SCALARS = 0
+        for i in range(self.num_rows):
+            if i not in self._entries:
+                continue
+            if i not in self._entries[i]:
+                continue
+            tr += self._entries[i][i]
+
+        return tr
 
     def __add__(self, other: Matrix) -> Matrix:
         row_match = self.num_rows == other.num_rows
