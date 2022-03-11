@@ -156,3 +156,11 @@ class DenseMatrix(Matrix):
     def transpose(self) -> Matrix:
         """Create a new Matrix that is the transpose of the current one."""
         return DenseMatrix(self.columns())
+
+    def trace(self) -> SCALARS:
+        assert self.square, "can only take the trace of square matrices"
+        tr: SCALARS = 0
+        for i in range(self.num_rows):
+            tr += self[i][i]
+
+        return tr
