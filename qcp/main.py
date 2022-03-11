@@ -52,12 +52,12 @@ def parse_cli(args) -> Tuple[int, int]:
             usage()
         elif arg == "-t" or arg == "--target":
             if i + 1 > num_args:
-                print("Must provide a target value!")
+                print("Must provide a target value!", file=sys.stderr)
                 exit(1)
             try:
                 targ = int(args[i+1])
             except ValueError:
-                print("target state must be an integer")
+                print("target state must be an integer", file=sys.stderr)
                 exit(1)
             i += 1
         # Falls into the everything else category
@@ -68,13 +68,12 @@ def parse_cli(args) -> Tuple[int, int]:
     nqbits = 1
     if len(vals) > 0:
         try:
-            print(vals[0])
             nqbits = int(vals[0])
         except ValueError:
-            print("number of qbits must be an integer")
+            print("number of qbits must be an integer", file=sys.stderr)
             exit(1)
     else:
-        print("Must provide the number of qbits to simulate")
+        print("Must provide the number of qbits to simulate", file=sys.stderr)
         exit(1)
 
     return (nqbits, targ)
