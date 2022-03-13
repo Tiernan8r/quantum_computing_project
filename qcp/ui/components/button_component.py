@@ -1,8 +1,22 @@
-from qcp.ui.components import AbstractComponent
+# Copyright 2022 Tiernan8r
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import time
 from PySide6 import QtWidgets
 from PySide6 import QtCore
-from qcp.ui.constants import BUTTON_CANCEL_SEARCH_BUTTON, BUTTON_SEARCH_BUTTON, BUTTON_PROGRESS_BAR, BUTTON_PROGRESS_BAR_TICK_RATE, LCD_CLASSICAL, LCD_GROVER, THREAD_PAUSE
-import time
+from qcp.ui.components import AbstractComponent
+from qcp.ui.constants import BUTTON_CANCEL_SEARCH_BUTTON, \
+    BUTTON_SEARCH_BUTTON, BUTTON_PROGRESS_BAR, BUTTON_PROGRESS_BAR_TICK_RATE, THREAD_PAUSE
 
 
 class ButtonComponent(AbstractComponent):
@@ -37,7 +51,6 @@ class ButtonComponent(AbstractComponent):
         for pb in progressBars:
             if pb.objectName() == BUTTON_PROGRESS_BAR:
                 self.progress_bar = pb
-
 
     def initiate_search(self):
         self.cancel_button.show()
