@@ -156,3 +156,7 @@ cython_debug/
 
 # test coverage reports:
 test-reports
+
+# LaTeX related files:
+docs/report/*.gz
+docs/report/*.pdf
