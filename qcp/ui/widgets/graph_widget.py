@@ -14,12 +14,13 @@
 from PySide6 import QtWidgets
 from qcp.matrices import Matrix
 from qcp.ui.widgets.embedded_graph import EmbeddedGraph
+from typing import List, Any
 
 
 class GraphWidget(EmbeddedGraph):
 
-    def __init__(self, graph_widget: QtWidgets.QWidget, width, height, dpi):
-        super().__init__(graph_widget, width, height, dpi)
+    def __init__(self, graph_widget: QtWidgets.QWidget):
+        super().__init__(graph_widget)
         self.display()
 
     def display(self, qregister: Matrix = None):
@@ -29,12 +30,12 @@ class GraphWidget(EmbeddedGraph):
         xlabel, ylabel = "states", "probabilities"
 
         # TODO: remove placeholders
-        x = range(10)
+        x: List[Any] = list(range(10))
         y = [2**i for i in x]
         x = [f"|{bin(i)[2:]}>" for i in x]
 
         if qregister is not None:
-            x = range(qregister.num_columns)
+            x = list(range(qregister.num_columns))
             # TODO: someway to measure qregister
             y = qregister.measure()
 

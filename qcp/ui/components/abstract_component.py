@@ -11,14 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from PySide6.QtCore import QObject
-from PySide6.QtWidgets import QMainWindow
+from PySide6 import QtCore, QtWidgets
 
 
-class AbstractComponent(QObject):
+class AbstractComponent(QtCore.QObject):
 
-    def __init__(self, main_window: QMainWindow, *args, **kwargs):
-        super(QObject).__init__(*args, **kwargs)
+    def __init__(self, main_window: QtWidgets.QMainWindow, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.main_window = main_window
         self.setup_signals()
 

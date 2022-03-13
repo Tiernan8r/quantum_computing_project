@@ -27,8 +27,6 @@ class EmbeddedGraph(QtWidgets.QWidget):
         super().__init__(parent=graph_widget)
         self.graph_widget = graph_widget
 
-        self.figure, self.toolbar, self.axes = None, None, None
-
         self._setup_canvas()
         self._setup_layouts()
 
@@ -54,7 +52,6 @@ class EmbeddedGraph(QtWidgets.QWidget):
         self.toolbar = NavigationToolbar(self.figure_canvas, self)
 
     def _setup_layouts(self):
-
         graph_frame_layout = QtWidgets.QGridLayout(parent=self.graph_widget)
         graph_frame_layout.addWidget(self.toolbar)
         graph_frame_layout.addWidget(self.figure_canvas)

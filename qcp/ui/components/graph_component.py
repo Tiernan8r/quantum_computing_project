@@ -33,8 +33,7 @@ class GraphComponent(AbstractComponent):
         widgets = self.main_window.ui_component.findChildren(QtWidgets.QWidget)
         for w in widgets:
             if w.objectName() == GRAPH_WIDGET_NAME:
-                self.graph_widget = GraphWidget(
-                    w, width=300, height=100, dpi=100)
+                self.graph_widget = GraphWidget(w)
 
     def refresh(self):
         # TODO: need to get qregister here

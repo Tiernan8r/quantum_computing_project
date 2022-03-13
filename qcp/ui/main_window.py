@@ -45,7 +45,7 @@ class MainWindow(QMainWindow):
         path = os.path.join(os.path.dirname(__file__), UI_FILENAME)
         ui_file = QFile(path)
 
-        if not ui_file.open(QIODevice.ReadOnly):
+        if not ui_file.open(QIODevice.ReadOnly):  # type: ignore
             print(f"Cannot open {UI_FILENAME}: {ui_file.errorString()}")
             sys.exit(-1)
 
