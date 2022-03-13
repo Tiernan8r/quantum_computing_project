@@ -1,3 +1,3 @@
 {
-    "files": ["main_window.py", "form.ui"]
+    "files": ["main.py","widgets/embedded_graph.py","widgets/__init__.py","components/abstract_component.py","components/button_component.py","components/simulator_component.py","form.ui","components/graph_component.py","main_window.py","components/__init__.py","components/input_component.py","widgets/graph_widget.py","constants.py","form.ui","__init__.py","main.py","main_window.py"]
 }
