@@ -40,17 +40,12 @@ class EmbeddedGraph(QtWidgets.QWidget):
 
     def _setup_layouts(self):
 
-        # self.setParent(self.graph_widget)
-        # self.setParent(self.graph_widget)
-        # self.graph_widget.layout().addWidget(self)
-
         graph_frame_layout = QtWidgets.QGridLayout(parent=self)
         figure_layout = QtWidgets.QGridLayout()
         figure_layout.addWidget(self.figure_canvas)
         self.figure_canvas.setLayout(figure_layout)
 
         graph_frame_layout.addWidget(self.figure_canvas)
-        # graph_frame_layout.addLayout(figure_layout)
         graph_frame_layout.addWidget(self.toolbar)
 
         self.setLayout(graph_frame_layout)
@@ -63,13 +58,6 @@ class EmbeddedGraph(QtWidgets.QWidget):
         self.figure_canvas.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         self.figure_canvas.updateGeometry()
-
-        # self.graph_widget.setLayout(parent_layout)
-
-        # graph_layout = QtWidgets.QGridLayout()
-        # graph_layout.addWidget(self.figure_canvas)
-
-        # self.setLayout(graph_layout)
 
     def _plot_line(self, x, y, title, xlabel, ylabel, legend=None, line_style="-"):
         self.axes.plot(x, y, line_style)
