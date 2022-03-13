@@ -37,7 +37,7 @@ class GraphWidget(EmbeddedGraph):
         if qregister is not None:
             x = list(range(qregister.num_columns))
             # TODO: someway to measure qregister
-            y = qregister.measure()
+            y = qregister.measure() # type: ignore
 
         self._plot_line(x, y, title=title,
                         xlabel=xlabel, ylabel=ylabel)
