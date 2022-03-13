@@ -20,11 +20,13 @@ class EmbeddedGraph(QtWidgets.QWidget):
 
     def hide(self) -> None:
         super().hide()
+        self.graph_widget.hide()
         self.figure_canvas.hide()
         self.toolbar.hide()
 
     def show(self) -> None:
         super().show()
+        self.graph_widget.show()
         self.figure_canvas.show()
         self.toolbar.show()
 
@@ -40,13 +42,9 @@ class EmbeddedGraph(QtWidgets.QWidget):
 
     def _setup_layouts(self):
 
-        graph_frame_layout = QtWidgets.QGridLayout(parent=self)
-        figure_layout = QtWidgets.QGridLayout()
-        figure_layout.addWidget(self.figure_canvas)
-        self.figure_canvas.setLayout(figure_layout)
-
-        graph_frame_layout.addWidget(self.figure_canvas)
+        graph_frame_layout = QtWidgets.QGridLayout(parent=self.graph_widget)
         graph_frame_layout.addWidget(self.toolbar)
+        graph_frame_layout.addWidget(self.figure_canvas)
 
         self.setLayout(graph_frame_layout)
 
