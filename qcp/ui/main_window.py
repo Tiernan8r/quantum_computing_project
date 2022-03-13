@@ -31,17 +31,16 @@ class MainWindow(QMainWindow):
         self.graph_component = comp.GraphComponent(self)
         self.input_component = comp.InputComponent(self)
         self.button_component = comp.ButtonComponent(
-            self, self.input_component.input_search, self.input_component.input_target)
+            self, self.input_component.input_search,
+            self.input_component.input_target)
 
         self.simulator = comp.SimulatorComponent(
             self, self.button_component, self.graph_component)
 
     def show(self):
-        # super().show()
         self.ui_component.show()
 
     def load_ui(self) -> QMainWindow:
-
         # Load in the 'form.ui' file where the ui layout is defined
         path = os.path.join(os.path.dirname(__file__), UI_FILENAME)
         ui_file = QFile(path)

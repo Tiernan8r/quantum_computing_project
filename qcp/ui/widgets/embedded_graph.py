@@ -14,7 +14,8 @@
 from PySide6 import QtWidgets
 import matplotlib
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas, \
+from matplotlib.backends.backend_qt5agg import \
+    FigureCanvasQTAgg as FigureCanvas, \
     NavigationToolbar2QT as NavigationToolbar
 
 matplotlib.use('Qt5Agg')
@@ -22,13 +23,13 @@ matplotlib.use('Qt5Agg')
 
 class EmbeddedGraph(QtWidgets.QWidget):
 
-    def __init__(self, graph_widget: QtWidgets.QWidget, width, height, dpi=100):
+    def __init__(self, graph_widget: QtWidgets.QWidget):
         super().__init__(parent=graph_widget)
         self.graph_widget = graph_widget
 
         self.figure, self.toolbar, self.axes = None, None, None
 
-        self._setup_canvas(width, height, dpi)
+        self._setup_canvas()
         self._setup_layouts()
 
     def hide(self) -> None:
@@ -43,8 +44,7 @@ class EmbeddedGraph(QtWidgets.QWidget):
         self.figure_canvas.show()
         self.toolbar.show()
 
-    def _setup_canvas(self, width, height, dpi):
-        # self.figure = Figure(figsize=(width, height), dpi=dpi)
+    def _setup_canvas(self):
         self.figure = Figure()
         self.figure.tight_layout()
         self.axes = self.figure.add_subplot()
@@ -70,7 +70,8 @@ class EmbeddedGraph(QtWidgets.QWidget):
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         self.figure_canvas.updateGeometry()
 
-    def _plot_line(self, x, y, title, xlabel, ylabel, legend=None, line_style="-"):
+    def _plot_line(self, x, y, title, xlabel, ylabel, legend=None,
+                   line_style="-"):
         self.axes.plot(x, y, line_style)
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)

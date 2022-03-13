@@ -16,12 +16,15 @@ from PySide6 import QtWidgets
 from PySide6 import QtCore
 from qcp.ui.components import AbstractComponent
 from qcp.ui.constants import BUTTON_CANCEL_SEARCH_BUTTON, \
-    BUTTON_SEARCH_BUTTON, BUTTON_PROGRESS_BAR, BUTTON_PROGRESS_BAR_TICK_RATE, THREAD_PAUSE
+    BUTTON_SEARCH_BUTTON, BUTTON_PROGRESS_BAR, BUTTON_PROGRESS_BAR_TICK_RATE, \
+    THREAD_PAUSE
 
 
 class ButtonComponent(AbstractComponent):
 
-    def __init__(self, main_window: QtWidgets.QMainWindow, search: QtWidgets.QTextEdit, target: QtWidgets.QLineEdit, *args, **kwargs):
+    def __init__(self, main_window: QtWidgets.QMainWindow,
+                 search: QtWidgets.QTextEdit, target: QtWidgets.QLineEdit,
+                 *args, **kwargs):
         super().__init__(main_window, *args, **kwargs)
 
     def setup_signals(self):

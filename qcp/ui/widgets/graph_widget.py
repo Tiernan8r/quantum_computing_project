@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import matplotlib
 from PySide6 import QtWidgets
 from qcp.matrices import Matrix
 from qcp.ui.widgets.embedded_graph import EmbeddedGraph

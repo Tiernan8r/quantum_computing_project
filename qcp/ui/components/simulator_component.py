@@ -20,7 +20,8 @@ from qcp.ui.constants import THREAD_PAUSE, LCD_CLASSICAL, LCD_GROVER
 
 class SimulatorComponent(AbstractComponent):
 
-    def __init__(self, main_window: QtWidgets.QMainWindow, button_component, graph_component, *args, **kwargs):
+    def __init__(self, main_window: QtWidgets.QMainWindow, button_component,
+                 graph_component, *args, **kwargs):
         self.button_component = button_component
         self.graph_component = graph_component
         super().__init__(main_window, *args, **kwargs)

@@ -13,7 +13,8 @@
 # limitations under the License.
 from PySide6 import QtWidgets
 from qcp.ui.components import AbstractComponent
-from qcp.ui.constants import INPUT_SEARCH_WIDGET_NAME, INPUT_TARGET_WIDGET_NAME, INPUT_BROWSE_FILE
+from qcp.ui.constants import INPUT_SEARCH_WIDGET_NAME, \
+    INPUT_TARGET_WIDGET_NAME, INPUT_BROWSE_FILE
 
 
 class InputComponent(AbstractComponent):
@@ -34,7 +35,8 @@ class InputComponent(AbstractComponent):
                 self.input_target = lineEdit
 
         textEdit = self.main_window.ui_component.findChild(QtWidgets.QTextEdit)
-        if textEdit is not None and textEdit.objectName() == INPUT_SEARCH_WIDGET_NAME:
+        if textEdit is not None and \
+                textEdit.objectName() == INPUT_SEARCH_WIDGET_NAME:
             self.input_search = textEdit
 
         buttons = self.main_window.ui_component.findChildren(
