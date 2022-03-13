@@ -59,11 +59,11 @@ class SimulatorComponent(AbstractComponent):
         self.graph_component.show()
 
     def update_lcd_displays(self):
-        clas_val = self.lcd_classical.value()
-        self.lcd_classical.display(clas_val + 1)
+        classical_value = self.lcd_classical.value()
+        self.lcd_classical.display(classical_value + 1)
 
-        grov_val = self.lcd_grover.value()
-        self.lcd_grover.display(grov_val + 1)
+        quantum_value = self.lcd_grover.value()
+        self.lcd_grover.display(quantum_value + 1)
 
 
 class SimulateQuantumComputerThread(QtCore.QThread):

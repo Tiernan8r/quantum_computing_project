@@ -49,9 +49,9 @@ class ButtonComponent(AbstractComponent):
             if b.objectName() == BUTTON_CANCEL_SEARCH_BUTTON:
                 self.cancel_button = b
 
-        progressBars = self.main_window.ui_component.findChildren(
+        progress_bars = self.main_window.ui_component.findChildren(
             QtWidgets.QProgressBar)
-        for pb in progressBars:
+        for pb in progress_bars:
             if pb.objectName() == BUTTON_PROGRESS_BAR:
                 self.progress_bar = pb
 

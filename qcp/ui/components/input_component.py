@@ -28,16 +28,17 @@ class InputComponent(AbstractComponent):
         self.input_browse.clicked.connect(self.browse_files)
 
     def _find_widgets(self):
-        lineEdits = self.main_window.ui_component.findChildren(
+        line_edits = self.main_window.ui_component.findChildren(
             QtWidgets.QLineEdit)
-        for lineEdit in lineEdits:
+        for lineEdit in line_edits:
             if lineEdit.objectName() == INPUT_TARGET_WIDGET_NAME:
                 self.input_target = lineEdit
 
-        textEdit = self.main_window.ui_component.findChild(QtWidgets.QTextEdit)
-        if textEdit is not None and \
-                textEdit.objectName() == INPUT_SEARCH_WIDGET_NAME:
-            self.input_search = textEdit
+        text_edit = self.main_window.ui_component.findChild(
+            QtWidgets.QTextEdit)
+        if text_edit is not None and \
+                text_edit.objectName() == INPUT_SEARCH_WIDGET_NAME:
+            self.input_search = text_edit
 
         buttons = self.main_window.ui_component.findChildren(
             QtWidgets.QPushButton)
