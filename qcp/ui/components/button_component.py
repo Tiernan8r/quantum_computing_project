@@ -5,7 +5,6 @@ from qcp.ui.constants import BUTTON_CANCEL_SEARCH_BUTTON, BUTTON_SEARCH_BUTTON, 
 import time
 
 
-
 class ButtonComponent(AbstractComponent):
 
     def __init__(self, main_window: QtWidgets.QMainWindow, search: QtWidgets.QTextEdit, target: QtWidgets.QLineEdit, *args, **kwargs):
@@ -39,12 +38,6 @@ class ButtonComponent(AbstractComponent):
             if pb.objectName() == BUTTON_PROGRESS_BAR:
                 self.progress_bar = pb
 
-        lcds = self.main_window.ui_component.findChildren(QtWidgets.QLCDNumber)
-        for lcd in lcds:
-            if lcd.objectName() == LCD_CLASSICAL:
-                self.lcd_classical = lcd
-            elif lcd.objectName() == LCD_GROVER:
-                self.lcd_grover = lcd
 
     def initiate_search(self):
         self.cancel_button.show()
@@ -75,14 +68,6 @@ class ButtonComponent(AbstractComponent):
             # wait until the thread has started
             while not self.pb_thread.isRunning():
                 time.sleep(THREAD_PAUSE)
-
-
-    def update_lcd_displays(self):
-        clas_val = self.lcd_classical.value()
-        self.lcd_classical.display(clas_val + 1)
-
-        grov_val = self.lcd_grover.value()
-        self.lcd_grover.display(grov_val + 1)
 
 
 class ProgressBarThread(QtCore.QThread):
