@@ -11,6 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import sys
-import os
-sys.path.append(os.getcwd() + os.sep + "qcp")
+from PySide6 import QtCore, QtWidgets
+
+
+class AbstractComponent(QtCore.QObject):
+
+    def __init__(self, main_window: QtWidgets.QMainWindow, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.main_window = main_window
+        self.setup_signals()
+
+    def setup_signals(self):
+        pass

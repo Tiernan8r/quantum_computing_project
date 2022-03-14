@@ -11,6 +11,5 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import sys
-import os
-sys.path.append(os.getcwd() + os.sep + "qcp")
+from qcp.ui.widgets.embedded_graph import EmbeddedGraph  # noqa: F401
+from qcp.ui.widgets.graph_widget import GraphWidget  # noqa: F401

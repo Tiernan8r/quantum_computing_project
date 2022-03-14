@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 -c requirements.txt
+tox
+pip-tools
 mypy
 pytest
 pytest-cov
 pytest-flake8
-pytest-mock
-pytest-optional-tests
-pylint

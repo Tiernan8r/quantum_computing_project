@@ -11,6 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import sys
-import os
-sys.path.append(os.getcwd() + os.sep + "qcp")
+from qcp.ui.components.abstract_component import AbstractComponent  # noqa: F401, E501
+from qcp.ui.components.graph_component import GraphComponent  # noqa: F401
+from qcp.ui.components.input_component import InputComponent  # noqa: F401
+from qcp.ui.components.button_component import ButtonComponent  # noqa: F401
+from qcp.ui.components.simulator_component import SimulatorComponent  # noqa: F401, E501

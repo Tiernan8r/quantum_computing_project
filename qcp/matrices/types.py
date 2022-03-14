@@ -11,6 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import sys
-import os
-sys.path.append(os.getcwd() + os.sep + "qcp")
+from typing import Dict, List, Union
+
+SCALARS = Union[complex, float, int]
+SCALARS_T = (complex, float, int)
+VECTOR = List[SCALARS]
+MATRIX = List[VECTOR]
+SPARSE = Dict[int, Dict[int, SCALARS]]

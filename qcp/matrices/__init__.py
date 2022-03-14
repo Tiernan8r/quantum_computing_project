@@ -11,6 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import sys
-import os
-sys.path.append(os.getcwd() + os.sep + "qcp")
+from qcp.matrices.matrix import Matrix  # noqa: F401
+from qcp.matrices.sparse_matrix import SparseMatrix  # noqa: F401
+from qcp.matrices.dense_matrix import DenseMatrix  # noqa: F401
+
+from qcp.matrices.types import SCALARS, SCALARS_T, VECTOR, \
+    MATRIX, SPARSE  # noqa: F401
+
+DefaultMatrix = SparseMatrix

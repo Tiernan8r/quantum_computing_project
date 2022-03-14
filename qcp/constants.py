@@ -11,6 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import sys
-import os
-sys.path.append(os.getcwd() + os.sep + "qcp")
+from qcp.matrices import DefaultMatrix
+import math
+
+IDENTITY = DefaultMatrix([[1, 0], [0, 1]])
+TWO_HADAMARD = (1/math.sqrt(2)) * DefaultMatrix([[1, 1], [1, -1]])
+ZERO_VECTOR = DefaultMatrix([[1], [0]])
+ONE_VECTOR = DefaultMatrix([[0], [1]])
+PAULI_X = DefaultMatrix([[0, 1], [1, 0]])
+PAULI_Z = DefaultMatrix([[1, 0], [0, -1]])

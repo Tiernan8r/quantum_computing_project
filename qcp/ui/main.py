@@ -12,5 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import sys
-import os
-sys.path.append(os.getcwd() + os.sep + "qcp")
+from PySide6.QtWidgets import QApplication
+from qcp.ui.main_window import MainWindow
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main_window = MainWindow()
+    main_window.show()
+
+    sys.exit(app.exec())
