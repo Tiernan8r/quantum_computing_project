@@ -82,3 +82,6 @@ class Matrix(ABC):
 
     def __str__(self) -> str:
         pass
+
+    def _optional_newline(self, i: int, N: int) -> str:
+        return "\n" if i < N - 1 else ""
