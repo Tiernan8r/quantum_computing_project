@@ -29,7 +29,7 @@ def test_measure():
     Z = DefaultMatrix([[0], [0], [0], [0]])
     try:
         _ = reg.measure(Z)
-    except ZeroDivisionError as zde:
+    except ZeroDivisionError:
         assert False, "expected no ZeroDivisionError"
 
     # Test probabilities come out as expected
@@ -38,7 +38,7 @@ def test_measure():
     prob = reg.measure(B)
     assert math.isclose(prob[0], 0.5)
 
-    # Test normalisation works 
-    C = DefaultMatrix([[1],[1]])
+    # Test normalisation works
+    C = DefaultMatrix([[1], [1]])
     prob2 = reg.measure(C)
     assert math.isclose(prob2[0], 0.5)
