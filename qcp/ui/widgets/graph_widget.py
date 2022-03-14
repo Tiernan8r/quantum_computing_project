@@ -13,6 +13,7 @@
 # limitations under the License.
 from PySide6 import QtWidgets
 from qcp.matrices import Matrix
+import qcp.register as reg
 from qcp.ui.widgets.embedded_graph import EmbeddedGraph
 from typing import List, Any
 
@@ -32,12 +33,12 @@ class GraphWidget(EmbeddedGraph):
         # TODO: remove placeholders
         x: List[Any] = list(range(10))
         y = [2**i for i in x]
-        x = [f"|{bin(i)[2:]}>" for i in x]
 
         if qregister is not None:
-            x = list(range(qregister.num_columns))
-            # TODO: someway to measure qregister
-            y = qregister.measure()  # type: ignore
+            x = list(range(qregister.num_rows))
+            y = reg.measure(qregister)
+
+        x = [f"|{bin(i)[2:]}>" for i in x]
 
         self._plot_line(x, y, title=title,
                         xlabel=xlabel, ylabel=ylabel)

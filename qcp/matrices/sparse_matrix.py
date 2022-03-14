@@ -155,7 +155,7 @@ class SparseMatrix(Matrix):
         return self._row
 
     def _get_row(self, i: int) -> SparseVector:  # type: ignore[override]
-        assert i < len(self), "index out of range"
+        assert i < self.num_rows, "index out of range"
 
         entry = {}
         if i in self._entries:
@@ -164,16 +164,15 @@ class SparseMatrix(Matrix):
         return SparseVector(entry, self.num_columns)
 
     def __getitem__(self, i: int) -> SparseVector:  # type: ignore[override]
-        assert i < len(self), "index out of range"
         return self._get_row(i)
 
     def __setitem__(self, i: int, v:  # type: ignore[override]
                     Union[SparseVector, List[SCALARS], Dict[int, SCALARS]]
                     ):
-        assert i < len(self), "index out of range"
+        assert i < self.num_rows, "index out of range"
         sv = None
         if isinstance(v, list):
-            assert len(v) == len(self[i]), "row dimension does not match"
+            assert len(v) == self.num_columns, "row dimension does not match"
             sv = SparseVector(v, self.num_rows)
         elif isinstance(v, dict):
             assert max(v.keys()) + 1 < self.num_rows, "row too wide"
@@ -349,6 +348,5 @@ class SparseMatrix(Matrix):
             total_string += "[" + \
                 ",".join(row_repr) + "]"
             # Don't add newline for last row:
-            total_string += (lambda i, N: "\n" if i <
-                             N - 1 else "")(i, self.num_rows)
+            total_string += self._optional_newline(i, self.num_rows)
         return total_string

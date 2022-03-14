@@ -1,4 +1,5 @@
 from qcp.matrices import DefaultMatrix
+import qcp.register as reg
 import random
 import qcp.gates as g
 
@@ -115,7 +116,7 @@ class Grovers:
         :return: the state observed and the probability of measuring
                 said state
         """
-        p = list(map(lambda x: x ** 2, self.state.transpose().get_state()[0]))
+        p = reg.measure(self.state)
         # list of weighted probabilities with the index representing the state
 
         observed = random.choices([i for i in range(len(p))], p, k=1)
