@@ -47,8 +47,9 @@ class Grovers:
         :param size: number of qubits in our circuit
         :param target_state: specific state we want to target/select
         """
-
-        assert (target_state < (2 ** size))
+        assert size > 1, "need minimum of two qbits"
+        assert target_state < (2 ** size), \
+            "target must be within qbit state indices"
         self.size = size
         self.target = target_state
         self.state = self.initial_state()

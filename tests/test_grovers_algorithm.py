@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import qcp.grovers_algorithm as ga
+import pytest
 
 
 def test_pull_set_bits():
@@ -34,8 +35,19 @@ def test_pull_set_bits():
 
 
 def test_init():
-    pass
+    # Test for one qbit state assertion error:
+    with pytest.raises(AssertionError) as ae1:
+        _ = ga.Grovers(1, 0)
+    assert ae1.match("need minimum of two qbits")
 
+    # Target out of range
+    with pytest.raises(AssertionError) as ae2:
+        _ = ga.Grovers(2, 10)
+    assert ae2.match("target must be within qbit state indices")
+
+    # Succeed:
+    grov = ga.Grovers(2, 0)
+    assert grov.size == 2
 
 def test_initial_state():
     pass
