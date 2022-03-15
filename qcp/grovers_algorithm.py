@@ -70,7 +70,7 @@ class Grovers:
         entries[0][0] = 1
         return DefaultMatrix(entries)
 
-    def single_target_oracle(self):
+    def single_target_oracle(self) -> Matrix:
         """
         Creates an oracle gate - a gate which 'selects' our target state
         by phase shifting it by pi (turning 1 into -1 in the matrix

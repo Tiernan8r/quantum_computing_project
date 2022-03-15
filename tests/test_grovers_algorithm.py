@@ -87,7 +87,38 @@ def test_initial_state():
 
 
 def test_single_target_oracle():
-    pass
+    # Create initial small grovers algorithm, so the test code doesn't take
+    # a while computing large circuits and oracles
+    grov = ga.Grovers(2, 0)
+
+    # iterate over all target possibilities for a 2 qbit system,
+    # and verify that the target oracle is generated correctly
+    # for each target
+    for t in range(0, 4):
+        # set the new target
+        grov.target = t
+        # generate the new target for the state
+        oracle4x4 = grov.single_target_oracle()
+        # the target index should be -1 in the oracle
+        expected4x4 = DefaultMatrix({
+            0: {0: 1},
+            1: {1: 1},
+            2: {2: 1},
+            3: {3: 1},
+        })
+        expected4x4[t][t] = -1
+
+        assert oracle4x4.get_state() == expected4x4.get_state()
+
+    # Test for 8x8 matrices
+    grov.size = 3
+    grov.target = 0
+    oracle8x8 = grov.single_target_oracle()
+
+    expected8x8 = DefaultMatrix.identity(8)
+    expected8x8[0][0] = -1
+
+    assert oracle8x8.get_state() == expected8x8.get_state()
 
 
 def test_diffusion():
