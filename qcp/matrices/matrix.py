@@ -15,7 +15,6 @@ from __future__ import annotations
 from abc import ABC
 from typing import Union
 from qcp.matrices.types import SCALARS, VECTOR, MATRIX
-import cmath
 
 
 class Matrix(ABC):
@@ -84,29 +83,5 @@ class Matrix(ABC):
     def __str__(self) -> str:
         pass
 
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Matrix):
-            return False
-        else:
-            return Matrix.compare(self, other)
-
     def _optional_newline(self, i: int, N: int) -> str:
         return "\n" if i < N - 1 else ""
-
-    @staticmethod
-    def compare(A: Matrix, B: Matrix) -> bool:
-        row_dim_match = A.num_rows == B.num_rows
-        col_dim_match = A.num_columns == B.num_columns
-        if not row_dim_match or not col_dim_match:
-            return False
-
-        # reference the two lists initially so the matrix indexing doesn't bog
-        # down regenerating them constantly
-        a = A.get_state()
-        b = B.get_state()
-        for i in range(A.num_rows):
-            for j in range(B.num_columns):
-                if not cmath.isclose(a[i][j], b[i][j]):
-                    return False
-
-        return True

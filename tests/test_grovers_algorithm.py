@@ -136,7 +136,7 @@ def test_diffusion():
     for t in range(4):
         grov.target = t
         diff4x4 = grov.diffusion()
-        assert diff4x4 == expected4x4
+        h.compare_matrices(diff4x4, expected4x4)
 
     # Test for 8x8 states
     grov.size = 3
