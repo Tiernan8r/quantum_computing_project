@@ -21,4 +21,4 @@ help:
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 convert:
-	@$(SPHINXCONVERT) -o "$(SOURCEDIR)" ..
+	@$(SPHINXCONVERT) -f -o "$(SOURCEDIR)" ..

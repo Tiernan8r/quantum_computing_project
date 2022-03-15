@@ -85,8 +85,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     Constructs a (2**size by 2**size) control-x gate with
     given controls and target
     :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits, if empty, 0th bit is
-                                used as the control.
+    :param controls List[int]: List of control qubits, if empty, 0th bit is used as the control.
     :param target int: target qubit the x gate will be applied to
     :returns Matrix: Matrix representing the gate
     """
@@ -156,8 +155,7 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
      given controls and target
     :param size int: total number of qubits in circuit
     :param controls List[int]: List of control qubits
-    :param target int: target qubit the z gate will be
-                    applied to
+    :param target int: target qubit the z gate will be applied to
     :return Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
@@ -223,10 +221,8 @@ def control_phase(size: int, controls: List[int], target: int,
      given controls and target
     :param size int: total number of qubits in circuit
     :param controls List[int]: List of control qubits
-    :param target int: target qubit the phase gate will be
-                    applied to
-    :param phi complex: angle the target qubit will be phase
-                    shifted by
+    :param target int: target qubit the phase gate will be applied to
+    :param phi complex: angle the target qubit will be phase shifted by
     :return Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
