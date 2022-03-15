@@ -15,6 +15,7 @@ import qcp.grovers_algorithm as ga
 from qcp.matrices import DefaultMatrix
 import tests.test_helpers as h
 import pytest
+import cmath
 
 
 def test_pull_set_bits():
@@ -222,8 +223,8 @@ def test_measure():
     state_choices, prob_choices = (0, 1), (0.2, 0.8)
 
     if measured_state3 == state_choices[0]:
-        assert pytest.approx(measured_prob3, prob_choices[0]) is True
+        assert cmath.isclose(measured_prob3, prob_choices[0])
     elif measured_state3 == state_choices[1]:
-        assert pytest.approx(measured_prob3, prob_choices[1]) is True
+        assert cmath.isclose(measured_prob3, prob_choices[1])
     else:
         assert False
