@@ -62,9 +62,11 @@ class SparseVector:
 
     def __getitem__(self, i: int) -> SCALARS:
         assert i < self._size, "index out of range"
-        if i not in self._entries:
-            return 0
-        return self._entries[i]
+        return self._entries.get(i, 0)
+
+    def __setitem__(self, i: int, v: SCALARS):
+        assert i < self._size, "index out of range"
+        self._entries[i] = v
 
 
 class SparseMatrix(Matrix):
@@ -157,9 +159,7 @@ class SparseMatrix(Matrix):
     def _get_row(self, i: int) -> SparseVector:  # type: ignore[override]
         assert i < self.num_rows, "index out of range"
 
-        entry = {}
-        if i in self._entries:
-            entry = self._entries[i]
+        entry = self._entries.get(i, {})
 
         return SparseVector(entry, self.num_columns)
 
