@@ -99,7 +99,7 @@ class Grovers:
         diff = h * (x * (cz * (x * h)))
         return diff
 
-    def construct_circuit(self):
+    def construct_circuit(self) -> Matrix:
         """
         Constructs the circuit for Grover's algorithm by applying an initial
         set of Hadamards and repeating the oracle and diffusion gates

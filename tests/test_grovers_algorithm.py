@@ -149,7 +149,32 @@ def test_diffusion():
 
 
 def test_construct_circuit():
-    pass
+    # Create initial small grovers algorithm, so the test code doesn't take
+    # a while computing large circuits and oracles
+    grov = ga.Grovers(2, 0)
+
+    circ4x4 = grov.construct_circuit()
+    expected4x4 = 0.5 * DefaultMatrix([
+        [1, 1, 1, 1],
+        [1, -1, 1, -1],
+        [1, 1, -1, -1],
+        [1, -1, -1, 1]
+    ])
+    h.compare_matrices(circ4x4, expected4x4)
+
+    # Change the circuit to be 8x8
+    grov.size = 3
+    circ8x8 = grov.construct_circuit()
+    expected8x8 = 0.354 * DefaultMatrix([[1, 1, 1, 1, 1, 1, 1, 1],
+                                         [1, -1, 1, -1, 1, -1, 1, -1],
+                                         [1, 1, -1, -1, 1, 1, -1, -1],
+                                         [1, -1, -1, 1, 1, -1, -1, 1],
+                                         [1, 1, 1, 1, -1, -1, -1, -1],
+                                         [1, -1, 1, -1, -1, 1, -1, 1],
+                                         [1, 1, -1, -1, -1, -1, 1, 1],
+                                         [1, -1, -1, 1, -1, 1, 1, -1]])
+
+    h.compare_matrices(circ8x8, expected8x8, 0.005)
 
 
 def test_run():
