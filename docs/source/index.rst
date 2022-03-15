@@ -10,8 +10,6 @@ Welcome to Quantum Computing Project's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
-
 Indices and tables
 ==================
 
