@@ -1,4 +1,4 @@
-from qcp.matrices import DefaultMatrix, Matrix, SCALARS
+from qcp.matrices import DefaultMatrix, Matrix, SCALARS, MATRIX
 import qcp.register as reg
 import random
 import qcp.gates as g
@@ -53,7 +53,7 @@ class Grovers:
         Creates a state vector corresponding to |0..0>
         :return Matrix: State vector
         """
-        entries = [[0] for _ in range(2 ** self.size)]
+        entries: MATRIX = [[0] for _ in range(2 ** self.size)]
         entries[0][0] = 1
         return DefaultMatrix(entries)
 
@@ -121,6 +121,7 @@ class Grovers:
         p = reg.measure(self.state)
         # list of weighted probabilities with the index representing the state
 
-        observed = random.choices([i for i in range(len(p))], p, k=1)
+        observed = random.choices(
+            [i for i in range(len(p))], p, k=1)  # type: ignore
         probability = p[observed[0]]
         return observed[0], probability
