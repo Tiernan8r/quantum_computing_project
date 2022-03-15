@@ -6,15 +6,23 @@
 #
 attrs==21.4.0
     # via pytest
+click==8.0.4
+    # via pip-tools
 coverage[toml]==6.3.2
     # via pytest-cov
+distlib==0.3.4
+    # via virtualenv
+filelock==3.6.0
+    # via
+    #   tox
+    #   virtualenv
 flake8==4.0.1
     # via pytest-flake8
 iniconfig==1.1.1
     # via pytest
 mccabe==0.6.1
     # via flake8
-mypy==0.931
+mypy==0.941
     # via -r test-requirements.in
 mypy-extensions==0.4.3
     # via mypy
@@ -22,14 +30,21 @@ packaging==21.3
     # via
     #   -c requirements.txt
     #   pytest
+    #   tox
+pep517==0.12.0
+    # via pip-tools
+pip-tools==6.5.1
+    # via -r test-requirements.in
+platformdirs==2.5.1
+    # via virtualenv
 pluggy==1.0.0
     # via
-    #   -c requirements.txt
     #   pytest
+    #   tox
 py==1.11.0
     # via
-    #   -c requirements.txt
     #   pytest
+    #   tox
 pycodestyle==2.8.0
     # via flake8
 pyflakes==2.4.0
@@ -38,7 +53,7 @@ pyparsing==3.0.7
     # via
     #   -c requirements.txt
     #   packaging
-pytest==7.0.1
+pytest==7.1.0
     # via
     #   -r test-requirements.in
     #   pytest-cov
@@ -47,11 +62,28 @@ pytest-cov==3.0.0
     # via -r test-requirements.in
 pytest-flake8==1.1.0
     # via -r test-requirements.in
-tomli==2.0.1
+six==1.16.0
     # via
     #   -c requirements.txt
+    #   tox
+    #   virtualenv
+toml==0.10.2
+    # via tox
+tomli==2.0.1
+    # via
     #   coverage
     #   mypy
+    #   pep517
     #   pytest
+tox==3.24.5
+    # via -r test-requirements.in
 typing-extensions==4.1.1
     # via mypy
+virtualenv==20.13.3
+    # via tox
+wheel==0.37.1
+    # via pip-tools
+
+# The following packages are considered to be unsafe in a requirements file:
+# pip
+# setuptools

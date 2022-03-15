@@ -11,10 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
--c requirements.txt
-tox
-pip-tools
-mypy
-pytest
-pytest-cov
-pytest-flake8
+import sys
+from PySide6.QtWidgets import QApplication
+from qcp.ui.main_window import MainWindow
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main_window = MainWindow()
+    main_window.show()
+
+    sys.exit(app.exec())

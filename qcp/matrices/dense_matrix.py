@@ -46,6 +46,12 @@ class DenseMatrix(Matrix):
             ] for j in range(n)
         ])
 
+    @staticmethod
+    def zeros(nrow, ncol=1) -> Matrix:
+        # Create zero matrix with dimension (nrow,ncol)
+        # Class method used to handle the creation of new object
+        return DenseMatrix([[0 for _ in range(ncol)] for _ in range(nrow)])
+
     def __len__(self) -> int:
         return self.num_columns
 
@@ -80,12 +86,6 @@ class DenseMatrix(Matrix):
             [self._state[i][j] for i in range(len(self))]
             for j in range(len(self[0]))
         ]
-
-    @classmethod
-    def zeros(cls, nrow, ncol=1):
-        # Create zero matrix with dimension (nrow,ncol)
-        # Class method used to handle the creation of new object
-        return cls([[0 for _ in range(ncol)] for _ in range(nrow)])
 
     def __iter__(self):
         return iter(self.get_state())
@@ -140,7 +140,7 @@ class DenseMatrix(Matrix):
         for i in range(N):
             total_string += "[" + \
                 ",".join([f"{c:3.3g}" for c in self._state[i]]) + "]" + \
-                (lambda i, N: "\n" if i < N - 1 else "")(i, N)
+                self._optional_newline(i, N)
         return total_string
 
     def conjugate(self) -> Matrix:
@@ -156,3 +156,11 @@ class DenseMatrix(Matrix):
     def transpose(self) -> Matrix:
         """Create a new Matrix that is the transpose of the current one."""
         return DenseMatrix(self.columns())
+
+    def trace(self) -> SCALARS:
+        assert self.square, "can only take the trace of square matrices"
+        tr: SCALARS = 0
+        for i in range(self.num_rows):
+            tr += self[i][i]
+
+        return tr

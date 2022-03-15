@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from copy import deepcopy
-from qcp.matrices import SparseMatrix
+from qcp.matrices import DenseMatrix, SparseMatrix
 import pytest
 
 
@@ -300,12 +300,37 @@ def test_sp_m_mul_scalar():
 def test_sp_m_mul_dot_product():
     # Test the assertions for the 1x1 case
     A1x1 = SparseMatrix([[2]])
-    B1x1 = SparseMatrix([[3]])
+    B1x1 = DenseMatrix([[3]])
     C1x1 = SparseMatrix([[6]])
 
     with pytest.raises(AssertionError) as ae2:
         A1x1 * SparseMatrix([[1, 2], [3, 4]])
     assert ae2.match("matrices don't match on their row/column dimensions")
+
+    assert (A1x1 * B1x1).get_state() == C1x1.get_state()
+
+    A2x2 = SparseMatrix([[1, 2], [3, 4]])
+    B2x2 = DenseMatrix([[5, 6], [7, 8]])
+    C2x2 = SparseMatrix([[19, 22], [43, 50]])
+
+    assert (A2x2 * B2x2).get_state() == C2x2.get_state()
+
+    A3x3 = SparseMatrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    B3x3 = DenseMatrix([[10, 11, 12], [13, 14, 15], [16, 17, 18]])
+    C3x3 = SparseMatrix([[84, 90, 96], [201, 216, 231], [318, 342, 366]])
+
+    assert (A3x3 * B3x3).get_state() == C3x3.get_state()
+
+    C4x4 = SparseMatrix({0: {0: 1}, 1: {1: 4}, 2: {2: 9}, 3: {3: 16}})
+    assert (TEST_4x4 * TEST_4x4).get_state() == C4x4.get_state()
+
+
+def test_sp_m_mul_dot_product_sparse():
+    # Test that the dot producting of two sparse matrices is working
+
+    A1x1 = SparseMatrix([[2]])
+    B1x1 = SparseMatrix([[3]])
+    C1x1 = SparseMatrix([[6]])
 
     assert (A1x1 * B1x1).get_state() == C1x1.get_state()
 
