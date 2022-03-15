@@ -178,7 +178,17 @@ def test_construct_circuit():
 
 
 def test_run():
-    pass
+    # Each target in a 2 qbit state should be retrieved exactly
+    for t in range(4):
+        grov = ga.Grovers(2, t)
+
+        result4x1 = grov.run()
+
+        state = [[0] for _ in range(4)]
+        state[t][0] = -1
+        expected4x1 = DefaultMatrix(state)
+
+        h.compare_matrices(result4x1, expected4x1)
 
 
 def test_measure():
