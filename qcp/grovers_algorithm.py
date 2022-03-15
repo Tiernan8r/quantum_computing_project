@@ -1,7 +1,20 @@
-from qcp.matrices import DefaultMatrix, Matrix, SCALARS, MATRIX
+# Copyright 2022 Tiernan8r
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+from qcp.matrices import DefaultMatrix, Matrix, MATRIX
 import qcp.register as reg
-import random
 import qcp.gates as g
+import random
 from typing import List, Tuple
 
 
@@ -35,8 +48,9 @@ class Grovers:
         :param size int: number of qubits in our circuit
         :param target_state int: specific state we want to target/select
         """
-
-        assert (target_state < (2 ** size))
+        assert size > 1, "need minimum of two qbits"
+        assert target_state < (2 ** size), \
+            "target must be within qbit state indices"
         self.size = size
         self.target = target_state
         self.state = self.initial_state()
@@ -50,14 +64,14 @@ class Grovers:
 
     def initial_state(self) -> Matrix:
         """
-        Creates a state vector corresponding to |0..0>
-        :return Matrix: State vector
+        Creates a state vector corresponding to |1..0>
+        :return: returns state vector
         """
         entries: MATRIX = [[0] for _ in range(2 ** self.size)]
         entries[0][0] = 1
         return DefaultMatrix(entries)
 
-    def single_target_oracle(self):
+    def single_target_oracle(self) -> Matrix:
         """
         Creates an oracle gate - a gate which 'selects' our target state
         by phase shifting it by pi (turning 1 into -1 in the matrix
@@ -112,7 +126,7 @@ class Grovers:
         self.state = self.circuit * self.state
         return self.state
 
-    def measure(self) -> Tuple[int, SCALARS]:
+    def measure(self) -> Tuple[int, float]:
         """
         'measures' self.state by selecting a state weighted by its
         (amplitude ** 2)

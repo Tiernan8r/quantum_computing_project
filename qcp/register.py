@@ -13,16 +13,18 @@
 # limitations under the License.
 from qcp.matrices import Matrix
 import cmath
-from qcp.matrices.types import VECTOR
+from typing import List
+
+from qcp.matrices.types import SCALARS
 
 
-def measure(mat: Matrix) -> VECTOR:
+def measure(mat: Matrix) -> List[float]:
     """Convert the qbit states into probability amplitudes"""
     assert mat.num_columns == 1, \
         "can only measure the probabilities of column matrices"
     states = mat.get_state()
 
-    probabilities = [s[0]**2 for s in states]
+    probabilities = [_magnitude(s[0]) for s in states]
 
     # Normalise the probabilities if they aren't, but avoid divide by
     # 0 errors
@@ -31,3 +33,10 @@ def measure(mat: Matrix) -> VECTOR:
         probabilities = [p / magnitude for p in probabilities]
 
     return probabilities
+
+
+def _magnitude(v: SCALARS) -> float:
+    if isinstance(v, complex):
+        return (v * v.conjugate()).real
+    else:
+        return v**2
