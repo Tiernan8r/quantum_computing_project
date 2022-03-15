@@ -14,6 +14,7 @@
 import qcp.grovers_algorithm as ga
 import pytest
 from qcp.matrices import DefaultMatrix
+import tests.test_helpers as h
 
 
 def test_pull_set_bits():
@@ -122,7 +123,29 @@ def test_single_target_oracle():
 
 
 def test_diffusion():
-    pass
+    # Create initial small grovers algorithm, so the test code doesn't take
+    # a while computing large circuits and oracles
+    grov = ga.Grovers(2, 0)
+
+    # The diffuser is independent of the target:
+    expected4x4 = 0.5 * DefaultMatrix([[1, -1, -1, -1],
+                                       [-1, 1, -1, -1],
+                                       [-1, -1, 1, -1],
+                                       [-1, -1, -1, 1]])
+    for t in range(4):
+        grov.target = t
+        diff4x4 = grov.diffusion()
+        assert diff4x4 == expected4x4
+
+    # Test for 8x8 states
+    grov.size = 3
+    diff8x8 = grov.diffusion()
+    basic_state = [[-1 for _ in range(8)] for _ in range(8)]
+    for i in range(8):
+        basic_state[i][i] = 3
+    expected8x8 = 0.25 * DefaultMatrix(basic_state)
+
+    h.compare_matrices(diff8x8, expected8x8)
 
 
 def test_construct_circuit():
