@@ -13,6 +13,7 @@
 # limitations under the License.
 import qcp.grovers_algorithm as ga
 import pytest
+from qcp.matrices import DefaultMatrix
 
 
 def test_pull_set_bits():
@@ -49,8 +50,40 @@ def test_init():
     grov = ga.Grovers(2, 0)
     assert grov.size == 2
 
+
 def test_initial_state():
-    pass
+    # Create initial small grovers algorithm, so the test code doesn't take
+    # a while computing large circuits and oracles
+    grov = ga.Grovers(2, 0)
+
+    expected4x1 = DefaultMatrix([[1],
+                                 [0],
+                                 [0],
+                                 [0]])
+    initial4x1 = grov.initial_state()
+    assert initial4x1.get_state() == expected4x1.get_state()
+
+    # Increase the algorithms size, so that larger initial states
+    # will be generated
+    grov.size = 4
+    expected16x1 = DefaultMatrix([[1],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0],
+                                 [0]])
+    initial16x1 = grov.initial_state()
+    assert initial16x1.get_state() == expected16x1.get_state()
 
 
 def test_single_target_oracle():

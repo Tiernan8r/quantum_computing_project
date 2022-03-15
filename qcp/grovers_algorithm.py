@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.matrices import DefaultMatrix
+from qcp.matrices import DefaultMatrix, Matrix
 import qcp.register as reg
 import random
 import qcp.gates as g
@@ -61,9 +61,9 @@ class Grovers:
 
         self.circuit = self.construct_circuit()
 
-    def initial_state(self):
+    def initial_state(self) -> Matrix:
         """
-        Creates a state vector corresponding to |0..0>
+        Creates a state vector corresponding to |1..0>
         :return: returns state vector
         """
         entries = [[0] for _ in range(2 ** self.size)]
