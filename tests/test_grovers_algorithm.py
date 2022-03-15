@@ -222,8 +222,8 @@ def test_measure():
     state_choices, prob_choices = (0, 1), (0.2, 0.8)
 
     if measured_state3 == state_choices[0]:
-        assert pytest.approx(measured_prob3, prob_choices[0]) == True
+        assert pytest.approx(measured_prob3, prob_choices[0]) is True
     elif measured_state3 == state_choices[1]:
-        assert pytest.approx(measured_prob3, prob_choices[1]) == True
+        assert pytest.approx(measured_prob3, prob_choices[1]) is True
     else:
         assert False
