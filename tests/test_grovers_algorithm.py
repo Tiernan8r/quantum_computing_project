@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import qcp.grovers_algorithm as ga
-import pytest
 from qcp.matrices import DefaultMatrix
 import tests.test_helpers as h
+import pytest
 
 
 def test_pull_set_bits():
@@ -192,4 +192,38 @@ def test_run():
 
 
 def test_measure():
-    pass
+    # Create initial small grovers algorithm, so the test code doesn't take
+    # a while computing large circuits and oracles
+    grov = ga.Grovers(2, 0)
+
+    # Set the state to be in "|00>"
+    grov.state = DefaultMatrix([[1], [0], [0], [0]])
+
+    measured_state1, measured_prob1 = grov.measure()
+    expec_state1, expec_prob1 = 0, 1
+    assert measured_state1 == expec_state1
+    assert measured_prob1 == expec_prob1
+
+    # Non-normalised, should still work:
+    grov.state *= 0.5
+
+    measured_state2, measured_prob2 = grov.measure()
+    expec_state2, expec_prob2 = 0, 1
+    assert measured_state2 == expec_state2
+    assert measured_prob2 == expec_prob2
+
+    # 8x8 system, close, but not equal probability
+    grov.size = 3
+    grov.state = DefaultMatrix({0: {0: 0.33}, 1: {0: 0.66}}, h=8, w=1)
+
+    # Get a random result everytime weighted by their probabilities,
+    # so need to verify each possibility
+    measured_state3, measured_prob3 = grov.measure()
+    state_choices, prob_choices = (0, 1), (0.2, 0.8)
+
+    if measured_state3 == state_choices[0]:
+        assert pytest.approx(measured_prob3, prob_choices[0]) == True
+    elif measured_state3 == state_choices[1]:
+        assert pytest.approx(measured_prob3, prob_choices[1]) == True
+    else:
+        assert False

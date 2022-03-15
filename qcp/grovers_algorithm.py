@@ -13,8 +13,9 @@
 # limitations under the License.
 from qcp.matrices import DefaultMatrix, Matrix
 import qcp.register as reg
-import random
 import qcp.gates as g
+import random
+from typing import Tuple
 
 
 def pull_set_bits(n: int):
@@ -115,7 +116,7 @@ class Grovers:
             self.max_reflections -= 1
         return circuit
 
-    def run(self):
+    def run(self) -> Matrix:
         """
         Multiplies our Grover's circuit with the initial state
         :return: Final state
@@ -123,7 +124,7 @@ class Grovers:
         self.state = self.circuit * self.state
         return self.state
 
-    def measure(self):
+    def measure(self) -> Tuple[float, float]:
         """
         'measures' self.state by selecting a state weighted by its
         (amplitude ** 2)
