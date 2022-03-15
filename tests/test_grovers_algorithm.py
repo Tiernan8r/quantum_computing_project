@@ -14,6 +14,25 @@
 import qcp.grovers_algorithm as ga
 
 
+def test_pull_set_bits():
+    # Create a list of tuples to test on
+    # The first entry is the value to input into pull_set_bits()
+    # The second entry is the expected list of indices
+    test_table = [
+        (1, [0]),
+        (7, [0, 1, 2]),
+        (10, [1, 3]),
+        (21, [0, 2, 4]),
+        (31, [0, 1, 2, 3, 4]),
+        (32, [5])
+    ]
+
+    for tests in test_table:
+        n = tests[0]
+        expec = tests[1]
+        assert ga.pull_set_bits(n) == expec
+
+
 def test_init():
     pass
 
