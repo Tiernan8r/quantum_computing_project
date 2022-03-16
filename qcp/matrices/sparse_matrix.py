@@ -47,7 +47,10 @@ def _list_to_dict(vals: List[SCALARS], limit: int = -1) -> Dict[int, SCALARS]:
 
 
 class SparseVector:
-    """Sparse representation of a row vector"""
+    """
+    Sparse implementation of a row vector, where only the non-zero elements 
+    are stored in memory, and any non saved index is taken to be zero.
+    """
 
     def __init__(self, entries:
                  Union[List[SCALARS], Dict[int, SCALARS]], size: int):
@@ -70,6 +73,11 @@ class SparseVector:
 
 
 class SparseMatrix(Matrix):
+    """
+    Implementation of a Sparse Matrix object, where only the non-zero matrix
+    elements are stored in memory, and if a matrix element is not indexed, it
+    is taken to be zero.
+    """
 
     def __init__(self, state: Union[MATRIX, SPARSE], w: int = -1, h: int = -1):
         """Initialise a SparseMatrix, using either a List[List[]] object,
@@ -129,31 +137,46 @@ class SparseMatrix(Matrix):
         self._entries = entries
 
     @staticmethod
-    def identity(n: int) -> Matrix:
+    def identity(n: int) -> SparseMatrix:
         """
         Create the identity matrix with the given dimensions
 
-        :param n int: The matrix dimension
-        :raises TypeError: If input dimension is not convertable to int.
+        :param int n: The matrix dimension
+        returns:
+            SparseMatrix: The SparseMatrix identity matrix object.
         """
-        try:
-            n = int(n)
-        except TypeError:
-            raise
-
+        assert isinstance(n, int), "matrix dimension must be an integer"
         assert n > 0, "Matrix dimension must be positive"
 
         return SparseMatrix({i: {i: 1} for i in range(n)}, w=n, h=n)
 
     @property
     def num_rows(self) -> int:
+        """
+        Return the number of rows in the SparseMatrix.
+
+        returns:
+            int: The number of rows
+        """
         return self._row
 
     @property
     def num_columns(self) -> int:
+        """
+        Return the number of columns in the SparseMatrix.
+
+        returns:
+            int: The number of columns.
+        """
         return self._col
 
     def __len__(self) -> int:
+        """
+        Return the horizontal size of the SparseMatrix.
+
+        returns:
+            int: The number of columns in the SparseMatrix
+        """
         return self._row
 
     def _get_row(self, i: int) -> SparseVector:  # type: ignore[override]
@@ -194,14 +217,33 @@ class SparseMatrix(Matrix):
         return list_representation
 
     def get_state(self) -> MATRIX:
+        """
+        Return the matrix values as a nested list
+
+        returns:
+            MATRIX: A nested list of the matrix values indexed by 
+            row/column
+        """
         return self._as_list()
 
     def rows(self) -> MATRIX:
-        """Return the rows of the Matrix."""
+        """
+        Equivalent to get_state().
+
+        returns:
+            MATRIX: A nested list of the matrix values indexed by
+            row/column
+        """
         return self.get_state()
 
     def columns(self) -> MATRIX:
-        """Returns the columns of the Matrix"""
+        """
+        The transpose of the matrix as a nested list
+
+        returns:
+            MATRIX: A nested list of the matrix values transposed,
+            indexed by column/row
+        """
         list_representation: MATRIX = [
             [0 for _ in range(self._row)] for _ in range(self._col)
         ]
@@ -212,7 +254,14 @@ class SparseMatrix(Matrix):
 
         return list_representation
 
-    def transpose(self) -> Matrix:
+    def transpose(self) -> SparseMatrix:
+        """
+        Flips the matrix elements along the diagonal, and return a new
+        SparseMatrix containing these values.
+
+        returns:
+            SparseMatrix: The transpose of the current matrix.
+        """
         entries: SPARSE = {
             k: {} for k in range(self._col)
         }
@@ -224,7 +273,15 @@ class SparseMatrix(Matrix):
                     entries[j][i] = v
         return SparseMatrix(entries, h=self.num_columns, w=self.num_rows)
 
-    def conjugate(self) -> Matrix:
+    def conjugate(self) -> SparseMatrix:
+        """
+        Create a new SparseMatrix where each value in the matrix is the
+        complex conjugate of the current matrix values.
+
+        returns:
+            SparseMatrix: A SparseMatrix object of the same dimensions of the
+            current matrix, with each value conjugated in place. 
+        """
         entries = deepcopy(self._entries)
         for i, row in self._entries.items():
             for j, v in row.items():
@@ -235,6 +292,13 @@ class SparseMatrix(Matrix):
         return SparseMatrix(entries, h=self.num_rows, w=self.num_columns)
 
     def trace(self) -> SCALARS:
+        """
+        Calculate the sum of the diagonal elements of the matrix
+
+        returns:
+            SCALARS: The sum of all diagonal elements, with type determined
+            by the value types.
+        """
         assert self.square, "can only take the trace of square matrices"
         tr: SCALARS = 0
         for i in range(self.num_rows):
