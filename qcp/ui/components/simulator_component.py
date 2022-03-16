@@ -19,6 +19,10 @@ from qcp.ui.constants import THREAD_PAUSE, LCD_CLASSICAL, LCD_GROVER
 
 
 class SimulatorComponent(AbstractComponent):
+    """
+    UI Component that handles the background task of running the Quantum
+    Computer Simulator code on a separate QThread.
+    """
 
     def __init__(self, main_window: QtWidgets.QMainWindow, button_component,
                  graph_component, *args, **kwargs):
@@ -29,6 +33,13 @@ class SimulatorComponent(AbstractComponent):
         self.graph_component.hide()
 
     def setup_signals(self):
+        """
+        Initialise the QThread to run the simulation on and have it ready
+        to run when the input parameters are provided.
+
+        Setup signals to display the graph when the calculation completes,
+        and to hide the cancel button and progress bar.
+        """
         self._find_widgets()
         self.qcp_thread = SimulateQuantumComputerThread()
 
@@ -48,6 +59,10 @@ class SimulatorComponent(AbstractComponent):
                 self.lcd_grover = lcd
 
     def run_simulation(self):
+        """
+        Pass the input parameters to the QThread, and start up the
+        simulation
+        """
         # Code to initialise the qcp simulation on the qthread
         if not self.qcp_thread.isRunning():
             self.qcp_thread.exiting = False
@@ -56,9 +71,19 @@ class SimulatorComponent(AbstractComponent):
                 time.sleep(THREAD_PAUSE)
 
     def simulation_finished(self):
+        """
+        Function to handle behaviour when the QThread completes successfully
+
+        Shows the quantum state on the matplotlib graph
+        """
         self.graph_component.show()
 
     def update_lcd_displays(self):
+        """
+        Show the comparison between the number of iterations a classical computer
+        would have needed to run the search, versus the number of iterations our
+        quantum simulation took.
+        """
         classical_value = self.lcd_classical.value()
         self.lcd_classical.display(classical_value + 1)
 
@@ -67,6 +92,10 @@ class SimulatorComponent(AbstractComponent):
 
 
 class SimulateQuantumComputerThread(QtCore.QThread):
+    """
+    QThread object to handle the running of the Quantum Computer
+    Simulation, input/output is passed back to the main thread by pipes.
+    """
 
     def __init__(self, parent=None):
         QtCore.QThread.__init__(self, parent)
