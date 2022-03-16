@@ -30,14 +30,32 @@ class Matrix(ABC):
 
     @property
     def num_rows(self) -> int:
+        """
+        The number of rows in the Matrix
+
+        returns:
+            int: The number of rows in the matrix
+        """
         pass
 
     @property
     def num_columns(self) -> int:
+        """
+        The number of columns in the Matrix
+
+        returns:
+            int: The number of columns in the matrix
+        """
         pass
 
     @property
     def square(self) -> bool:
+        """
+        Whether the matrix is square or not.
+
+        returns:
+            bool: Whether the matrix row/column dimensions match.
+        """
         return self.num_columns == self.num_rows
 
     def __getitem__(self, i: int) -> VECTOR:
@@ -47,6 +65,13 @@ class Matrix(ABC):
         pass
 
     def get_state(self) -> MATRIX:
+        """
+        Returns the matrix values as a nested list, indexed by the
+        row/column indices.
+
+        returns:
+            MATRIX: A nested list of the matrix values
+        """
         pass
 
     def __add__(self, other: Matrix) -> Matrix:
@@ -56,22 +81,53 @@ class Matrix(ABC):
         pass
 
     def columns(self) -> MATRIX:
+        """
+        Return the transpose of the matrix as a nested list
+
+        returns:
+            MATRIX: The nested list of matrix elements, indexed by
+            column/row.
+        """
         pass
 
     def transpose(self) -> Matrix:
+        """
+        Mirror a square matrix along it's diagonal, and return a new
+        matrix of these elements
+
+        returns:
+            Matrix: The transpose of the current matrix.
+        """
         pass
 
     def conjugate(self) -> Matrix:
+        """
+        Calculate the complex conjugate of each matrix element and return a
+        new matrix of these conjugated elements
+
+        returns:
+            Matrix: The matrix with each element conjugates of the current Matrix
+        """
         pass
 
     def adjoint(self) -> Matrix:
         """
         Shortcut operation to calculate the transpose and conjugate of the
         current matrix.
+
+        returns:
+            Matrix: The new matrix that is transposed and then conjugated of
+            the current matrix
         """
         return self.transpose().conjugate()
 
     def trace(self) -> SCALARS:
+        """
+        The sum of the diagonal elements of a square matrix
+
+        returns:
+            SCALARS: The sum of the diagonal of the matrix
+        """
         pass
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
