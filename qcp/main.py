@@ -12,11 +12,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+CLI initialiser to parse CLI options for the Algorithm, and to run the
+computation
+"""
 from qcp.grovers_algorithm import Grovers
-from typing import Tuple
+from typing import List, Tuple
 import sys
 
+#: The default target state the Oracle will search for
 TARGET_DEF = 5
+#: The CLI help text
 USAGE_STR = f"""USAGE:
 {sys.argv[0]} [FLAGS] nqbits
 
@@ -28,6 +34,10 @@ FLAGS:
 
 
 def main():
+    """
+    The entrypoint for the CLI, parses the cli options and passes the read
+    options to the function to run the computation.
+    """
     nqbits, target = parse_cli(sys.argv)
     assert nqbits > 1, "must have a minimum of a 2 qbit state"
 
@@ -35,11 +45,23 @@ def main():
 
 
 def usage():
+    """
+    Prints the help text to stdout, and exits with error code 0.
+    """
     print(USAGE_STR)
     exit(0)
 
 
-def parse_cli(args) -> Tuple[int, int]:
+def parse_cli(args: List[str]) -> Tuple[int, int]:
+    """
+    Parses the sys.argv CLI options to read the value for the optional flags
+    (if provided), and the required CLI arguments.
+
+    :param List[str] args: The list of CLI inputs from sys.argv
+    :returns Tuple[int, int]: The two CLI values, 
+        firstly the required 'nqbits' parameter,
+        and the second optional 'target' parameter.
+    """
     num_args = len(args)
     vals = []
     targ = TARGET_DEF
@@ -80,6 +102,13 @@ def parse_cli(args) -> Tuple[int, int]:
 
 
 def compute(nqbits: int, target: int):
+    """
+    Run the Grover's Algorithm simulation and print the observed state to
+    stdout with the probability of observing that state.
+
+    :param nqbits int: The number of qbits to simulate in the simulator
+    :param target int: The index of the target qbit state
+    """
     grover = Grovers(nqbits, target)
     grover.run()
 
