@@ -18,6 +18,9 @@ from qcp.ui.constants import GRAPH_WIDGET_NAME
 
 
 class GraphComponent(AbstractComponent):
+    """
+    UI component that handles the behaviour of the embedded matplotlib graph
+    """
 
     def __init__(self, main_window: QtWidgets.QMainWindow, *args, **kwargs):
         super().__init__(main_window, *args, **kwargs)
@@ -25,6 +28,10 @@ class GraphComponent(AbstractComponent):
         self.graph_widget.hide()
 
     def setup_signals(self):
+        """
+        Find the graph widget to embed the matplotlib canvas in, and draw the
+        canvas
+        """
         self._find_graph_widget()
 
         self.refresh()
@@ -36,11 +43,20 @@ class GraphComponent(AbstractComponent):
                 self.graph_widget = GraphWidget(w)
 
     def refresh(self):
+        """
+        Redraw the matlpotlib canvas
+        """
         # TODO: need to get qregister here
         self.graph_widget.display()
 
     def hide(self):
+        """
+        Hide the matplotlib graph if shown
+        """
         self.graph_widget.hide()
 
     def show(self):
+        """
+        Show the matplotlib graph if hidden
+        """
         self.graph_widget.show()
