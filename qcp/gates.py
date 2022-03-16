@@ -13,10 +13,12 @@
 # limitations under the License.
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix, SPARSE
+from qcp.tensor_product import _tensor_product_sparse as tps
 import qcp.constants as c
 import qcp.tensor_product as tp
 from typing import List
 import enum
+import math
 
 
 class Gate(enum.Enum):
@@ -264,3 +266,40 @@ def phase_shift(phi: complex) -> Matrix:
     :return: Matrix(complex)
     """
     return DefaultMatrix([[1, 0], [0, cmath.exp(1j * phi)]])
+
+def swap(size: int, target: List[int]) -> Matrix: 
+    """
+    Construct swap gate which swaps two states
+    :param size int: total number of qubits in circuit
+    :param target int: 2 target states the swap gate will be applied to
+    :return Matrix: Matrix representing the gate
+    """
+    assert size > 1, "need minimum of two states"
+    assert len(target) == 2, 'Invalid swap targets!'
+    
+    swapgate = multi_gate(size,[],Gate.I)
+    temp = swapgate[target[1]-1]
+    swapgate[target[1]-1] = swapgate[target[0]+1]
+    swapgate[target[0]+1] = temp
+    return swapgate
+
+def control_U(size: int,control: int,unitary: DefaultMatrix):
+    """
+    Implement the control U gate
+    :param size int: number of qubits
+    :param control int: control qubit 
+    :param unitary DefaultMatrix: Unitary gate to apply 
+    :return Matrix: Matrix representing the gate
+    """
+    assert size > 1, "need minimum of two qubits"
+    n = 2 ** size
+    targetsize = int(math.log2(unitary.num_rows))
+    # Make sure the control/target bits are within the qbit size
+    assert control in range(size), "control bit out of range"
+    assert control not in range(size,size+unitary.num_rows), "control bit cannot be in auxiliary register"
+
+    gate0 = DefaultMatrix([[1,0],[0,0]])
+    gate1 = DefaultMatrix([[0,0],[0,1]])
+    cu_gate = tps(multi_gate(control,[],Gate.I),tps(gate0,multi_gate(size-1-control,[],Gate.I)))
+    cu_gate += tps(tps(tps(multi_gate(control,[],Gate.I),gate1),multi_gate(size-1-targetsize-control,[],Gate.I)),unitary)
+    return cu_gate
