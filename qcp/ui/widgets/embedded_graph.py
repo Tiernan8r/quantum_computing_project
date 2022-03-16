@@ -22,6 +22,10 @@ matplotlib.use('Qt5Agg')
 
 
 class EmbeddedGraph(QtWidgets.QWidget):
+    """
+    General custom widget to handle behaviour of the matplotlib chart that
+    will be embedded within our UI.
+    """
 
     def __init__(self, graph_widget: QtWidgets.QWidget):
         super().__init__(parent=graph_widget)
@@ -30,13 +34,19 @@ class EmbeddedGraph(QtWidgets.QWidget):
         self._setup_canvas()
         self._setup_layouts()
 
-    def hide(self) -> None:
+    def hide(self):
+        """
+        Hide the chart element if it is shown
+        """
         super().hide()
         self.graph_widget.hide()
         self.figure_canvas.hide()
         self.toolbar.hide()
 
-    def show(self) -> None:
+    def show(self):
+        """
+        Show the chart element if it is hidden.
+        """
         super().show()
         self.graph_widget.show()
         self.figure_canvas.show()
