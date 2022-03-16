@@ -16,8 +16,8 @@ cycler==0.11.0
     # via matplotlib
 docutils==0.17.1
     # via
+    #   m2r2
     #   sphinx
-    #   sphinx-mdinclude
 fonttools==4.30.0
     # via matplotlib
 idna==3.3
@@ -30,12 +30,14 @@ jinja2==3.0.3
     # via sphinx
 kiwisolver==1.4.0
     # via matplotlib
+m2r2==0.3.2
+    # via -r requirements.in
 markupsafe==2.1.1
     # via jinja2
 matplotlib==3.5.1
     # via -r requirements.in
-mistune==2.0.2
-    # via sphinx-mdinclude
+mistune==0.8.4
+    # via m2r2
 numpy==1.22.3
     # via matplotlib
 packaging==21.3
@@ -65,8 +67,6 @@ six==1.16.0
 snowballstemmer==2.2.0
     # via sphinx
 sphinx==4.4.0
-    # via -r requirements.in
-sphinx-mdinclude==0.5.1
     # via -r requirements.in
 sphinxcontrib-applehelp==1.0.2
     # via sphinx

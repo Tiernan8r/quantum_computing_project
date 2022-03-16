@@ -36,7 +36,11 @@ extensions = [
         "sphinx.ext.viewcode",
         "sphinx.ext.autosummary",
         "sphinx.ext.githubpages",
+        "m2r2",
 ]
+
+m2r_parse_relative_links = True
+m2r_anonymous_references = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
