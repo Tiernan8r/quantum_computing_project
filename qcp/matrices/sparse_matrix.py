@@ -25,7 +25,8 @@ def _list_to_dict(vals: List[SCALARS], limit: int = -1) -> Dict[int, SCALARS]:
 
     :param vals list: List of vector values.
     :param limit int: Optional iteration limit for fixed sized rows.
-    :returns dict: dict of key/value pairs for non-zero entries in the list.
+    returns:
+        dict: dict of key/value pairs for non-zero entries in the list.
     """
     # If the SparseMatrix dimensions have been explicitly set, will only
     # convert list entries up to that hard limit into the dict.

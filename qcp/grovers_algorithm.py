@@ -28,7 +28,8 @@ def pull_set_bits(n: int) -> List[int]:
     to make the number n
 
     :param int n: number
-    :returns List[int]: list of bits
+    returns:
+        List[int]: list of bits
     """
     bits = []
     count = 0
@@ -71,7 +72,8 @@ class Grovers:
         """
         Creates a state vector corresponding to |1..0>
 
-        :returns Matrix: returns state vector
+        returns:
+            Matrix: the state vector
         """
         entries: MATRIX = [[0] for _ in range(2 ** self.size)]
         entries[0][0] = 1
@@ -83,7 +85,8 @@ class Grovers:
         by phase shifting it by pi (turning 1 into -1 in the matrix
         representation)
 
-        :returns Matrix: Matrix representation of our Oracle
+        returns:
+            Matrix: Matrix representation of our Oracle
         """
         not_placement = (2 ** self.size) - 1 - self.target
         t = pull_set_bits(not_placement)
@@ -99,7 +102,8 @@ class Grovers:
         Creates a diffusion gate - a gate which amplifies the probability of
         selecting our target state
 
-        :returns Matrix: Matrix representing diffusion gate
+        returns:
+            Matrix: Matrix representing diffusion gate
         """
         h = g.multi_gate(self.size, [i for i in range(0, self.size)], g.Gate.H)
         cz = g.control_z(self.size, [i for i in range(0, self.size - 1)],
@@ -114,7 +118,8 @@ class Grovers:
         set of Hadamards and repeating the oracle and diffusion gates
         until our target state is close to 1 in terms of probability
 
-        :returns Matrix: Matrix representing our completed Grover's algorithm
+        returns:
+            Matrix: Matrix representing our completed Grover's algorithm
         """
         circuit = g.multi_gate(self.size, [i for i in range(0, self.size)],
                                g.Gate.H)
@@ -129,7 +134,8 @@ class Grovers:
         """
         Multiplies our Grover's circuit with the initial state
 
-        :returns Matrix: Column matrix representation of the final state
+        returns:
+            Matrix: Column matrix representation of the final state
         """
         self.state = self.circuit * self.state
         return self.state
@@ -139,7 +145,8 @@ class Grovers:
         'measures' self.state by selecting a state weighted by its
         (amplitude ** 2)
 
-        :returns Tuple[int, float]: The state observed and the probability of
+        returns:
+            Tuple[int, float]: The state observed and the probability of
             measuring said state
         """
         p = reg.measure(self.state)

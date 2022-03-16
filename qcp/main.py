@@ -58,7 +58,8 @@ def parse_cli(args: List[str]) -> Tuple[int, int]:
     (if provided), and the required CLI arguments.
 
     :param args List[str]: The list of CLI inputs from sys.argv
-    :returns Tuple[int, int]: The two CLI values,
+    returns:
+        Tuple[int, int]: The two CLI values,
         firstly the required 'nqbits' parameter,
         and the second optional 'target' parameter.
     """

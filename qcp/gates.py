@@ -50,7 +50,8 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
                     applied to, indexing from 0.
     :param gate Gate: Enum of which gate we want to apply
     :param phi complex: Phase angle for the phase gate
-    :returns Matrix: Matrix representing the composite gate
+    returns:
+        Matrix: Matrix representing the composite gate
     """
 
     if gate is Gate.H:
@@ -96,7 +97,8 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     :param List[int] controls: List of control qubits,
         if empty, 0th bit is used as the control.
     :param int target: target qubit the x gate will be applied to
-    :returns Matrix: Matrix representing the gate
+    returns:
+        Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
@@ -166,7 +168,8 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     :param int size: total number of qubits in circuit
     :param List[int] controls: List of control qubits
     :param int target: target qubit the z gate will be applied to
-    :returns Matrix: Matrix representing the gate
+    returns:
+        Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
@@ -234,7 +237,8 @@ def control_phase(size: int, controls: List[int], target: int,
     :param List[int] controls: List of control qubits
     :param int target: target qubit the phase gate will be applied to
     :param complex phi: angle the target qubit will be phase shifted by
-    :returns Matrix: Matrix representing the gate
+    returns:
+        Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
@@ -269,6 +273,7 @@ def phase_shift(phi: complex) -> Matrix:
     Creates a 2 x 2 phase shift matrix
 
     :param complex phi: angle the qubit is phase shifted by
-    :returns Matrix: Matrix representing the phase shift gate.
+    returns:
+        Matrix: Matrix representing the phase shift gate.
     """
     return DefaultMatrix([[1, 0], [0, cmath.exp(1j * phi)]])

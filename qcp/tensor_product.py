@@ -27,7 +27,8 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
 
     :param Matrix A: An m*n matrix
     :param Matrix B: Second p*q matrix to tensor product with
-    :returns Matrix: An (m*p)*(n*q) matrix of the tensor product.
+    returns:
+        Matrix: An (m*p)*(n*q) matrix of the tensor product.
     """
 
     if isinstance(A, SparseMatrix) and isinstance(B, SparseMatrix):
@@ -111,7 +112,8 @@ def _tensor_product_sparse(A: SparseMatrix, B: SparseMatrix) -> SparseMatrix:
 
     :param SparseMatrix A: An m*n matrix
     :param SparseMatrix B: Second p*q matrix to tensor product with
-    :returns SparseMatrix: An (m*p)*(n*q) matrix of the tensor product.
+    returns:
+        SparseMatrix: An (m*p)*(n*q) matrix of the tensor product.
     """
 
     m = A.num_rows
