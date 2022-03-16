@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Module to calculate the required gates used to construct Grover's Algorithm
+Contains the code required calculate the required gates used to construct 
+Grover's Algorithm
 """
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix, SPARSE
