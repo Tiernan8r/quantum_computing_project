@@ -11,6 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+Initialiser for the UI main window.
+"""
 import sys
 from PySide6.QtWidgets import QApplication
 from qcp.ui.main_window import MainWindow

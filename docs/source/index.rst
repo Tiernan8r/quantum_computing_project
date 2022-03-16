@@ -11,7 +11,7 @@ Welcome to Quantum Computing Project's documentation!
    :start-line: 1
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
 Indices and tables
