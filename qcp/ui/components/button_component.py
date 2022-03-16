@@ -21,6 +21,9 @@ from qcp.ui.constants import BUTTON_CANCEL_SEARCH_BUTTON, \
 
 
 class ButtonComponent(AbstractComponent):
+    """
+    Component of the UI that handles button click behaviour.
+    """
 
     def __init__(self, main_window: QtWidgets.QMainWindow,
                  search: QtWidgets.QTextEdit, target: QtWidgets.QLineEdit,
@@ -28,6 +31,9 @@ class ButtonComponent(AbstractComponent):
         super().__init__(main_window, *args, **kwargs)
 
     def setup_signals(self):
+        """
+        Setup what happens when the buttons in the UI are clicked.
+        """
         self._find_widgets()
 
         self.progress_bar.hide()
@@ -56,6 +62,17 @@ class ButtonComponent(AbstractComponent):
                 self.progress_bar = pb
 
     def initiate_search(self):
+        """
+        Start the running of the Quantum Computer Simulator on a
+        separate QThread.
+
+        Show the cancel button, so that the QThread can be killed before the
+        calculation completes.
+
+        Startup the QThread that updates the progress bar so that it swirls
+        overtime, to visualise that the computer is running a calculation in
+        the background.
+        """
         self.cancel_button.show()
 
         self.tick_progress_bar()
@@ -64,9 +81,14 @@ class ButtonComponent(AbstractComponent):
 
         self.pb_thread.exiting = True
 
-        return
-
     def cancel_search(self):
+        """
+        Kill the Simulation QThread when the button is clicked.
+
+        Hide and reset the progress bar.
+
+        Then hide the cancel button as a calculation is no longer running.
+        """
         if self.pb_thread.isRunning():
             self.pb_thread.exiting = True
             while self.pb_thread.isRunning():
@@ -78,6 +100,11 @@ class ButtonComponent(AbstractComponent):
         self.cancel_button.hide()
 
     def tick_progress_bar(self):
+        """
+        Set up the QThread to increment the progress bar widget every
+        tick, and reset it when it fills, to visualise that a calculation
+        is being run by the UI.
+        """
         if not self.pb_thread.isRunning():
             self.pb_thread.exiting = False
             self.pb_thread.start()
@@ -87,6 +114,11 @@ class ButtonComponent(AbstractComponent):
 
 
 class ProgressBarThread(QtCore.QThread):
+    """
+    Thread that handles visually updating the progress bar value
+    every tick, so that it fills slowly, then resets to zero when
+    full.
+    """
 
     def __init__(self, progress_bar: QtWidgets.QProgressBar, parent=None):
         QtCore.QThread.__init__(self, parent)
@@ -94,6 +126,9 @@ class ProgressBarThread(QtCore.QThread):
         self.exiting = False
 
     def run(self):
+        """
+        Startup the thread, and run the desired actions every loop.
+        """
         self.pb.setVisible(True)
         self.pb.reset()
         while not self.exiting:
