@@ -133,7 +133,7 @@ class DenseMatrix(Matrix):
         Return the matrix values as a nested list
 
         returns:
-            MATRIX: A nested list of the matrix values indexed by 
+            MATRIX: A nested list of the matrix values indexed by
             row/column
         """
         return self._state
@@ -224,7 +224,7 @@ class DenseMatrix(Matrix):
 
         returns:
             DenseMatrix: A DenseMatrix object of the same dimensions of the
-            current matrix, with each value conjugated in place. 
+            current matrix, with each value conjugated in place.
         """
         state = self.get_state().copy()
 

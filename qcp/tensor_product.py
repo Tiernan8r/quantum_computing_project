@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Code to calculate the general tensor product between two arbitrarily sized matrices.
+Code to calculate the general tensor product between two arbitrarily sized
+matrices.
 """
 from qcp.matrices import Matrix, DefaultMatrix, SparseMatrix, MATRIX
 from typing import Dict, Union

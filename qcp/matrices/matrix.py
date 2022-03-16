@@ -106,7 +106,8 @@ class Matrix(ABC):
         new matrix of these conjugated elements
 
         returns:
-            Matrix: The matrix with each element conjugates of the current Matrix
+            Matrix: The matrix with each element conjugates of the current
+            Matrix
         """
         pass
 

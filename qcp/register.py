@@ -25,7 +25,7 @@ from qcp.matrices.types import SCALARS
 def measure(mat: Matrix) -> List[float]:
     """
     Convert the qbit states into probability amplitudes
-    
+
     :param Matrix mat: the column vector of qbit states to measure.
     :returns List[float]: list of probabilities of observing the qbits in each
         state, normalised to total probability of 1.

@@ -21,7 +21,7 @@ from qcp.matrices.dense_matrix import DenseMatrix  # noqa: F401
 from qcp.matrices.types import SCALARS, SCALARS_T, VECTOR, \
     MATRIX, SPARSE  # noqa: F401
 
-#: Quick type referencing for the preferred `Matrix` class to use, 
+#: Quick type referencing for the preferred `Matrix` class to use,
 #: so that if we want to change it later, all we have to do is modify this
 #: line
 DefaultMatrix = SparseMatrix

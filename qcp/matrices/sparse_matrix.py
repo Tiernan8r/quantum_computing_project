@@ -48,7 +48,7 @@ def _list_to_dict(vals: List[SCALARS], limit: int = -1) -> Dict[int, SCALARS]:
 
 class SparseVector:
     """
-    Sparse implementation of a row vector, where only the non-zero elements 
+    Sparse implementation of a row vector, where only the non-zero elements
     are stored in memory, and any non saved index is taken to be zero.
     """
 
@@ -221,7 +221,7 @@ class SparseMatrix(Matrix):
         Return the matrix values as a nested list
 
         returns:
-            MATRIX: A nested list of the matrix values indexed by 
+            MATRIX: A nested list of the matrix values indexed by
             row/column
         """
         return self._as_list()
@@ -280,7 +280,7 @@ class SparseMatrix(Matrix):
 
         returns:
             SparseMatrix: A SparseMatrix object of the same dimensions of the
-            current matrix, with each value conjugated in place. 
+            current matrix, with each value conjugated in place.
         """
         entries = deepcopy(self._entries)
         for i, row in self._entries.items():

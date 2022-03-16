@@ -139,7 +139,7 @@ class Grovers:
         'measures' self.state by selecting a state weighted by its
         (amplitude ** 2)
 
-        :returns Tuple[int, float]: The state observed and the probability of 
+        :returns Tuple[int, float]: The state observed and the probability of
             measuring said state
         """
         p = reg.measure(self.state)
