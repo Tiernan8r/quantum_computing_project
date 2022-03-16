@@ -15,6 +15,11 @@ from PySide6 import QtCore, QtWidgets
 
 
 class AbstractComponent(QtCore.QObject):
+    """
+    A generalised Abstract component of out UI, in which the section
+    of the UI that the component controls is setup, with it's behaviour
+    defined in the code.
+    """
 
     def __init__(self, main_window: QtWidgets.QMainWindow, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -22,4 +27,8 @@ class AbstractComponent(QtCore.QObject):
         self.setup_signals()
 
     def setup_signals(self):
+        """
+        Setup any UI signals and events associated with interacting with
+        this part of the UI.
+        """
         pass
