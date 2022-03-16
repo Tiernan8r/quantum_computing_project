@@ -80,9 +80,9 @@ class SimulatorComponent(AbstractComponent):
 
     def update_lcd_displays(self):
         """
-        Show the comparison between the number of iterations a classical computer
-        would have needed to run the search, versus the number of iterations our
-        quantum simulation took.
+        Show the comparison between the number of iterations a classical
+        computer would have needed to run the search, versus the number
+        of iterations our quantum simulation took.
         """
         classical_value = self.lcd_classical.value()
         self.lcd_classical.display(classical_value + 1)
