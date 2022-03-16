@@ -99,7 +99,7 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     return DefaultMatrix(entries)
 
 
-def _tensor_product_sparse(A: SparseMatrix, B: SparseMatrix) -> Matrix:
+def _tensor_product_sparse(A: SparseMatrix, B: SparseMatrix) -> SparseMatrix:
     """
     Compute the tensor product between two SparseMatrices, and return the
     resultant Matrix
