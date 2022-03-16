@@ -11,6 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+Code to calculate the general tensor product between two arbitrarily sized matrices.
+"""
 from qcp.matrices import Matrix, DefaultMatrix, SparseMatrix, MATRIX
 from typing import Dict, Union
 import cmath
@@ -20,9 +23,10 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     """
     Compute the tensor product between two matrices, and return the
     resultant Matrix
-    :param A Matrix: An m*n matrix
-    :param B Matrix: Second p*q matrix to tensor product with
-    :returns: An (m*p)*(n*q) matrix of the tensor product.
+
+    :param Matrix A: An m*n matrix
+    :param Matrix B: Second p*q matrix to tensor product with
+    :returns Matrix: An (m*p)*(n*q) matrix of the tensor product.
     """
 
     if isinstance(A, SparseMatrix) and isinstance(B, SparseMatrix):
