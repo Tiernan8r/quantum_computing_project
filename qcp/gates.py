@@ -92,10 +92,10 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     Constructs a (2**size by 2**size) control-x gate with
     given controls and target
 
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits,
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits,
         if empty, 0th bit is used as the control.
-    :param target int: target qubit the x gate will be applied to
+    :param int target: target qubit the x gate will be applied to
     :returns Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
@@ -163,9 +163,9 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     Constructs a (2**size by 2**size) control-z gate with
     given controls and target
 
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
-    :param target int: target qubit the z gate will be applied to
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits
+    :param int target: target qubit the z gate will be applied to
     :returns Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
@@ -230,10 +230,10 @@ def control_phase(size: int, controls: List[int], target: int,
     Constructs a (2**size by 2**size) control-phase gate with
     given controls and target
 
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
-    :param target int: target qubit the phase gate will be applied to
-    :param phi complex: angle the target qubit will be phase shifted by
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits
+    :param int target: target qubit the phase gate will be applied to
+    :param complex phi: angle the target qubit will be phase shifted by
     :returns Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
@@ -268,7 +268,7 @@ def phase_shift(phi: complex) -> Matrix:
     """
     Creates a 2 x 2 phase shift matrix
 
-    :param phi complex: angle the qubit is phase shifted by
+    :param complex phi: angle the qubit is phase shifted by
     :returns Matrix: Matrix representing the phase shift gate.
     """
     return DefaultMatrix([[1, 0], [0, cmath.exp(1j * phi)]])

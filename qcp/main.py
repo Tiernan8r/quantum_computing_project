@@ -57,7 +57,7 @@ def parse_cli(args: List[str]) -> Tuple[int, int]:
     Parses the sys.argv CLI options to read the value for the optional flags
     (if provided), and the required CLI arguments.
 
-    :param List[str] args: The list of CLI inputs from sys.argv
+    :param args List[str]: The list of CLI inputs from sys.argv
     :returns Tuple[int, int]: The two CLI values, 
         firstly the required 'nqbits' parameter,
         and the second optional 'target' parameter.
@@ -106,8 +106,8 @@ def compute(nqbits: int, target: int):
     Run the Grover's Algorithm simulation and print the observed state to
     stdout with the probability of observing that state.
 
-    :param nqbits int: The number of qbits to simulate in the simulator
-    :param target int: The index of the target qbit state
+    :param int nqbits: The number of qbits to simulate in the simulator
+    :param int target: The index of the target qbit state
     """
     grover = Grovers(nqbits, target)
     grover.run()

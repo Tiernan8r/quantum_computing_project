@@ -27,7 +27,7 @@ def pull_set_bits(n: int) -> List[int]:
     Creates a list of bits that would be set to 1
     to make the number n
 
-    :param n int: number
+    :param int n: number
     :returns List[int]: list of bits
     """
     bits = []
@@ -50,8 +50,8 @@ class Grovers:
         we use Grover's algorithm to increase the amplitude of the
         "target_state" and reduce all others in a "size"-qubit system
 
-        :param size int: number of qubits in our circuit
-        :param target_state int: specific state we want to target/select
+        :param int size: number of qubits in our circuit
+        :param int target_state: specific state we want to target/select
         """
         assert size > 1, "need minimum of two qbits"
         assert target_state < (2 ** size), \

@@ -103,13 +103,14 @@ def tensor_product(A: Matrix, B: Matrix) -> Matrix:
     return DefaultMatrix(entries)
 
 
-def _tensor_product_sparse(A: SparseMatrix, B: SparseMatrix) -> Matrix:
+def _tensor_product_sparse(A: SparseMatrix, B: SparseMatrix) -> SparseMatrix:
     """
     Compute the tensor product between two SparseMatrices, and return the
     resultant Matrix
-    :param A SparseMatrix: An m*n matrix
-    :param B SparseMatrix: Second p*q matrix to tensor product with
-    :returns: An (m*p)*(n*q) matrix of the tensor product.
+
+    :param SparseMatrix A: An m*n matrix
+    :param SparseMatrix B: Second p*q matrix to tensor product with
+    :returns SparseMatrix: An (m*p)*(n*q) matrix of the tensor product.
     """
 
     m = A.num_rows
