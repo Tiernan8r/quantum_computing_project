@@ -36,6 +36,7 @@ extensions = [
         "sphinx.ext.viewcode",
         "sphinx.ext.autosummary",
         "sphinx.ext.githubpages",
+        "sphinx.ext.autodoc",
         "m2r2",
 ]
 
