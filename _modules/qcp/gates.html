@@ -47,6 +47,7 @@
 <span class="kn">import</span> <span class="nn">cmath</span>
 <span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">DefaultMatrix</span><span class="p">,</span> <span class="n">SPARSE</span>
 <span class="kn">import</span> <span class="nn">qcp.constants</span> <span class="k">as</span> <span class="nn">c</span>
+<span class="kn">from</span> <span class="nn">qcp.matrices.types</span> <span class="kn">import</span> <span class="n">SCALARS</span>
 <span class="kn">import</span> <span class="nn">qcp.tensor_product</span> <span class="k">as</span> <span class="nn">tp</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="kn">import</span> <span class="nn">enum</span>
@@ -183,7 +184,8 @@
 <span class="c1"># range [0, 3]</span>
 
 
-<div class="viewcode-block" id="control_z"><a class="viewcode-back" href="../../qcp.html#qcp.gates.control_z">[docs]</a><span class="k">def</span> <span class="nf">control_z</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">controls</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_generic_control</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">controls</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+                     <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">cval</span><span class="p">:</span> <span class="n">SCALARS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constructs a (2**size by 2**size) control-z gate with</span>
 <span class="sd">     given controls and target</span>
@@ -223,16 +225,41 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
         <span class="n">condition</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">target_bit</span><span class="p">)</span> <span class="o">==</span> <span class="n">target_bit</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">^</span> <span class="n">mask</span> <span class="o">==</span> <span class="n">flip_mask</span>
 
-        <span class="n">val</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">val</span><span class="p">:</span> <span class="n">SCALARS</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="c1"># Modulo 2 filters out an bits that don&#39;t meet the condition,</span>
         <span class="c1"># Any number that is of the form of all ones, like 3 = 11, or 7 = 111</span>
         <span class="c1"># Can be determined by taking their modulus with 2, since binary is in</span>
         <span class="c1"># powers of 2.</span>
         <span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">cval</span>
         <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">val</span><span class="p">}</span>
 
-    <span class="k">return</span> <span class="n">DefaultMatrix</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">n</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">DefaultMatrix</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># NOTE:</span>
+<span class="c1"># The way the control/target bit is indexed is by indexing the</span>
+<span class="c1"># control bit in the byte notation:</span>
+<span class="c1"># E.g: 13 = 1101 in bit notation, so this is indexed as</span>
+<span class="c1">#       +---+---+---+---+</span>
+<span class="c1"># BITS  | 1 | 1 | 0 | 1 |</span>
+<span class="c1">#       +---+---+---+---+</span>
+<span class="c1"># INDEX | 3 | 2 | 1 | 0 |</span>
+<span class="c1">#       +---+---+---+---+</span>
+<span class="c1"># in the usual little endian indexing notation</span>
+<span class="c1"># Therefore, in this example, the target/control bits are in the index</span>
+<span class="c1"># range [0, 3]</span>
+
+
+<div class="viewcode-block" id="control_z"><a class="viewcode-back" href="../../qcp.html#qcp.gates.control_z">[docs]</a><span class="k">def</span> <span class="nf">control_z</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">controls</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constructs a (2**size by 2**size) control-z gate with</span>
+<span class="sd">     given controls and target</span>
+<span class="sd">    :param size int: total number of qubits in circuit</span>
+<span class="sd">    :param controls List[int]: List of control qubits</span>
+<span class="sd">    :param target int: target qubit the z gate will be applied to</span>
+<span class="sd">    :return Matrix: Matrix representing the gate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_generic_control</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
 
 <span class="c1"># NOTE:</span>
 <span class="c1"># The way the control/target bit is indexed is by indexing the</span>
@@ -259,32 +286,8 @@
 <span class="sd">    :param phi complex: angle the target qubit will be phase shifted by</span>
 <span class="sd">    :return Matrix: Matrix representing the gate</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;need minimum of two qubits&quot;</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">size</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">controls</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
-
-    <span class="c1"># Make sure the control/target bits are within the qbit size</span>
-    <span class="n">bit_bounds</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">controls</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">bit_bounds</span><span class="p">,</span> <span class="s2">&quot;control bit out of range&quot;</span>
-    <span class="k">assert</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">bit_bounds</span><span class="p">,</span> <span class="s2">&quot;target bit out of range&quot;</span>
-
-    <span class="k">assert</span> <span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> \
-        <span class="n">controls</span><span class="p">,</span> <span class="s2">&quot;control bits and target bit cannot be the same&quot;</span>
-
-    <span class="n">m</span><span class="p">:</span> <span class="n">SPARSE</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="n">target_bit</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">target</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="n">condition</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">target_bit</span><span class="p">)</span> <span class="o">==</span> <span class="n">target_bit</span>
-
-        <span class="n">val</span> <span class="o">=</span> <span class="mi">1</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span>
-        <span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="n">cmath</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span>
-        <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">val</span><span class="p">}</span>
-
-    <span class="k">return</span> <span class="n">DefaultMatrix</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">n</span><span class="p">)</span></div>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">cmath</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_generic_control</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="phase_shift"><a class="viewcode-back" href="../../qcp.html#qcp.gates.phase_shift">[docs]</a><span class="k">def</span> <span class="nf">phase_shift</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
