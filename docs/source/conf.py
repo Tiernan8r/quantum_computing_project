@@ -49,14 +49,16 @@ autodoc_type_aliases = {
     "MATRIX": "qcp.matrices.types.MATRIX",
     "SPARSE": "qcp.matrices.types.SPARSE",
 }
+
+special_members = ["__init__", "__add__", "__sub__", "__mul__",
+                   "__rmul__", "__len__", "__setitem__", "__getitem__",
+                   "__str__"]
 autodoc_default_options = {
     "members": True,
     "undoc-members": True,
     "private-members": True,
-    "special-members": "__init__, __add__, __sub__, __mul__, __rmul__, __len__, __setitem__, __getitem__",
+    "special-members": ",".join(special_members),
     "exlude-members": "_abc_impl"
-    # "inherited-members": True,
-    # "show-inheritance": True
 }
 
 # Add any paths that contain templates here, relative to this directory.
