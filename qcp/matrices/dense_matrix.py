@@ -111,7 +111,8 @@ class DenseMatrix(Matrix):
 
         :param int i: The row index to get.
         returns:
-            VECTOR: List representation of the row.
+            :py:obj:`~qcp.matrices.types.VECTOR`: List representation of the
+            row.
         """
         assert i < len(self), "index out of range"
         return self._state[i]
@@ -133,18 +134,19 @@ class DenseMatrix(Matrix):
         Return the matrix values as a nested list
 
         returns:
-            MATRIX: A nested list of the matrix values indexed by
-            row/column
+            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix
+            values indexed by row/column
         """
         return self._state
 
     def rows(self) -> MATRIX:
         """
-        Equivalent to get_state().
+        Equivalent to 
+        :py:meth:`qcp.matrices.dense_matrix.DenseMatrix.get_state()`.
 
         returns:
-            MATRIX: A nested list of the matrix values indexed by
-            row/column
+            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix
+            values indexed by row/column
         """
         return self.get_state()
 
@@ -153,8 +155,8 @@ class DenseMatrix(Matrix):
         The transpose of the matrix as a nested list
 
         returns:
-            MATRIX: A nested list of the matrix values transposed,
-            indexed by column/row
+            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix
+            values transposed, indexed by column/row.
         """
         return [
             [self._state[i][j] for i in range(len(self))]
@@ -180,7 +182,6 @@ class DenseMatrix(Matrix):
         return self + (-1 * other)
 
     def __mul__(self, other: Union[SCALARS, Matrix]) -> Matrix:
-
         if isinstance(other, SCALARS_T):
             state = self.get_state().copy()
 
@@ -194,6 +195,15 @@ class DenseMatrix(Matrix):
             return self._dot(other)
 
     def _dot(self, other: Matrix) -> Matrix:
+        """
+        Calculate the dot product between this Matrix, and another Matrix.
+
+        :param Matrix other: The matrix to dot product with this one.
+
+        returns:
+            Matrix: A new matrix that conforms to the rules of matrix
+            dot producting.
+        """
         assert len(other) > 0, "taking dot product with empty matrix"
         assert len(self) == len(other.columns()[
             0]), "matrices don't match on their row/column dimensions"
@@ -219,8 +229,9 @@ class DenseMatrix(Matrix):
 
     def conjugate(self) -> DenseMatrix:
         """
-        Create a new DenseMatrix where each value in the matrix is the
-        complex conjugate of the current matrix values.
+        Create a new :py:obj:`qcp.matrices.dense_matrix.DenseMatrix` where
+        each value in the matrix is the complex conjugate of the current
+        matrix values.
 
         returns:
             DenseMatrix: A DenseMatrix object of the same dimensions of the
@@ -237,7 +248,8 @@ class DenseMatrix(Matrix):
     def transpose(self) -> DenseMatrix:
         """
         Flips the matrix elements along the diagonal, and return a new
-        DenseMatrix containing these values.
+        :py:obj:`qcp.matrices.dense_matrix.DenseMatrix` containing these
+        values.
 
         returns:
             DenseMatrix: The transpose of the current matrix.
@@ -249,8 +261,8 @@ class DenseMatrix(Matrix):
         Calculate the sum of the diagonal elements of the matrix
 
         returns:
-            SCALARS: The sum of all diagonal elements, with type determined
-            by the value types.
+            :py:obj:`~qcp.matrices.types.SCALARS`: The sum of all diagonal
+            elements, with type determined by the value types.
         """
         assert self.square, "can only take the trace of square matrices"
         tr: SCALARS = 0
