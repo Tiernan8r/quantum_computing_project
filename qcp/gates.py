@@ -11,6 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+Contains the code required calculate the required gates used to construct
+Grover's Algorithm
+"""
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix, SPARSE
 import qcp.constants as c
@@ -21,7 +25,10 @@ import enum
 
 
 class Gate(enum.Enum):
-    """Enum class to encode gate options in multi_gates"""
+    """
+    Enums of the options of gate types to use in qcp.gates.multi_gates()
+    """
+
     H = "h"
     X = "x"
     Z = "z"
@@ -44,7 +51,8 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
                     applied to, indexing from 0.
     :param gate Gate: Enum of which gate we want to apply
     :param phi complex: Phase angle for the phase gate
-    :return Matrix: Matrix representing the composite gate
+    returns:
+        Matrix: Matrix representing the composite gate
     """
 
     if gate is Gate.H:
@@ -85,11 +93,13 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-x gate with
     given controls and target
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits,
-    if empty, 0th bit is used as the control.
-    :param target int: target qubit the x gate will be applied to
-    :returns Matrix: Matrix representing the gate
+
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits,
+        if empty, 0th bit is used as the control.
+    :param int target: target qubit the x gate will be applied to
+    returns:
+        Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
@@ -154,12 +164,17 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
 def _generic_control(size: int, controls: List[int],
                      target: int, cval: SCALARS) -> Matrix:
     """
-    Constructs a (2**size by 2**size) control-z gate with
-     given controls and target
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
-    :param target int: target qubit the z gate will be applied to
-    :return Matrix: Matrix representing the gate
+    Constructs a (2**size by 2**size) control gate with
+    given controls, target and the control value.
+    This is a generic implementation of the logic used for
+    :py:meth:`qcp.gates.control_z` and :py:meth:`qcp.gates.control_phase`
+
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits
+    :param int target: target qubit the gate will be applied to
+    :param SCALARS cval: The control value in the gate
+    returns:
+        Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
@@ -221,10 +236,11 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-z gate with
      given controls and target
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
-    :param target int: target qubit the z gate will be applied to
-    :return Matrix: Matrix representing the gate
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits
+    :param int target: target qubit the z gate will be applied to
+    returns:
+        Matrix: Matrix representing the gate
     """
     return _generic_control(size, controls, target, -1)
 
@@ -246,12 +262,14 @@ def control_phase(size: int, controls: List[int], target: int,
                   phi: complex) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-phase gate with
-     given controls and target
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
-    :param target int: target qubit the phase gate will be applied to
-    :param phi complex: angle the target qubit will be phase shifted by
-    :return Matrix: Matrix representing the gate
+    given controls and target
+
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits
+    :param int target: target qubit the phase gate will be applied to
+    :param complex phi: angle the target qubit will be phase shifted by
+    returns:
+        Matrix: Matrix representing the gate
     """
     val = cmath.exp(1j * phi)
     return _generic_control(size, controls, target, val)
@@ -260,7 +278,9 @@ def control_phase(size: int, controls: List[int], target: int,
 def phase_shift(phi: complex) -> Matrix:
     """
     Creates a 2 x 2 phase shift matrix
-    :param phi: angle the qubit is phase shifted by
-    :return: Matrix(complex)
+
+    :param complex phi: angle the qubit is phase shifted by
+    returns:
+        Matrix: Matrix representing the phase shift gate.
     """
     return DefaultMatrix([[1, 0], [0, cmath.exp(1j * phi)]])

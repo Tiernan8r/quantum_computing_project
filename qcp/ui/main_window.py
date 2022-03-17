@@ -21,8 +21,18 @@ import qcp.ui.components as comp
 
 
 class MainWindow(QMainWindow):
+    """
+    A Class to handle the behaviour of the overall UI window
+    """
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialise the MainWindow object
+
+        :param *args: variable length extra arguments to pass down
+            to QMainWindow
+        :param **kwargs: dictionary parameters to pass to QMainWindow
+        """
         super().__init__(*args, **kwargs)
 
         self.ui_component = self.load_ui()
@@ -38,9 +48,20 @@ class MainWindow(QMainWindow):
             self, self.button_component, self.graph_component)
 
     def show(self):
+        """
+        Shows the loaded UI if hidden.
+        """
         self.ui_component.show()
 
     def load_ui(self) -> QMainWindow:
+        """
+        Reads the UI XML file and converts it into a QT widget,
+        and returns the widget
+
+        returns:
+            QMainWindow: The Main Window element of our UI, with widget
+            elements laid out as defined in the UI file.
+        """
         # Load in the 'form.ui' file where the ui layout is defined
         path = os.path.join(os.path.dirname(__file__), UI_FILENAME)
         ui_file = QFile(path)

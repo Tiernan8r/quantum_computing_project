@@ -19,12 +19,29 @@ from typing import List, Any
 
 
 class GraphWidget(EmbeddedGraph):
+    """
+    Custom widget to embed a matplotlib plot canvas into our UI.
+    """
 
     def __init__(self, graph_widget: QtWidgets.QWidget):
+        """
+        Initialise the GraphWidget widget, referencing the widget to use
+        as a frame for the embedded graph, and display the embedded graph.
+
+        :param QtWidgets.QWidget graph_widget: widget to embed in
+        """
         super().__init__(graph_widget)
         self.display()
 
     def display(self, qregister: Matrix = None):
+        """
+        Calculate the probability distributions for the given quantum
+        register to be in each qbit state, and plot the probabilities
+        as a histogram within the embedded matplotlib canvas widget
+
+        :param Matrix qregister: The column vector representing our qbit
+            state.
+        """
         self.axes.clear()
 
         title = "Measured Quantum States:"

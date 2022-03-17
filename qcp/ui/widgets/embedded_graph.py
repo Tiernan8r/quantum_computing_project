@@ -22,27 +22,46 @@ matplotlib.use('Qt5Agg')
 
 
 class EmbeddedGraph(QtWidgets.QWidget):
+    """
+    General custom widget to handle behaviour of the matplotlib chart that
+    will be embedded within our UI.
+    """
 
     def __init__(self, graph_widget: QtWidgets.QWidget):
+        """
+        Initialise the EmbeddedGraph widget, referencing the widget to use
+        as a frame for the embedded graph.
+
+        :param QtWidgets.QWidget graph_widget: widget to embed in
+        """
         super().__init__(parent=graph_widget)
         self.graph_widget = graph_widget
 
         self._setup_canvas()
         self._setup_layouts()
 
-    def hide(self) -> None:
+    def hide(self):
+        """
+        Hide the chart element if it is shown
+        """
         super().hide()
         self.graph_widget.hide()
         self.figure_canvas.hide()
         self.toolbar.hide()
 
-    def show(self) -> None:
+    def show(self):
+        """
+        Show the chart element if it is hidden.
+        """
         super().show()
         self.graph_widget.show()
         self.figure_canvas.show()
         self.toolbar.show()
 
     def _setup_canvas(self):
+        """
+        Create a matplotlib UI canvas
+        """
         self.figure = Figure()
         self.figure.tight_layout()
         self.axes = self.figure.add_subplot()
@@ -52,6 +71,10 @@ class EmbeddedGraph(QtWidgets.QWidget):
         self.toolbar = NavigationToolbar(self.figure_canvas, self)
 
     def _setup_layouts(self):
+        """
+        Embed this widget and the matplotlib canvase into the graph frame
+        widget
+        """
         graph_frame_layout = QtWidgets.QGridLayout(parent=self.graph_widget)
         graph_frame_layout.addWidget(self.toolbar)
         graph_frame_layout.addWidget(self.figure_canvas)
@@ -67,8 +90,22 @@ class EmbeddedGraph(QtWidgets.QWidget):
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         self.figure_canvas.updateGeometry()
 
-    def _plot_line(self, x, y, title, xlabel, ylabel, legend=None,
+    def _plot_line(self, x: list, y: list, title: str, xlabel: str,
+                   ylabel: str, legend: list = None,
                    line_style="-"):
+        """
+        Plot the given x/y values on the matplotlib canvas, displaying with
+        the given xlabel/ylabel/title and legend.
+
+        :param list x: The x values to plot
+        :param list y: The y values to plot
+        :param str title: The title of the plot
+        :param str xlabel: The label for the x axis
+        :param str ylabel: The label for the y axis
+        :param list legend: The (optional) legend for the plot
+        :param str line_style: The line style for the plot, defaults to solid
+            lines
+        """
         self.axes.plot(x, y, line_style)
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)

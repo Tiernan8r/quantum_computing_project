@@ -101,14 +101,14 @@ $ python -m qcp.ui.main
 
 This will bring up the following interface
 
-![Initial UI](./docs/images/ui_overview.png)
+![Initial UI](https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_overview.png)
 
 ### Search Input:
 The "Search" box can either be populated manually, or alternatively the
 "browse" dialog can be used to read the contents of a file of `.txt`/`.csv`/
 `.json`/`.yaml`
 
-![File Dialog](./docs/images/ui_filedialog.png)
+![File Dialog](https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_filedialog.png)
 
 ### Target:
 
@@ -123,4 +123,4 @@ search of the input data using the Grover's Algorithm quantum algorithm.
 Once the search is completed, a plot of the probability of the quantum state 
 being in the target state will be shown on the right.
 
-![Sample Calculated Result](./docs/images/ui_with_computed_graph.png)
+![Sample Calculated Result](https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_with_computed_graph.png)

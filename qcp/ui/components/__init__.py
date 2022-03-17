@@ -11,6 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+Code to handle the behaviour of elements of our UI, split into smaller
+UI components for clarity.
+"""
 from qcp.ui.components.abstract_component import AbstractComponent  # noqa: F401, E501
 from qcp.ui.components.graph_component import GraphComponent  # noqa: F401
 from qcp.ui.components.input_component import InputComponent  # noqa: F401

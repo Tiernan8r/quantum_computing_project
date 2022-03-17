@@ -18,11 +18,27 @@ from qcp.ui.constants import INPUT_SEARCH_WIDGET_NAME, \
 
 
 class InputComponent(AbstractComponent):
+    """
+    UI component that handles the reading of input from the search and target
+    text boxes
+    """
 
     def __init__(self, main_window: QtWidgets.QMainWindow, *args, **kwargs):
+        """
+        Initialise the InputComponent object
+
+        :param QtWidgets.QMainWindow main_window: The main window element of
+            the UI.
+        :param *args: variable length extra arguments to pass down
+            to QtCore.QObject
+        :param **kwargs: dictionary parameters to pass to QtCore.QObject
+        """
         super().__init__(main_window, *args, **kwargs)
 
     def setup_signals(self):
+        """
+        Setup the "browse" button to open the file dialog window when clicked.
+        """
         self._find_widgets()
 
         self.input_browse.clicked.connect(self.browse_files)
@@ -47,9 +63,14 @@ class InputComponent(AbstractComponent):
                 self.input_browse = b
 
     def browse_files(self):
+        """
+        Create and display a QT file browser window to find files of
+        type `.txt`/`.json`/`.csv`/`.yml` and populate the search
+        box with the file's content.
+        """
         dialog = QtWidgets.QFileDialog(self.main_window)
         dialog.setFileMode(QtWidgets.QFileDialog.ExistingFile)
-        dialog.setNameFilter("Text (*.txt *.json *.cvc *.yml)")
+        dialog.setNameFilter("Text (*.txt *.json *.csv *.yml)")
         dialog.setViewMode(QtWidgets.QFileDialog.List)
 
         file_names = []

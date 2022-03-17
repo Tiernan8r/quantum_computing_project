@@ -6,8 +6,12 @@
 Welcome to Quantum Computing Project's documentation!
 =====================================================
 
+.. m2r_parse_relative_links
+.. mdinclude:: ../../README.md
+   :start-line: 1
+
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
 Indices and tables

@@ -30,14 +30,14 @@ TEST_4x4 = SparseMatrix([[1, 0, 0, 0],
 
 def test_sp_m_identity():
     # Non-integer dimension:
-    with pytest.raises(TypeError) as ve:
+    with pytest.raises(AssertionError) as ae1:
         _ = SparseMatrix.identity(2+2j)
-    assert ve.match("can't convert .* to int")
+    assert ae1.match("matrix dimension must be an integer")
 
     # Negative dimension:
-    with pytest.raises(AssertionError) as ae1:
+    with pytest.raises(AssertionError) as ae2:
         _ = SparseMatrix.identity(-1)
-    assert ae1.match("Matrix dimension must be positive")
+    assert ae2.match("Matrix dimension must be positive")
 
     expected1x1 = [[1]]
     i1x1 = SparseMatrix.identity(1)
