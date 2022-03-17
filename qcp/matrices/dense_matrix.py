@@ -141,7 +141,7 @@ class DenseMatrix(Matrix):
 
     def rows(self) -> MATRIX:
         """
-        Equivalent to 
+        Equivalent to
         :py:meth:`qcp.matrices.dense_matrix.DenseMatrix.get_state()`.
 
         returns:

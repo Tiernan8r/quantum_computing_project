@@ -14,7 +14,7 @@
 from __future__ import annotations
 from abc import ABC
 from typing import Union
-from qcp.matrices.types import SCALARS, SCALARS_T, VECTOR, MATRIX
+from qcp.matrices.types import SCALARS, VECTOR, MATRIX
 
 
 class Matrix(ABC):
@@ -119,8 +119,8 @@ class Matrix(ABC):
 
     def __sub__(self, other: Matrix) -> Matrix:
         """
-        Subtract the matching elements of the other matrix to the entries in this
-        matrix, and return a new matrix containing the resultant values.
+        Subtract the matching elements of the other matrix to the entries in
+        this matrix, and return a new matrix containing the resultant values.
 
         :param Matrix other: The matrix to subtract from this one.
 

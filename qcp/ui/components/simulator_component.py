@@ -14,7 +14,8 @@
 from PySide6 import QtWidgets
 from PySide6 import QtCore
 import time
-from qcp.ui.components import AbstractComponent, ButtonComponent, GraphComponent
+from qcp.ui.components import AbstractComponent, \
+    ButtonComponent, GraphComponent
 from qcp.ui.constants import THREAD_PAUSE, LCD_CLASSICAL, LCD_GROVER
 
 

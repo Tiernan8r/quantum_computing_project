@@ -218,7 +218,8 @@ class SparseMatrix(Matrix):
 
     def _get_row(self, i: int) -> SparseVector:  # type: ignore[override]
         """
-        Equivalent to :py:meth:`~qcp.matrices.sparse_matrix.SparseMatrix.__getitem__`
+        Equivalent to
+        :py:meth:`~qcp.matrices.sparse_matrix.SparseMatrix.__getitem__`
         """
         assert i < self.num_rows, "index out of range"
 
@@ -265,8 +266,8 @@ class SparseMatrix(Matrix):
         Return the matrix values as a nested list
 
         returns:
-            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix values indexed by
-            row/column
+            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix
+            values indexed by row/column
         """
         return self._as_list()
 
@@ -275,8 +276,8 @@ class SparseMatrix(Matrix):
         Equivalent to get_state().
 
         returns:
-            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix values indexed by
-            row/column
+            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix
+            values indexed by row/column
         """
         return self.get_state()
 
@@ -285,8 +286,8 @@ class SparseMatrix(Matrix):
         The transpose of the matrix as a nested list
 
         returns:
-            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix values transposed,
-            indexed by column/row
+            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix
+            values transposed, indexed by column/row
         """
         list_representation: MATRIX = [
             [0 for _ in range(self._row)] for _ in range(self._col)
@@ -340,8 +341,8 @@ class SparseMatrix(Matrix):
         Calculate the sum of the diagonal elements of the matrix
 
         returns:
-            :py:obj:`~qcp.matrices.types.SCALARS`: The sum of all diagonal elements, with type determined
-            by the value types.
+            :py:obj:`~qcp.matrices.types.SCALARS`: The sum of all diagonal
+            elements, with type determined by the value types.
         """
         assert self.square, "can only take the trace of square matrices"
         tr: SCALARS = 0
