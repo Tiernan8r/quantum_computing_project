@@ -14,7 +14,7 @@
 from PySide6 import QtWidgets
 from PySide6 import QtCore
 import time
-from qcp.ui.components import AbstractComponent
+from qcp.ui.components import AbstractComponent, ButtonComponent, GraphComponent
 from qcp.ui.constants import THREAD_PAUSE, LCD_CLASSICAL, LCD_GROVER
 
 
@@ -24,8 +24,22 @@ class SimulatorComponent(AbstractComponent):
     Computer Simulator code on a separate QThread.
     """
 
-    def __init__(self, main_window: QtWidgets.QMainWindow, button_component,
-                 graph_component, *args, **kwargs):
+    def __init__(self, main_window: QtWidgets.QMainWindow,
+                 button_component: ButtonComponent,
+                 graph_component: GraphComponent, *args, **kwargs):
+        """
+        Initialise the SimulatorComponent object, referencing the main window
+        element, and the two UI components required for it to function.
+
+        :param QtWidgets.QMainWindow main_window: The main window element of
+            the UI.
+        :param ButtonComponent button_component: The search input box of the
+            UI
+        :param GraphComponent graph_component: The target input box of the UI
+        :param *args: variable length extra arguments to pass down
+            to QtCore.QObject
+        :param **kwargs: dictionary parameters to pass to QtCore.QObject
+        """
         self.button_component = button_component
         self.graph_component = graph_component
         super().__init__(main_window, *args, **kwargs)
@@ -98,8 +112,16 @@ class SimulateQuantumComputerThread(QtCore.QThread):
     """
 
     def __init__(self, parent=None):
+        """
+        Setup the SimulateQuantumComputerThread QThread.
+
+        :param QtCore.QObject parent: A parent element for the QThread.
+        """
         QtCore.QThread.__init__(self, parent)
         self.exiting = False
 
     def run(self):
+        """
+        Run the simulation
+        """
         self.quit()

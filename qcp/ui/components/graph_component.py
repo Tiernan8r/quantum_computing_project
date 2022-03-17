@@ -23,6 +23,16 @@ class GraphComponent(AbstractComponent):
     """
 
     def __init__(self, main_window: QtWidgets.QMainWindow, *args, **kwargs):
+        """
+        Initialise the GraphComponent object, referencing the main window
+        element.
+
+        :param QtWidgets.QMainWindow main_window: The main window element of
+            the UI.
+        :param *args: variable length extra arguments to pass down
+            to QtCore.QObject
+        :param **kwargs: dictionary parameters to pass to QtCore.QObject
+        """
         super().__init__(main_window, *args, **kwargs)
 
         self.graph_widget.hide()
@@ -37,6 +47,10 @@ class GraphComponent(AbstractComponent):
         self.refresh()
 
     def _find_graph_widget(self):
+        """
+        Determine the graph widget in the UI to use to embed the matplotlib
+        canvas into.
+        """
         widgets = self.main_window.ui_component.findChildren(QtWidgets.QWidget)
         for w in widgets:
             if w.objectName() == GRAPH_WIDGET_NAME:

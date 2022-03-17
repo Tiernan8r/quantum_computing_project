@@ -24,6 +24,15 @@ class InputComponent(AbstractComponent):
     """
 
     def __init__(self, main_window: QtWidgets.QMainWindow, *args, **kwargs):
+        """
+        Initialise the InputComponent object
+
+        :param QtWidgets.QMainWindow main_window: The main window element of
+            the UI.
+        :param *args: variable length extra arguments to pass down
+            to QtCore.QObject
+        :param **kwargs: dictionary parameters to pass to QtCore.QObject
+        """
         super().__init__(main_window, *args, **kwargs)
 
     def setup_signals(self):

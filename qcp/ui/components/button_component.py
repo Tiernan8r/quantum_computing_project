@@ -28,6 +28,18 @@ class ButtonComponent(AbstractComponent):
     def __init__(self, main_window: QtWidgets.QMainWindow,
                  search: QtWidgets.QTextEdit, target: QtWidgets.QLineEdit,
                  *args, **kwargs):
+        """
+        Initialise the ButtonComponent object, referencing the main window
+        element, and the two text boxes used in the UI.
+
+        :param QtWidgets.QMainWindow main_window: The main window element of
+            the UI.
+        :param QtWidgets.QTextEdit search: The search input box of the UI
+        :param QtWidgets.QLineEdit target: The target input box of the UI
+        :param *args: variable length extra arguments to pass down
+            to QtCore.QObject
+        :param **kwargs: dictionary parameters to pass to QtCore.QObject
+        """
         super().__init__(main_window, *args, **kwargs)
 
     def setup_signals(self):
@@ -121,6 +133,14 @@ class ProgressBarThread(QtCore.QThread):
     """
 
     def __init__(self, progress_bar: QtWidgets.QProgressBar, parent=None):
+        """
+        Setup the ProgressBarThread QThread, referencing the progress bar
+        widget to increment.
+
+        :param QtWidgets.QProgressBar progress_bar: The progress bar to
+            animate
+        :param QtCore.QObject parent: A parent element for the QThread.
+        """
         QtCore.QThread.__init__(self, parent)
         self.pb = progress_bar
         self.exiting = False

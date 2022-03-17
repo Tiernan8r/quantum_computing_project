@@ -26,6 +26,13 @@ class MainWindow(QMainWindow):
     """
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialise the MainWindow object
+
+        :param *args: variable length extra arguments to pass down
+            to QMainWindow
+        :param **kwargs: dictionary parameters to pass to QMainWindow
+        """
         super().__init__(*args, **kwargs)
 
         self.ui_component = self.load_ui()

@@ -24,6 +24,12 @@ class GraphWidget(EmbeddedGraph):
     """
 
     def __init__(self, graph_widget: QtWidgets.QWidget):
+        """
+        Initialise the GraphWidget widget, referencing the widget to use
+        as a frame for the embedded graph, and display the embedded graph.
+
+        :param QtWidgets.QWidget graph_widget: widget to embed in
+        """
         super().__init__(graph_widget)
         self.display()
 
