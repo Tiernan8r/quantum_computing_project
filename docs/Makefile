@@ -8,6 +8,8 @@ SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
 SPHINXCONVERT ?= sphinx-apidoc
+APIOUTPUTDIR = source
+APISOURCEDIR = ../qcp
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -21,4 +23,4 @@ help:
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 convert:
-	@$(SPHINXCONVERT) -f -o "$(SOURCEDIR)" ..
+	@$(SPHINXCONVERT) -f -o "$(APIOUTPUTDIR)" "$(APISOURCEDIR)"

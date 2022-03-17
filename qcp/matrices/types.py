@@ -13,8 +13,16 @@
 # limitations under the License.
 from typing import Dict, List, Union
 
+#: Type Alias for the allowed types for the matrix elements
 SCALARS = Union[complex, float, int]
+#: Typle Alias for the allowed matrix element types as a tuple
 SCALARS_T = (complex, float, int)
+#: Type Alias for the type of a matrix row, as a list representation
 VECTOR = List[SCALARS]
+#: Type Alias for the type of the matrix content, a 2D nested list of allowed
+#: matrix element types
 MATRIX = List[VECTOR]
+#: Type Alias for the storage method used in SparseMatrix, the entries of the
+#: matrix are stored in a nested dictionary, where values are looked up by
+#: row/column index
 SPARSE = Dict[int, Dict[int, SCALARS]]

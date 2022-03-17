@@ -31,12 +31,35 @@ release = '0.0.3'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-        "sphinx.ext.autodoc",
-        "sphinx.ext.napoleon",
-        "sphinx.ext.viewcode",
-        "sphinx.ext.autosummary",
-        "sphinx.ext.githubpages",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.githubpages",
+    "sphinx.ext.autodoc",
+    "m2r2",
 ]
+
+m2r_parse_relative_links = True
+m2r_anonymous_references = True
+autodoc_type_aliases = {
+    "SCALARS": "qcp.matrices.types.SCALARS",
+    "SCALARS_T": "qcp.matrices.types.SCALARS_T",
+    "VECTOR": "qcp.matrices.types.VECTOR",
+    "MATRIX": "qcp.matrices.types.MATRIX",
+    "SPARSE": "qcp.matrices.types.SPARSE",
+}
+
+special_members = ["__init__", "__add__", "__sub__", "__mul__",
+                   "__rmul__", "__len__", "__setitem__", "__getitem__",
+                   "__str__"]
+autodoc_default_options = {
+    "members": True,
+    "undoc-members": True,
+    "private-members": True,
+    "special-members": ",".join(special_members),
+    "exlude-members": "_abc_impl"
+}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
