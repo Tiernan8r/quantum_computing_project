@@ -18,6 +18,7 @@ Grover's Algorithm
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix, SPARSE
 import qcp.constants as c
+from qcp.matrices.types import SCALARS
 import qcp.tensor_product as tp
 from typing import List
 import enum
@@ -160,7 +161,8 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
 # range [0, 3]
 
 
-def control_z(size: int, controls: List[int], target: int) -> Matrix:
+def _generic_control(size: int, controls: List[int],
+                     target: int, cval: SCALARS) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-z gate with
     given controls and target
@@ -202,16 +204,41 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     for i in range(0, n):
         condition = (i & target_bit) == target_bit and i ^ mask == flip_mask
 
-        val = 1
+        val: SCALARS = 1
         # Modulo 2 filters out an bits that don't meet the condition,
         # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
         # Can be determined by taking their modulus with 2, since binary is in
         # powers of 2.
         if condition:
-            val = -1
+            val = cval
         m[i] = {i: val}
 
     return DefaultMatrix(m, h=n, w=n)
+
+# NOTE:
+# The way the control/target bit is indexed is by indexing the
+# control bit in the byte notation:
+# E.g: 13 = 1101 in bit notation, so this is indexed as
+#       +---+---+---+---+
+# BITS  | 1 | 1 | 0 | 1 |
+#       +---+---+---+---+
+# INDEX | 3 | 2 | 1 | 0 |
+#       +---+---+---+---+
+# in the usual little endian indexing notation
+# Therefore, in this example, the target/control bits are in the index
+# range [0, 3]
+
+
+def control_z(size: int, controls: List[int], target: int) -> Matrix:
+    """
+    Constructs a (2**size by 2**size) control-z gate with
+     given controls and target
+    :param size int: total number of qubits in circuit
+    :param controls List[int]: List of control qubits
+    :param target int: target qubit the z gate will be applied to
+    :return Matrix: Matrix representing the gate
+    """
+    return _generic_control(size, controls, target, -1)
 
 # NOTE:
 # The way the control/target bit is indexed is by indexing the
@@ -240,32 +267,8 @@ def control_phase(size: int, controls: List[int], target: int,
     returns:
         Matrix: Matrix representing the gate
     """
-    assert size > 1, "need minimum of two qubits"
-    n = 2 ** size
-    assert isinstance(controls, list)
-
-    # Make sure the control/target bits are within the qbit size
-    bit_bounds = range(size)
-    for con in controls:
-        assert con in bit_bounds, "control bit out of range"
-    assert target in bit_bounds, "target bit out of range"
-
-    assert target not in \
-        controls, "control bits and target bit cannot be the same"
-
-    m: SPARSE = {}
-
-    target_bit = 2**target
-
-    for i in range(0, n):
-        condition = (i & target_bit) == target_bit
-
-        val = 1+0j
-        if condition:
-            val = cmath.exp(1j * phi)
-        m[i] = {i: val}
-
-    return DefaultMatrix(m, h=n, w=n)
+    val = cmath.exp(1j * phi)
+    return _generic_control(size, controls, target, val)
 
 
 def phase_shift(phi: complex) -> Matrix:
