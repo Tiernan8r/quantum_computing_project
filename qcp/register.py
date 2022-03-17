@@ -47,6 +47,14 @@ def measure(mat: Matrix) -> List[float]:
 
 
 def _magnitude(v: SCALARS) -> float:
+    """
+    Measure the probability magnitude of the given scalar in the
+    usual Quantum Mechanical way.
+
+    :param SCALARS v: The value to determine the magnitude of.
+    returns:
+        float: The magnitude of the scalar
+    """
     if isinstance(v, complex):
         return (v * v.conjugate()).real
     else:

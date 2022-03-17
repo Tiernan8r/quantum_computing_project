@@ -164,12 +164,15 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
 def _generic_control(size: int, controls: List[int],
                      target: int, cval: SCALARS) -> Matrix:
     """
-    Constructs a (2**size by 2**size) control-z gate with
-    given controls and target
+    Constructs a (2**size by 2**size) control gate with
+    given controls, target and the control value.
+    This is a generic implementation of the logic used for
+    :py:meth:`qcp.gates.control_z` and :py:meth:`qcp.gates.control_phase`
 
     :param int size: total number of qubits in circuit
     :param List[int] controls: List of control qubits
-    :param int target: target qubit the z gate will be applied to
+    :param int target: target qubit the gate will be applied to
+    :param SCALARS cval: The control value in the gate
     returns:
         Matrix: Matrix representing the gate
     """
@@ -233,10 +236,11 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-z gate with
      given controls and target
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
-    :param target int: target qubit the z gate will be applied to
-    :return Matrix: Matrix representing the gate
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits
+    :param int target: target qubit the z gate will be applied to
+    returns:
+        Matrix: Matrix representing the gate
     """
     return _generic_control(size, controls, target, -1)
 
