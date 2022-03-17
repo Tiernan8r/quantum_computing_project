@@ -11,6 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+Code that converts a given column vector to the probability distributions of
+observing the qbits in each state
+"""
 from qcp.matrices import Matrix
 import cmath
 from typing import List
@@ -19,7 +23,14 @@ from qcp.matrices.types import SCALARS
 
 
 def measure(mat: Matrix) -> List[float]:
-    """Convert the qbit states into probability amplitudes"""
+    """
+    Convert the qbit states into probability amplitudes
+
+    :param Matrix mat: the column vector of qbit states to measure.
+    returns:
+        List[float]: list of probabilities of observing the qbits in each
+        state, normalised to total probability of 1.
+    """
     assert mat.num_columns == 1, \
         "can only measure the probabilities of column matrices"
     states = mat.get_state()
@@ -36,6 +47,14 @@ def measure(mat: Matrix) -> List[float]:
 
 
 def _magnitude(v: SCALARS) -> float:
+    """
+    Measure the probability magnitude of the given scalar in the
+    usual Quantum Mechanical way.
+
+    :param SCALARS v: The value to determine the magnitude of.
+    returns:
+        float: The magnitude of the scalar
+    """
     if isinstance(v, complex):
         return (v * v.conjugate()).real
     else:

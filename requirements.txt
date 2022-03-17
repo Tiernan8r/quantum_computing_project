@@ -15,7 +15,9 @@ charset-normalizer==2.0.12
 cycler==0.11.0
     # via matplotlib
 docutils==0.17.1
-    # via sphinx
+    # via
+    #   m2r2
+    #   sphinx
 fonttools==4.30.0
     # via matplotlib
 idna==3.3
@@ -28,10 +30,14 @@ jinja2==3.0.3
     # via sphinx
 kiwisolver==1.4.0
     # via matplotlib
-markupsafe==2.1.0
+m2r2==0.3.2
+    # via -r requirements.in
+markupsafe==2.1.1
     # via jinja2
 matplotlib==3.5.1
     # via -r requirements.in
+mistune==0.8.4
+    # via m2r2
 numpy==1.22.3
     # via matplotlib
 packaging==21.3
@@ -74,7 +80,7 @@ sphinxcontrib-qthelp==1.0.3
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
-urllib3==1.26.8
+urllib3==1.26.9
     # via requests
 zipp==3.7.0
     # via importlib-metadata

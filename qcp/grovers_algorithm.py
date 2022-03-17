@@ -11,6 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+Constructs the quantum register, circuits of composite gates, and runs the
+simulation of Grover's Algorithm
+"""
 from qcp.matrices import DefaultMatrix, Matrix, MATRIX
 import qcp.register as reg
 import qcp.gates as g
@@ -22,8 +26,10 @@ def pull_set_bits(n: int) -> List[int]:
     """
     Creates a list of bits that would be set to 1
     to make the number n
-    :param n int: number
-    :return List[int]: list of bits
+
+    :param int n: number
+    returns:
+        List[int]: list of bits
     """
     bits = []
     count = 0
@@ -45,8 +51,8 @@ class Grovers:
         we use Grover's algorithm to increase the amplitude of the
         "target_state" and reduce all others in a "size"-qubit system
 
-        :param size int: number of qubits in our circuit
-        :param target_state int: specific state we want to target/select
+        :param int size: number of qubits in our circuit
+        :param int target_state: specific state we want to target/select
         """
         assert size > 1, "need minimum of two qbits"
         assert target_state < (2 ** size), \
@@ -65,7 +71,9 @@ class Grovers:
     def initial_state(self) -> Matrix:
         """
         Creates a state vector corresponding to |1..0>
-        :return: returns state vector
+
+        returns:
+            Matrix: the state vector
         """
         entries: MATRIX = [[0] for _ in range(2 ** self.size)]
         entries[0][0] = 1
@@ -76,7 +84,9 @@ class Grovers:
         Creates an oracle gate - a gate which 'selects' our target state
         by phase shifting it by pi (turning 1 into -1 in the matrix
         representation)
-        :return Matrix: Matrix representation of our Oracle
+
+        returns:
+            Matrix: Matrix representation of our Oracle
         """
         not_placement = (2 ** self.size) - 1 - self.target
         t = pull_set_bits(not_placement)
@@ -92,7 +102,8 @@ class Grovers:
         Creates a diffusion gate - a gate which amplifies the probability of
         selecting our target state
 
-        :return Matrix: Matrix representing diffusion gate
+        returns:
+            Matrix: Matrix representing diffusion gate
         """
         h = g.multi_gate(self.size, [i for i in range(0, self.size)], g.Gate.H)
         cz = g.control_z(self.size, [i for i in range(0, self.size - 1)],
@@ -107,7 +118,8 @@ class Grovers:
         set of Hadamards and repeating the oracle and diffusion gates
         until our target state is close to 1 in terms of probability
 
-        :return Matrix: Matrix representing our completed Grover's algorithm
+        returns:
+            Matrix: Matrix representing our completed Grover's algorithm
         """
         circuit = g.multi_gate(self.size, [i for i in range(0, self.size)],
                                g.Gate.H)
@@ -121,7 +133,9 @@ class Grovers:
     def run(self) -> Matrix:
         """
         Multiplies our Grover's circuit with the initial state
-        :return Matrix: Final state
+
+        returns:
+            Matrix: Column matrix representation of the final state
         """
         self.state = self.circuit * self.state
         return self.state
@@ -130,7 +144,10 @@ class Grovers:
         """
         'measures' self.state by selecting a state weighted by its
         (amplitude ** 2)
-        :return: the state observed and the probability of measuring said state
+
+        returns:
+            Tuple[int, float]: The state observed and the probability of
+            measuring said state
         """
         p = reg.measure(self.state)
         # list of weighted probabilities with the index representing the state
