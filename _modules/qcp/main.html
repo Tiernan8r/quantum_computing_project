@@ -45,11 +45,17 @@
 <span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CLI initialiser to parse CLI options for the Algorithm, and to run the</span>
+<span class="sd">computation</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">qcp.grovers_algorithm</span> <span class="kn">import</span> <span class="n">Grovers</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
+<span class="c1">#: The default target state the Oracle will search for</span>
 <span class="n">TARGET_DEF</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="c1">#: The CLI help text</span>
 <span class="n">USAGE_STR</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;USAGE:</span>
 <span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> [FLAGS] nqbits</span>
 
@@ -61,6 +67,10 @@
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../qcp.html#qcp.main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The entrypoint for the CLI, parses the cli options and passes the read</span>
+<span class="sd">    options to the function to run the computation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nqbits</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">parse_cli</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">nqbits</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;must have a minimum of a 2 qbit state&quot;</span>
 
@@ -68,11 +78,24 @@
 
 
 <div class="viewcode-block" id="usage"><a class="viewcode-back" href="../../qcp.html#qcp.main.usage">[docs]</a><span class="k">def</span> <span class="nf">usage</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prints the help text to stdout, and exits with error code 0.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">USAGE_STR</span><span class="p">)</span>
     <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="parse_cli"><a class="viewcode-back" href="../../qcp.html#qcp.main.parse_cli">[docs]</a><span class="k">def</span> <span class="nf">parse_cli</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<div class="viewcode-block" id="parse_cli"><a class="viewcode-back" href="../../qcp.html#qcp.main.parse_cli">[docs]</a><span class="k">def</span> <span class="nf">parse_cli</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parses the sys.argv CLI options to read the value for the optional flags</span>
+<span class="sd">    (if provided), and the required CLI arguments.</span>
+
+<span class="sd">    :param args List[str]: The list of CLI inputs from sys.argv</span>
+<span class="sd">    returns:</span>
+<span class="sd">        Tuple[int, int]: The two CLI values,</span>
+<span class="sd">        firstly the required &#39;nqbits&#39; parameter,</span>
+<span class="sd">        and the second optional &#39;target&#39; parameter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">num_args</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">vals</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">targ</span> <span class="o">=</span> <span class="n">TARGET_DEF</span>
@@ -113,6 +136,13 @@
 
 
 <div class="viewcode-block" id="compute"><a class="viewcode-back" href="../../qcp.html#qcp.main.compute">[docs]</a><span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="n">nqbits</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run the Grover&#39;s Algorithm simulation and print the observed state to</span>
+<span class="sd">    stdout with the probability of observing that state.</span>
+
+<span class="sd">    :param int nqbits: The number of qbits to simulate in the simulator</span>
+<span class="sd">    :param int target: The index of the target qbit state</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">grover</span> <span class="o">=</span> <span class="n">Grovers</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
     <span class="n">grover</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 

@@ -40,32 +40,231 @@
 <span id="qcp-matrices-dense-matrix-module"></span><h2>qcp.matrices.dense_matrix module<a class="headerlink" href="#module-qcp.matrices.dense_matrix" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.matrices.dense_matrix.</span></span><span class="sig-name descname"><span class="pre">DenseMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.matrices.dense_matrix.</span></span><span class="sig-name descname"><span class="pre">DenseMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qcp.matrices.types.MATRIX</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcp.matrices.matrix.Matrix</span></code></a></p>
+<p>Implementation of a Dense Matrix class, where each matrix entry is stored
+in memory, including entries of value zero.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.__add__">
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.__add__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.__add__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the matching elements of the other matrix to the entries in this
+matrix, and return a new matrix containing the resultant values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – The matrix to add to this one.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix where the elements are the addition of the
+current and applied matrix elements.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.VECTOR</span></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the List representation of the row of index i.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) – The row index to get.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List representation of the
+row.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.types.VECTOR" title="qcp.matrices.types.VECTOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VECTOR</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qcp.matrices.types.MATRIX</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise the dense matrix, using the given nested list as our matrix
+content</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>MATRIX</em>) – A nested list containing values for each entry in
+the matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the horizontal size of the DenseMatrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of columns in the DenseMatrix</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.__mul__">
+<span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">SCALARS</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">Matrix</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.__mul__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.__mul__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override of the behaviour of the <cite>*</cite> multiplication operator.</p>
+<p>If the operator is applied using a scalar value to this matrix, the
+matrix elements are each scaled by this number and a new matrix is
+returned containing these scaled elements.</p>
+<p>If a <a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Matrix</span></code></a> object is applied using the
+<cite>*</cite> operator, the dot product of the two matrices is calculated, with
+the current matrix being the first Matrix, and the applied one the
+second, as order matters for matrix multiplication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<em>Union</em><em>[</em><em>SCALARS</em><em>, </em><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a><em>]</em>) – The object being applied to this
+matrix</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix containing the calculated values as
+appropriate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.__setitem__">
+<span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qcp.matrices.types.VECTOR</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the given row inplace to the new row values in the given list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>int</em>) – The row index to modify</p></li>
+<li><p><strong>v</strong> (<em>VECTOR</em>) – The list of values to set the row to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a string representation of the Matrix, with rows separated by
+newlines, and bounded by ‘[‘/’]’ characters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A string representation of the matrix suitable for printing.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.__sub__">
+<span class="sig-name descname"><span class="pre">__sub__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.__sub__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.__sub__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract the matching elements of the other matrix to the entries in
+this matrix, and return a new matrix containing the resultant values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – The matrix to subtract from this one.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix where the elements are the subtraction of the
+current and applied matrix elements.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix._abc_impl">
+<span class="sig-name descname"><span class="pre">_abc_impl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix._abc_impl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix._dot">
+<span class="sig-name descname"><span class="pre">_dot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix._dot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix._dot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the dot product between this Matrix, and another Matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – The matrix to dot product with this one.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix that conforms to the rules of matrix
+dot producting.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.columns">
-<span class="sig-name descname"><span class="pre">columns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.columns" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the columns of the Matrix</p>
+<span class="sig-name descname"><span class="pre">columns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.MATRIX</span></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>The transpose of the matrix as a nested list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A nested list of the matrix
+values transposed, indexed by column/row.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.MATRIX" title="qcp.matrices.types.MATRIX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MATRIX</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.conjugate">
-<span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.conjugate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.conjugate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the conjugate of the matrix</p>
+<span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.dense_matrix.DenseMatrix" title="qcp.matrices.dense_matrix.DenseMatrix"><span class="pre">qcp.matrices.dense_matrix.DenseMatrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.conjugate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.conjugate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new <a class="reference internal" href="#qcp.matrices.dense_matrix.DenseMatrix" title="qcp.matrices.dense_matrix.DenseMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qcp.matrices.dense_matrix.DenseMatrix</span></code></a> where
+each value in the matrix is the complex conjugate of the current
+matrix values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A DenseMatrix object of the same dimensions of the
+current matrix, with each value conjugated in place.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.dense_matrix.DenseMatrix" title="qcp.matrices.dense_matrix.DenseMatrix">DenseMatrix</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.get_state">
-<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.get_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.get_state" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.MATRIX</span></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.get_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the matrix values as a nested list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A nested list of the matrix
+values indexed by row/column</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.MATRIX" title="qcp.matrices.types.MATRIX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MATRIX</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.identity">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.identity" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.dense_matrix.DenseMatrix" title="qcp.matrices.dense_matrix.DenseMatrix"><span class="pre">qcp.matrices.dense_matrix.DenseMatrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.identity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the identity matrix with the given dimensions</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>int</strong> (<em>n</em>) – The matrix dimension</p>
+<dd class="field-odd"><p><strong>n</strong> (<em>int</em>) – The matrix dimension</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The identity matrix of given dimension</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.dense_matrix.DenseMatrix" title="qcp.matrices.dense_matrix.DenseMatrix">DenseMatrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -73,34 +272,99 @@
 <dl class="py property">
 <dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.num_columns">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.num_columns" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return the number of columns in the DenseMatrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of columns.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.num_rows">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_rows</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.num_rows" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return the number of rows in the DenseMatrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of rows</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.rows">
-<span class="sig-name descname"><span class="pre">rows</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.rows" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the rows of the Matrix.</p>
+<span class="sig-name descname"><span class="pre">rows</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.MATRIX</span></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to
+<a class="reference internal" href="#qcp.matrices.dense_matrix.DenseMatrix.get_state" title="qcp.matrices.dense_matrix.DenseMatrix.get_state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">qcp.matrices.dense_matrix.DenseMatrix.get_state()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A nested list of the matrix
+values indexed by row/column</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.MATRIX" title="qcp.matrices.types.MATRIX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MATRIX</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.trace">
-<span class="sig-name descname"><span class="pre">trace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.trace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.trace" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">trace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.SCALARS</span></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.trace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the sum of the diagonal elements of the matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The sum of all diagonal
+elements, with type determined by the value types.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.SCALARS" title="qcp.matrices.types.SCALARS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SCALARS</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.transpose">
-<span class="sig-name descname"><span class="pre">transpose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.transpose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.transpose" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new Matrix that is the transpose of the current one.</p>
+<span class="sig-name descname"><span class="pre">transpose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.dense_matrix.DenseMatrix" title="qcp.matrices.dense_matrix.DenseMatrix"><span class="pre">qcp.matrices.dense_matrix.DenseMatrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.transpose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.transpose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flips the matrix elements along the diagonal, and return a new
+<a class="reference internal" href="#qcp.matrices.dense_matrix.DenseMatrix" title="qcp.matrices.dense_matrix.DenseMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qcp.matrices.dense_matrix.DenseMatrix</span></code></a> containing these
+values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The transpose of the current matrix.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.dense_matrix.DenseMatrix" title="qcp.matrices.dense_matrix.DenseMatrix">DenseMatrix</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.dense_matrix.DenseMatrix.zeros">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">zeros</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nrow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.zeros"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.zeros" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">zeros</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nrow</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.dense_matrix.DenseMatrix" title="qcp.matrices.dense_matrix.DenseMatrix"><span class="pre">qcp.matrices.dense_matrix.DenseMatrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/dense_matrix.html#DenseMatrix.zeros"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.dense_matrix.DenseMatrix.zeros" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a DenseMatrix of given dimensions, where each value of the
+matrix is zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nrow</strong> (<em>int</em>) – The row dimension of the DenseMatrix</p></li>
+<li><p><strong>ncol</strong> (<em>int</em>) – The (optional) column dimenion of the DenseMatrix
+defaults to 1, to be a column vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The matrix object of our given size.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.dense_matrix.DenseMatrix" title="qcp.matrices.dense_matrix.DenseMatrix">DenseMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -109,55 +373,329 @@
 <span id="qcp-matrices-matrix-module"></span><h2>qcp.matrices.matrix module<a class="headerlink" href="#module-qcp.matrices.matrix" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.matrices.matrix.</span></span><span class="sig-name descname"><span class="pre">Matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.matrices.matrix.</span></span><span class="sig-name descname"><span class="pre">Matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qcp.matrices.types.MATRIX</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
-<p>Method stubs for an immutable implementation of a matrix.</p>
+<p>Method stubs for an implementation of a matrix.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.__add__">
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.__add__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.__add__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the matching elements of the other matrix to the entries in this
+matrix, and return a new matrix containing the resultant values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – The matrix to add to this one.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix where the elements are the addition of the
+current and applied matrix elements.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.VECTOR</span></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the row elements for the given row index in a list
+representation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) – The index of the row to get the elements of</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list containing the row
+elements</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.types.VECTOR" title="qcp.matrices.types.VECTOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VECTOR</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qcp.matrices.types.MATRIX</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise the Matrix object, setting the matrix elements based off of
+the given nested list, and inferring the matrix dimensions from the
+list dimensions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>MATRIX</em>) – The nested list containing the matrix elements</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the horizontal width of the matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The width of the matrix</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.__mul__">
+<span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">SCALARS</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">Matrix</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.__mul__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.__mul__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override of the behaviour of the <cite>*</cite> multiplication operator.</p>
+<p>If the operator is applied using a scalar value to this matrix, the
+matrix elements are each scaled by this number and a new matrix is
+returned containing these scaled elements.</p>
+<p>If a <a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Matrix</span></code></a> object is applied using the
+<cite>*</cite> operator, the dot product of the two matrices is calculated, with
+the current matrix being the first Matrix, and the applied one the
+second, as order matters for matrix multiplication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<em>Union</em><em>[</em><em>SCALARS</em><em>, </em><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a><em>]</em>) – The object being applied to this
+matrix</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix containing the calculated values as
+appropriate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.__rmul__">
+<span class="sig-name descname"><span class="pre">__rmul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qcp.matrices.types.SCALARS</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.__rmul__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.__rmul__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shim layer for the <a class="reference internal" href="#qcp.matrices.matrix.Matrix.__mul__" title="qcp.matrices.matrix.Matrix.__mul__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__mul__()</span></code></a>
+operation, so that we can pre-mulitply matrices with a scalar and
+get the expected behaviour.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<em>SCALARS</em>) – The scalar to multiply against the matrix</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix where the elements are scaled by other</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.__setitem__">
+<span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qcp.matrices.types.VECTOR</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the given row in the matrix to the given elements in the list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>int</em>) – The index of the row to modify</p></li>
+<li><p><strong>v</strong> (<em>VECTOR</em>) – The new elements as a list to set the row to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a string representation of the Matrix, with rows separated by
+newlines, and bounded by ‘[‘/’]’ characters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A string representation of the matrix suitable for printing.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.__sub__">
+<span class="sig-name descname"><span class="pre">__sub__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.__sub__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.__sub__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract the matching elements of the other matrix to the entries in
+this matrix, and return a new matrix containing the resultant values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – The matrix to subtract from this one.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix where the elements are the subtraction of the
+current and applied matrix elements.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix._abc_impl">
+<span class="sig-name descname"><span class="pre">_abc_impl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#qcp.matrices.matrix.Matrix._abc_impl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix._optional_newline">
+<span class="sig-name descname"><span class="pre">_optional_newline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix._optional_newline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix._optional_newline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function for <a class="reference internal" href="#qcp.matrices.matrix.Matrix.__str__" title="qcp.matrices.matrix.Matrix.__str__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__str__()</span></code></a> to
+determine which rows require a newline character appended to them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>int</em>) – The current row index under consideration.</p></li>
+<li><p><strong>N</strong> (<em>int</em>) – The total number of rows.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A newline character, or empty string depending on the
+condition.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.adjoint">
 <span class="sig-name descname"><span class="pre">adjoint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.adjoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.adjoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shortcut operation to calculate the transpose and conjugate of the
 current matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The new matrix that is
+transposed and then conjugated of the current matrix.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.MATRIX" title="qcp.matrices.types.MATRIX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MATRIX</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.columns">
-<span class="sig-name descname"><span class="pre">columns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.columns" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">columns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.MATRIX</span></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the transpose of the matrix as a nested list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The nested list of matrix
+elements, indexed by column/row.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.MATRIX" title="qcp.matrices.types.MATRIX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MATRIX</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.conjugate">
 <span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.conjugate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.conjugate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Calculate the complex conjugate of each matrix element and return a
+new matrix of these conjugated elements</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The matrix with each element
+conjugates of the current <a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qcp.matrices.matrix.Matrix</span></code></a></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.MATRIX" title="qcp.matrices.types.MATRIX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MATRIX</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.get_state">
-<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.get_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.get_state" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.MATRIX</span></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.get_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the matrix values as a nested list, indexed by the
+row/column indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A nested list of the matrix
+values</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.MATRIX" title="qcp.matrices.types.MATRIX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MATRIX</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.num_columns">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#qcp.matrices.matrix.Matrix.num_columns" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>The number of columns in the Matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of columns in the matrix</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.num_rows">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_rows</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#qcp.matrices.matrix.Matrix.num_rows" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>The number of rows in the Matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of rows in the matrix</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.square">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">square</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#qcp.matrices.matrix.Matrix.square" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Whether the matrix is square or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Whether the matrix row/column dimensions match.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.trace">
-<span class="sig-name descname"><span class="pre">trace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.trace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.trace" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">trace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.SCALARS</span></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.trace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sum of the diagonal elements of a square matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The sum of the diagonal
+of the matrix</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.SCALARS" title="qcp.matrices.types.SCALARS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SCALARS</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.matrix.Matrix.transpose">
 <span class="sig-name descname"><span class="pre">transpose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/matrix.html#Matrix.transpose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.matrix.Matrix.transpose" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Mirror a square matrix along it’s diagonal, and return a new
+matrix of these elements</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The transpose of the current
+matrix.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.MATRIX" title="qcp.matrices.types.MATRIX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MATRIX</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -166,34 +704,272 @@ current matrix.</p>
 <span id="qcp-matrices-sparse-matrix-module"></span><h2>qcp.matrices.sparse_matrix module<a class="headerlink" href="#module-qcp.matrices.sparse_matrix" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.matrices.sparse_matrix.</span></span><span class="sig-name descname"><span class="pre">SparseMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.matrices.sparse_matrix.</span></span><span class="sig-name descname"><span class="pre">SparseMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">MATRIX</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">SPARSE</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcp.matrices.matrix.Matrix</span></code></a></p>
+<p>Implementation of a Sparse Matrix object, where only the non-zero matrix
+elements are stored in memory, and if a matrix element is not indexed, it
+is taken to be zero.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.__add__">
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.__add__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.__add__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the matching elements of the other matrix to the entries in this
+matrix, and return a new matrix containing the resultant values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – The matrix to add to this one.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix where the elements are the addition of the
+current and applied matrix elements.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseVector" title="qcp.matrices.sparse_matrix.SparseVector"><span class="pre">qcp.matrices.sparse_matrix.SparseVector</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the row elements for the given row index in a list
+representation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) – The index of the row to get the elements of</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list containing the row
+elements</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.types.VECTOR" title="qcp.matrices.types.VECTOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VECTOR</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">MATRIX</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">SPARSE</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise a SparseMatrix, using either a List[List[]] object,
+or a pre-indexed dictionary mapping indices to non-zero values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<em>Union</em><em>[</em><em>MATRIX</em><em>, </em><em>SPARSE</em><em>]</em>) – object containing the
+matrix elements, either by determining the row/column indices from
+the list, or using the given row/column index mapping.</p></li>
+<li><p><strong>w</strong> (<em>int</em>) – Optional overload of the Matrix width dimension</p></li>
+<li><p><strong>h</strong> (<em>int</em>) – Optional overload of the Matrix height dimension</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the horizontal size of the SparseMatrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of columns in the SparseMatrix</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.__mul__">
+<span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">SCALARS</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">Matrix</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.__mul__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.__mul__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override of the behaviour of the <cite>*</cite> multiplication operator.</p>
+<p>If the operator is applied using a scalar value to this matrix, the
+matrix elements are each scaled by this number and a new matrix is
+returned containing these scaled elements.</p>
+<p>If a <a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Matrix</span></code></a> object is applied using the
+<cite>*</cite> operator, the dot product of the two matrices is calculated, with
+the current matrix being the first Matrix, and the applied one the
+second, as order matters for matrix multiplication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<em>Union</em><em>[</em><em>SCALARS</em><em>, </em><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a><em>]</em>) – The object being applied to this
+matrix</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix containing the calculated values as
+appropriate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.__setitem__">
+<span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseVector" title="qcp.matrices.sparse_matrix.SparseVector"><span class="pre">SparseVector</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">SCALARS</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">SCALARS</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the given row in the matrix to the given elements in the list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>int</em>) – The index of the row to modify</p></li>
+<li><p><strong>v</strong> (<em>VECTOR</em>) – The new elements as a list to set the row to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a string representation of the Matrix, with rows separated by
+newlines, and bounded by ‘[‘/’]’ characters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A string representation of the matrix suitable for printing.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.__sub__">
+<span class="sig-name descname"><span class="pre">__sub__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.__sub__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.__sub__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract the matching elements of the other matrix to the entries in
+this matrix, and return a new matrix containing the resultant values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – The matrix to subtract from this one.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix where the elements are the subtraction of the
+current and applied matrix elements.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix._abc_impl">
+<span class="sig-name descname"><span class="pre">_abc_impl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix._abc_impl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix._as_list">
+<span class="sig-name descname"><span class="pre">_as_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.MATRIX</span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix._as_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix._as_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to
+<a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix.get_state" title="qcp.matrices.sparse_matrix.SparseMatrix.get_state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_state()</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix._dot">
+<span class="sig-name descname"><span class="pre">_dot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix._dot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix._dot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the dot product between this Matrix, and another Matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – The matrix to dot product with this one.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix that conforms to the rules of matrix
+dot producting.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix._dot_sparse">
+<span class="sig-name descname"><span class="pre">_dot_sparse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix"><span class="pre">qcp.matrices.sparse_matrix.SparseMatrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix"><span class="pre">qcp.matrices.sparse_matrix.SparseMatrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix._dot_sparse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix._dot_sparse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimisation of the
+<a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix._dot" title="qcp.matrices.sparse_matrix.SparseMatrix._dot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_dot()</span></code></a> method in the
+case where both Matrices are SparseMatrix objects, in which case we
+only need to consider the non-zero entries of the matrices</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix"><em>SparseMatrix</em></a>) – The matrix to dot product with this one.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new matrix that conforms to the rules of matrix
+dot producting.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix">SparseMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix._get_row">
+<span class="sig-name descname"><span class="pre">_get_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseVector" title="qcp.matrices.sparse_matrix.SparseVector"><span class="pre">qcp.matrices.sparse_matrix.SparseVector</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix._get_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix._get_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to
+<a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix.__getitem__" title="qcp.matrices.sparse_matrix.SparseMatrix.__getitem__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getitem__()</span></code></a></p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.columns">
-<span class="sig-name descname"><span class="pre">columns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.columns" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the columns of the Matrix</p>
+<span class="sig-name descname"><span class="pre">columns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.MATRIX</span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>The transpose of the matrix as a nested list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A nested list of the matrix
+values transposed, indexed by column/row</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.MATRIX" title="qcp.matrices.types.MATRIX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MATRIX</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.conjugate">
-<span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.conjugate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.conjugate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix"><span class="pre">qcp.matrices.sparse_matrix.SparseMatrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.conjugate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.conjugate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new SparseMatrix where each value in the matrix is the
+complex conjugate of the current matrix values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A SparseMatrix object of the same dimensions of the
+current matrix, with each value conjugated in place.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix">SparseMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.get_state">
-<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.get_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.get_state" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.MATRIX</span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.get_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the matrix values as a nested list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A nested list of the matrix
+values indexed by row/column</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.MATRIX" title="qcp.matrices.types.MATRIX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MATRIX</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.identity">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.identity" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix"><span class="pre">qcp.matrices.sparse_matrix.SparseMatrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.identity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the identity matrix with the given dimensions</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>int</strong> (<em>n</em>) – The matrix dimension</p>
+<dd class="field-odd"><p><strong>n</strong> (<em>int</em>) – The matrix dimension</p>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>TypeError</strong> – If input dimension is not convertable to int.</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The SparseMatrix identity matrix object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix">SparseMatrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -201,44 +977,226 @@ current matrix.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.num_columns">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.num_columns" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return the number of columns in the SparseMatrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of columns.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.num_rows">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_rows</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.num_rows" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return the number of rows in the SparseMatrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of rows</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.rows">
-<span class="sig-name descname"><span class="pre">rows</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.rows" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the rows of the Matrix.</p>
+<span class="sig-name descname"><span class="pre">rows</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.MATRIX</span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to get_state().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A nested list of the matrix
+values indexed by row/column</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.MATRIX" title="qcp.matrices.types.MATRIX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MATRIX</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.trace">
-<span class="sig-name descname"><span class="pre">trace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.trace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.trace" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">trace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.SCALARS</span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.trace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the sum of the diagonal elements of the matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The sum of all diagonal
+elements, with type determined by the value types.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.types.SCALARS" title="qcp.matrices.types.SCALARS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SCALARS</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseMatrix.transpose">
-<span class="sig-name descname"><span class="pre">transpose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.transpose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.transpose" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">transpose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix"><span class="pre">qcp.matrices.sparse_matrix.SparseMatrix</span></a></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseMatrix.transpose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseMatrix.transpose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flips the matrix elements along the diagonal, and return a new
+SparseMatrix containing these values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The transpose of the current matrix.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix">SparseMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseVector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.matrices.sparse_matrix.</span></span><span class="sig-name descname"><span class="pre">SparseVector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseVector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseVector" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.matrices.sparse_matrix.</span></span><span class="sig-name descname"><span class="pre">SparseVector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">SCALARS</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">SCALARS</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseVector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseVector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Sparse representation of a row vector</p>
+<p>Sparse implementation of a row vector, where only the non-zero elements
+are stored in memory, and any non saved index is taken to be zero.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseVector.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qcp.matrices.types.SCALARS</span></span></span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseVector.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseVector.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the item at the given index in the SparseVector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) – The index of the value to read</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The indexed value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qcp.matrices.types.SCALARS" title="qcp.matrices.types.SCALARS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SCALARS</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseVector.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">SCALARS</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">SCALARS</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseVector.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseVector.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new SparseVector object, where the values are allocated
+either directly, by providing a dictionary mapping the indices
+to the values, or inferred by reading the given list and storing
+any non-zero list values in a dictionary mapping.</p>
+<p>When the dictionary is provided, the vector size is inferred from the
+highest index in the dictionary, unless the value is overwritten
+with the size parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entries</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><em>SCALARS</em><em>]</em><em>, </em><em>Dict</em><em>[</em><em>int</em><em>, </em><em>SCALARS</em><em>]</em><em>]</em>) – The object
+containing the vector values to use.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – The size of the SparseVector</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseVector.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseVector.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseVector.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the size of the vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The size of the vector</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix.SparseVector.__setitem__">
+<span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qcp.matrices.types.SCALARS</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#SparseVector.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix.SparseVector.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the item at the given index to be the given value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>int</em>) – The index to modify</p></li>
+<li><p><strong>v</strong> (<em>SCALARS</em>) – The new value to set.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.matrices.sparse_matrix._list_to_dict">
+<span class="sig-prename descclassname"><span class="pre">qcp.matrices.sparse_matrix.</span></span><span class="sig-name descname"><span class="pre">_list_to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/matrices/sparse_matrix.html#_list_to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.matrices.sparse_matrix._list_to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a given list of values into a dictionary mapping indices
+to non-zero values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list</strong> (<em>vals</em>) – List of vector values.</p></li>
+<li><p><strong>int</strong> (<em>limit</em>) – Optional iteration limit for fixed sized rows.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict of key/value
+pairs for non-zero entries in the list.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict[int, <a class="reference internal" href="#qcp.matrices.types.SCALARS" title="qcp.matrices.types.SCALARS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SCALARS</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
 <section id="module-qcp.matrices.types">
 <span id="qcp-matrices-types-module"></span><h2>qcp.matrices.types module<a class="headerlink" href="#module-qcp.matrices.types" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.matrices.types.MATRIX">
+<span class="sig-prename descclassname"><span class="pre">qcp.matrices.types.</span></span><span class="sig-name descname"><span class="pre">MATRIX</span></span><a class="headerlink" href="#qcp.matrices.types.MATRIX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type Alias for the type of the matrix content, a 2D nested list of allowed
+matrix element types</p>
+<p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">complex</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]]</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.matrices.types.SCALARS">
+<span class="sig-prename descclassname"><span class="pre">qcp.matrices.types.</span></span><span class="sig-name descname"><span class="pre">SCALARS</span></span><a class="headerlink" href="#qcp.matrices.types.SCALARS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type Alias for the allowed types for the matrix elements</p>
+<p>alias of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">complex</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.matrices.types.SCALARS_T">
+<span class="sig-prename descclassname"><span class="pre">qcp.matrices.types.</span></span><span class="sig-name descname"><span class="pre">SCALARS_T</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;class</span> <span class="pre">'complex'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;)</span></em><a class="headerlink" href="#qcp.matrices.types.SCALARS_T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Typle Alias for the allowed matrix element types as a tuple</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.matrices.types.SPARSE">
+<span class="sig-prename descclassname"><span class="pre">qcp.matrices.types.</span></span><span class="sig-name descname"><span class="pre">SPARSE</span></span><a class="headerlink" href="#qcp.matrices.types.SPARSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type Alias for the storage method used in SparseMatrix, the entries of the
+matrix are stored in a nested dictionary, where values are looked up by
+row/column index</p>
+<p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">complex</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]]</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.matrices.types.VECTOR">
+<span class="sig-prename descclassname"><span class="pre">qcp.matrices.types.</span></span><span class="sig-name descname"><span class="pre">VECTOR</span></span><a class="headerlink" href="#qcp.matrices.types.VECTOR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type Alias for the type of a matrix row, as a list representation</p>
+<p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">complex</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]</p>
+</dd></dl>
+
 </section>
 <section id="module-qcp.matrices">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-qcp.matrices" title="Permalink to this headline">¶</a></h2>
+<p>Module containing pure Python implementations of matrices.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qcp.matrices.DefaultMatrix">
+<span class="sig-prename descclassname"><span class="pre">qcp.matrices.</span></span><span class="sig-name descname"><span class="pre">DefaultMatrix</span></span><a class="headerlink" href="#qcp.matrices.DefaultMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quick type referencing for the preferred <cite>Matrix</cite> class to use,
+so that if we want to change it later, all we have to do is modify this
+line</p>
+</dd></dl>
+
 </section>
 </section>
 

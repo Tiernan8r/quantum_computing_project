@@ -44,6 +44,10 @@
 <span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Code that converts a given column vector to the probability distributions of</span>
+<span class="sd">observing the qbits in each state</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">Matrix</span>
 <span class="kn">import</span> <span class="nn">cmath</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
@@ -52,7 +56,14 @@
 
 
 <div class="viewcode-block" id="measure"><a class="viewcode-back" href="../../qcp.html#qcp.register.measure">[docs]</a><span class="k">def</span> <span class="nf">measure</span><span class="p">(</span><span class="n">mat</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Convert the qbit states into probability amplitudes&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert the qbit states into probability amplitudes</span>
+
+<span class="sd">    :param Matrix mat: the column vector of qbit states to measure.</span>
+<span class="sd">    returns:</span>
+<span class="sd">        List[float]: list of probabilities of observing the qbits in each</span>
+<span class="sd">        state, normalised to total probability of 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">mat</span><span class="o">.</span><span class="n">num_columns</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> \
         <span class="s2">&quot;can only measure the probabilities of column matrices&quot;</span>
     <span class="n">states</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
@@ -68,11 +79,19 @@
     <span class="k">return</span> <span class="n">probabilities</span></div>
 
 
-<span class="k">def</span> <span class="nf">_magnitude</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">SCALARS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="_magnitude"><a class="viewcode-back" href="../../qcp.html#qcp.register._magnitude">[docs]</a><span class="k">def</span> <span class="nf">_magnitude</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">SCALARS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Measure the probability magnitude of the given scalar in the</span>
+<span class="sd">    usual Quantum Mechanical way.</span>
+
+<span class="sd">    :param SCALARS v: The value to determine the magnitude of.</span>
+<span class="sd">    returns:</span>
+<span class="sd">        float: The magnitude of the scalar</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">complex</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="n">v</span><span class="o">.</span><span class="n">conjugate</span><span class="p">())</span><span class="o">.</span><span class="n">real</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span></div>
 </pre></div>
 
           </div>

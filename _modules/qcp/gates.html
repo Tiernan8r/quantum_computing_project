@@ -44,6 +44,10 @@
 <span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Contains the code required calculate the required gates used to construct</span>
+<span class="sd">Grover&#39;s Algorithm</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">cmath</span>
 <span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">DefaultMatrix</span><span class="p">,</span> <span class="n">SPARSE</span>
 <span class="kn">import</span> <span class="nn">qcp.constants</span> <span class="k">as</span> <span class="nn">c</span>
@@ -54,7 +58,10 @@
 
 
 <div class="viewcode-block" id="Gate"><a class="viewcode-back" href="../../qcp.html#qcp.gates.Gate">[docs]</a><span class="k">class</span> <span class="nc">Gate</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Enum class to encode gate options in multi_gates&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enums of the options of gate types to use in qcp.gates.multi_gates()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">H</span> <span class="o">=</span> <span class="s2">&quot;h&quot;</span>
     <span class="n">X</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
     <span class="n">Z</span> <span class="o">=</span> <span class="s2">&quot;z&quot;</span>
@@ -77,7 +84,8 @@
 <span class="sd">                    applied to, indexing from 0.</span>
 <span class="sd">    :param gate Gate: Enum of which gate we want to apply</span>
 <span class="sd">    :param phi complex: Phase angle for the phase gate</span>
-<span class="sd">    :return Matrix: Matrix representing the composite gate</span>
+<span class="sd">    returns:</span>
+<span class="sd">        Matrix: Matrix representing the composite gate</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">gate</span> <span class="ow">is</span> <span class="n">Gate</span><span class="o">.</span><span class="n">H</span><span class="p">:</span>
@@ -118,11 +126,13 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constructs a (2**size by 2**size) control-x gate with</span>
 <span class="sd">    given controls and target</span>
-<span class="sd">    :param size int: total number of qubits in circuit</span>
-<span class="sd">    :param controls List[int]: List of control qubits,</span>
-<span class="sd">    if empty, 0th bit is used as the control.</span>
-<span class="sd">    :param target int: target qubit the x gate will be applied to</span>
-<span class="sd">    :returns Matrix: Matrix representing the gate</span>
+
+<span class="sd">    :param int size: total number of qubits in circuit</span>
+<span class="sd">    :param List[int] controls: List of control qubits,</span>
+<span class="sd">        if empty, 0th bit is used as the control.</span>
+<span class="sd">    :param int target: target qubit the x gate will be applied to</span>
+<span class="sd">    returns:</span>
+<span class="sd">        Matrix: Matrix representing the gate</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;need minimum of two qubits&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">size</span>
@@ -184,15 +194,20 @@
 <span class="c1"># range [0, 3]</span>
 
 
-<span class="k">def</span> <span class="nf">_generic_control</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">controls</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+<div class="viewcode-block" id="_generic_control"><a class="viewcode-back" href="../../qcp.html#qcp.gates._generic_control">[docs]</a><span class="k">def</span> <span class="nf">_generic_control</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">controls</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
                      <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">cval</span><span class="p">:</span> <span class="n">SCALARS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Constructs a (2**size by 2**size) control-z gate with</span>
-<span class="sd">     given controls and target</span>
-<span class="sd">    :param size int: total number of qubits in circuit</span>
-<span class="sd">    :param controls List[int]: List of control qubits</span>
-<span class="sd">    :param target int: target qubit the z gate will be applied to</span>
-<span class="sd">    :return Matrix: Matrix representing the gate</span>
+<span class="sd">    Constructs a (2**size by 2**size) control gate with</span>
+<span class="sd">    given controls, target and the control value.</span>
+<span class="sd">    This is a generic implementation of the logic used for</span>
+<span class="sd">    :py:meth:`qcp.gates.control_z` and :py:meth:`qcp.gates.control_phase`</span>
+
+<span class="sd">    :param int size: total number of qubits in circuit</span>
+<span class="sd">    :param List[int] controls: List of control qubits</span>
+<span class="sd">    :param int target: target qubit the gate will be applied to</span>
+<span class="sd">    :param SCALARS cval: The control value in the gate</span>
+<span class="sd">    returns:</span>
+<span class="sd">        Matrix: Matrix representing the gate</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;need minimum of two qubits&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">size</span>
@@ -234,7 +249,7 @@
             <span class="n">val</span> <span class="o">=</span> <span class="n">cval</span>
         <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">val</span><span class="p">}</span>
 
-    <span class="k">return</span> <span class="n">DefaultMatrix</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">DefaultMatrix</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">n</span><span class="p">)</span></div>
 
 <span class="c1"># NOTE:</span>
 <span class="c1"># The way the control/target bit is indexed is by indexing the</span>
@@ -254,10 +269,11 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constructs a (2**size by 2**size) control-z gate with</span>
 <span class="sd">     given controls and target</span>
-<span class="sd">    :param size int: total number of qubits in circuit</span>
-<span class="sd">    :param controls List[int]: List of control qubits</span>
-<span class="sd">    :param target int: target qubit the z gate will be applied to</span>
-<span class="sd">    :return Matrix: Matrix representing the gate</span>
+<span class="sd">    :param int size: total number of qubits in circuit</span>
+<span class="sd">    :param List[int] controls: List of control qubits</span>
+<span class="sd">    :param int target: target qubit the z gate will be applied to</span>
+<span class="sd">    returns:</span>
+<span class="sd">        Matrix: Matrix representing the gate</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_generic_control</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
 
@@ -279,12 +295,14 @@
                   <span class="n">phi</span><span class="p">:</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constructs a (2**size by 2**size) control-phase gate with</span>
-<span class="sd">     given controls and target</span>
-<span class="sd">    :param size int: total number of qubits in circuit</span>
-<span class="sd">    :param controls List[int]: List of control qubits</span>
-<span class="sd">    :param target int: target qubit the phase gate will be applied to</span>
-<span class="sd">    :param phi complex: angle the target qubit will be phase shifted by</span>
-<span class="sd">    :return Matrix: Matrix representing the gate</span>
+<span class="sd">    given controls and target</span>
+
+<span class="sd">    :param int size: total number of qubits in circuit</span>
+<span class="sd">    :param List[int] controls: List of control qubits</span>
+<span class="sd">    :param int target: target qubit the phase gate will be applied to</span>
+<span class="sd">    :param complex phi: angle the target qubit will be phase shifted by</span>
+<span class="sd">    returns:</span>
+<span class="sd">        Matrix: Matrix representing the gate</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">val</span> <span class="o">=</span> <span class="n">cmath</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_generic_control</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span></div>
@@ -293,8 +311,10 @@
 <div class="viewcode-block" id="phase_shift"><a class="viewcode-back" href="../../qcp.html#qcp.gates.phase_shift">[docs]</a><span class="k">def</span> <span class="nf">phase_shift</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a 2 x 2 phase shift matrix</span>
-<span class="sd">    :param phi: angle the qubit is phase shifted by</span>
-<span class="sd">    :return: Matrix(complex)</span>
+
+<span class="sd">    :param complex phi: angle the qubit is phase shifted by</span>
+<span class="sd">    returns:</span>
+<span class="sd">        Matrix: Matrix representing the phase shift gate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">DefaultMatrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmath</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)]])</span></div>
 </pre></div>

@@ -33,8 +33,132 @@
             
   <section id="welcome-to-quantum-computing-project-s-documentation">
 <h1>Welcome to Quantum Computing Project’s documentation!<a class="headerlink" href="#welcome-to-quantum-computing-project-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>An implementation of a quantum computer simulator in Python to simulate the
+running of <a class="reference external" href="https://qiskit.org/textbook/ch-algorithms/grover.html">Grover’s Algorithm</a>.</p>
+<section id="table-of-contents">
+<h2>Table of Contents:<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><span class="xref std std-ref">Setup</span></p>
+<ul>
+<li><p><span class="xref std std-ref">Clone the Repository</span></p></li>
+<li><p><span class="xref std std-ref">Optional - Run Tests</span></p></li>
+</ul>
+</li>
+<li><p><span class="xref std std-ref">CLI</span></p></li>
+<li><p><span class="xref std std-ref">GUI</span></p>
+<ul>
+<li><p><span class="xref std std-ref">Search Input</span></p></li>
+<li><p><span class="xref std std-ref">Target</span></p></li>
+<li><p><span class="xref std std-ref">Search Button</span></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="setup">
+<h2>Setup:<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>To get started with the repository, you need to do the following:</p>
+<section id="clone-the-repository">
+<h3>Clone the Repository:<a class="headerlink" href="#clone-the-repository" title="Permalink to this headline">¶</a></h3>
+<p>Clone the repository to your system:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git clone https://github.com/Tiernan8r/quantum_computing_project
+</pre></div>
+</div>
+<p>Move into the cloned repository:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span> quantum_computing_project
+</pre></div>
+</div>
+<p>Setup a python virtual environment:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m virtualenv venv
+</pre></div>
+</div>
+<p>Activate the new virtualenvironment</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">source</span> venv/bin/activate
+</pre></div>
+</div>
+<p>Download the PyPi program requirements:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip install -r requirements.txt
+</pre></div>
+</div>
+<hr class="docutils" />
+<section id="optional-run-tests">
+<h4>Optional - Run Tests:<a class="headerlink" href="#optional-run-tests" title="Permalink to this headline">¶</a></h4>
+<p>Verify that all the tests are working, by running:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip install -r test-requirements.txt
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tox
+</pre></div>
+</div>
+<p>There are three test actions configured for the repository, <code class="docutils literal notranslate"><span class="pre">tests</span></code>/<code class="docutils literal notranslate"><span class="pre">pep8</span></code>/
+<code class="docutils literal notranslate"><span class="pre">mypy</span></code>.
+The individual actions can be run using</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tox -e <span class="o">[</span>action<span class="o">]</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">[action]</span></code> is one of <code class="docutils literal notranslate"><span class="pre">tests</span></code>/<code class="docutils literal notranslate"><span class="pre">pep8</span></code>/<code class="docutils literal notranslate"><span class="pre">mypy</span></code></p>
+<hr class="docutils" />
+<p>Once you have the repository set up on your system, you can run the code using
+one of the following:</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">CLI Usage</span></p></li>
+<li><p><span class="xref std std-ref">GUI</span>
+## CLI Usage:</p></li>
+</ul>
+<p>The Help message for the CLI gives an overview of the program usage</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m qcp.main --help
+<span class="go">USAGE:</span>
+<span class="go">/home/tiernan/quantum_computing_project/qcp/main.py [FLAGS] nqbits</span>
+
+<span class="go">ARGS:</span>
+<span class="go">    nqbits          The number of qbit states to simulate</span>
+<span class="go">FLAGS:</span>
+<span class="go">    -t/--target     The target state, defaults to 5</span>
+<span class="go">    -h/--help       Display this prompt</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nqbits</span></code>: is a required parameter, and controls the number of qbibts to simulate in the simulator</p>
+<blockquote>
+<div><p><strong>Note:</strong>
+The quantum simulator simulates matrices of size <code class="docutils literal notranslate"><span class="pre">2^nqbits</span></code>, so be aware that
+The simulation takes exponentially longer for each extra qbit simulated.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">-t</span></code>/<code class="docutils literal notranslate"><span class="pre">--target</span></code>: is the target state to search for, must be bounded within <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">&lt;</span> <span class="pre">t</span> <span class="pre">&lt;</span> <span class="pre">2^nqbits</span></code></p>
+</section>
+</section>
+</section>
+<section id="gui">
+<h2>GUI:<a class="headerlink" href="#gui" title="Permalink to this headline">¶</a></h2>
+<p>A User Interface is provided with the program to make interaction with it
+easier.</p>
+<p>The GUI can be initialised with the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m qcp.ui.main
+</pre></div>
+</div>
+<p>This will bring up the following interface</p>
+<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_overview.png"><img alt="Initial UI" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_overview.png" /></a>
+<section id="search-input">
+<h3>Search Input:<a class="headerlink" href="#search-input" title="Permalink to this headline">¶</a></h3>
+<p>The “Search” box can either be populated manually, or alternatively the
+“browse” dialog can be used to read the contents of a file of <code class="docutils literal notranslate"><span class="pre">.txt</span></code>/<code class="docutils literal notranslate"><span class="pre">.csv</span></code>/
+<code class="docutils literal notranslate"><span class="pre">.json</span></code>/<code class="docutils literal notranslate"><span class="pre">.yaml</span></code></p>
+<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_filedialog.png"><img alt="File Dialog" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_filedialog.png" /></a>
+</section>
+<section id="target">
+<h3>Target:<a class="headerlink" href="#target" title="Permalink to this headline">¶</a></h3>
+<p>The “Target” text box must be populated manually with the value that we want to
+search for.</p>
+</section>
+<section id="search-button">
+<h3>Search Button:<a class="headerlink" href="#search-button" title="Permalink to this headline">¶</a></h3>
+<p>Once ready to search, hit the “Search!” button, and the program will simulate a
+search of the input data using the Grover’s Algorithm quantum algorithm.</p>
+<p>Once the search is completed, a plot of the probability of the quantum state
+being in the target state will be shown on the right.</p>
+<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_with_computed_graph.png"><img alt="Sample Calculated Result" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_with_computed_graph.png" /></a>
 <div class="toctree-wrapper compound">
 </div>
+</section>
+</section>
 </section>
 <section id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>

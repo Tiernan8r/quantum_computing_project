@@ -44,6 +44,10 @@
 <span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Constructs the quantum register, circuits of composite gates, and runs the</span>
+<span class="sd">simulation of Grover&#39;s Algorithm</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">DefaultMatrix</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">MATRIX</span>
 <span class="kn">import</span> <span class="nn">qcp.register</span> <span class="k">as</span> <span class="nn">reg</span>
 <span class="kn">import</span> <span class="nn">qcp.gates</span> <span class="k">as</span> <span class="nn">g</span>
@@ -55,8 +59,10 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a list of bits that would be set to 1</span>
 <span class="sd">    to make the number n</span>
-<span class="sd">    :param n int: number</span>
-<span class="sd">    :return List[int]: list of bits</span>
+
+<span class="sd">    :param int n: number</span>
+<span class="sd">    returns:</span>
+<span class="sd">        List[int]: list of bits</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">bits</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
@@ -71,15 +77,15 @@
 
 <div class="viewcode-block" id="Grovers"><a class="viewcode-back" href="../../qcp.html#qcp.grovers_algorithm.Grovers">[docs]</a><span class="k">class</span> <span class="nc">Grovers</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_state</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<div class="viewcode-block" id="Grovers.__init__"><a class="viewcode-back" href="../../qcp.html#qcp.grovers_algorithm.Grovers.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_state</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is an implementation of Grover&#39;s algorithm which efficiently</span>
 <span class="sd">        finds a specific item in a list of items. In this implementation</span>
 <span class="sd">        we use Grover&#39;s algorithm to increase the amplitude of the</span>
 <span class="sd">        &quot;target_state&quot; and reduce all others in a &quot;size&quot;-qubit system</span>
 
-<span class="sd">        :param size int: number of qubits in our circuit</span>
-<span class="sd">        :param target_state int: specific state we want to target/select</span>
+<span class="sd">        :param int size: number of qubits in our circuit</span>
+<span class="sd">        :param int target_state: specific state we want to target/select</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;need minimum of two qbits&quot;</span>
         <span class="k">assert</span> <span class="n">target_state</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">size</span><span class="p">),</span> \
@@ -93,12 +99,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">max_reflections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="c1"># can only reflect size-1 times to get maximum probability</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_circuit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_circuit</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Grovers.initial_state"><a class="viewcode-back" href="../../qcp.html#qcp.grovers_algorithm.Grovers.initial_state">[docs]</a>    <span class="k">def</span> <span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a state vector corresponding to |1..0&gt;</span>
-<span class="sd">        :return: returns state vector</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: the state vector</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">entries</span><span class="p">:</span> <span class="n">MATRIX</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)]</span>
         <span class="n">entries</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
@@ -109,7 +117,9 @@
 <span class="sd">        Creates an oracle gate - a gate which &#39;selects&#39; our target state</span>
 <span class="sd">        by phase shifting it by pi (turning 1 into -1 in the matrix</span>
 <span class="sd">        representation)</span>
-<span class="sd">        :return Matrix: Matrix representation of our Oracle</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: Matrix representation of our Oracle</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">not_placement</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">pull_set_bits</span><span class="p">(</span><span class="n">not_placement</span><span class="p">)</span>
@@ -125,7 +135,8 @@
 <span class="sd">        Creates a diffusion gate - a gate which amplifies the probability of</span>
 <span class="sd">        selecting our target state</span>
 
-<span class="sd">        :return Matrix: Matrix representing diffusion gate</span>
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: Matrix representing diffusion gate</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">h</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">H</span><span class="p">)</span>
         <span class="n">cz</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">control_z</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)],</span>
@@ -140,7 +151,8 @@
 <span class="sd">        set of Hadamards and repeating the oracle and diffusion gates</span>
 <span class="sd">        until our target state is close to 1 in terms of probability</span>
 
-<span class="sd">        :return Matrix: Matrix representing our completed Grover&#39;s algorithm</span>
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: Matrix representing our completed Grover&#39;s algorithm</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">circuit</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)],</span>
                                <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">H</span><span class="p">)</span>
@@ -154,7 +166,9 @@
 <div class="viewcode-block" id="Grovers.run"><a class="viewcode-back" href="../../qcp.html#qcp.grovers_algorithm.Grovers.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Multiplies our Grover&#39;s circuit with the initial state</span>
-<span class="sd">        :return Matrix: Final state</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: Column matrix representation of the final state</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span></div>
@@ -163,7 +177,10 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &#39;measures&#39; self.state by selecting a state weighted by its</span>
 <span class="sd">        (amplitude ** 2)</span>
-<span class="sd">        :return: the state observed and the probability of measuring said state</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Tuple[int, float]: The state observed and the probability of</span>
+<span class="sd">            measuring said state</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
         <span class="c1"># list of weighted probabilities with the index representing the state</span>

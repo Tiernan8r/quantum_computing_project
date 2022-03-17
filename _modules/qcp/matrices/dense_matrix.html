@@ -44,14 +44,26 @@
 <span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">Matrix</span>
 <span class="kn">from</span> <span class="nn">qcp.matrices.types</span> <span class="kn">import</span> <span class="n">MATRIX</span><span class="p">,</span> <span class="n">VECTOR</span><span class="p">,</span> <span class="n">SCALARS</span><span class="p">,</span> <span class="n">SCALARS_T</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
 
 <div class="viewcode-block" id="DenseMatrix"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix">[docs]</a><span class="k">class</span> <span class="nc">DenseMatrix</span><span class="p">(</span><span class="n">Matrix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation of a Dense Matrix class, where each matrix entry is stored</span>
+<span class="sd">    in memory, including entries of value zero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">MATRIX</span><span class="p">):</span>
+<div class="viewcode-block" id="DenseMatrix.__init__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">MATRIX</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialise the dense matrix, using the given nested list as our matrix</span>
+<span class="sd">        content</span>
+
+<span class="sd">        :param MATRIX state: A nested list containing values for each entry in</span>
+<span class="sd">            the matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span>
             <span class="n">state</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;attempting to initialise matrix with no dimensions&quot;</span>
 
@@ -60,14 +72,16 @@
             <span class="k">assert</span> <span class="n">row_widths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span>\
                 <span class="n">row_widths</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s2">&quot;matrix rows must have equal dimension&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span></div>
 
 <div class="viewcode-block" id="DenseMatrix.identity"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.identity">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DenseMatrix</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create the identity matrix with the given dimensions</span>
 
-<span class="sd">        :param n int: The matrix dimension</span>
+<span class="sd">        :param int n: The matrix dimension</span>
+<span class="sd">        returns:</span>
+<span class="sd">            DenseMatrix: The identity matrix of given dimension</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="s2">&quot;must provide integer dimension&quot;</span>
         <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Matrix dimension must be positive&quot;</span>
@@ -80,41 +94,103 @@
         <span class="p">])</span></div>
 
 <div class="viewcode-block" id="DenseMatrix.zeros"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.zeros">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">zeros</span><span class="p">(</span><span class="n">nrow</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">zeros</span><span class="p">(</span><span class="n">nrow</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ncol</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DenseMatrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a DenseMatrix of given dimensions, where each value of the</span>
+<span class="sd">        matrix is zero.</span>
+
+<span class="sd">        :param int nrow: The row dimension of the DenseMatrix</span>
+<span class="sd">        :param int ncol: The (optional) column dimenion of the DenseMatrix</span>
+<span class="sd">            defaults to 1, to be a column vector.</span>
+<span class="sd">        returns:</span>
+<span class="sd">            DenseMatrix: The matrix object of our given size.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Create zero matrix with dimension (nrow,ncol)</span>
         <span class="c1"># Class method used to handle the creation of new object</span>
         <span class="k">return</span> <span class="n">DenseMatrix</span><span class="p">([[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncol</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrow</span><span class="p">)])</span></div>
 
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_columns</span>
+<div class="viewcode-block" id="DenseMatrix.__len__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the horizontal size of the DenseMatrix.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            int: The number of columns in the DenseMatrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_columns</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">num_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the number of rows in the DenseMatrix.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            int: The number of rows</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">num_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the number of columns in the DenseMatrix.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            int: The number of columns.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VECTOR</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="s2">&quot;index out of range&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<div class="viewcode-block" id="DenseMatrix.__getitem__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VECTOR</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the List representation of the row of index i.</span>
 
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VECTOR</span><span class="p">):</span>
+<span class="sd">        :param int i: The row index to get.</span>
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.VECTOR`: List representation of the</span>
+<span class="sd">            row.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="s2">&quot;index out of range&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DenseMatrix.__setitem__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VECTOR</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the given row inplace to the new row values in the given list.</span>
+
+<span class="sd">        :param int i: The row index to modify</span>
+<span class="sd">        :param VECTOR v: The list of values to set the row to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="s2">&quot;index out of range&quot;</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="s2">&quot;row dimension does not match&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
 
 <div class="viewcode-block" id="DenseMatrix.get_state"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.get_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MATRIX</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the matrix values as a nested list</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix</span>
+<span class="sd">            values indexed by row/column</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span></div>
 
 <div class="viewcode-block" id="DenseMatrix.rows"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.rows">[docs]</a>    <span class="k">def</span> <span class="nf">rows</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MATRIX</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return the rows of the Matrix.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Equivalent to</span>
+<span class="sd">        :py:meth:`qcp.matrices.dense_matrix.DenseMatrix.get_state()`.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix</span>
+<span class="sd">            values indexed by row/column</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DenseMatrix.columns"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.columns">[docs]</a>    <span class="k">def</span> <span class="nf">columns</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MATRIX</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Returns the columns of the Matrix&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The transpose of the matrix as a nested list</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix</span>
+<span class="sd">            values transposed, indexed by column/row.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span>
             <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))]</span>
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
@@ -123,7 +199,7 @@
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+<div class="viewcode-block" id="DenseMatrix.__add__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.__add__">[docs]</a>    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
             <span class="n">other</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;Matrix dimensions must be equal for addition&quot;</span>
 
@@ -133,13 +209,12 @@
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
                 <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">other</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
 
-        <span class="k">return</span> <span class="n">DenseMatrix</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">DenseMatrix</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">other</span><span class="p">)</span>
+<div class="viewcode-block" id="DenseMatrix.__sub__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">other</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">SCALARS</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
-
+<div class="viewcode-block" id="DenseMatrix.__mul__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.__mul__">[docs]</a>    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">SCALARS</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SCALARS_T</span><span class="p">):</span>
             <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -150,9 +225,18 @@
             <span class="k">return</span> <span class="n">DenseMatrix</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dot</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dot</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_dot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+<div class="viewcode-block" id="DenseMatrix._dot"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix._dot">[docs]</a>    <span class="k">def</span> <span class="nf">_dot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the dot product between this Matrix, and another Matrix.</span>
+
+<span class="sd">        :param Matrix other: The matrix to dot product with this one.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: A new matrix that conforms to the rules of matrix</span>
+<span class="sd">            dot producting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;taking dot product with empty matrix&quot;</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">columns</span><span class="p">()[</span>
             <span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;matrices don&#39;t match on their row/column dimensions&quot;</span>
@@ -165,19 +249,27 @@
                 <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
                     <span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">other</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span>
 
-        <span class="k">return</span> <span class="n">DenseMatrix</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">DenseMatrix</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="DenseMatrix.__str__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">total_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
             <span class="n">total_string</span> <span class="o">+=</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> \
                 <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">3.3g</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span> <span class="o">+</span> \
                 <span class="bp">self</span><span class="o">.</span><span class="n">_optional_newline</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">total_string</span>
+        <span class="k">return</span> <span class="n">total_string</span></div>
 
-<div class="viewcode-block" id="DenseMatrix.conjugate"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.conjugate">[docs]</a>    <span class="k">def</span> <span class="nf">conjugate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Calculate the conjugate of the matrix&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DenseMatrix.conjugate"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.conjugate">[docs]</a>    <span class="k">def</span> <span class="nf">conjugate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DenseMatrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new :py:obj:`qcp.matrices.dense_matrix.DenseMatrix` where</span>
+<span class="sd">        each value in the matrix is the complex conjugate of the current</span>
+<span class="sd">        matrix values.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            DenseMatrix: A DenseMatrix object of the same dimensions of the</span>
+<span class="sd">            current matrix, with each value conjugated in place.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">):</span>
@@ -186,11 +278,25 @@
                     <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">DenseMatrix</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DenseMatrix.transpose"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.transpose">[docs]</a>    <span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Create a new Matrix that is the transpose of the current one.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DenseMatrix.transpose"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.transpose">[docs]</a>    <span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DenseMatrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Flips the matrix elements along the diagonal, and return a new</span>
+<span class="sd">        :py:obj:`qcp.matrices.dense_matrix.DenseMatrix` containing these</span>
+<span class="sd">        values.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            DenseMatrix: The transpose of the current matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">DenseMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="DenseMatrix.trace"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.trace">[docs]</a>    <span class="k">def</span> <span class="nf">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SCALARS</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the sum of the diagonal elements of the matrix</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.SCALARS`: The sum of all diagonal</span>
+<span class="sd">            elements, with type determined by the value types.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">square</span><span class="p">,</span> <span class="s2">&quot;can only take the trace of square matrices&quot;</span>
         <span class="n">tr</span><span class="p">:</span> <span class="n">SCALARS</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">):</span>

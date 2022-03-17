@@ -52,13 +52,15 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 
-<span class="k">def</span> <span class="nf">_list_to_dict</span><span class="p">(</span><span class="n">vals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SCALARS</span><span class="p">],</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">SCALARS</span><span class="p">]:</span>
+<div class="viewcode-block" id="_list_to_dict"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix._list_to_dict">[docs]</a><span class="k">def</span> <span class="nf">_list_to_dict</span><span class="p">(</span><span class="n">vals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SCALARS</span><span class="p">],</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">SCALARS</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Convert a given list of values into a dictionary mapping indices</span>
 <span class="sd">    to non-zero values</span>
 
 <span class="sd">    :param vals list: List of vector values.</span>
 <span class="sd">    :param limit int: Optional iteration limit for fixed sized rows.</span>
-<span class="sd">    :returns dict: dict of key/value pairs for non-zero entries in the list.</span>
+<span class="sd">    returns:</span>
+<span class="sd">        Dict[int, :py:obj:`~qcp.matrices.types.SCALARS`]: dict of key/value</span>
+<span class="sd">        pairs for non-zero entries in the list.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># If the SparseMatrix dimensions have been explicitly set, will only</span>
     <span class="c1"># convert list entries up to that hard limit into the dict.</span>
@@ -76,42 +78,85 @@
 
         <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span>
 
-    <span class="k">return</span> <span class="n">d</span>
+    <span class="k">return</span> <span class="n">d</span></div>
 
 
 <div class="viewcode-block" id="SparseVector"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseVector">[docs]</a><span class="k">class</span> <span class="nc">SparseVector</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Sparse representation of a row vector&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sparse implementation of a row vector, where only the non-zero elements</span>
+<span class="sd">    are stored in memory, and any non saved index is taken to be zero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseVector.__init__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseVector.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span>
                  <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">SCALARS</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">SCALARS</span><span class="p">]],</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new SparseVector object, where the values are allocated</span>
+<span class="sd">        either directly, by providing a dictionary mapping the indices</span>
+<span class="sd">        to the values, or inferred by reading the given list and storing</span>
+<span class="sd">        any non-zero list values in a dictionary mapping.</span>
+
+<span class="sd">        When the dictionary is provided, the vector size is inferred from the</span>
+<span class="sd">        highest index in the dictionary, unless the value is overwritten</span>
+<span class="sd">        with the size parameter.</span>
+
+<span class="sd">        :param Union[List[SCALARS], Dict[int, SCALARS]] entries: The object</span>
+<span class="sd">            containing the vector values to use.</span>
+<span class="sd">        :param int size: The size of the SparseVector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span> <span class="o">=</span> <span class="n">_list_to_dict</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span> <span class="o">=</span> <span class="n">entries</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="n">size</span></div>
 
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
+<div class="viewcode-block" id="SparseVector.__len__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseVector.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the size of the vector</span>
 
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SCALARS</span><span class="p">:</span>
+<span class="sd">        returns:</span>
+<span class="sd">            int: The size of the vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span></div>
+
+<div class="viewcode-block" id="SparseVector.__getitem__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseVector.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SCALARS</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the item at the given index in the SparseVector.</span>
+
+<span class="sd">        :param int i: The index of the value to read</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.SCALARS`: The indexed value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span> <span class="s2">&quot;index out of range&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">SCALARS</span><span class="p">):</span>
+<div class="viewcode-block" id="SparseVector.__setitem__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseVector.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">SCALARS</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the item at the given index to be the given value.</span>
+
+<span class="sd">        :param int i: The index to modify</span>
+<span class="sd">        :param SCALARS v: The new value to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span> <span class="s2">&quot;index out of range&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div></div>
 
 
 <div class="viewcode-block" id="SparseMatrix"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix">[docs]</a><span class="k">class</span> <span class="nc">SparseMatrix</span><span class="p">(</span><span class="n">Matrix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation of a Sparse Matrix object, where only the non-zero matrix</span>
+<span class="sd">    elements are stored in memory, and if a matrix element is not indexed, it</span>
+<span class="sd">    is taken to be zero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">MATRIX</span><span class="p">,</span> <span class="n">SPARSE</span><span class="p">],</span> <span class="n">w</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="SparseMatrix.__init__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">MATRIX</span><span class="p">,</span> <span class="n">SPARSE</span><span class="p">],</span> <span class="n">w</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialise a SparseMatrix, using either a List[List[]] object,</span>
 <span class="sd">        or a pre-indexed dictionary mapping indices to non-zero values.</span>
 
-<span class="sd">        :param state: List[List[SCALAR]] or Dict[int, Dict[int, SCALAR]] used</span>
-<span class="sd">                        to determine the matrix content</span>
-<span class="sd">        :param w int: Optional overload of the Matrix width dimension</span>
-<span class="sd">        :param h int: Optional overload of the Matrix height dimension</span>
+<span class="sd">        :param Union[MATRIX, SPARSE] state: object containing the</span>
+<span class="sd">            matrix elements, either by determining the row/column indices from</span>
+<span class="sd">            the list, or using the given row/column index mapping.</span>
+<span class="sd">        :param int w: Optional overload of the Matrix width dimension</span>
+<span class="sd">        :param int h: Optional overload of the Matrix height dimension</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">given_width</span> <span class="o">=</span> <span class="n">w</span> <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="n">given_width</span><span class="p">:</span>
@@ -159,47 +204,66 @@
             <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
                 <span class="n">s</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_list_to_dict</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_col</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span> <span class="o">=</span> <span class="n">entries</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span> <span class="o">=</span> <span class="n">entries</span></div>
 
 <div class="viewcode-block" id="SparseMatrix.identity"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.identity">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SparseMatrix</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create the identity matrix with the given dimensions</span>
 
-<span class="sd">        :param n int: The matrix dimension</span>
-<span class="sd">        :raises TypeError: If input dimension is not convertable to int.</span>
+<span class="sd">        :param int n: The matrix dimension</span>
+<span class="sd">        returns:</span>
+<span class="sd">            SparseMatrix: The SparseMatrix identity matrix object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-            <span class="k">raise</span>
-
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="s2">&quot;matrix dimension must be an integer&quot;</span>
         <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Matrix dimension must be positive&quot;</span>
 
         <span class="k">return</span> <span class="n">SparseMatrix</span><span class="p">({</span><span class="n">i</span><span class="p">:</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)},</span> <span class="n">w</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">n</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">num_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the number of rows in the SparseMatrix.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            int: The number of rows</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_row</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">num_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the number of columns in the SparseMatrix.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            int: The number of columns.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_col</span>
 
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_row</span>
+<div class="viewcode-block" id="SparseMatrix.__len__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the horizontal size of the SparseMatrix.</span>
 
-    <span class="k">def</span> <span class="nf">_get_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SparseVector</span><span class="p">:</span>  <span class="c1"># type: ignore[override]</span>
+<span class="sd">        returns:</span>
+<span class="sd">            int: The number of columns in the SparseMatrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_row</span></div>
+
+<div class="viewcode-block" id="SparseMatrix._get_row"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix._get_row">[docs]</a>    <span class="k">def</span> <span class="nf">_get_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SparseVector</span><span class="p">:</span>  <span class="c1"># type: ignore[override]</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Equivalent to</span>
+<span class="sd">        :py:meth:`~qcp.matrices.sparse_matrix.SparseMatrix.__getitem__`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">,</span> <span class="s2">&quot;index out of range&quot;</span>
 
         <span class="n">entry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">{})</span>
 
-        <span class="k">return</span> <span class="n">SparseVector</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_columns</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SparseVector</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_columns</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SparseVector</span><span class="p">:</span>  <span class="c1"># type: ignore[override]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_row</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<div class="viewcode-block" id="SparseMatrix.__getitem__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SparseVector</span><span class="p">:</span>  <span class="c1"># type: ignore[override]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_row</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span>  <span class="c1"># type: ignore[override]</span>
+<div class="viewcode-block" id="SparseMatrix.__setitem__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span>  <span class="c1"># type: ignore[override]</span>
                     <span class="n">Union</span><span class="p">[</span><span class="n">SparseVector</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">SCALARS</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">SCALARS</span><span class="p">]]</span>
                     <span class="p">):</span>
         <span class="k">assert</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">,</span> <span class="s2">&quot;index out of range&quot;</span>
@@ -213,9 +277,13 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">sv</span> <span class="o">=</span> <span class="n">v</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sv</span><span class="o">.</span><span class="n">_entries</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sv</span><span class="o">.</span><span class="n">_entries</span></div>
 
-    <span class="k">def</span> <span class="nf">_as_list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MATRIX</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseMatrix._as_list"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix._as_list">[docs]</a>    <span class="k">def</span> <span class="nf">_as_list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MATRIX</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Equivalent to</span>
+<span class="sd">        :py:meth:`~qcp.matrices.sparse_matrix.SparseMatrix.get_state`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">list_representation</span><span class="p">:</span> <span class="n">MATRIX</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_columns</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span>
         <span class="p">]</span>
@@ -224,17 +292,36 @@
             <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">list_representation</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
 
-        <span class="k">return</span> <span class="n">list_representation</span>
+        <span class="k">return</span> <span class="n">list_representation</span></div>
 
 <div class="viewcode-block" id="SparseMatrix.get_state"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.get_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MATRIX</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the matrix values as a nested list</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix</span>
+<span class="sd">            values indexed by row/column</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_as_list</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="SparseMatrix.rows"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.rows">[docs]</a>    <span class="k">def</span> <span class="nf">rows</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MATRIX</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return the rows of the Matrix.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Equivalent to get_state().</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix</span>
+<span class="sd">            values indexed by row/column</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="SparseMatrix.columns"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.columns">[docs]</a>    <span class="k">def</span> <span class="nf">columns</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MATRIX</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Returns the columns of the Matrix&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The transpose of the matrix as a nested list</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix</span>
+<span class="sd">            values transposed, indexed by column/row</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">list_representation</span><span class="p">:</span> <span class="n">MATRIX</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_row</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_col</span><span class="p">)</span>
         <span class="p">]</span>
@@ -245,7 +332,14 @@
 
         <span class="k">return</span> <span class="n">list_representation</span></div>
 
-<div class="viewcode-block" id="SparseMatrix.transpose"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.transpose">[docs]</a>    <span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseMatrix.transpose"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.transpose">[docs]</a>    <span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SparseMatrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Flips the matrix elements along the diagonal, and return a new</span>
+<span class="sd">        SparseMatrix containing these values.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            SparseMatrix: The transpose of the current matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">entries</span><span class="p">:</span> <span class="n">SPARSE</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">k</span><span class="p">:</span> <span class="p">{}</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_col</span><span class="p">)</span>
         <span class="p">}</span>
@@ -257,7 +351,15 @@
                     <span class="n">entries</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
         <span class="k">return</span> <span class="n">SparseMatrix</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_columns</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SparseMatrix.conjugate"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.conjugate">[docs]</a>    <span class="k">def</span> <span class="nf">conjugate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseMatrix.conjugate"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.conjugate">[docs]</a>    <span class="k">def</span> <span class="nf">conjugate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SparseMatrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new SparseMatrix where each value in the matrix is the</span>
+<span class="sd">        complex conjugate of the current matrix values.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            SparseMatrix: A SparseMatrix object of the same dimensions of the</span>
+<span class="sd">            current matrix, with each value conjugated in place.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">entries</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -268,6 +370,13 @@
         <span class="k">return</span> <span class="n">SparseMatrix</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_columns</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SparseMatrix.trace"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.trace">[docs]</a>    <span class="k">def</span> <span class="nf">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SCALARS</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the sum of the diagonal elements of the matrix</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.SCALARS`: The sum of all diagonal</span>
+<span class="sd">            elements, with type determined by the value types.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">square</span><span class="p">,</span> <span class="s2">&quot;can only take the trace of square matrices&quot;</span>
         <span class="n">tr</span><span class="p">:</span> <span class="n">SCALARS</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">):</span>
@@ -279,7 +388,7 @@
 
         <span class="k">return</span> <span class="n">tr</span></div>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseMatrix.__add__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.__add__">[docs]</a>    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
         <span class="n">row_match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">num_rows</span>
         <span class="n">column_match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_columns</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">num_columns</span>
         <span class="k">assert</span> <span class="n">row_match</span> <span class="ow">and</span> \
@@ -298,12 +407,12 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">other_val</span>
 
-        <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
 
-    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">other</span><span class="p">)</span>
+<div class="viewcode-block" id="SparseMatrix.__sub__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">other</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">SCALARS</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseMatrix.__mul__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.__mul__">[docs]</a>    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">SCALARS</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SCALARS_T</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -313,9 +422,18 @@
             <span class="k">return</span> <span class="bp">self</span>
 
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dot</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dot</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_dot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseMatrix._dot"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix._dot">[docs]</a>    <span class="k">def</span> <span class="nf">_dot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the dot product between this Matrix, and another Matrix.</span>
+
+<span class="sd">        :param Matrix other: The matrix to dot product with this one.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: A new matrix that conforms to the rules of matrix</span>
+<span class="sd">            dot producting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">other</span><span class="o">.</span><span class="n">num_rows</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;taking dot product with empty matrix&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_columns</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">num_rows</span><span class="p">,</span> \
             <span class="s2">&quot;matrices don&#39;t match on their row/column dimensions&quot;</span>
@@ -336,9 +454,21 @@
                     <span class="k">continue</span>
                 <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
 
-        <span class="k">return</span> <span class="n">SparseMatrix</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">other</span><span class="o">.</span><span class="n">num_columns</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SparseMatrix</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">other</span><span class="o">.</span><span class="n">num_columns</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_dot_sparse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">SparseMatrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SparseMatrix</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseMatrix._dot_sparse"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix._dot_sparse">[docs]</a>    <span class="k">def</span> <span class="nf">_dot_sparse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">SparseMatrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SparseMatrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimisation of the</span>
+<span class="sd">        :py:meth:`~qcp.matrices.sparse_matrix.SparseMatrix._dot` method in the</span>
+<span class="sd">        case where both Matrices are SparseMatrix objects, in which case we</span>
+<span class="sd">        only need to consider the non-zero entries of the matrices</span>
+
+<span class="sd">        :param SparseMatrix other: The matrix to dot product with this one.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            SparseMatrix: A new matrix that conforms to the rules of matrix</span>
+<span class="sd">            dot producting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Don&#39;t need to check dimensions, as the _dot() method has already</span>
         <span class="c1"># done it for us.</span>
         <span class="n">entries</span><span class="p">:</span> <span class="n">SPARSE</span> <span class="o">=</span> <span class="p">{</span>
@@ -370,9 +500,9 @@
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">val</span>
 
-        <span class="k">return</span> <span class="n">SparseMatrix</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">other</span><span class="o">.</span><span class="n">num_columns</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SparseMatrix</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">other</span><span class="o">.</span><span class="n">num_columns</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseMatrix.__str__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">total_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">):</span>
@@ -382,7 +512,7 @@
                 <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">row_repr</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
             <span class="c1"># Don&#39;t add newline for last row:</span>
             <span class="n">total_string</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optional_newline</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">total_string</span></div>
+        <span class="k">return</span> <span class="n">total_string</span></div></div>
 </pre></div>
 
           </div>

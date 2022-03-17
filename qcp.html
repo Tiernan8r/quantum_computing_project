@@ -82,14 +82,52 @@
 </section>
 <section id="module-qcp.constants">
 <span id="qcp-constants-module"></span><h2>qcp.constants module<a class="headerlink" href="#module-qcp.constants" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.constants.IDENTITY">
+<span class="sig-prename descclassname"><span class="pre">qcp.constants.</span></span><span class="sig-name descname"><span class="pre">IDENTITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;qcp.matrices.sparse_matrix.SparseMatrix</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#qcp.constants.IDENTITY" title="Permalink to this definition">¶</a></dt>
+<dd><p>The 2x2 Identity Matrix</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.constants.ONE_VECTOR">
+<span class="sig-prename descclassname"><span class="pre">qcp.constants.</span></span><span class="sig-name descname"><span class="pre">ONE_VECTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;qcp.matrices.sparse_matrix.SparseMatrix</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#qcp.constants.ONE_VECTOR" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Column Vector representing the <a href="#id1"><span class="problematic" id="id2">|</span></a>1&gt; state</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.constants.PAULI_X">
+<span class="sig-prename descclassname"><span class="pre">qcp.constants.</span></span><span class="sig-name descname"><span class="pre">PAULI_X</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;qcp.matrices.sparse_matrix.SparseMatrix</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#qcp.constants.PAULI_X" title="Permalink to this definition">¶</a></dt>
+<dd><p>The 2x2 Pauli-X Gate</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.constants.PAULI_Z">
+<span class="sig-prename descclassname"><span class="pre">qcp.constants.</span></span><span class="sig-name descname"><span class="pre">PAULI_Z</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;qcp.matrices.sparse_matrix.SparseMatrix</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#qcp.constants.PAULI_Z" title="Permalink to this definition">¶</a></dt>
+<dd><p>The 2x2 Pauli-Z Gate</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.constants.TWO_HADAMARD">
+<span class="sig-prename descclassname"><span class="pre">qcp.constants.</span></span><span class="sig-name descname"><span class="pre">TWO_HADAMARD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;qcp.matrices.sparse_matrix.SparseMatrix</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#qcp.constants.TWO_HADAMARD" title="Permalink to this definition">¶</a></dt>
+<dd><p>The 2x2 Hadamard Gate</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.constants.ZERO_VECTOR">
+<span class="sig-prename descclassname"><span class="pre">qcp.constants.</span></span><span class="sig-name descname"><span class="pre">ZERO_VECTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;qcp.matrices.sparse_matrix.SparseMatrix</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#qcp.constants.ZERO_VECTOR" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Column Vector representing the <a href="#id3"><span class="problematic" id="id4">|</span></a>0&gt; state</p>
+</dd></dl>
+
 </section>
 <section id="module-qcp.gates">
 <span id="qcp-gates-module"></span><h2>qcp.gates module<a class="headerlink" href="#module-qcp.gates" title="Permalink to this headline">¶</a></h2>
+<p>Contains the code required calculate the required gates used to construct
+Grover’s Algorithm</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qcp.gates.Gate">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.gates.</span></span><span class="sig-name descname"><span class="pre">Gate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/gates.html#Gate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.gates.Gate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
-<p>Enum class to encode gate options in multi_gates</p>
+<p>Enums of the options of gate types to use in qcp.gates.multi_gates()</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qcp.gates.Gate.H">
 <span class="sig-name descname"><span class="pre">H</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'h'</span></em><a class="headerlink" href="#qcp.gates.Gate.H" title="Permalink to this definition">¶</a></dt>
@@ -118,23 +156,49 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qcp.gates.control_phase">
-<span class="sig-prename descclassname"><span class="pre">qcp.gates.</span></span><span class="sig-name descname"><span class="pre">control_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">complex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/gates.html#control_phase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.gates.control_phase" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>Constructs a (2**size by 2**size) control-phase gate with</dt><dd><p>given controls and target</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="qcp.gates._generic_control">
+<span class="sig-prename descclassname"><span class="pre">qcp.gates.</span></span><span class="sig-name descname"><span class="pre">_generic_control</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/gates.html#_generic_control"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.gates._generic_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a (2**size by 2**size) control gate with
+given controls, target and the control value.
+This is a generic implementation of the logic used for
+<a class="reference internal" href="#qcp.gates.control_z" title="qcp.gates.control_z"><code class="xref py py-meth docutils literal notranslate"><span class="pre">qcp.gates.control_z()</span></code></a> and <a class="reference internal" href="#qcp.gates.control_phase" title="qcp.gates.control_phase"><code class="xref py py-meth docutils literal notranslate"><span class="pre">qcp.gates.control_phase()</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>int</strong> (<em>target</em>) – total number of qubits in circuit</p></li>
-<li><p><strong>List</strong><strong>[</strong><strong>int</strong><strong>]</strong> (<em>controls</em>) – List of control qubits</p></li>
-<li><p><strong>int</strong> – target qubit the phase gate will be applied to</p></li>
-<li><p><strong>complex</strong> (<em>phi</em>) – angle the target qubit will be phase shifted by</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – total number of qubits in circuit</p></li>
+<li><p><strong>controls</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – List of control qubits</p></li>
+<li><p><strong>target</strong> (<em>int</em>) – target qubit the gate will be applied to</p></li>
+<li><p><strong>cval</strong> (<em>SCALARS</em>) – The control value in the gate</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return Matrix</dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Matrix representing the gate</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.gates.control_phase">
+<span class="sig-prename descclassname"><span class="pre">qcp.gates.</span></span><span class="sig-name descname"><span class="pre">control_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">complex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/gates.html#control_phase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.gates.control_phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a (2**size by 2**size) control-phase gate with
+given controls and target</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em>) – total number of qubits in circuit</p></li>
+<li><p><strong>controls</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – List of control qubits</p></li>
+<li><p><strong>target</strong> (<em>int</em>) – target qubit the phase gate will be applied to</p></li>
+<li><p><strong>phi</strong> (<em>complex</em>) – angle the target qubit will be phase shifted by</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Matrix representing the gate</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -143,12 +207,23 @@
 <dt class="sig sig-object py" id="qcp.gates.control_x">
 <span class="sig-prename descclassname"><span class="pre">qcp.gates.</span></span><span class="sig-name descname"><span class="pre">control_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/gates.html#control_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.gates.control_x" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructs a (2**size by 2**size) control-x gate with
-given controls and target
-:param size int: total number of qubits in circuit
-:param controls List[int]: List of control qubits,
-if empty, 0th bit is used as the control.
-:param target int: target qubit the x gate will be applied to
-:returns Matrix: Matrix representing the gate</p>
+given controls and target</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em>) – total number of qubits in circuit</p></li>
+<li><p><strong>controls</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – List of control qubits,
+if empty, 0th bit is used as the control.</p></li>
+<li><p><strong>target</strong> (<em>int</em>) – target qubit the x gate will be applied to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Matrix representing the gate</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -161,13 +236,16 @@ if empty, 0th bit is used as the control.
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>int</strong> (<em>target</em>) – total number of qubits in circuit</p></li>
-<li><p><strong>List</strong><strong>[</strong><strong>int</strong><strong>]</strong> (<em>controls</em>) – List of control qubits</p></li>
-<li><p><strong>int</strong> – target qubit the z gate will be applied to</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – total number of qubits in circuit</p></li>
+<li><p><strong>controls</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – List of control qubits</p></li>
+<li><p><strong>target</strong> (<em>int</em>) – target qubit the z gate will be applied to</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return Matrix</dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Matrix representing the gate</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -187,8 +265,11 @@ applied to, indexing from 0.</p></li>
 <li><p><strong>complex</strong> (<em>phi</em>) – Phase angle for the phase gate</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return Matrix</dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Matrix representing the composite gate</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -196,18 +277,46 @@ applied to, indexing from 0.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="qcp.gates.phase_shift">
 <span class="sig-prename descclassname"><span class="pre">qcp.gates.</span></span><span class="sig-name descname"><span class="pre">phase_shift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">complex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/gates.html#phase_shift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.gates.phase_shift" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a 2 x 2 phase shift matrix
-:param phi: angle the qubit is phase shifted by
-:return: Matrix(complex)</p>
+<dd><p>Creates a 2 x 2 phase shift matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>phi</strong> (<em>complex</em>) – angle the qubit is phase shifted by</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Matrix representing the phase shift gate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
 <section id="module-qcp.grovers_algorithm">
 <span id="qcp-grovers-algorithm-module"></span><h2>qcp.grovers_algorithm module<a class="headerlink" href="#module-qcp.grovers_algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Constructs the quantum register, circuits of composite gates, and runs the
+simulation of Grover’s Algorithm</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qcp.grovers_algorithm.Grovers">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.grovers_algorithm.</span></span><span class="sig-name descname"><span class="pre">Grovers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/grovers_algorithm.html#Grovers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.grovers_algorithm.Grovers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.grovers_algorithm.Grovers.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/grovers_algorithm.html#Grovers.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.grovers_algorithm.Grovers.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is an implementation of Grover’s algorithm which efficiently
+finds a specific item in a list of items. In this implementation
+we use Grover’s algorithm to increase the amplitude of the
+“target_state” and reduce all others in a “size”-qubit system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em>) – number of qubits in our circuit</p></li>
+<li><p><strong>target_state</strong> (<em>int</em>) – specific state we want to target/select</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.grovers_algorithm.Grovers.construct_circuit">
 <span class="sig-name descname"><span class="pre">construct_circuit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/grovers_algorithm.html#Grovers.construct_circuit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.grovers_algorithm.Grovers.construct_circuit" title="Permalink to this definition">¶</a></dt>
@@ -215,8 +324,11 @@ applied to, indexing from 0.</p></li>
 set of Hadamards and repeating the oracle and diffusion gates
 until our target state is close to 1 in terms of probability</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return Matrix</dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Matrix representing our completed Grover’s algorithm</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -227,8 +339,11 @@ until our target state is close to 1 in terms of probability</p>
 <dd><p>Creates a diffusion gate - a gate which amplifies the probability of
 selecting our target state</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return Matrix</dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Matrix representing diffusion gate</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -236,23 +351,45 @@ selecting our target state</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.grovers_algorithm.Grovers.initial_state">
 <span class="sig-name descname"><span class="pre">initial_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/grovers_algorithm.html#Grovers.initial_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.grovers_algorithm.Grovers.initial_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a state vector corresponding to <a href="#id1"><span class="problematic" id="id2">|</span></a>1..0&gt;
-:return: returns state vector</p>
+<dd><p>Creates a state vector corresponding to <a href="#id5"><span class="problematic" id="id6">|</span></a>1..0&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the state vector</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.grovers_algorithm.Grovers.measure">
 <span class="sig-name descname"><span class="pre">measure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/grovers_algorithm.html#Grovers.measure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.grovers_algorithm.Grovers.measure" title="Permalink to this definition">¶</a></dt>
 <dd><p>‘measures’ self.state by selecting a state weighted by its
-(amplitude ** 2)
-:return: the state observed and the probability of measuring said state</p>
+(amplitude ** 2)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The state observed and the probability of
+measuring said state</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tuple[int, float]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qcp.grovers_algorithm.Grovers.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/grovers_algorithm.html#Grovers.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.grovers_algorithm.Grovers.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multiplies our Grover’s circuit with the initial state
-:return Matrix: Final state</p>
+<dd><p>Multiplies our Grover’s circuit with the initial state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Column matrix representation of the final state</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -260,8 +397,15 @@ selecting our target state</p>
 <span class="sig-name descname"><span class="pre">single_target_oracle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/grovers_algorithm.html#Grovers.single_target_oracle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.grovers_algorithm.Grovers.single_target_oracle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an oracle gate - a gate which ‘selects’ our target state
 by phase shifting it by pi (turning 1 into -1 in the matrix
-representation)
-:return Matrix: Matrix representation of our Oracle</p>
+representation)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Matrix representation of our Oracle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -270,59 +414,177 @@ representation)
 <dt class="sig sig-object py" id="qcp.grovers_algorithm.pull_set_bits">
 <span class="sig-prename descclassname"><span class="pre">qcp.grovers_algorithm.</span></span><span class="sig-name descname"><span class="pre">pull_set_bits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/grovers_algorithm.html#pull_set_bits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.grovers_algorithm.pull_set_bits" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a list of bits that would be set to 1
-to make the number n
-:param n int: number
-:return List[int]: list of bits</p>
+to make the number n</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n</strong> (<em>int</em>) – number</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of bits</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[int]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
 <section id="module-qcp.main">
 <span id="qcp-main-module"></span><h2>qcp.main module<a class="headerlink" href="#module-qcp.main" title="Permalink to this headline">¶</a></h2>
+<p>CLI initialiser to parse CLI options for the Algorithm, and to run the
+computation</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.main.TARGET_DEF">
+<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">TARGET_DEF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#qcp.main.TARGET_DEF" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default target state the Oracle will search for</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.main.USAGE_STR">
+<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">USAGE_STR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USAGE:\n/opt/hostedtoolcache/Python/3.10.2/x64/bin/sphinx-build</span> <span class="pre">[FLAGS]</span> <span class="pre">nqbits\n\nARGS:\n</span>&#160;&#160;&#160; <span class="pre">nqbits</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">The</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">qbit</span> <span class="pre">states</span> <span class="pre">to</span> <span class="pre">simulate\nFLAGS:\n</span>&#160;&#160;&#160; <span class="pre">-t/--target</span>&#160;&#160;&#160;&#160; <span class="pre">The</span> <span class="pre">target</span> <span class="pre">state,</span> <span class="pre">defaults</span> <span class="pre">to</span> <span class="pre">5\n</span>&#160;&#160;&#160; <span class="pre">-h/--help</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Display</span> <span class="pre">this</span> <span class="pre">prompt'</span></em><a class="headerlink" href="#qcp.main.USAGE_STR" title="Permalink to this definition">¶</a></dt>
+<dd><p>The CLI help text</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="qcp.main.compute">
 <span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nqbits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/main.html#compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.compute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Run the Grover’s Algorithm simulation and print the observed state to
+stdout with the probability of observing that state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nqbits</strong> (<em>int</em>) – The number of qbits to simulate in the simulator</p></li>
+<li><p><strong>target</strong> (<em>int</em>) – The index of the target qbit state</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qcp.main.main">
 <span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/main.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>The entrypoint for the CLI, parses the cli options and passes the read
+options to the function to run the computation.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qcp.main.parse_cli">
-<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">parse_cli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/main.html#parse_cli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.parse_cli" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">parse_cli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/main.html#parse_cli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.parse_cli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the sys.argv CLI options to read the value for the optional flags
+(if provided), and the required CLI arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>List</strong><strong>[</strong><strong>str</strong><strong>]</strong> (<em>args</em>) – The list of CLI inputs from sys.argv</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The two CLI values,
+firstly the required ‘nqbits’ parameter,
+and the second optional ‘target’ parameter.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[int, int]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qcp.main.usage">
 <span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">usage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/main.html#usage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.usage" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Prints the help text to stdout, and exits with error code 0.</p>
+</dd></dl>
 
 </section>
 <section id="module-qcp.register">
 <span id="qcp-register-module"></span><h2>qcp.register module<a class="headerlink" href="#module-qcp.register" title="Permalink to this headline">¶</a></h2>
+<p>Code that converts a given column vector to the probability distributions of
+observing the qbits in each state</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.register._magnitude">
+<span class="sig-prename descclassname"><span class="pre">qcp.register.</span></span><span class="sig-name descname"><span class="pre">_magnitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/qcp/register.html#_magnitude"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.register._magnitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Measure the probability magnitude of the given scalar in the
+usual Quantum Mechanical way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>SCALARS</em>) – The value to determine the magnitude of.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The magnitude of the scalar</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="qcp.register.measure">
 <span class="sig-prename descclassname"><span class="pre">qcp.register.</span></span><span class="sig-name descname"><span class="pre">measure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/register.html#measure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.register.measure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the qbit states into probability amplitudes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mat</strong> (<a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – the column vector of qbit states to measure.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of probabilities of observing the qbits in each
+state, normalised to total probability of 1.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[float]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
 <section id="module-qcp.tensor_product">
 <span id="qcp-tensor-product-module"></span><h2>qcp.tensor_product module<a class="headerlink" href="#module-qcp.tensor_product" title="Permalink to this headline">¶</a></h2>
+<p>Code to calculate the general tensor product between two arbitrarily sized
+matrices.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.tensor_product._tensor_product_sparse">
+<span class="sig-prename descclassname"><span class="pre">qcp.tensor_product.</span></span><span class="sig-name descname"><span class="pre">_tensor_product_sparse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix"><span class="pre">qcp.matrices.sparse_matrix.SparseMatrix</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix"><span class="pre">qcp.matrices.sparse_matrix.SparseMatrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix"><span class="pre">qcp.matrices.sparse_matrix.SparseMatrix</span></a></span></span><a class="reference internal" href="_modules/qcp/tensor_product.html#_tensor_product_sparse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.tensor_product._tensor_product_sparse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the tensor product between two SparseMatrices, and return the
+resultant Matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> (<a class="reference internal" href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix"><em>SparseMatrix</em></a>) – An m*n matrix</p></li>
+<li><p><strong>B</strong> (<a class="reference internal" href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix"><em>SparseMatrix</em></a>) – Second p*q matrix to tensor product with</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An (m*p)*(n*q) matrix of the tensor product.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix" title="qcp.matrices.sparse_matrix.SparseMatrix">SparseMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="qcp.tensor_product.tensor_product">
 <span class="sig-prename descclassname"><span class="pre">qcp.tensor_product.</span></span><span class="sig-name descname"><span class="pre">tensor_product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/tensor_product.html#tensor_product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.tensor_product.tensor_product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the tensor product between two matrices, and return the
-resultant Matrix
-:param A Matrix: An m*n matrix
-:param B Matrix: Second p*q matrix to tensor product with
-:returns: An (m*p)*(n*q) matrix of the tensor product.</p>
+resultant Matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> (<a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – An m*n matrix</p></li>
+<li><p><strong>B</strong> (<a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – Second p*q matrix to tensor product with</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An (m*p)*(n*q) matrix of the tensor product.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
 <section id="module-qcp">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-qcp" title="Permalink to this headline">¶</a></h2>
+<p>Base module for the Quantum Computer Simulator.</p>
 </section>
 </section>
 

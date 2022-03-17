@@ -52,72 +52,228 @@
 
 <div class="viewcode-block" id="Matrix"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix">[docs]</a><span class="k">class</span> <span class="nc">Matrix</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method stubs for an immutable implementation of a matrix.</span>
+<span class="sd">    Method stubs for an implementation of a matrix.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">MATRIX</span><span class="p">):</span>
-        <span class="k">pass</span>
+<div class="viewcode-block" id="Matrix.__init__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">MATRIX</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialise the Matrix object, setting the matrix elements based off of</span>
+<span class="sd">        the given nested list, and inferring the matrix dimensions from the</span>
+<span class="sd">        list dimensions</span>
 
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">pass</span>
+<span class="sd">        :param MATRIX state: The nested list containing the matrix elements</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Matrix.__len__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the horizontal width of the matrix.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            int: The width of the matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">num_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of rows in the Matrix</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            int: The number of rows in the matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">num_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of columns in the Matrix</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            int: The number of columns in the matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the matrix is square or not.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            bool: Whether the matrix row/column dimensions match.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_columns</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_rows</span>
 
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VECTOR</span><span class="p">:</span>
-        <span class="k">pass</span>
+<div class="viewcode-block" id="Matrix.__getitem__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VECTOR</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the row elements for the given row index in a list</span>
+<span class="sd">        representation</span>
 
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VECTOR</span><span class="p">):</span>
-        <span class="k">pass</span>
+<span class="sd">        :param int i: The index of the row to get the elements of</span>
 
-<div class="viewcode-block" id="Matrix.get_state"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.get_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MATRIX</span><span class="p">:</span>
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.VECTOR`: A list containing the row</span>
+<span class="sd">            elements</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
-        <span class="k">pass</span>
+<div class="viewcode-block" id="Matrix.__setitem__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VECTOR</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the given row in the matrix to the given elements in the list</span>
 
-    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
-        <span class="k">pass</span>
+<span class="sd">        :param int i: The index of the row to modify</span>
+<span class="sd">        :param VECTOR v: The new elements as a list to set the row to.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Matrix.get_state"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.get_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MATRIX</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the matrix values as a nested list, indexed by the</span>
+<span class="sd">        row/column indices.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix</span>
+<span class="sd">            values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Matrix.__add__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.__add__">[docs]</a>    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add the matching elements of the other matrix to the entries in this</span>
+<span class="sd">        matrix, and return a new matrix containing the resultant values.</span>
+
+<span class="sd">        :param Matrix other: The matrix to add to this one.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: A new matrix where the elements are the addition of the</span>
+<span class="sd">            current and applied matrix elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Matrix.__sub__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Subtract the matching elements of the other matrix to the entries in</span>
+<span class="sd">        this matrix, and return a new matrix containing the resultant values.</span>
+
+<span class="sd">        :param Matrix other: The matrix to subtract from this one.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: A new matrix where the elements are the subtraction of the</span>
+<span class="sd">            current and applied matrix elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="Matrix.columns"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.columns">[docs]</a>    <span class="k">def</span> <span class="nf">columns</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MATRIX</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the transpose of the matrix as a nested list</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.MATRIX`: The nested list of matrix</span>
+<span class="sd">            elements, indexed by column/row.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="Matrix.transpose"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.transpose">[docs]</a>    <span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mirror a square matrix along it&#39;s diagonal, and return a new</span>
+<span class="sd">        matrix of these elements</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.MATRIX`: The transpose of the current</span>
+<span class="sd">            matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="Matrix.conjugate"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.conjugate">[docs]</a>    <span class="k">def</span> <span class="nf">conjugate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the complex conjugate of each matrix element and return a</span>
+<span class="sd">        new matrix of these conjugated elements</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.MATRIX`: The matrix with each element</span>
+<span class="sd">            conjugates of the current :py:obj:`qcp.matrices.matrix.Matrix`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="Matrix.adjoint"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.adjoint">[docs]</a>    <span class="k">def</span> <span class="nf">adjoint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shortcut operation to calculate the transpose and conjugate of the</span>
 <span class="sd">        current matrix.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.MATRIX`: The new matrix that is</span>
+<span class="sd">            transposed and then conjugated of the current matrix.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Matrix.trace"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.trace">[docs]</a>    <span class="k">def</span> <span class="nf">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SCALARS</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The sum of the diagonal elements of a square matrix</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            :py:obj:`~qcp.matrices.types.SCALARS`: The sum of the diagonal</span>
+<span class="sd">            of the matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">SCALARS</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
-        <span class="k">pass</span>
+<div class="viewcode-block" id="Matrix.__mul__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.__mul__">[docs]</a>    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">SCALARS</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override of the behaviour of the `*` multiplication operator.</span>
 
-    <span class="k">def</span> <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">SCALARS</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__mul__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+<span class="sd">        If the operator is applied using a scalar value to this matrix, the</span>
+<span class="sd">        matrix elements are each scaled by this number and a new matrix is</span>
+<span class="sd">        returned containing these scaled elements.</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">pass</span>
+<span class="sd">        If a :py:obj:`~qcp.matrices.matrix.Matrix` object is applied using the</span>
+<span class="sd">        `*` operator, the dot product of the two matrices is calculated, with</span>
+<span class="sd">        the current matrix being the first Matrix, and the applied one the</span>
+<span class="sd">        second, as order matters for matrix multiplication.</span>
 
-    <span class="k">def</span> <span class="nf">_optional_newline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span></div>
+<span class="sd">        :param Union[SCALARS, Matrix] other: The object being applied to this</span>
+<span class="sd">            matrix</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: A new matrix containing the calculated values as</span>
+<span class="sd">            appropriate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Matrix.__rmul__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.__rmul__">[docs]</a>    <span class="k">def</span> <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="n">SCALARS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shim layer for the :py:meth:`~qcp.matrices.matrix.Matrix.__mul__`</span>
+<span class="sd">        operation, so that we can pre-mulitply matrices with a scalar and</span>
+<span class="sd">        get the expected behaviour.</span>
+
+<span class="sd">        :param SCALARS other: The scalar to multiply against the matrix</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: A new matrix where the elements are scaled by other</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__mul__</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Matrix.__str__"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a string representation of the Matrix, with rows separated by</span>
+<span class="sd">        newlines, and bounded by &#39;[&#39;/&#39;]&#39; characters.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            str: A string representation of the matrix suitable for printing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Matrix._optional_newline"><a class="viewcode-back" href="../../../qcp.matrices.html#qcp.matrices.matrix.Matrix._optional_newline">[docs]</a>    <span class="k">def</span> <span class="nf">_optional_newline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function for :py:meth:`~qcp.matrices.matrix.Matrix.__str__` to</span>
+<span class="sd">        determine which rows require a newline character appended to them.</span>
+
+<span class="sd">        :param int i: The current row index under consideration.</span>
+<span class="sd">        :param int N: The total number of rows.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            str: A newline character, or empty string depending on the</span>
+<span class="sd">            condition.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span></div></div>
 </pre></div>
 
           </div>
