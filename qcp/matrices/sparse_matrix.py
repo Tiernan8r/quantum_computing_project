@@ -143,6 +143,22 @@ class SparseMatrix(Matrix):
 
         return SparseMatrix({i: {i: 1} for i in range(n)}, w=n, h=n)
 
+    def zero(n: int) -> Matrix:
+        """
+        Create the zero matrix with the given dimensions
+
+        :param n int: The matrix dimension
+        :raises TypeError: If input dimension is not convertable to int.
+        """
+        try:
+            n = int(n)
+        except TypeError:
+            raise
+
+        assert n > 0, "Matrix dimension must be positive"
+
+        return SparseMatrix({i: {} for i in range(n)}, w=n, h=n)
+
     @property
     def num_rows(self) -> int:
         return self._row
@@ -350,3 +366,4 @@ class SparseMatrix(Matrix):
             # Don't add newline for last row:
             total_string += self._optional_newline(i, self.num_rows)
         return total_string
+    
