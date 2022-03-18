@@ -158,10 +158,6 @@
     <span class="c1"># bitmask is 10101 in binary notation</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">controls</span><span class="p">))</span>
 
-    <span class="c1"># Invert all bits in place in the bitmask</span>
-    <span class="n">invertor</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
-    <span class="n">flip_mask</span> <span class="o">=</span> <span class="n">mask</span> <span class="o">^</span> <span class="n">invertor</span>
-
     <span class="c1"># Find the bit index of the target</span>
     <span class="n">target_bit</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">target</span>
 
@@ -169,12 +165,12 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
         <span class="c1"># If the bits are targeted and meet the mask condition, it needs</span>
         <span class="c1"># to be flipped</span>
-        <span class="n">condition</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">target_bit</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">flip_mask</span>
+        <span class="n">condition</span> <span class="o">=</span> <span class="n">i</span> <span class="o">&amp;</span> <span class="n">mask</span>
 
         <span class="n">x</span> <span class="o">=</span> <span class="n">i</span>
-        <span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">condition</span> <span class="o">&gt;=</span> <span class="n">mask</span><span class="p">:</span>
             <span class="c1"># bit flip the targetted bit by the control bits</span>
-            <span class="n">x</span> <span class="o">^=</span> <span class="n">mask</span>
+            <span class="n">x</span> <span class="o">^=</span> <span class="n">target_bit</span>
 
         <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
 
