@@ -57,7 +57,6 @@ class ButtonComponent(AbstractComponent):
                                            self.progress_bar.maximum())
         self.pb_thread.progress_bar_value_change.connect(self._draw_progress)
         self.pb_thread.finished.connect(self._hide_progress_bar)
-        # self.pb_thread.started.connect(self._show_progress_bar)
 
         self.search_button.clicked.connect(self.initiate_search)
         self.cancel_button.clicked.connect(self.cancel_search)
