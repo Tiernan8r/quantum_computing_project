@@ -132,7 +132,7 @@ class ProgressBarThread(QtCore.QThread):
     full.
     """
 
-    def __init__(self, progress_bar: QtWidgets.QProgressBar):
+    def __init__(self, progress_bar: QtWidgets.QProgressBar, parent=None):
         """
         Setup the ProgressBarThread QThread, referencing the progress bar
         widget to increment.
@@ -140,7 +140,7 @@ class ProgressBarThread(QtCore.QThread):
         :param QtWidgets.QProgressBar progress_bar: The progress bar to
             animate
         """
-        QtCore.QThread.__init__(self)
+        super().__init__(parent)
         self.pb = progress_bar
         self.exiting = False
 
