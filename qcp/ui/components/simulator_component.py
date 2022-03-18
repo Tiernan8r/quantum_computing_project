@@ -54,7 +54,8 @@ class SimulatorComponent(AbstractComponent):
         Setup signals to display the graph when the calculation completes,
         and to hide the cancel button and progress bar.
         """
-        self._find_widgets()
+        super().setup_signals()
+
         self.qcp_thread = SimulateQuantumComputerThread()
         self.qcp_thread.simulation_result_signal.connect(
             self._simulation_results)
