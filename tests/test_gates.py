@@ -135,25 +135,25 @@ def test_control_x():
     cx_8x8 = gts.control_x(3, [1], 0)
     # Set the 3 qbit state to initially be in |001> state
     three_qbits = SparseMatrix([
-        [0],  # |000>
-        [1],  # |001>
-        [0],  # |010>
-        [0],  # |011>
-        [0],  # |100>
-        [0],  # |101>
-        [0],  # |110>
-        [0]  # |111>
+        [1],  # |000>
+        [2],  # |001>
+        [3],  # |010>
+        [4],  # |011>
+        [5],  # |100>
+        [6],  # |101>
+        [7],  # |110>
+        [8]  # |111>
     ])
     transform_3qbits = cx_8x8 * three_qbits
     expected_3qbits = SparseMatrix([
-        [0],  # |000>
-        [1],  # |001>
-        [0],  # |010>
-        [0],  # |011>
-        [0],  # |100>
-        [0],  # |101>
-        [0],  # |110>
-        [0]  # |111>
+        [1],  # |000>
+        [2],  # |001>
+        [4],  # |010>
+        [3],  # |011>
+        [5],  # |100>
+        [6],  # |101>
+        [8],  # |110>
+        [7]  # |111>
     ])
 
     assert transform_3qbits.get_state() == expected_3qbits.get_state()
