@@ -136,12 +136,12 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     for i in range(0, n):
         # If the bits are targeted and meet the mask condition, it needs
         # to be flipped
-        condition = (i & target_bit) & flip_mask
+        condition = (i ^ flip_mask) & mask
 
         x = i
         if condition:
             # bit flip the targetted bit by the control bits
-            x ^= mask
+            x ^= target_bit
 
         m[i] = {x: 1}
 

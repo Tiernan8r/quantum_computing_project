@@ -94,7 +94,7 @@ def test_control_x():
 
     # Two qbit state has two options for the control/target position:
     # Test for 1st expected result
-    cx_4x4 = gts.control_x(2, [0], 1)
+    cx_4x4 = gts.control_x(2, [1], 0)
     expected_4x4 = SparseMatrix([
         [1, 0, 0, 0],
         [0, 1, 0, 0],
@@ -104,7 +104,7 @@ def test_control_x():
     assert cx_4x4.get_state() == expected_4x4.get_state()
 
     # Test for second:
-    cx_4x4_2 = gts.control_x(2, [1], 0)
+    cx_4x4_2 = gts.control_x(2, [0], 1)
     expected_4x4_2 = SparseMatrix([
         [1, 0, 0, 0],
         [0, 0, 0, 1],
@@ -147,9 +147,9 @@ def test_control_x():
     transform_3qbits = cx_8x8 * three_qbits
     expected_3qbits = SparseMatrix([
         [0],  # |000>
-        [0],  # |001>
+        [1],  # |001>
         [0],  # |010>
-        [1],  # |011>
+        [0],  # |011>
         [0],  # |100>
         [0],  # |101>
         [0],  # |110>
