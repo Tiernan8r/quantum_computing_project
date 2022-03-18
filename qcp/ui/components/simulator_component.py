@@ -112,13 +112,11 @@ class SimulateQuantumComputerThread(QtCore.QThread):
     Simulation, input/output is passed back to the main thread by pipes.
     """
 
-    def __init__(self, parent=None):
+    def __init__(self):
         """
         Setup the SimulateQuantumComputerThread QThread.
-
-        :param QtCore.QObject parent: A parent element for the QThread.
         """
-        QtCore.QThread.__init__(self, parent)
+        QtCore.QThread.__init__(self)
         self.exiting = False
 
     def run(self):
