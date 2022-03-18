@@ -57,6 +57,8 @@ class SimulatorComponent(AbstractComponent):
         """
         self._find_widgets()
         self.qcp_thread = SimulateQuantumComputerThread()
+        self.qcp_thread.simulation_result_signal.connect(
+            self._simulation_results)
 
         self.qcp_thread.finished.connect(self.update_lcd_displays)
         # Hide the cancel button if the calculation finishes
@@ -82,8 +84,12 @@ class SimulatorComponent(AbstractComponent):
         if not self.qcp_thread.isRunning():
             self.qcp_thread.exiting = False
             self.qcp_thread.start()
-            while not self.qcp_thread.isRunning():
-                time.sleep(THREAD_PAUSE)
+            # while not self.qcp_thread.isRunning():
+            #     time.sleep(THREAD_PAUSE)
+
+    @QtCore.Slot(float)
+    def _simulation_results(self, float):
+        pass
 
     def simulation_finished(self):
         """
@@ -111,6 +117,7 @@ class SimulateQuantumComputerThread(QtCore.QThread):
     QThread object to handle the running of the Quantum Computer
     Simulation, input/output is passed back to the main thread by pipes.
     """
+    simulation_result_signal = QtCore.Signal(float)
 
     def __init__(self, parent=None):
         """

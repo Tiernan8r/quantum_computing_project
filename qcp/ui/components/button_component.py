@@ -55,7 +55,7 @@ class ButtonComponent(AbstractComponent):
 
         self.pb_thread = ProgressBarThread(self.progress_bar.minimum(),
                                            self.progress_bar.maximum())
-        self.pb_thread.progressBarValueChange.connect(self._draw_progress)
+        self.pb_thread.progress_bar_value_change.connect(self._draw_progress)
         self.pb_thread.finished.connect(self._hide_progress_bar)
         # self.pb_thread.started.connect(self._show_progress_bar)
 
@@ -144,7 +144,7 @@ class ProgressBarThread(QtCore.QThread):
     every tick, so that it fills slowly, then resets to zero when
     full.
     """
-    progressBarValueChange = QtCore.Signal(int)
+    progress_bar_value_change = QtCore.Signal(int)
 
     def __init__(self, min: int, max: int, parent=None):
         """
@@ -170,7 +170,7 @@ class ProgressBarThread(QtCore.QThread):
             if val < self.min:
                 val = self.min
 
-            self.progressBarValueChange.emit(val)
+            self.progress_bar_value_change.emit(val)
             self.pb_val = val
             self.msleep(BUTTON_PROGRESS_BAR_TICK_RATE)
 
