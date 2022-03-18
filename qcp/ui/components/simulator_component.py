@@ -13,10 +13,9 @@
 # limitations under the License.
 from PySide6 import QtWidgets
 from PySide6 import QtCore
-import time
 from qcp.ui.components import AbstractComponent, \
     ButtonComponent, GraphComponent
-from qcp.ui.constants import THREAD_PAUSE, LCD_CLASSICAL, LCD_GROVER
+from qcp.ui.constants import LCD_CLASSICAL, LCD_GROVER
 
 
 class SimulatorComponent(AbstractComponent):
@@ -57,6 +56,8 @@ class SimulatorComponent(AbstractComponent):
         """
         self._find_widgets()
         self.qcp_thread = SimulateQuantumComputerThread()
+        self.qcp_thread.simulation_result_signal.connect(
+            self._simulation_results)
 
         self.qcp_thread.finished.connect(self.update_lcd_displays)
         # Hide the cancel button if the calculation finishes
@@ -82,8 +83,14 @@ class SimulatorComponent(AbstractComponent):
         if not self.qcp_thread.isRunning():
             self.qcp_thread.exiting = False
             self.qcp_thread.start()
-            while not self.qcp_thread.isRunning():
-                time.sleep(THREAD_PAUSE)
+
+    @QtCore.Slot(float)
+    def _simulation_results(self, float):
+        """
+        Signal catcher to read in the simulation results from the
+        QThread that it is calculated in.
+        """
+        pass
 
     def simulation_finished(self):
         """
@@ -111,14 +118,13 @@ class SimulateQuantumComputerThread(QtCore.QThread):
     QThread object to handle the running of the Quantum Computer
     Simulation, input/output is passed back to the main thread by pipes.
     """
+    simulation_result_signal = QtCore.Signal(float)
 
     def __init__(self, parent=None):
         """
         Setup the SimulateQuantumComputerThread QThread.
-
-        :param QtCore.QObject parent: A parent element for the QThread.
         """
-        QtCore.QThread.__init__(self, parent)
+        super().__init__(parent)
         self.exiting = False
 
     def run(self):
