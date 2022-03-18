@@ -83,8 +83,6 @@ class SimulatorComponent(AbstractComponent):
         if not self.qcp_thread.isRunning():
             self.qcp_thread.exiting = False
             self.qcp_thread.start()
-            # while not self.qcp_thread.isRunning():
-            #     time.sleep(THREAD_PAUSE)
 
     @QtCore.Slot(float)
     def _simulation_results(self, float):
