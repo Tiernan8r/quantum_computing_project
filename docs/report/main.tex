@@ -23,8 +23,20 @@
 \usepackage{mathtools}
 \usepackage{physics}
 \usepackage{amsmath}
-
+\usepackage[superscript,biblabel]{cite}
 \usepackage[scale=1,bmargin=1.5cm,footnotesep=1.5cm]{geometry}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=violet,
+    filecolor=green,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\urlstyle{same}
 
 \input{structure.tex} % Include the file specifying the document structure and custom commands
 
@@ -56,13 +68,15 @@
 \section*{Introduction} % Unnumbered section
 \vspace{10mm}
 
-The objective of our project is to build an application which implements the Grover's Algorithm to perform an unstructured search from a list of information. 
+The objective of our project is to build an application which implements the Grover's Algorithm to perform an unstructured search from a list of information.
 \vspace{5mm}
 
+\noindent
 The programming language used in our project is Python. We use Git to plan, manage and organise the codes and work flow of this project. 
 \vspace{5mm}
 
-The aim of this project is to demonstrate the basic working principle of Grover's Algorithm in a shape of a simple GUI with input and output feature.
+\noindent
+The aim of this project is to demonstrate the basic working principle of Grover's Algorithm in the shape of a simple GUI with input and output feature.
 \pagebreak
 
 \tableofcontents % Unnumbered section
@@ -74,15 +88,15 @@ The aim of this project is to demonstrate the basic working principle of Grover'
 \subsection{Qubits}
 \vspace{5mm}
 
-The qubit can the thought of the "quantum" counterpart to the classical bit. 
+The qubit can be thought of as the "quantum" counterpart to the classical bit. 
 \vspace{5mm}
 
 \noindent
-A bit is expressed in binary number of 0 and 1. In the most simple case of a classical bit, a bit can only be in the state of 0 or 1. However as for the quantum analogue, a qubit is expressed in a superposition of the binary state of 0 and 1.
+A bit is expressed in binary numbers of 0 and 1. In the most simple case of a classical bit, a bit can only be in the state of 0 or 1. However as for the quantum analogue, a qubit is expressed in a superposition of both the binary state of 0 and 1.
 \vspace{5mm}
 
 \noindent
-This superposition state of a qubit $\ket{\psi}$ can be written as:
+This superposition of state of a qubit $\ket{\psi}$ can be written as:
 \vspace{5mm}
 
 \noindent
@@ -90,12 +104,11 @@ This superposition state of a qubit $\ket{\psi}$ can be written as:
 \vspace{5mm}
 
 \noindent
-Where $\alpha$ and $\beta$ are normalised complex constant such that $\abs{\alpha}^2 + \abs{\beta}^2 = 1$  for $\alpha, \ \beta \in \mathbb{C} $
+Where $\alpha$ and $\beta$ are normalised complex constants such that $\abs{\alpha}^2 + \abs{\beta}^2 = 1$  for $\alpha, \ \beta \in \mathbb{C} $
 \vspace{5mm}
 
 \noindent
-
-The quantum state $\ket{0}$ and $\ket{1}$ is known as the computational basis state. The basis state can be visualised in a form of a Bloch Sphere:
+The quantum state of $\ket{0}$ and $\ket{1}$ are known as the computational basis state. The basis state can be visualised in a form of a Bloch Sphere:
 \vspace{5mm}
 
 \begin{center}
@@ -127,8 +140,7 @@ The quantum state $\ket{0}$ and $\ket{1}$ is known as the computational basis st
 \vspace{5mm}
 
 \noindent
-
-These two qubit states can be expressed in column matrices as:
+These qubit states can be expressed in column matrices as:
 \vspace{5mm}
 
 \qquad $\ket{0} = \begin{pmatrix}1 \\ 0 \end{pmatrix}$ \ and \ $\ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$
@@ -136,22 +148,22 @@ These two qubit states can be expressed in column matrices as:
 \vspace{5mm}
 
 \noindent
-The state of a quantum system can be represented as the spin, energy, angular momentum and magnetic moment of an elementary particle. However for the sake simplicity and brevity the state $\ket{0}$ and $\ket{1}$ will denote spin up and spin down of an electron. 
+The state of a quantum system can be represented as the spin, energy, angular momentum and magnetic moment of an elementary particle. However for the sake of brevity the state $\ket{0}$ and $\ket{1}$ will denote spin up and spin down of the electron in this report.
 \pagebreak
 
 \subsection{Quantum Register}
 \vspace{5mm}
 
 \noindent
-The qubits in a quantum computer is stored in a quantum register. The size of the quantum register is dictated by the number of qubits. 
+The qubits in a quantum computer are stored in a quantum register. The size of the quantum register is dictated by the number of qubits. 
 \vspace{5mm}
 
 \noindent
-The vector state of the quantum register $\mathcal{H}$ with $n$ qubits can be expressed in tensor product:
+The vector state of the quantum register $\mathcal{H}$ with $n$ qubits can be expressed in tensor product\hyperlink{1}{$^1$}:
 \vspace{5mm}
 
 
-\qquad $\mathcal{H} = \mathbb{C}^{2\bigotimes N} = \mathbb{C}^2 \bigotimes\mathbb{C}^2 ....\bigotimes\mathbb{C}^2 = \mathbb{C}^{2^N} $ , \  where qubits are 2-dimensional complex spaces $\mathbb{C}$.
+\qquad $\mathcal{H} = \mathbb{C}^{2\bigotimes N} = \mathbb{C}^2 \bigotimes\mathbb{C}^2 ....\bigotimes\mathbb{C}^2 = \mathbb{C}^{2^N} $ , \  where the qubits are in 2-dimensional complex spaces $\mathbb{C}$.
 \vspace{5mm}
 
 \noindent
@@ -161,11 +173,11 @@ Each qubit has an index in this register, starting at index 0 and counting up by
 \vspace{5mm}
 
 \noindent
-Tensor product is used a function which combines elements of two or more vector space to yield an additional vector space. 
+Tensor product is used as a function which combines elements of two or more vector space to yield an additional vector space. 
 \vspace{5mm}
 
 \noindent
-Tensor products are distributive and associative and shown here is the tensor product of two qubit in Hilbert space (complex vector space):
+Tensor products are distributive and associative and shown here is the tensor product of two qubit in the Hilbert space (complex vector space)\hyperlink{1}{$^1$}:
 \vspace{5mm}
 
 
@@ -220,7 +232,7 @@ spaces (Hilbert space).
 \vspace{5mm}
 
 \noindent
-A generic quantum state $\ket{\psi}$ can be described as a linear combination of basis states such as:
+A generic quantum state $\ket{\psi}$ can be described as a linear combination of basis states such as\hyperlink{1}{$^1$}:
 \vspace{5mm}
 
 
@@ -240,7 +252,7 @@ The action of quantum operators on a state is linear. For a quantum operator $U$
 \vspace{5mm}
 
 \noindent
-The action of a quantum linear operator on a basis state determines the type of operator it is. It can also acts on multiple or superposition of basis states:
+The action of a quantum linear operator on a basis state determines the type of operator it is. It can also act on multiple or superposition of basis states:
 \vspace{5mm}
 
 \noindent
@@ -251,9 +263,10 @@ The action of a quantum linear operator on a basis state determines the type of 
 \vspace{5mm}
 
 \noindent
-Linear operators $U$ acting on some basis states can be written in matrix form:
+Linear operators $U$ acting on some basis states can be written in matrix form\hyperlink{1}{$^1$}:
+\vspace{5mm}
 
-\qquad $U_{kj} = \bra{k}U\ket{j}$ \ , for some basis state $\ket{k}$ and $\ket{k}$
+\qquad $U_{kj} = \bra{k}U\ket{j}$ \ , for some basis state $\ket{j}$ and $\ket{k}$
 \vspace{5mm}
 
 \noindent
@@ -283,8 +296,9 @@ And on the state:
 
 \qquad $\ket{\psi'} = U\ket{\psi}$
 \pagebreak
+
 \noindent
-Additionally, all quantum operators(quantum gates) are unitary with the exception of measurement and reset operators. 
+Additionally, all quantum operators (quantum gates) are unitary with the exception of measurement and reset operators. 
 \vspace{5mm}
 
 \noindent
@@ -292,14 +306,14 @@ A quantum operator $U$ has its conjugate transpose (adjoint) which can be expres
 \vspace{5mm}
 
 \noindent
-The unitary operator has the following property:
+The unitary operator has the following property\hyperlink{2}{$^2$}:
 \vspace{5mm}
 
 \qquad $UU^{\dagger} = UU^{-1} = 1$
 \vspace{5mm}
 
 \noindent
-Another consequence of unitary is that it preserves the inner product between two arbitrary states $\braket{\phi}{\psi}$. For example apply the unitary opeartor $U$ to two states $\ket{\phi}$ and $\ket{\psi}$:
+Another consequence of unitarity is that it preserves the inner product between two arbitrary states $\braket{\phi}{\psi}$. For example apply the unitary operator $U$ to two states $\ket{\phi}$ and $\ket{\psi}$:
 \vspace{5mm}
 
 \qquad $ \bra{\phi} U^{\dagger} U\ket{\psi} = \braket{\phi}{\psi}$
@@ -317,7 +331,7 @@ Quantum gates are unitary quantum operators and are described as unitary matrice
 \vspace{5mm}
 
 \noindent
-The following are some of the common types of quantum gates which will be used in constructing the Grover's circuit.
+The following are some of the common types of quantum gates\hyperlink{3}{$^3$} which will be used in constructing the Grover's circuit.
 \vspace{5mm}
 
 \textbf{Hadamard Gate}: \qquad $H = \frac{1}{\sqrt{2}}= \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$
@@ -352,7 +366,7 @@ The Pauli X Gate essentially swaps the qubits around. This effect of this gate i
 \vspace{5mm}
 
 
-\textbf{Pauli Y Gate}: \qquad $X = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}$
+\textbf{Pauli Y Gate}: \qquad $Y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}$
 \vspace{5mm}
 
 
@@ -360,7 +374,7 @@ The Pauli X Gate essentially swaps the qubits around. This effect of this gate i
 \vspace{5mm}
 
 \noindent
-The Pauli Y Gate rotates a single qubit in the y(complex)-axis by $\pi$.
+The Pauli Y Gate rotates a single qubit in the y (complex)-axis by $\pi$.
 \pagebreak
 
 
@@ -404,7 +418,7 @@ It leaves the control qubit unchanged and performs the Pauli Z Gate to the targe
 \vspace{5mm}
 
 \noindent
-The phase shift gate modifies the phase of the quantum state and is equivalent to tracing a horizontal circle  on the Bloch Sphere(Refer to page 3) by $\varphi$ radians. 
+The phase shift gate modifies the phase of the quantum state and is equivalent to tracing a horizontal circle  on the Bloch Sphere (Refer to page 3) by $\varphi$ radians\hyperlink{4}{$^4$}. 
 \pagebreak
 
 
@@ -415,7 +429,7 @@ The phase shift gate modifies the phase of the quantum state and is equivalent t
 \section{Grover's Algorithm}
 \subsection{Introduction}
 
-The Grover's Algorithm is a quantum search algorithm which increases quadratically the speed of unstructured search. It uses  amplitude amplification to search an unstructured set of $N$ elements/items. 
+The Grover's Algorithm is a quantum search algorithm which increases quadratically the speed of unstructured search\hyperlink{5}{$^5$}. It uses  amplitude amplification to search an unstructured set of $N$ elements/items. 
 
 \subsection{Unstructured Search}
 \vspace{10mm}
@@ -495,20 +509,28 @@ An unstructured search through a list of items using Grover's Algorithm can be i
 
 \noindent
 On classical computation, $\omega$ must check at least on average $O(N/2)$ entries of the list which gives $\frac{1}{2}$ the probability of finding $\omega$ or worse the entire N elements in the list.
-With Grover's Algorithm, only $O(\sqrt{N})$ steps is required to find $\omega$.
+With Grover's Algorithm, only $O(\sqrt{N})$ steps are required to find $\omega$.
 \vspace{5mm}
 
 \noindent
-For an $N$ item search problem with $M$ number of solutions, the required number of times of searches will be $O(\sqrt{\frac{N}{M}})$.
+For an $N$ item search problem with $M$ number of solutions, the required number of times of searches will be $O(\sqrt{\frac{N}{M}})$\hyperlink{6}{$^6$}.
 \pagebreak
 
 \subsection{The Oracle}
 
-Let's suppose the function $f$ of $N$ integer such that $f:\{0,1, 2,...., N-1\} \rightarrow{\{0,1\}}$. The integers in the domain corresponds to the indices of the list and $f(x) =1$ if and only if $x$ corresponds to the item which is searched conversely $f(x) =0$ for $x$ not corresponding the item searched. There will be only one value of $x$ which satisfies $f(x)=1$ and this index corresponds to item $\omega$.
-\noindent
+Let's suppose the function $f$ of $N$ integer such that $f:\{0,1, 2,...., N-1\} \rightarrow{\{0,1\}}$. 
 \vspace{5mm}
--
-So $f$ can be accessed with an unitary operator $U_{\omega}$ of  an oracle which satisfies:
+
+\noindent
+The integers in the domain corresponds to the indices of the list and $f(x) =1$ if and only if $x$ corresponds to the item which is searched conversely $f(x) =0$ for $x$ not corresponding the item searched. 
+\vspace{5mm}
+
+\noindent
+There will be only one value of $x$ which satisfies $f(x)=1$ and this index corresponds to item $\omega$\hyperlink{7}{$^7$}.
+\vspace{5mm}
+
+\noindent
+So $f$ can be accessed with a unitary operator $U_{\omega}$ of  an oracle which satisfies:
 \vspace{5mm}
 
 $\hspace{30mm} \begin{cases}
@@ -517,7 +539,7 @@ $\hspace{30mm} \begin{cases}
 \end{cases}$
 \vspace{5mm}
 
-The oracle function of a two qubit system is defined as:
+The oracle function of a two qubit system is defined as\hyperlink{8}{$^8$}:
 \vspace{5mm}
 
 \qquad $\ket{x} \bigotimes\ \ket{q} \rightarrow{O_f} \ket{x} \bigotimes \ket{q \bigoplus f(x)}$ \footnote{$\bigotimes$ denotes tensor product and $\bigoplus$ denotes denotes addition modulo 2}
@@ -538,17 +560,19 @@ Substitute $\ket{q}$ into the oracle function $O_f$:
 \qquad if $f(x) =1 \rightarrow \ket{x}\frac{\ket{1 \bigoplus 0} - \ket{1 \bigoplus 1}}{\sqrt{2}} = -\ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}$
 \vspace{5mm}
 
+\noindent
 \qquad if $f(x) =0 \rightarrow \ket{x}\frac{\ket{0 \bigoplus 0} - \ket{0 \bigoplus 1}}{\sqrt{2}} = \ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}$
 \vspace{5mm}
 
+\noindent
 When $f(x) = 1 $, the amplitude $\ket{x}$ changed to negative and remains unchanged when $f(x) = 0$.
-\vspace{5mm}
+\pagebreak
 
 \noindent
-The oracle will be in the form a diagonal matrix $U_{\omega}$
+The oracle takes the form of a diagonal matrix $U_{\omega}$
 \vspace{5mm}
 \noindent
-For example, for a three qubit state and we are looking for 6 which corresponds to $\ket{110}$. In matrix form $\omega =6$ will be:
+For example, in a three qubit state, we want to look for the number 6 which corresponds to $\ket{110}$. In matrix form $\omega =6$ will be:
 \vspace{5mm}
 
 \qquad $ U_\omega = \begin{bmatrix}
@@ -571,7 +595,7 @@ Hence the oracle can be described as:
 \qquad $U_\omega\ket{x} = (-1)^{f(x)} \ket{x}$
 \vspace{5mm}
 
-This is essentially a reflection on the state $\ket{x}$
+This is essentially a reflection on the state $\ket{x}$.
 
 \pagebreak
 
@@ -581,7 +605,7 @@ This is essentially a reflection on the state $\ket{x}$
 \textbf{Step 1:}
 \vspace{5mm}
 \noindent
-The sequence of the Grover's Algorithm starts out with a uniform superposition state $\ket{s}$
+The sequence of the Grover's Algorithm starts out with a uniform superposition state $\ket{s}$\hyperlink{5}{$^5$}:
 \vspace{5mm}
 
 \qquad $ \ket{s}= H^{\bigotimes n} \ket{0}^n = \frac{1}{\sqrt{2^n}}\sum\limits_{x \in \{0,1\}^n}\ket{x} $ , \qquad for $N = 2^n$ , where $n$ is the number of qubits.
@@ -646,7 +670,7 @@ The sequence of the Grover's Algorithm starts out with a uniform superposition s
 
 \end{tikzpicture}
 
-Figure 2 shows a two dimensional plane spanned by $\ket{\omega}$ and $\ket{s'}$. In this representation, we can write:
+Figure 2 shows a two dimensional plane spanned by $\ket{\omega}$ and $\ket{s'}$. In this representation, it can be written:
 \vspace{5mm}
 
 \qquad $\ket{s} = \sin\theta\ket{\omega} + \cos\theta\ket{s'}$
@@ -658,7 +682,7 @@ Figure 2 shows a two dimensional plane spanned by $\ket{\omega}$ and $\ket{s'}$.
 \textbf{Step 2:}
 \vspace{5mm}
 
-Next the apply the reflection oracle $U_\omega$ to the state $\ket{s}$.
+Next apply the reflection oracle $U_\omega$ to the state $\ket{s}$.
 \vspace{5mm}
 
 
@@ -731,7 +755,7 @@ Next the apply the reflection oracle $U_\omega$ to the state $\ket{s}$.
 
 
 \end{tikzpicture}
-\vspace{5mm}
+\pagebreak
 
 The reflection oracle $U_\omega$ can be expressed as:
 \vspace{5mm}
@@ -742,9 +766,11 @@ The reflection oracle $U_\omega$ can be expressed as:
 \qquad $U_\omega \ket{s} = -\sin\theta\ket{\omega} +  \cos\theta\ket{\omega} $ 
 \vspace{5mm}
 
-$U_{{\omega }}$ is a reflection at the hyperplane orthogonal to $\ket{\omega}$  for vectors in the plane spanned by $\ket{s'}$  and $\ket{\omega}$ 
+\noindent
+$U_{{\omega }}$ is a reflection at the hyperplane orthogonal to $\ket{\omega}$  for vectors in the plane spanned by $\ket{s'}$  and $\ket{\omega}$\hyperlink{7}{$^7$}.
 \vspace{5mm}
 
+\noindent
 Referring to Figure 4, $\ket{s}$ is reflected about $\ket{s'}$. The reflection operation on $\ket{s}$ in the negative amplitude causes the overall positive average amplitude to decrease slightly as indicated by Figure 5. 
 \vspace{5mm}
 
@@ -825,11 +851,124 @@ Referring to Figure 4, $\ket{s}$ is reflected about $\ket{s'}$. The reflection o
 
 \draw (530,135) node [anchor=north west][inner sep=0.75pt]    {$ >\ \frac{1}{\sqrt{2^{n}}}$};
 \end{tikzpicture}
-\vspace{5mm}
+\vspace{10mm}
 
 \noindent
-As indicated in Figure 6, a diffusion operator $U_s$ is applied which result in a rotation of $\ket{s}$ by $2\theta$. 
+As indicated in Figure 6, a diffusion operator $U_s$ is applied which results in a rotation of $\ket{s}$ by $2\theta$. 
+\pagebreak
+
+
+\begin{center}
+    
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,392); %set diagram left start at 0, and has height of 392
+
+%Shape: Rectangle [id:dp8937257723636158] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (143,134) -- (175.19,134) -- (175.19,162.7) -- (143,162.7) -- cycle ;
+%Shape: Rectangle [id:dp007021083049765675] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (143,174.3) -- (175.19,174.3) -- (175.19,203) -- (143,203) -- cycle ;
+%Shape: Rectangle [id:dp8911339020880464] 
+\draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (205,133) -- (235,133) -- (235,203) -- (205,203) -- cycle ;
+%Shape: Rectangle [id:dp25845825302570513] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (265,133) -- (297.19,133) -- (297.19,161.7) -- (265,161.7) -- cycle ;
+%Shape: Rectangle [id:dp47274224679471666] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (265,174.3) -- (297.19,174.3) -- (297.19,203) -- (265,203) -- cycle ;
+%Shape: Rectangle [id:dp5929473120919728] 
+\draw  [fill={rgb, 255:red, 126; green, 211; blue, 33 }  ,fill opacity=1 ] (325,131) -- (475,131) -- (475,201) -- (325,201) -- cycle ;
+%Shape: Rectangle [id:dp561230971836093] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (505,131) -- (537.19,131) -- (537.19,159.7) -- (505,159.7) -- cycle ;
+%Shape: Rectangle [id:dp551714500077588] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (505,172.3) -- (537.19,172.3) -- (537.19,201) -- (505,201) -- cycle ;
+%Shape: Rectangle [id:dp014371224119280157] 
+\draw   (565,131) -- (596.33,131) -- (596.33,159.22) -- (565,159.22) -- cycle ;
+%Shape: Arc [id:dp45728741367881365] 
+\draw  [draw opacity=0] (569.39,151.72) .. controls (570.82,147.31) and (575.03,144.13) .. (579.99,144.13) .. controls (584.9,144.13) and (589.07,147.24) .. (590.55,151.57) -- (579.99,155.06) -- cycle ; \draw   (569.39,151.72) .. controls (570.82,147.31) and (575.03,144.13) .. (579.99,144.13) .. controls (584.9,144.13) and (589.07,147.24) .. (590.55,151.57) ;  
+%Straight Lines [id:da3994764524189143] 
+\draw    (576.46,153) -- (589.1,139.61) ;
+%Shape: Rectangle [id:dp7321580418061253] 
+\draw   (565,172) -- (596.33,172) -- (596.33,200.22) -- (565,200.22) -- cycle ;
+%Shape: Arc [id:dp575518695312089] 
+\draw  [draw opacity=0] (569.39,192.72) .. controls (570.82,188.31) and (575.03,185.13) .. (579.99,185.13) .. controls (584.9,185.13) and (589.07,188.24) .. (590.55,192.57) -- (579.99,196.06) -- cycle ; \draw   (569.39,192.72) .. controls (570.82,188.31) and (575.03,185.13) .. (579.99,185.13) .. controls (584.9,185.13) and (589.07,188.24) .. (590.55,192.57) ;  
+%Straight Lines [id:da9653097238135147] 
+\draw    (576.46,194) -- (589.1,180.61) ;
+%Straight Lines [id:da054926584620969665] 
+\draw    (95,151) -- (145,151) ;
+%Straight Lines [id:da1998461114344101] 
+\draw    (95,191) -- (145,191) ;
+%Straight Lines [id:da13455039306792682] 
+\draw    (175,151) -- (205,151) ;
+%Straight Lines [id:da8941875904744676] 
+\draw    (175,191) -- (205,191) ;
+%Straight Lines [id:da16169269211888615] 
+\draw    (235,151) -- (265,151) ;
+%Straight Lines [id:da6385231938077083] 
+\draw    (235,191) -- (265,191) ;
+%Straight Lines [id:da21590920227006993] 
+\draw    (295,151) -- (325,151) ;
+%Straight Lines [id:da44624469722388915] 
+\draw    (295,191) -- (325,191) ;
+%Straight Lines [id:da9474262709127792] 
+\draw    (475,191) -- (505,191) ;
+%Straight Lines [id:da8304606265085992] 
+\draw    (475,151) -- (505,151) ;
+%Straight Lines [id:da4700710359224989] 
+\draw    (535,151) -- (565,151) ;
+%Straight Lines [id:da09738039485721028] 
+\draw    (535,191) -- (565,191) ;
+%Straight Lines [id:da7131108234298331] 
+\draw    (595,149.5) -- (625,149.5)(595,152.5) -- (625,152.5) ;
+%Straight Lines [id:da9226246067589841] 
+\draw    (595,189.5) -- (625,189.5)(595,192.5) -- (625,192.5) ;
+%Shape: Brace [id:dp5786954336630095] 
+\draw   (208.13,205) .. controls (208.15,209.67) and (210.49,211.99) .. (215.16,211.98) -- (357.81,211.53) .. controls (364.48,211.51) and (367.82,213.83) .. (367.83,218.5) .. controls (367.82,213.83) and (371.14,211.49) .. (377.81,211.47)(374.81,211.48) -- (528.16,210.99) .. controls (532.83,210.98) and (535.15,208.64) .. (535.13,203.97) ;
+%Shape: Brace [id:dp3814057437492582] 
+\draw   (470.13,127) .. controls (470.13,122.33) and (467.8,120) .. (463.13,120) -- (410.13,120) .. controls (403.46,120) and (400.13,117.67) .. (400.13,113) .. controls (400.13,117.67) and (396.8,120) .. (390.13,120)(393.13,120) -- (334.13,120) .. controls (329.46,120) and (327.13,122.33) .. (327.13,127) ;
+%Shape: Brace [id:dp5248227356988384] 
+\draw   (66.13,152) .. controls (61.46,152) and (59.13,154.33) .. (59.13,159) -- (59.13,162.16) .. controls (59.13,168.83) and (56.8,172.16) .. (52.13,172.16) .. controls (56.8,172.16) and (59.13,175.49) .. (59.13,182.16)(59.13,179.16) -- (59.13,185) .. controls (59.13,189.67) and (61.46,192) .. (66.13,192) ;
+%Straight Lines [id:da6246903517915476] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}]  (75.13,168) -- (133.13,168) ;
+%Straight Lines [id:da7651260164716407] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}]  (251,168) -- (305.13,168) ;
+%Straight Lines [id:da5357419850229155] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}]  (504,167) -- (592.13,167) ;
+
+% Text Node
+\draw (151.6,139.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+% Text Node
+\draw (151.6,181.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+% Text Node
+\draw (209,155.4) node [anchor=north west][inner sep=0.75pt]    {$U_{\omega }$};
+% Text Node
+\draw (273.6,139.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+% Text Node
+\draw (273.6,181.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+% Text Node
+\draw (513.6,137.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+% Text Node
+\draw (513.6,179.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+% Text Node
+\draw (346,153.4) node [anchor=north west][inner sep=0.75pt]    {$2\ket{0^{n}}\bra{0^{n}} \ -\ I^{n}$};
+% Text Node
+\draw (68,142.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0}$};
+% Text Node
+\draw (68,181.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0}$};
+% Text Node
+\draw (16,162.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0^{n}}$};
+% Text Node
+\draw (316,95) node [anchor=north west][inner sep=0.75pt]   [align=left] {Grover's Diffusion Operator};
+% Text Node
+\draw (313,213) node [anchor=north west][inner sep=0.75pt]   [align=left] {Repeat $\displaystyle \approx \ \frac{\pi }{4}\sqrt{N}$ times};
+
+
+\end{tikzpicture}
 \vspace{5mm}
+
+\textbf{Quantum circuit representation of Grover's Algorithm.}
+\end{center}
+\vspace{5mm}
+
 
 \noindent
 The diffusion operator is expressed as:
@@ -839,11 +978,11 @@ The diffusion operator is expressed as:
 \vspace{5mm}
 
 \noindent
-$U_s$ is a reflection at the hyperplane orthogonal to $\ket{\perp s}$  for vectors in the plane spanned by $\ket{s}$  and $\ket{\perp s}$, in another words a reflection about $\ket{s}$. 
+$U_s$ is a reflection at the hyperplane orthogonal to $\ket{\perp s}$  for vectors in the plane spanned by $\ket{s}$  and $\ket{\perp s}$, in other words a reflection about $\ket{s}$. 
 \vspace{5mm}
 
 \noindent
-The product of two reflection operator $U_\omega$ and $U_s$ is a rotation in the plane spanned by $\ket{\omega}$ and $\ket{s'}$ through twice the angle $\theta$.
+The product of two reflection operators $U_\omega$ and $U_s$ is a rotation in the plane spanned by $\ket{\omega}$ and $\ket{s'}$ through twice the angle $\theta$.
 \vspace{5mm}
 
 \noindent
@@ -857,18 +996,18 @@ outputs a solution to the search problem with high probability.
 
 \noindent
 By looking at Figure 7, the amplitude of $\ket{\omega}$ is reflected about the average amplitude. Referring to Figure 5, the average amplitude is lowered below the dashed line and the reflection boosts the amplitude by about three times its original value, as depicted in Figure 7.
-\pagebreak
-
-\noindent
-Step 2 and Step 3 will be repeated where necessary for $T$ times until the average amplitude approaches zero so that the amplitude for $\ket{\omega} \sim 1$.
 \vspace{5mm}
 
 \noindent
-By observation, the number of times $T$ required to apply the Grover's Algorithm according to Figure 6 can be written as:
+Step 2 and Step 3 will be repeated where necessary for $T$ times until the average amplitude approaches zero so that the amplitude for $\ket{\omega} \sim 1$\hyperlink{9}{$^9$}.
 \vspace{5mm}
 
 \noindent
-\qquad $\theta_T = (2T + 1)\theta$, \ where \ $\theta_T \approx \frac{\pi}{2}$  
+By observation, the number of times $T$ is required to apply the Grover's Algorithm according to Figure 6 can be written as:
+\vspace{5mm}
+
+\noindent
+\qquad $\theta_T = (2T + 1)\theta$, \ where \ $\theta_T \approx \frac{\pi}{2}$ \ , $T$ is chosen to the nearest integer. 
 \vspace{5mm}
 
 \noindent
@@ -888,24 +1027,26 @@ Hence:
 \vspace{5mm}
 
 \noindent
-Consequently, it is shown that the number of iteration is directly proportional to the order $O(\sqrt{N}$. 
-\\draw (540,130.4) node [anchor=north west][inner sep=0.75pt]    {$ >\ \frac{1}{\sqrt{2^{n}}}$};
+Consequently, it is shown that $T$ is directly proportional to the order $O(\sqrt{N})$.
+\pagebreak
+
+\noindent
 In terms of the amplitude of the state $\ket{s}$, it is observed to grow linearly with the number of application of $\sim T\sqrt{N}$. Therefore the amplitude and the probability are both amplified in Grover's Algorithm.
 \vspace{5mm}
 
 \noindent
-For multiple search solutions, $M$ the number of Grover's iteration would be roughly $\sqrt{\frac{N}{M}}$.
+For multiple search entries $M$, the number of Grover's iteration would be roughly $\sqrt{\frac{N}{M}}$.
 \vspace{10mm}
 
 \subsection{Advantages and Disadvantages}
 \vspace{5mm}
 
 \noindent
-The obvious advantage of the Grover's Algorithm is the quadratic speed up over classical search algorithm. 
+The obvious advantage of the Grover's Algorithm is the quadratic speed up over classical search algorithms. 
 \vspace{5mm}
 
 \noindent
-In the previous chapter, Grover's Algorithm shows amplitude amplification on the target state $\ket{\omega}$ and this can be used to speed up a wide variety of other algorithms. 
+In the previous chapter, Grover's Algorithm shows amplitude amplification on the target state $\ket{\omega}$ and this can be used to speed up a wide variety of other algorithms\hyperlink{5}{$^5$}. 
 \vspace{5mm}
 
 \noindent
@@ -913,8 +1054,8 @@ One of the few drawbacks of the Grover's Algorithm is that it is probabilistic. 
 \vspace{5mm}
 
 \noindent
-Due to the constraints of currently available quantum computers, Grover's Algorithm is yet to yield any  meaningful quadratic speed up compared to classical algorithms.   
-
+Due to the constraints of currently available quantum computers, Grover's Algorithm is yet to yield any  meaningful quadratic speed up compared to classical algorithms\hyperlink{7}{$7$}.   
+\pagebreak
 
 \section{Methodology}
 
@@ -1057,17 +1198,43 @@ Mauris interdum porttitor fringilla. Proin tincidunt sodales leo at ornare. Done
 %	PROBLEM 2
 %----------------------------------------------------------------------------------------
 
+
 \section{References and Bibliographies}
+\vspace{5mm}
 
+\textbf{1.} \hypertarget{1}{\url{https://www.learn.ed.ac.uk/webapps/blackboard/execute/content/file?cmd=view&content_id=_6912117_1&course_id=_88488_1}}
+\vspace{5mm}
 
+\noindent
+\textbf{2.} \hypertarget{2}{\url{https://en.wikipedia.org/wiki/Unitary_matrix}}
+\vspace{5mm}
 
+\noindent
+\textbf{3.} \hypertarget{3}{\url{https://www.quantum-inspire.com/kbase/pauli-x/}}
+\vspace{5mm}
 
+\noindent
+\textbf{4.} \hypertarget{4}{\url{https://en.wikipedia.org/wiki/Quantum_logic_gate}}
+\vspace{5mm}
 
+\noindent
+\textbf{5.} \hypertarget{5}{\url{https://qiskit.org/textbook/ch-algorithms/grover.html}}
+\vspace{5mm}
 
+\noindent
+\textbf{6.} \hypertarget{6}{\textcolor{blue}{Michael A. Nielsen and Issac L. Chuang. \textit{Quantum Computation and Quantum Information.} Cambridge University Press; 10th Anniversary ed. edition (9 Dec. 2010). ISBN: 9781107002173 }}
+\vspace{5mm}
 
+\noindent
+\textbf{7.} \hypertarget{7}{\url{https://en.wikipedia.org/wiki/Grover\%27s_algorithm}}
+\vspace{5mm}
 
+\noindent
+\textbf{8.} \hypertarget{8}{\url{https://jonathan-hui.medium.com/qc-grovers-algorithm-cd81e61cf248}}
+\vspace{5mm}
 
-
+\noindent
+\textbf{9.} \hyperlink{9}{\url{https://homepages.cwi.nl/~rdewolf/warsaw2short.pdf}}
 
 
 \end{document}
