@@ -11,18 +11,24 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import cmath
+"""
+Contains the code required calculate the required gates used to construct
+Grover's Algorithm
+"""
+import cmath, math
 from qcp.matrices import Matrix, DefaultMatrix, SPARSE
-from qcp.tensor_product import _tensor_product_sparse as tps
 import qcp.constants as c
+from qcp.matrices.types import SCALARS
 import qcp.tensor_product as tp
 from typing import List
 import enum
-import math
 
 
 class Gate(enum.Enum):
-    """Enum class to encode gate options in multi_gates"""
+    """
+    Enums of the options of gate types to use in qcp.gates.multi_gates()
+    """
+
     H = "h"
     X = "x"
     Z = "z"
@@ -39,13 +45,13 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
     """
     Constructs a (2**size by 2**size) gate matrix that applies a
     specific gate to one or more specified qubits
-
     :param size int: total number of qubits in circuit
     :param targets List[int]: list of qubits the specified gate will be
                     applied to, indexing from 0.
     :param gate Gate: Enum of which gate we want to apply
     :param phi complex: Phase angle for the phase gate
-    :return Matrix: Matrix representing the composite gate
+    returns:
+        Matrix: Matrix representing the composite gate
     """
 
     if gate is Gate.H:
@@ -86,11 +92,12 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-x gate with
     given controls and target
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits, if empty, 0th bit is
-                                used as the control.
-    :param target int: target qubit the x gate will be applied to
-    :returns Matrix: Matrix representing the gate
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits,
+        if empty, 0th bit is used as the control.
+    :param int target: target qubit the x gate will be applied to
+    returns:
+        Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
@@ -116,10 +123,6 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     # bitmask is 10101 in binary notation
     mask = sum(2**c for c in set(controls))
 
-    # Invert all bits in place in the bitmask
-    invertor = sum(2**i for i in range(size))
-    flip_mask = mask ^ invertor
-
     # Find the bit index of the target
     target_bit = 2**target
 
@@ -127,12 +130,12 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     for i in range(0, n):
         # If the bits are targeted and meet the mask condition, it needs
         # to be flipped
-        condition = (i & target_bit) & flip_mask
+        condition = i & mask
 
         x = i
-        if condition:
+        if condition >= mask:
             # bit flip the targetted bit by the control bits
-            x ^= mask
+            x ^= target_bit
 
         m[i] = {x: 1}
 
@@ -152,15 +155,19 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
 # range [0, 3]
 
 
-def control_z(size: int, controls: List[int], target: int) -> Matrix:
+def _generic_control(size: int, controls: List[int],
+                     target: int, cval: SCALARS) -> Matrix:
     """
-    Constructs a (2**size by 2**size) control-z gate with
-     given controls and target
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
-    :param target int: target qubit the z gate will be
-                    applied to
-    :return Matrix: Matrix representing the gate
+    Constructs a (2**size by 2**size) control gate with
+    given controls, target and the control value.
+    This is a generic implementation of the logic used for
+    :py:meth:`qcp.gates.control_z` and :py:meth:`qcp.gates.control_phase`
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits
+    :param int target: target qubit the gate will be applied to
+    :param SCALARS cval: The control value in the gate
+    returns:
+        Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
     n = 2 ** size
@@ -193,16 +200,42 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     for i in range(0, n):
         condition = (i & target_bit) == target_bit and i ^ mask == flip_mask
 
-        val = 1
+        val: SCALARS = 1
         # Modulo 2 filters out an bits that don't meet the condition,
         # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
         # Can be determined by taking their modulus with 2, since binary is in
         # powers of 2.
         if condition:
-            val = -1
+            val = cval
         m[i] = {i: val}
 
     return DefaultMatrix(m, h=n, w=n)
+
+# NOTE:
+# The way the control/target bit is indexed is by indexing the
+# control bit in the byte notation:
+# E.g: 13 = 1101 in bit notation, so this is indexed as
+#       +---+---+---+---+
+# BITS  | 1 | 1 | 0 | 1 |
+#       +---+---+---+---+
+# INDEX | 3 | 2 | 1 | 0 |
+#       +---+---+---+---+
+# in the usual little endian indexing notation
+# Therefore, in this example, the target/control bits are in the index
+# range [0, 3]
+
+
+def control_z(size: int, controls: List[int], target: int) -> Matrix:
+    """
+    Constructs a (2**size by 2**size) control-z gate with
+     given controls and target
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits
+    :param int target: target qubit the z gate will be applied to
+    returns:
+        Matrix: Matrix representing the gate
+    """
+    return _generic_control(size, controls, target, -1)
 
 # NOTE:
 # The way the control/target bit is indexed is by indexing the
@@ -222,48 +255,24 @@ def control_phase(size: int, controls: List[int], target: int,
                   phi: complex) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-phase gate with
-     given controls and target
-    :param size int: total number of qubits in circuit
-    :param controls List[int]: List of control qubits
-    :param target int: target qubit the phase gate will be
-                    applied to
-    :param phi complex: angle the target qubit will be phase
-                    shifted by
-    :return Matrix: Matrix representing the gate
+    given controls and target
+    :param int size: total number of qubits in circuit
+    :param List[int] controls: List of control qubits
+    :param int target: target qubit the phase gate will be applied to
+    :param complex phi: angle the target qubit will be phase shifted by
+    returns:
+        Matrix: Matrix representing the gate
     """
-    assert size > 1, "need minimum of two qubits"
-    n = 2 ** size
-    assert isinstance(controls, list)
-
-    # Make sure the control/target bits are within the qbit size
-    bit_bounds = range(size)
-    for con in controls:
-        assert con in bit_bounds, "control bit out of range"
-    assert target in bit_bounds, "target bit out of range"
-
-    assert target not in \
-        controls, "control bits and target bit cannot be the same"
-
-    m: SPARSE = {}
-
-    target_bit = 2**target
-
-    for i in range(0, n):
-        condition = (i & target_bit) == target_bit
-
-        val = 1+0j
-        if condition:
-            val = cmath.exp(1j * phi)
-        m[i] = {i: val}
-
-    return DefaultMatrix(m, h=n, w=n)
+    val = cmath.exp(1j * phi)
+    return _generic_control(size, controls, target, val)
 
 
 def phase_shift(phi: complex) -> Matrix:
     """
     Creates a 2 x 2 phase shift matrix
-    :param phi: angle the qubit is phase shifted by
-    :return: Matrix(complex)
+    :param complex phi: angle the qubit is phase shifted by
+    returns:
+        Matrix: Matrix representing the phase shift gate.
     """
     return DefaultMatrix([[1, 0], [0, cmath.exp(1j * phi)]])
 
@@ -275,13 +284,28 @@ def swap(size: int, target: List[int]) -> Matrix:
     :return Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two states"
-    assert len(target) == 2, 'Invalid swap targets!'
-    
-    swapgate = multi_gate(size,[],Gate.I)
-    temp = swapgate[target[1]-1]
-    swapgate[target[1]-1] = swapgate[target[0]+1]
-    swapgate[target[0]+1] = temp
-    return swapgate
+    assert target[0] != target[1], 'Invalid swap targets!'
+    if target[0] > target[1]:
+        temp = target[1]
+        target[1] = target[0]
+        target[0] = temp
+
+    swapgate = DefaultMatrix.zero(2**size) 
+    for i in range(2**size):
+        bit = (bin(i)[2:].zfill(size)) 
+        swapbit = (bit[0:target[0]] + bit[target[1]] 
+        + bit[target[0]+1:target[1]] + bit[target[0]] + bit[target[1]+1:] )
+        bit = int(bit,2)
+        swapbit = int(swapbit,2)
+        vec = [[0] for _ in range(2**size)]
+        swapvec = [[0] for _ in range(2**size)]
+        vec[bit] = [1]
+        swapvec[swapbit] = [1]
+        vec = DefaultMatrix(vec)
+        swapvec = DefaultMatrix(swapvec)
+        swapgate += swapvec*vec.transpose() # Outer product to create matrix
+    return swapgate    
+        
 
 def control_U(size: int,control: int,unitary: DefaultMatrix):
     """
@@ -295,11 +319,12 @@ def control_U(size: int,control: int,unitary: DefaultMatrix):
     n = 2 ** size
     targetsize = int(math.log2(unitary.num_rows))
     # Make sure the control/target bits are within the qbit size
+    from tensor_product import tensor_product as tps
     assert control in range(size), "control bit out of range"
     assert control not in range(size,size+unitary.num_rows), "control bit cannot be in auxiliary register"
 
     gate0 = DefaultMatrix([[1,0],[0,0]])
     gate1 = DefaultMatrix([[0,0],[0,1]])
-    cu_gate = tps(multi_gate(control,[],Gate.I),tps(gate0,multi_gate(size-1-control,[],Gate.I)))
-    cu_gate += tps(tps(tps(multi_gate(control,[],Gate.I),gate1),multi_gate(size-1-targetsize-control,[],Gate.I)),unitary)
+    cu_gate = tps(multi_gate(control+targetsize,[],Gate.I),tps(gate0,multi_gate(size-1-control-targetsize,[],Gate.I)))
+    cu_gate += tps(unitary,tps(tps(multi_gate(control,[],Gate.I),gate1),multi_gate(size-1-targetsize-control,[],Gate.I)))
     return cu_gate
