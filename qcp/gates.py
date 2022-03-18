@@ -201,7 +201,7 @@ def _generic_control(size: int, controls: List[int],
     target_bit = 2**target
 
     for i in range(0, n):
-        condition = (i & target_bit) == target_bit and i ^ mask == flip_mask
+        condition = (i & target_bit) == target_bit and i & mask >= mask
 
         val: SCALARS = 1
         # Modulo 2 filters out an bits that don't meet the condition,
