@@ -86,6 +86,10 @@ class SimulatorComponent(AbstractComponent):
 
     @QtCore.Slot(float)
     def _simulation_results(self, float):
+        """
+        Signal catcher to read in the simulation results from the
+        QThread that it is calculated in.
+        """
         pass
 
     def simulation_finished(self):

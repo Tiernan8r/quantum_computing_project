@@ -129,11 +129,21 @@ class ButtonComponent(AbstractComponent):
 
     @QtCore.Slot(int)
     def _draw_progress(self, val: int):
+        """
+        Set the progress bar widget to the provided value whenever the
+        signal is called.
+
+        :param int val: The value to set the progress bar to, no checks
+        are performed on it's value.
+        """
         if self.progress_bar.isHidden():
             self.progress_bar.show()
         self.progress_bar.setValue(val)
 
     def _hide_progress_bar(self):
+        """
+        Hide the progress bar widget.
+        """
         self.progress_bar.hide()
 
 
@@ -147,11 +157,11 @@ class ProgressBarThread(QtCore.QThread):
 
     def __init__(self, min: int, max: int, parent=None):
         """
-        Setup the ProgressBarThread QThread, referencing the progress bar
-        widget to increment.
+        Setup the ProgressBarThread QThread, to calculate the progress
+        bar ticker value every iteration.
 
-        :param QtWidgets.QProgressBar progress_bar: The progress bar to
-            animate
+        :param int min: The minimum value allowed for the progress bar
+        :param int max: The maximum allowed value for the progress bar
         """
         super().__init__(parent)
         self.exiting = False
