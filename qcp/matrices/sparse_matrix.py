@@ -25,7 +25,9 @@ def _list_to_dict(vals: List[SCALARS], limit: int = -1) -> Dict[int, SCALARS]:
 
     :param vals list: List of vector values.
     :param limit int: Optional iteration limit for fixed sized rows.
-    :returns dict: dict of key/value pairs for non-zero entries in the list.
+    returns:
+        Dict[int, :py:obj:`~qcp.matrices.types.SCALARS`]: dict of key/value
+        pairs for non-zero entries in the list.
     """
     # If the SparseMatrix dimensions have been explicitly set, will only
     # convert list entries up to that hard limit into the dict.
@@ -47,10 +49,27 @@ def _list_to_dict(vals: List[SCALARS], limit: int = -1) -> Dict[int, SCALARS]:
 
 
 class SparseVector:
-    """Sparse representation of a row vector"""
+    """
+    Sparse implementation of a row vector, where only the non-zero elements
+    are stored in memory, and any non saved index is taken to be zero.
+    """
 
     def __init__(self, entries:
                  Union[List[SCALARS], Dict[int, SCALARS]], size: int):
+        """
+        Create a new SparseVector object, where the values are allocated
+        either directly, by providing a dictionary mapping the indices
+        to the values, or inferred by reading the given list and storing
+        any non-zero list values in a dictionary mapping.
+
+        When the dictionary is provided, the vector size is inferred from the
+        highest index in the dictionary, unless the value is overwritten
+        with the size parameter.
+
+        :param Union[List[SCALARS], Dict[int, SCALARS]] entries: The object
+            containing the vector values to use.
+        :param int size: The size of the SparseVector
+        """
         if isinstance(entries, list):
             self._entries = _list_to_dict(entries, limit=size)
         else:
@@ -58,25 +77,53 @@ class SparseVector:
         self._size = size
 
     def __len__(self):
+        """
+        Return the size of the vector
+
+        returns:
+            int: The size of the vector
+        """
         return self._size
 
     def __getitem__(self, i: int) -> SCALARS:
+        """
+        Get the item at the given index in the SparseVector.
+
+        :param int i: The index of the value to read
+
+        returns:
+            :py:obj:`~qcp.matrices.types.SCALARS`: The indexed value.
+        """
         assert i < self._size, "index out of range"
-        if i not in self._entries:
-            return 0
-        return self._entries[i]
+        return self._entries.get(i, 0)
+
+    def __setitem__(self, i: int, v: SCALARS):
+        """
+        Set the item at the given index to be the given value.
+
+        :param int i: The index to modify
+        :param SCALARS v: The new value to set.
+        """
+        assert i < self._size, "index out of range"
+        self._entries[i] = v
 
 
 class SparseMatrix(Matrix):
+    """
+    Implementation of a Sparse Matrix object, where only the non-zero matrix
+    elements are stored in memory, and if a matrix element is not indexed, it
+    is taken to be zero.
+    """
 
     def __init__(self, state: Union[MATRIX, SPARSE], w: int = -1, h: int = -1):
         """Initialise a SparseMatrix, using either a List[List[]] object,
         or a pre-indexed dictionary mapping indices to non-zero values.
 
-        :param state: List[List[SCALAR]] or Dict[int, Dict[int, SCALAR]] used
-                        to determine the matrix content
-        :param w int: Optional overload of the Matrix width dimension
-        :param h int: Optional overload of the Matrix height dimension
+        :param Union[MATRIX, SPARSE] state: object containing the
+            matrix elements, either by determining the row/column indices from
+            the list, or using the given row/column index mapping.
+        :param int w: Optional overload of the Matrix width dimension
+        :param int h: Optional overload of the Matrix height dimension
         """
         given_width = w > 0
         if given_width:
@@ -127,18 +174,15 @@ class SparseMatrix(Matrix):
         self._entries = entries
 
     @staticmethod
-    def identity(n: int) -> Matrix:
+    def identity(n: int) -> SparseMatrix:
         """
         Create the identity matrix with the given dimensions
 
-        :param n int: The matrix dimension
-        :raises TypeError: If input dimension is not convertable to int.
+        :param int n: The matrix dimension
+        returns:
+            SparseMatrix: The SparseMatrix identity matrix object.
         """
-        try:
-            n = int(n)
-        except TypeError:
-            raise
-
+        assert isinstance(n, int), "matrix dimension must be an integer"
         assert n > 0, "Matrix dimension must be positive"
 
         return SparseMatrix({i: {i: 1} for i in range(n)}, w=n, h=n)
@@ -161,21 +205,41 @@ class SparseMatrix(Matrix):
 
     @property
     def num_rows(self) -> int:
+        """
+        Return the number of rows in the SparseMatrix.
+
+        returns:
+            int: The number of rows
+        """
         return self._row
 
     @property
     def num_columns(self) -> int:
+        """
+        Return the number of columns in the SparseMatrix.
+
+        returns:
+            int: The number of columns.
+        """
         return self._col
 
     def __len__(self) -> int:
+        """
+        Return the horizontal size of the SparseMatrix.
+
+        returns:
+            int: The number of columns in the SparseMatrix
+        """
         return self._row
 
     def _get_row(self, i: int) -> SparseVector:  # type: ignore[override]
+        """
+        Equivalent to
+        :py:meth:`~qcp.matrices.sparse_matrix.SparseMatrix.__getitem__`
+        """
         assert i < self.num_rows, "index out of range"
 
-        entry = {}
-        if i in self._entries:
-            entry = self._entries[i]
+        entry = self._entries.get(i, {})
 
         return SparseVector(entry, self.num_columns)
 
@@ -199,6 +263,10 @@ class SparseMatrix(Matrix):
         self._entries[i] = sv._entries
 
     def _as_list(self) -> MATRIX:
+        """
+        Equivalent to
+        :py:meth:`~qcp.matrices.sparse_matrix.SparseMatrix.get_state`
+        """
         list_representation: MATRIX = [
             [0 for _ in range(self.num_columns)] for _ in range(self.num_rows)
         ]
@@ -210,14 +278,33 @@ class SparseMatrix(Matrix):
         return list_representation
 
     def get_state(self) -> MATRIX:
+        """
+        Return the matrix values as a nested list
+
+        returns:
+            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix
+            values indexed by row/column
+        """
         return self._as_list()
 
     def rows(self) -> MATRIX:
-        """Return the rows of the Matrix."""
+        """
+        Equivalent to get_state().
+
+        returns:
+            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix
+            values indexed by row/column
+        """
         return self.get_state()
 
     def columns(self) -> MATRIX:
-        """Returns the columns of the Matrix"""
+        """
+        The transpose of the matrix as a nested list
+
+        returns:
+            :py:obj:`~qcp.matrices.types.MATRIX`: A nested list of the matrix
+            values transposed, indexed by column/row
+        """
         list_representation: MATRIX = [
             [0 for _ in range(self._row)] for _ in range(self._col)
         ]
@@ -228,7 +315,14 @@ class SparseMatrix(Matrix):
 
         return list_representation
 
-    def transpose(self) -> Matrix:
+    def transpose(self) -> SparseMatrix:
+        """
+        Flips the matrix elements along the diagonal, and return a new
+        SparseMatrix containing these values.
+
+        returns:
+            SparseMatrix: The transpose of the current matrix.
+        """
         entries: SPARSE = {
             k: {} for k in range(self._col)
         }
@@ -240,7 +334,15 @@ class SparseMatrix(Matrix):
                     entries[j][i] = v
         return SparseMatrix(entries, h=self.num_columns, w=self.num_rows)
 
-    def conjugate(self) -> Matrix:
+    def conjugate(self) -> SparseMatrix:
+        """
+        Create a new SparseMatrix where each value in the matrix is the
+        complex conjugate of the current matrix values.
+
+        returns:
+            SparseMatrix: A SparseMatrix object of the same dimensions of the
+            current matrix, with each value conjugated in place.
+        """
         entries = deepcopy(self._entries)
         for i, row in self._entries.items():
             for j, v in row.items():
@@ -251,6 +353,13 @@ class SparseMatrix(Matrix):
         return SparseMatrix(entries, h=self.num_rows, w=self.num_columns)
 
     def trace(self) -> SCALARS:
+        """
+        Calculate the sum of the diagonal elements of the matrix
+
+        returns:
+            :py:obj:`~qcp.matrices.types.SCALARS`: The sum of all diagonal
+            elements, with type determined by the value types.
+        """
         assert self.square, "can only take the trace of square matrices"
         tr: SCALARS = 0
         for i in range(self.num_rows):
@@ -299,6 +408,15 @@ class SparseMatrix(Matrix):
             return self._dot(other)
 
     def _dot(self, other: Matrix) -> Matrix:
+        """
+        Calculate the dot product between this Matrix, and another Matrix.
+
+        :param Matrix other: The matrix to dot product with this one.
+
+        returns:
+            Matrix: A new matrix that conforms to the rules of matrix
+            dot producting.
+        """
         assert other.num_rows > 0, "taking dot product with empty matrix"
         assert self.num_columns == other.num_rows, \
             "matrices don't match on their row/column dimensions"
@@ -322,6 +440,18 @@ class SparseMatrix(Matrix):
         return SparseMatrix(entries, w=other.num_columns, h=self.num_rows)
 
     def _dot_sparse(self, other: SparseMatrix) -> SparseMatrix:
+        """
+        Optimisation of the
+        :py:meth:`~qcp.matrices.sparse_matrix.SparseMatrix._dot` method in the
+        case where both Matrices are SparseMatrix objects, in which case we
+        only need to consider the non-zero entries of the matrices
+
+        :param SparseMatrix other: The matrix to dot product with this one.
+
+        returns:
+            SparseMatrix: A new matrix that conforms to the rules of matrix
+            dot producting.
+        """
         # Don't need to check dimensions, as the _dot() method has already
         # done it for us.
         entries: SPARSE = {
