@@ -30,7 +30,6 @@ class sudoku:
 
     def sudoku_conditions(self):
         cond1 = g.control_x(9, [1], 4) * g.control_x(9, [0], 4)
-        print(g.control_x(9, [0], 4) * g.multi_gate(9, [0, 1, 2, 3], g.Gate.H) * self.state)
         cond2 = g.control_x(9, [2], 5) * g.control_x(9, [0], 5)
         cond3 = g.control_x(9, [3], 6) * g.control_x(9, [1], 6)
         cond4 = g.control_x(9, [3], 7) * g.control_x(9, [2], 7)
@@ -49,7 +48,7 @@ class sudoku:
         had = g.multi_gate(9, [0, 1, 2, 3], g.Gate.H)
         circuit = had
 
-        for i in range(1):
+        for i in range(2):
             circuit = self.oracle() * circuit
 
             circuit = self.diffusion() * circuit
@@ -73,7 +72,7 @@ s = sudoku()
 
 s.run()
 o, p = s.measure()
-#print(s.state)
+print(s.state)
 #print(o)
 #print(p)
 
