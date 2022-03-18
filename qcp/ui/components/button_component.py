@@ -53,7 +53,11 @@ class ButtonComponent(AbstractComponent):
 
         self.cancel_button.hide()
 
-        self.pb_thread = ProgressBarThread(self.progress_bar)
+        self.pb_thread = ProgressBarThread(self.progress_bar.minimum(),
+                                           self.progress_bar.maximum())
+        self.pb_thread.progressBarValueChange.connect(self._draw_progress)
+        self.pb_thread.finished.connect(self._hide_progress_bar)
+        # self.pb_thread.started.connect(self._show_progress_bar)
 
         self.search_button.clicked.connect(self.initiate_search)
         self.cancel_button.clicked.connect(self.cancel_search)
@@ -65,13 +69,13 @@ class ButtonComponent(AbstractComponent):
             if b.objectName() == BUTTON_SEARCH_BUTTON:
                 self.search_button = b
             if b.objectName() == BUTTON_CANCEL_SEARCH_BUTTON:
-                self.cancel_button = b
+                self.cancel_button: QtWidgets.QPushButton = b
 
         progress_bars = self.main_window.ui_component.findChildren(
             QtWidgets.QProgressBar)
         for pb in progress_bars:
             if pb.objectName() == BUTTON_PROGRESS_BAR:
-                self.progress_bar = pb
+                self.progress_bar: QtWidgets.QProgressBar = pb
 
     def initiate_search(self):
         """
@@ -124,6 +128,15 @@ class ButtonComponent(AbstractComponent):
             while not self.pb_thread.isRunning():
                 time.sleep(THREAD_PAUSE)
 
+    @QtCore.Slot(int)
+    def _draw_progress(self, val: int):
+        if self.progress_bar.isHidden():
+            self.progress_bar.show()
+        self.progress_bar.setValue(val)
+
+    def _hide_progress_bar(self):
+        self.progress_bar.hide()
+
 
 class ProgressBarThread(QtCore.QThread):
     """
@@ -131,8 +144,9 @@ class ProgressBarThread(QtCore.QThread):
     every tick, so that it fills slowly, then resets to zero when
     full.
     """
+    progressBarValueChange = QtCore.Signal(int)
 
-    def __init__(self, progress_bar: QtWidgets.QProgressBar, parent=None):
+    def __init__(self, min: int, max: int, parent=None):
         """
         Setup the ProgressBarThread QThread, referencing the progress bar
         widget to increment.
@@ -141,23 +155,23 @@ class ProgressBarThread(QtCore.QThread):
             animate
         """
         super().__init__(parent)
-        self.pb = progress_bar
         self.exiting = False
+        self.min = min
+        self.max = max
+        self.pb_val = 0
 
     def run(self):
         """
         Startup the thread, and run the desired actions every loop.
         """
-        self.pb.setVisible(True)
-        self.pb.reset()
+        self.pb_val = 0
         while not self.exiting:
-            val = (self.pb.value() + 1) % self.pb.maximum()
-            if val < self.pb.minimum():
-                val = self.pb.minimum()
+            val = (self.pb_val + 1) % self.max
+            if val < self.min:
+                val = self.min
 
-            self.pb.setValue(val)
+            self.progressBarValueChange.emit(val)
+            self.pb_val = val
             self.msleep(BUTTON_PROGRESS_BAR_TICK_RATE)
 
-        self.pb.reset()
-        self.pb.hide()
         self.quit()
