@@ -158,6 +158,22 @@ def test_control_x():
 
     assert transform_3qbits.get_state() == expected_3qbits.get_state()
 
+    # Test for multiple controls:
+    cx_8x8_2 = gts.control_x(3, [1, 2], 0)
+    transform_3qbits_2 = cx_8x8_2 * three_qbits
+    expected_3qbits_2 = SparseMatrix([
+        [1],  # |000>
+        [2],  # |001>
+        [3],  # |010>
+        [4],  # |011>
+        [5],  # |100>
+        [6],  # |101>
+        [8],  # |110>
+        [7]  # |111>
+    ])
+
+    assert transform_3qbits_2.get_state() == expected_3qbits_2.get_state()
+
 
 def test_control_z():
     # Gate needs a minimum of two qubits to make sense
