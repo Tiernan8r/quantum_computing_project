@@ -202,14 +202,14 @@ def _generic_control(size: int, controls: List[int],
     target_bit = 2 ** target
 
     for i in range(0, n):
-        condition = (i & target_bit) == target_bit and i & mask >= mask
-
+        condition1 = (i & target_bit)
+        condition2 = i & mask
         val: SCALARS = 1
         # Modulo 2 filters out an bits that don't meet the condition,
         # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
         # Can be determined by taking their modulus with 2, since binary is in
         # powers of 2.
-        if condition:
+        if condition1 == target_bit and condition2 >= mask:
             val = cval
         m[i] = {i: val}
 
