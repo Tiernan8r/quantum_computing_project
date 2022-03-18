@@ -125,10 +125,6 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     # bitmask is 10101 in binary notation
     mask = sum(2**c for c in set(controls))
 
-    # Invert all bits in place in the bitmask
-    invertor = sum(2**i for i in range(size))
-    flip_mask = mask ^ invertor
-
     # Find the bit index of the target
     target_bit = 2**target
 
@@ -136,12 +132,12 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     for i in range(0, n):
         # If the bits are targeted and meet the mask condition, it needs
         # to be flipped
-        condition = (i & target_bit) & flip_mask
+        condition = i & mask
 
         x = i
-        if condition:
+        if condition >= mask:
             # bit flip the targetted bit by the control bits
-            x ^= mask
+            x ^= target_bit
 
         m[i] = {x: 1}
 
