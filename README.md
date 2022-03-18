@@ -1,5 +1,9 @@
 # Quantum Computing Project:
 
+[![Tox](https://github.com/Tiernan8r/quantum_computing_project/actions/workflows/tox.yml/badge.svg)](https://github.com/Tiernan8r/quantum_computing_project/actions/workflows/tox.yml)
+[![CodeQL](https://github.com/Tiernan8r/quantum_computing_project/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Tiernan8r/quantum_computing_project/actions/workflows/codeql-analysis.yml)
+[![Pages](https://github.com/Tiernan8r/quantum_computing_project/actions/workflows/sphinx_docs_to_gh_pages.yaml/badge.svg)](https://github.com/Tiernan8r/quantum_computing_project/actions/workflows/sphinx_docs_to_gh_pages.yaml)
+
 An implementation of a quantum computer simulator in Python to simulate the 
 running of [Grover's Algorithm](https://qiskit.org/textbook/ch-algorithms/grover.html).
 

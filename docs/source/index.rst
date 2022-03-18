@@ -8,7 +8,7 @@ Welcome to Quantum Computing Project's documentation!
 
 .. m2r_parse_relative_links
 .. mdinclude:: ../../README.md
-   :start-line: 1
+   :start-line: 6
 
 .. toctree::
    :maxdepth: 4
