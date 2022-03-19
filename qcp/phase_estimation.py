@@ -102,7 +102,7 @@ def inverse_qft_rotation_gate(size: int, current_qubit: int) -> Matrix:
     return gate
 
 
-class phase_estimation:
+class PhaseEstimation:
 
     def __init__(self, size: int, unitary: Matrix, eigenvector: Matrix):
         """
