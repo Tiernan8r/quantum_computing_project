@@ -46,7 +46,7 @@ class ButtonComponent(AbstractComponent):
         """
         Setup what happens when the buttons in the UI are clicked.
         """
-        self._find_widgets()
+        super().setup_signals()
 
         self.progress_bar.hide()
         self.progress_bar.reset()
