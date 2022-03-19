@@ -23,7 +23,6 @@
 \usepackage{mathtools}
 \usepackage{physics}
 \usepackage{amsmath}
-\usepackage[superscript,biblabel]{cite}
 \usepackage[scale=1,bmargin=1.5cm,footnotesep=1.5cm]{geometry}
 
 \usepackage{hyperref}
@@ -35,6 +34,11 @@
     pdftitle={Overleaf Example},
     pdfpagemode=FullScreen,
     }
+
+% To get references:
+\usepackage[nottoc,numbib]{tocbibind} % To get bibliography into table of contents
+\usepackage[backend=bibtex, style=ieee]{biblatex}
+\bibliography{references} 
 
 \urlstyle{same}
 
@@ -159,7 +163,7 @@ The qubits in a quantum computer are stored in a quantum register. The size of t
 \vspace{5mm}
 
 \noindent
-The vector state of the quantum register $\mathcal{H}$ with $n$ qubits can be expressed in tensor product\hyperlink{1}{$^1$}:
+The vector state of the quantum register $\mathcal{H}$ with $n$ qubits can be expressed in tensor product \cite{noauthor_lecture_nodate}:
 \vspace{5mm}
 
 
@@ -177,7 +181,7 @@ Tensor product is used as a function which combines elements of two or more vect
 \vspace{5mm}
 
 \noindent
-Tensor products are distributive and associative and shown here is the tensor product of two qubit in the Hilbert space (complex vector space)\hyperlink{1}{$^1$}:
+Tensor products are distributive and associative and shown here is the tensor product of two qubit in the Hilbert space (complex vector space)\cite{noauthor_lecture_nodate}:
 \vspace{5mm}
 
 
@@ -232,7 +236,7 @@ spaces (Hilbert space).
 \vspace{5mm}
 
 \noindent
-A generic quantum state $\ket{\psi}$ can be described as a linear combination of basis states such as\hyperlink{1}{$^1$}:
+A generic quantum state $\ket{\psi}$ can be described as a linear combination of basis states such as \cite{noauthor_lecture_nodate}:
 \vspace{5mm}
 
 
@@ -263,7 +267,7 @@ The action of a quantum linear operator on a basis state determines the type of 
 \vspace{5mm}
 
 \noindent
-Linear operators $U$ acting on some basis states can be written in matrix form\hyperlink{1}{$^1$}:
+Linear operators $U$ acting on some basis states can be written in matrix form \cite{noauthor_lecture_nodate}:
 \vspace{5mm}
 
 \qquad $U_{kj} = \bra{k}U\ket{j}$ \ , for some basis state $\ket{j}$ and $\ket{k}$
@@ -306,7 +310,7 @@ A quantum operator $U$ has its conjugate transpose (adjoint) which can be expres
 \vspace{5mm}
 
 \noindent
-The unitary operator has the following property\hyperlink{2}{$^2$}:
+The unitary operator has the following property\cite{noauthor_unitary_2022}:
 \vspace{5mm}
 
 \qquad $UU^{\dagger} = UU^{-1} = 1$
@@ -331,7 +335,7 @@ Quantum gates are unitary quantum operators and are described as unitary matrice
 \vspace{5mm}
 
 \noindent
-The following are some of the common types of quantum gates\hyperlink{3}{$^3$} which will be used in constructing the Grover's circuit.
+The following are some of the common types of quantum gates\cite{voorhoede_pauli-x_nodate} which will be used in constructing the Grover's circuit.
 \vspace{5mm}
 
 \textbf{Hadamard Gate}: \qquad $H = \frac{1}{\sqrt{2}}= \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$
@@ -418,7 +422,7 @@ It leaves the control qubit unchanged and performs the Pauli Z Gate to the targe
 \vspace{5mm}
 
 \noindent
-The phase shift gate modifies the phase of the quantum state and is equivalent to tracing a horizontal circle  on the Bloch Sphere (Refer to page 3) by $\varphi$ radians\hyperlink{4}{$^4$}. 
+The phase shift gate modifies the phase of the quantum state and is equivalent to tracing a horizontal circle  on the Bloch Sphere (Refer to page 3) by $\varphi$ radians\cite{noauthor_quantum_nodate}. 
 \pagebreak
 
 
@@ -429,7 +433,7 @@ The phase shift gate modifies the phase of the quantum state and is equivalent t
 \section{Grover's Algorithm}
 \subsection{Introduction}
 
-The Grover's Algorithm is a quantum search algorithm which increases quadratically the speed of unstructured search\hyperlink{5}{$^5$}. It uses  amplitude amplification to search an unstructured set of $N$ elements/items. 
+The Grover's Algorithm is a quantum search algorithm which increases quadratically the speed of unstructured search\cite{noauthor_grovers_nodate}. It uses  amplitude amplification to search an unstructured set of $N$ elements/items. 
 
 \subsection{Unstructured Search}
 \vspace{10mm}
@@ -513,7 +517,7 @@ With Grover's Algorithm, only $O(\sqrt{N})$ steps are required to find $\omega$.
 \vspace{5mm}
 
 \noindent
-For an $N$ item search problem with $M$ number of solutions, the required number of times of searches will be $O(\sqrt{\frac{N}{M}})$\hyperlink{6}{$^6$}.
+For an $N$ item search problem with $M$ number of solutions, the required number of times of searches will be $O(\sqrt{\frac{N}{M}})$\cite{nielsen_quantum_2010}.
 \pagebreak
 
 \subsection{The Oracle}
@@ -526,7 +530,7 @@ The integers in the domain corresponds to the indices of the list and $f(x) =1$ 
 \vspace{5mm}
 
 \noindent
-There will be only one value of $x$ which satisfies $f(x)=1$ and this index corresponds to item $\omega$\hyperlink{7}{$^7$}.
+There will be only one value of $x$ which satisfies $f(x)=1$ and this index corresponds to item $\omega$\cite{noauthor_grovers_2022}.
 \vspace{5mm}
 
 \noindent
@@ -539,7 +543,7 @@ $\hspace{30mm} \begin{cases}
 \end{cases}$
 \vspace{5mm}
 
-The oracle function of a two qubit system is defined as\hyperlink{8}{$^8$}:
+The oracle function of a two qubit system is defined as\cite{hui_qc_2019}:
 \vspace{5mm}
 
 \qquad $\ket{x} \bigotimes\ \ket{q} \rightarrow{O_f} \ket{x} \bigotimes \ket{q \bigoplus f(x)}$ \footnote{$\bigotimes$ denotes tensor product and $\bigoplus$ denotes denotes addition modulo 2}
@@ -605,7 +609,7 @@ This is essentially a reflection on the state $\ket{x}$.
 \textbf{Step 1:}
 \vspace{5mm}
 \noindent
-The sequence of the Grover's Algorithm starts out with a uniform superposition state $\ket{s}$\hyperlink{5}{$^5$}:
+The sequence of the Grover's Algorithm starts out with a uniform superposition state $\ket{s}$\cite{noauthor_grovers_nodate}:
 \vspace{5mm}
 
 \qquad $ \ket{s}= H^{\bigotimes n} \ket{0}^n = \frac{1}{\sqrt{2^n}}\sum\limits_{x \in \{0,1\}^n}\ket{x} $ , \qquad for $N = 2^n$ , where $n$ is the number of qubits.
@@ -767,7 +771,7 @@ The reflection oracle $U_\omega$ can be expressed as:
 \vspace{5mm}
 
 \noindent
-$U_{{\omega }}$ is a reflection at the hyperplane orthogonal to $\ket{\omega}$  for vectors in the plane spanned by $\ket{s'}$  and $\ket{\omega}$\hyperlink{7}{$^7$}.
+$U_{{\omega }}$ is a reflection at the hyperplane orthogonal to $\ket{\omega}$  for vectors in the plane spanned by $\ket{s'}$  and $\ket{\omega}$\cite{noauthor_grovers_2022}.
 \vspace{5mm}
 
 \noindent
@@ -999,7 +1003,7 @@ By looking at Figure 7, the amplitude of $\ket{\omega}$ is reflected about the a
 \vspace{5mm}
 
 \noindent
-Step 2 and Step 3 will be repeated where necessary for $T$ times until the average amplitude approaches zero so that the amplitude for $\ket{\omega} \sim 1$\hyperlink{9}{$^9$}.
+Step 2 and Step 3 will be repeated where necessary for $T$ times until the average amplitude approaches zero so that the amplitude for $\ket{\omega} \sim 1$\cite{de_wolf_main_nodate}.
 \vspace{5mm}
 
 \noindent
@@ -1046,7 +1050,7 @@ The obvious advantage of the Grover's Algorithm is the quadratic speed up over c
 \vspace{5mm}
 
 \noindent
-In the previous chapter, Grover's Algorithm shows amplitude amplification on the target state $\ket{\omega}$ and this can be used to speed up a wide variety of other algorithms\hyperlink{5}{$^5$}. 
+In the previous chapter, Grover's Algorithm shows amplitude amplification on the target state $\ket{\omega}$ and this can be used to speed up a wide variety of other algorithms\cite{noauthor_grovers_nodate}. 
 \vspace{5mm}
 
 \noindent
@@ -1054,7 +1058,7 @@ One of the few drawbacks of the Grover's Algorithm is that it is probabilistic. 
 \vspace{5mm}
 
 \noindent
-Due to the constraints of currently available quantum computers, Grover's Algorithm is yet to yield any  meaningful quadratic speed up compared to classical algorithms\hyperlink{7}{$7$}.   
+Due to the constraints of currently available quantum computers, Grover's Algorithm is yet to yield any  meaningful quadratic speed up compared to classical algorithms\cite{noauthor_grovers_2022}.   
 \pagebreak
 
 \section{Methodology}
@@ -1199,43 +1203,8 @@ Mauris interdum porttitor fringilla. Proin tincidunt sodales leo at ornare. Done
 %----------------------------------------------------------------------------------------
 
 
-\section{References and Bibliographies}
-\vspace{5mm}
-
-\textbf{1.} \hypertarget{1}{\url{https://www.learn.ed.ac.uk/webapps/blackboard/execute/content/file?cmd=view&content_id=_6912117_1&course_id=_88488_1}}
-\vspace{5mm}
-
-\noindent
-\textbf{2.} \hypertarget{2}{\url{https://en.wikipedia.org/wiki/Unitary_matrix}}
-\vspace{5mm}
-
-\noindent
-\textbf{3.} \hypertarget{3}{\url{https://www.quantum-inspire.com/kbase/pauli-x/}}
-\vspace{5mm}
-
-\noindent
-\textbf{4.} \hypertarget{4}{\url{https://en.wikipedia.org/wiki/Quantum_logic_gate}}
-\vspace{5mm}
-
-\noindent
-\textbf{5.} \hypertarget{5}{\url{https://qiskit.org/textbook/ch-algorithms/grover.html}}
-\vspace{5mm}
-
-\noindent
-\textbf{6.} \hypertarget{6}{\textcolor{blue}{Michael A. Nielsen and Issac L. Chuang. \textit{Quantum Computation and Quantum Information.} Cambridge University Press; 10th Anniversary ed. edition (9 Dec. 2010). ISBN: 9781107002173 }}
-\vspace{5mm}
-
-\noindent
-\textbf{7.} \hypertarget{7}{\url{https://en.wikipedia.org/wiki/Grover\%27s_algorithm}}
-\vspace{5mm}
-
-\noindent
-\textbf{8.} \hypertarget{8}{\url{https://jonathan-hui.medium.com/qc-grovers-algorithm-cd81e61cf248}}
-\vspace{5mm}
-
-\noindent
-\textbf{9.} \hyperlink{9}{\url{https://homepages.cwi.nl/~rdewolf/warsaw2short.pdf}}
-
+\section{References and Bibliography}
+\printbibliography[heading=none]
 
 \end{document}
 https://www.overleaf.com/project/621f925c52bf57288226281e
