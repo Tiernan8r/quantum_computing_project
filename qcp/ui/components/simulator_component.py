@@ -84,7 +84,7 @@ class SimulatorComponent(AbstractComponent):
         # Code to initialise the qcp simulation on the qthread
         # Pass the number of qbits and target bit over to the thread
         self.nqbits = nqbits
-        self.qcp_thread.simultaion_input_signal.emit(nqbits, target)
+        self.qcp_thread.simulation_input_signal.emit(nqbits, target)
 
     @QtCore.Slot(Matrix)
     def _simulation_results(self, qregister):
@@ -128,14 +128,14 @@ class SimulateQuantumComputerThread(QtCore.QThread):
     Simulation, input/output is passed back to the main thread by pipes.
     """
     simulation_result_signal = QtCore.Signal(Matrix)
-    simultaion_input_signal = QtCore.Signal(int, int)
+    simulation_input_signal = QtCore.Signal(int, int)
 
     def __init__(self, parent=None):
         """
         Setup the SimulateQuantumComputerThread QThread.
         """
         super().__init__(parent)
-        self.simultaion_input_signal.connect(self.input)
+        self.simulation_input_signal.connect(self.input)
         self.exiting = False
 
     @QtCore.Slot(int, int)
