@@ -115,8 +115,8 @@ class SimulatorComponent(AbstractComponent):
 
         # TODO: Don't know if this reasoning makes sense...
         number_entries = math.log2(self.nqbits)
-        classical_average = number_entries / 2
-        quantum_average = math.sqrt(number_entries)
+        classical_average = math.ceil(number_entries / 2)
+        quantum_average = math.ceil(math.sqrt(number_entries))
 
         self.lcd_classical.display(classical_average)
         self.lcd_grover.display(quantum_average)

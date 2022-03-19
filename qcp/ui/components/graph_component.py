@@ -117,25 +117,19 @@ class GraphComponent(AbstractComponent):
         title = "Measured Quantum States:"
         xlabel, ylabel = "states", "probabilities"
 
-        # TODO: remove placeholders
-        x: List[Any] = list(range(10))
-        import random
-        y: List[float] = [random.randint(0, 100) for i in x]
-
         if qregister is not None:
             x = list(range(qregister.num_rows))
             y = reg.measure(qregister)
 
         x = [f"|{bin(i)[2:]}>" for i in x]
 
-        self._plot_line(x, y, title=title,
+        self._plot(x, y, title=title,
                         xlabel=xlabel, ylabel=ylabel)
 
         self.figure_canvas.draw()
 
-    def _plot_line(self, x: list, y: list, title: str, xlabel: str,
-                   ylabel: str, legend: list = None,
-                   line_style="-"):
+    def _plot(self, x: list, y: list, title: str, xlabel: str,
+                   ylabel: str, legend: list = None):
         """
         Plot the given x/y values on the matplotlib canvas, displaying with
         the given xlabel/ylabel/title and legend.
@@ -149,7 +143,12 @@ class GraphComponent(AbstractComponent):
         :param str line_style: The line style for the plot, defaults to solid
             lines
         """
-        self.axes.plot(x, y, line_style)
+        xticks = list(range(len(x)))
+
+        self.axes.hist(y, bins=xticks, density=True, align="left")
+
+        self.axes.set_xticks(xticks)
+        self.axes.set_xticklabels(x)
 
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
