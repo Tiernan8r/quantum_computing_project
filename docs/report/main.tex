@@ -690,13 +690,13 @@ The sequence of the Grover's Algorithm starts out with a uniform superposition s
   \caption{\label{fig:grover_step_1} Grover's Algorithm Step 1}
 \end{figure}
 
-Figure \ref{fig:grover_step_1} shows a two dimensional plane spanned by $\ket{\omega}$ and $\ket{s'}$. In this representation, it can be written:
+Figure \ref{fig:grover_step_1a} shows a two dimensional plane spanned by $\ket{\omega}$ and $\ket{s'}$. In this representation, it can be written:
 \vspace{5mm}
 
 \qquad $\ket{s} = \sin\theta\ket{\omega} + \cos\theta\ket{s'}$
 \vspace{5mm}
 
-\qquad $\sin\theta = \frac{1}{\sqrt{2^n}}$ , \ where the amplitude of $\ket{s}$ is as shown in Figure 3.
+\qquad $\sin\theta = \frac{1}{\sqrt{2^n}}$ , \ where the amplitude of $\ket{s}$ is as shown in Figure \ref{fig:grover_step_1b}.
 \vspace{5mm}
 
 \textbf{Step 2:}
@@ -805,7 +805,7 @@ $U_{{\omega }}$ is a reflection at the hyperplane orthogonal to $\ket{\omega}$  
 \vspace{5mm}
 
 \noindent
-Referring to Figure \ref{fig:grover_step_2}, $\ket{s}$ is reflected about $\ket{s'}$. The reflection operation on $\ket{s}$ in the negative amplitude causes the overall positive average amplitude to decrease slightly as indicated by Figure \ref{fig:grover_step_2}. 
+Referring to Figure \ref{fig:grover_step_2a}, $\ket{s}$ is reflected about $\ket{s'}$. The reflection operation on $\ket{s}$ in the negative amplitude causes the overall positive average amplitude to decrease slightly as indicated by Figure \ref{fig:grover_step_2b}. 
 \vspace{5mm}
 
 \textbf{Step 3:}
@@ -903,7 +903,7 @@ Referring to Figure \ref{fig:grover_step_2}, $\ket{s}$ is reflected about $\ket{
 \vspace{10mm}
 
 \noindent
-As indicated in Figure \ref{fig:grover_step_3}, a diffusion operator $U_s$ is applied which results in a rotation of $\ket{s}$ by $2\theta$. 
+As indicated in Figure \ref{fig:grover_step_3a}, a diffusion operator $U_s$ is applied which results in a rotation of $\ket{s}$ by $2\theta$. 
 \pagebreak
 
 
@@ -1045,7 +1045,7 @@ outputs a solution to the search problem with high probability.
 \vspace{5mm}
 
 \noindent
-By looking at Figure 7, the amplitude of $\ket{\omega}$ is reflected about the average amplitude. Referring to Figure 5, the average amplitude is lowered below the dashed line and the reflection boosts the amplitude by about three times its original value, as depicted in Figure 7.
+By looking at Figure \ref{fig:grover_step_3b}, the amplitude of $\ket{\omega}$ is reflected about the average amplitude. Referring to Figure \ref{fig:grover_step_2b}, the average amplitude is lowered below the dashed line and the reflection boosts the amplitude by about three times its original value, as depicted in Figure \ref{fig:grover_step_3b}.
 \vspace{5mm}
 
 \noindent
@@ -1053,7 +1053,7 @@ Step 2 and Step 3 will be repeated where necessary for $T$ times until the avera
 \vspace{5mm}
 
 \noindent
-By observation, the number of times $T$ is required to apply the Grover's Algorithm according to Figure 6 can be written as:
+By observation, the number of times $T$ is required to apply the Grover's Algorithm according to Figure \ref{fig:grover_step_3a} can be written as:
 \vspace{5mm}
 
 \noindent
