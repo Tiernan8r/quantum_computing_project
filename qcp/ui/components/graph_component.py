@@ -11,10 +11,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import matplotlib
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_qt5agg import \
+    FigureCanvasQTAgg as FigureCanvas, \
+    NavigationToolbar2QT as NavigationToolbar
+import qcp.register as reg
 from PySide6 import QtWidgets
 from qcp.ui.components import AbstractComponent
-from qcp.ui.widgets import GraphWidget
 from qcp.ui.constants import GRAPH_WIDGET_NAME
+from qcp.matrices import Matrix
+from typing import List, Any
+
+matplotlib.use('Qt5Agg')
 
 
 class GraphComponent(AbstractComponent):
@@ -35,18 +44,19 @@ class GraphComponent(AbstractComponent):
         """
         super().__init__(main_window, *args, **kwargs)
 
-        self.graph_widget.hide()
+        self.show()
 
     def setup_signals(self):
         """
         Find the graph widget to embed the matplotlib canvas in, and draw the
         canvas
         """
-        self._find_graph_widget()
+        super().setup_signals()
 
-        self.refresh()
+        self._setup_canvas()
+        self._setup_layouts()
 
-    def _find_graph_widget(self):
+    def _find_widgets(self):
         """
         Determine the graph widget in the UI to use to embed the matplotlib
         canvas into.
@@ -54,23 +64,95 @@ class GraphComponent(AbstractComponent):
         widgets = self.main_window.ui_component.findChildren(QtWidgets.QWidget)
         for w in widgets:
             if w.objectName() == GRAPH_WIDGET_NAME:
-                self.graph_widget = GraphWidget(w)
+                self.graph_widget: QtWidgets.QWidget = w
 
-    def refresh(self):
+    def _setup_canvas(self):
         """
-        Redraw the matlpotlib canvas
+        Create a matplotlib UI canvas
         """
-        # TODO: need to get qregister here
-        self.graph_widget.display()
+        self.figure = Figure()
+        self.axes = self.figure.add_subplot()
+
+        self.figure_canvas = FigureCanvas(self.figure)
+
+        self.toolbar = NavigationToolbar(self.figure_canvas, self.graph_widget)
+
+    def _setup_layouts(self):
+        """
+        Embed this widget and the matplotlib canvas into the graph frame
+        widget
+        """
+        graph_frame_layout = QtWidgets.QGridLayout(parent=self.graph_widget)
+        graph_frame_layout.addWidget(self.toolbar)
+        graph_frame_layout.addWidget(self.figure_canvas)
+
+        self.graph_widget.setLayout(graph_frame_layout)
 
     def hide(self):
         """
         Hide the matplotlib graph if shown
         """
-        self.graph_widget.hide()
+        if self.graph_widget.isVisible():
+            self.graph_widget.hide()
 
     def show(self):
         """
         Show the matplotlib graph if hidden
         """
-        self.graph_widget.show()
+        if self.graph_widget.isHidden():
+            self.graph_widget.show()
+
+    def display(self, qregister: Matrix = None):
+        """
+        Calculate the probability distributions for the given quantum
+        register to be in each qbit state, and plot the probabilities
+        as a histogram within the embedded matplotlib canvas widget
+
+        :param Matrix qregister: The column vector representing our qbit
+            state.
+        """
+        self.show()
+        self.axes.clear()
+
+        title = "Measured Quantum States:"
+        xlabel, ylabel = "states", "probabilities"
+
+        # TODO: remove placeholders
+        x: List[Any] = list(range(10))
+        import random
+        y: List[float] = [random.randint(0, 100) for i in x]
+
+        if qregister is not None:
+            x = list(range(qregister.num_rows))
+            y = reg.measure(qregister)
+
+        x = [f"|{bin(i)[2:]}>" for i in x]
+
+        self._plot_line(x, y, title=title,
+                        xlabel=xlabel, ylabel=ylabel)
+
+        self.figure_canvas.draw()
+
+    def _plot_line(self, x: list, y: list, title: str, xlabel: str,
+                   ylabel: str, legend: list = None,
+                   line_style="-"):
+        """
+        Plot the given x/y values on the matplotlib canvas, displaying with
+        the given xlabel/ylabel/title and legend.
+
+        :param list x: The x values to plot
+        :param list y: The y values to plot
+        :param str title: The title of the plot
+        :param str xlabel: The label for the x axis
+        :param str ylabel: The label for the y axis
+        :param list legend: The (optional) legend for the plot
+        :param str line_style: The line style for the plot, defaults to solid
+            lines
+        """
+        self.axes.plot(x, y, line_style)
+
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+        if legend is not None:
+            self.axes.legend(legend)

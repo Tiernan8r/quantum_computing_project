@@ -39,7 +39,7 @@ class InputComponent(AbstractComponent):
         """
         Setup the "browse" button to open the file dialog window when clicked.
         """
-        self._find_widgets()
+        super().setup_signals()
 
         self.input_browse.clicked.connect(self.browse_files)
 
