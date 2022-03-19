@@ -14,7 +14,9 @@
 from PySide6 import QtWidgets
 from qcp.ui.components import AbstractComponent
 from qcp.ui.constants import INPUT_SEARCH_WIDGET_NAME, \
-    INPUT_TARGET_WIDGET_NAME, INPUT_BROWSE_FILE
+    INPUT_TARGET_WIDGET_NAME, INPUT_SEARCH_ERROR_WIDGET_NAME, \
+    INPUT_TARGET_ERROR_WIDGET_NAME
+from typing import List
 
 
 class InputComponent(AbstractComponent):
@@ -35,53 +37,78 @@ class InputComponent(AbstractComponent):
         """
         super().__init__(main_window, *args, **kwargs)
 
+        self.input_search_error.hide()
+        self.input_target_error.hide()
+
     def setup_signals(self):
         """
         Setup the "browse" button to open the file dialog window when clicked.
         """
         super().setup_signals()
 
-        self.input_browse.clicked.connect(self.browse_files)
-
     def _find_widgets(self):
-        line_edits = self.main_window.ui_component.findChildren(
-            QtWidgets.QLineEdit)
-        for lineEdit in line_edits:
-            if lineEdit.objectName() == INPUT_TARGET_WIDGET_NAME:
-                self.input_target = lineEdit
+        line_edits: List[QtWidgets.QLineEdit] = \
+            self.main_window.ui_component.findChildren(
+                QtWidgets.QLineEdit
+        )
+        for line_edit in line_edits:
+            if line_edit.objectName() == INPUT_TARGET_WIDGET_NAME:
+                self.input_target = line_edit
+            elif line_edit.objectName() == INPUT_SEARCH_WIDGET_NAME:
+                self.input_search = line_edit
 
-        text_edit = self.main_window.ui_component.findChild(
-            QtWidgets.QTextEdit)
-        if text_edit is not None and \
-                text_edit.objectName() == INPUT_SEARCH_WIDGET_NAME:
-            self.input_search = text_edit
+        error_labels: List[QtWidgets.QLabel] = \
+            self.main_window.ui_component.findChildren(
+                QtWidgets.QLabel
+        )
+        for error_label in error_labels:
+            if error_label.objectName() == INPUT_SEARCH_ERROR_WIDGET_NAME:
+                self.input_search_error = error_label
+            elif error_label.objectName() == INPUT_TARGET_ERROR_WIDGET_NAME:
+                self.input_target_error = error_label
 
-        buttons = self.main_window.ui_component.findChildren(
-            QtWidgets.QPushButton)
-        for b in buttons:
-            if b.objectName() == INPUT_BROWSE_FILE:
-                self.input_browse = b
+    def _widget_error(self, widget: QtWidgets.QLabel, err: str):
+        widget.show()
+        widget.setText(err)
 
-    def browse_files(self):
-        """
-        Create and display a QT file browser window to find files of
-        type `.txt`/`.json`/`.csv`/`.yml` and populate the search
-        box with the file's content.
-        """
-        dialog = QtWidgets.QFileDialog(self.main_window)
-        dialog.setFileMode(QtWidgets.QFileDialog.ExistingFile)
-        dialog.setNameFilter("Text (*.txt *.json *.csv *.yml)")
-        dialog.setViewMode(QtWidgets.QFileDialog.List)
+    def _search_input_error(self, error: str):
+        self._widget_error(self.input_search, error)
 
-        file_names = []
-        if dialog.exec_():
-            file_names = dialog.selectedFiles()
+    def _target_input_error(self, error: str):
+        self._widget_error(self.input_target, error)
 
-        if len(file_names) != 1:
-            return
+    def parse_input(self) -> int:
+        self.input_search_error.hide()
 
-        file_name = file_names[0]
+        input_str = self.input_search.text()
+        input = 0
+        try:
+            input = int(input_str)
+        except ValueError as ve:
+            self._search_input_error(str(ve))
+            raise ve
 
-        with open(file_name, "r") as f:
-            content = f.read()
-            self.input_search.setPlainText(content)
+        if input < 2:
+            err = "need a minimum of two qbits"
+            self._search_input_error(err)
+            raise ValueError(err)
+
+        return input
+
+    def parse_target(self, nqbits) -> int:
+        self.input_target_error.hide()
+
+        target_str = self.input_target.text()
+        target = 0
+        try:
+            target = int(target_str)
+        except ValueError as ve:
+            self._target_input_error(str(ve))
+            raise ve
+
+        if target < 0 or target >= 2**nqbits:
+            err = "target must be within qbit state size range"
+            self._target_input_error(err)
+            raise ValueError(err)
+
+        return target
