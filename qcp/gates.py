@@ -323,7 +323,8 @@ def swap(size: int, target: List[int]) -> Matrix:
         swapvec_entries[swapbit] = [1]  # type: ignore
         vector = DefaultMatrix(vec_entries)
         swapvector = DefaultMatrix(swapvec_entries)
-        swapgate += swapvector*vector.transpose()  # Outer product to create matrix
+        # Outer product to create matrix
+        swapgate += swapvector*vector.transpose()
 
     return swapgate
 
