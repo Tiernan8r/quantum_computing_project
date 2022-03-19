@@ -187,21 +187,19 @@ class SparseMatrix(Matrix):
 
         return SparseMatrix({i: {i: 1} for i in range(n)}, w=n, h=n)
 
-    def zero(n: int) -> Matrix:
+    @staticmethod
+    def zeros(nrow: int, ncol: int = 1) -> SparseMatrix:
         """
-        Create the zero matrix with the given dimensions
+        Create a SparseMatrix of given dimensions, where each value of the
+        matrix is zero.
 
-        :param n int: The matrix dimension
-        :raises TypeError: If input dimension is not convertable to int.
+        :param int nrow: The row dimension of the SparseMatrix
+        :param int ncol: The (optional) column dimenion of the SparseMatrix
+            defaults to 1, to be a column vector.
+        returns:
+            SparseMatrix: The matrix object of our given size.
         """
-        try:
-            n = int(n)
-        except TypeError:
-            raise
-
-        assert n > 0, "Matrix dimension must be positive"
-
-        return SparseMatrix({i: {} for i in range(n)}, w=n, h=n)
+        return SparseMatrix({i: {} for i in range(nrow)}, w=ncol, h=nrow)
 
     @property
     def num_rows(self) -> int:
@@ -490,9 +488,12 @@ class SparseMatrix(Matrix):
         for i in range(self.num_rows):
             for j in range(self.num_columns):
                 # Remove very small numbers and show neater matrix
-                if float(self[i][j].real+self[i][j].imag) < 10**-15: 
+                v = self[i][j]
+                if not isinstance(v, complex):
+                    continue
+                if cmath.isclose(v.real + v.imag, 0):
                     self[i][j] = 0
-                
+
             row_repr = [
                 f"{self[i][j]:3.3g}" for j in range(self.num_columns)]
             total_string += "[" + \
@@ -500,4 +501,3 @@ class SparseMatrix(Matrix):
             # Don't add newline for last row:
             total_string += self._optional_newline(i, self.num_rows)
         return total_string
-    
