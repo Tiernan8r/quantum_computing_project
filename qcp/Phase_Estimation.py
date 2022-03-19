@@ -1,6 +1,3 @@
-import sys
-sys.path.insert(0,'C:\\Users\\Ng Yi Sheng\\Desktop\\QCP\\quantum_computing_project')
-
 import math, cmath
 from qcp.matrices import DefaultMatrix
 import qcp.gates as g
