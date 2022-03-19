@@ -40,7 +40,7 @@ class AbstractComponent(QtCore.QObject):
         Setup any UI signals and events associated with interacting with
         this part of the UI.
         """
-        pass
+        self._find_widgets()
 
     def _find_widgets(self):
         """
