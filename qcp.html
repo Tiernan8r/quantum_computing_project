@@ -160,15 +160,26 @@ Grover’s Algorithm</p>
 <span class="sig-prename descclassname"><span class="pre">qcp.gates.</span></span><span class="sig-name descname"><span class="pre">_generic_control</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/gates.html#_generic_control"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.gates._generic_control" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructs a (2**size by 2**size) control gate with
 given controls, target and the control value.
-This is a generic implementation of the logic used for
-<a class="reference internal" href="#qcp.gates.control_z" title="qcp.gates.control_z"><code class="xref py py-meth docutils literal notranslate"><span class="pre">qcp.gates.control_z()</span></code></a> and <a class="reference internal" href="#qcp.gates.control_phase" title="qcp.gates.control_phase"><code class="xref py py-meth docutils literal notranslate"><span class="pre">qcp.gates.control_phase()</span></code></a></p>
+This is a generic implementation of the logic used for</p>
+<p><a class="reference internal" href="#qcp.gates.control_z" title="qcp.gates.control_z"><code class="xref py py-meth docutils literal notranslate"><span class="pre">qcp.gates.control_z()</span></code></a> and <a class="reference internal" href="#qcp.gates.control_phase" title="qcp.gates.control_phase"><code class="xref py py-meth docutils literal notranslate"><span class="pre">qcp.gates.control_phase()</span></code></a>
+:param int size: total number of qubits in circuit
+:param List[int] controls: List of control qubits
+:param int target: target qubit the gate will be applied to
+:param SCALARS cval: The control value in the gate
+:returns: Matrix representing the gate
+:rtype: Matrix</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.gates.control_U">
+<span class="sig-prename descclassname"><span class="pre">qcp.gates.</span></span><span class="sig-name descname"><span class="pre">control_U</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unitary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/gates.html#control_U"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.gates.control_U" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the control U gate</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>size</strong> (<em>int</em>) – total number of qubits in circuit</p></li>
-<li><p><strong>controls</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – List of control qubits</p></li>
-<li><p><strong>target</strong> (<em>int</em>) – target qubit the gate will be applied to</p></li>
-<li><p><strong>cval</strong> (<em>SCALARS</em>) – The control value in the gate</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – number of qubits</p></li>
+<li><p><strong>control</strong> (<em>int</em>) – control qubit</p></li>
+<li><p><strong>unitary</strong> (<a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><em>Matrix</em></a>) – Unitary gate to apply</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -284,6 +295,26 @@ applied to, indexing from 0.</p></li>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Matrix representing the phase shift gate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.gates.swap">
+<span class="sig-prename descclassname"><span class="pre">qcp.gates.</span></span><span class="sig-name descname"><span class="pre">swap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/gates.html#swap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.gates.swap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct swap gate which swaps two states</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>int</strong> (<em>target</em>) – total number of qubits in circuit</p></li>
+<li><p><strong>int</strong> – 2 target states the swap gate will be applied to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Matrix representing the gate</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
