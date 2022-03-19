@@ -690,8 +690,6 @@ Figure 2 shows a two dimensional plane spanned by $\ket{\omega}$ and $\ket{s'}$.
 Next apply the reflection oracle $U_\omega$ to the state $\ket{s}$.
 \vspace{5mm}
 
-
-
 \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
 \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
@@ -1084,33 +1082,84 @@ The other gates such as the control\_(x/y/z/phase) gates also has functions dedi
 
 \section{Implementation}
 
-Proin lobortis efficitur dictum. Pellentesque vitae pharetra eros, quis dignissim magna. Sed tellus leo, semper non vestibulum vel, tincidunt eu mi. Aenean pretium ut velit sed facilisis. Ut placerat urna facilisis dolor suscipit vehicula. Ut ut auctor nunc. Nulla non massa eros. Proin rhoncus arcu odio, eu lobortis metus sollicitudin eu. Duis maximus ex dui, id bibendum diam dignissim id. Aliquam quis lorem lorem. Phasellus sagittis aliquet dolor, vulputate cursus dolor convallis vel. Suspendisse eu tellus feugiat, bibendum lectus quis, fermentum nunc. Nunc euismod condimentum magna nec bibendum. Curabitur elementum nibh eu sem cursus, eu aliquam leo rutrum. Sed bibendum augue sit amet pharetra ullamcorper. Aenean congue sit amet tortor vitae feugiat.
+Grover's algorithm was implemented in the \textit{grovers\_algorithm.py} file which contains a Grovers class which includes all the necessary methods and attributes to run the algorithm. In Grover's algorithm qubits and incrementally operated on by Hadamard, Oracle, and Diffusion gates, These qubits were represented in the class as an attribute which it then iterated upon itself, this allowed for state to be tied to the Grover object which lead to neater code. Below is displayed the contents of the class's init function 
+which takes in two inputs (size, which is the number of qubits that is required and target\_state, which is the input the user is searching for in the algorithm) all other attributes are defined through methods in the class which are explained below.
 
-In congue risus leo, in gravida enim viverra id. Donec eros mauris, bibendum vel dui at, tempor commodo augue. In vel lobortis lacus. Nam ornare ullamcorper mauris vel molestie. Maecenas vehicula ornare turpis, vitae fringilla orci consectetur vel. Nam pulvinar justo nec neque egestas tristique. Donec ac dolor at libero congue varius sed vitae lectus. Donec et tristique nulla, sit amet scelerisque orci. Maecenas a vestibulum lectus, vitae gravida nulla. Proin eget volutpat orci. Morbi eu aliquet turpis. Vivamus molestie urna quis tempor tristique. Proin hendrerit sem nec tempor sollicitudin.
 
-% File contents
-\begin{file}[hello.py]
+\begin{file}[def \_\_init\_\_(self, size: int, target\_state: int):]
 \begin{lstlisting}[language=Python]
-#! /usr/bin/python
+assert size > 1, 
+assert target_state < (2 ** size),
 
-import sys
-sys.stdout.write("Hello World!\n")
+self.size = size
+self.target = target_state
+self.state = self.initial_state()
+
+self.oracle = self.single_target_oracle()
+self.diffuser = self.diffusion()
+self.max_reflections = self.size - 1
+self.circuit = self.construct_circuit()
 \end{lstlisting}
 \end{file}
 
-Fusce eleifend porttitor arcu, id accumsan elit pharetra eget. Mauris luctus velit sit amet est sodales rhoncus. Donec cursus suscipit justo, sed tristique ipsum fermentum nec. Ut tortor ex, ullamcorper varius congue in, efficitur a tellus. Vivamus ut rutrum nisi. Phasellus sit amet enim efficitur, aliquam nulla id, lacinia mauris. Quisque viverra libero ac magna maximus efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum mollis eros in tellus fermentum, vitae tristique justo finibus. Sed quis vehicula nibh. Etiam nulla justo, pellentesque id sapien at, semper aliquam arcu. Integer at commodo arcu. Quisque dapibus ut lacus eget vulputate.
+\subsection{Initial State}
 
-% Command-line "screenshot"
-\begin{commandline}
-	\begin{verbatim}
-		$ chmod +x hello.py
-		$ ./hello.py
+Defining an initial state is simple, it does not put the state in the form of a superposition, however it does create a column vector representing the value zero of the correct size do do operations with. If for example Grover's algorithm were set to work with 3 qubits (done by setting the size attribute to three), it would create a column vector of size 8 which corresponds to gates and values that multiply to give three qubits, in line 1 list comprehension makes the code more compact and readable. In short, this function is simply to initialise the inputs as a vector of appropriate size. Below is the python code.
 
-		Hello World!
-	\end{verbatim}
-\end{commandline}
+\begin{file}[def initial\_state(self) -> Matrix:]
+\begin{lstlisting}[language=Python]
+entries: MATRIX = [[0] for _ in range(2**self.size)]
+entries[0][0] = 1
+return DefaultMatrix(entries)
+\end{lstlisting}
+\end{file}
 
-Vestibulum sodales orci a nisi interdum tristique. In dictum vehicula dui, eget bibendum purus elementum eu. Pellentesque lobortis mattis mauris, non feugiat dolor vulputate a. Cras porttitor dapibus lacus at pulvinar. Praesent eu nunc et libero porttitor malesuada tempus quis massa. Aenean cursus ipsum a velit ultricies sagittis. Sed non leo ullamcorper, suscipit massa ut, pulvinar erat. Aliquam erat volutpat. Nulla non lacus vitae mi placerat tincidunt et ac diam. Aliquam tincidunt augue sem, ut vestibulum est volutpat eget. Suspendisse potenti. Integer condimentum, risus nec maximus elementum, lacus purus porta arcu, at ultrices diam nisl eget urna. Curabitur sollicitudin diam quis sollicitudin varius. Ut porta erat ornare laoreet euismod. In tincidunt purus dui, nec egestas dui convallis non. In vestibulum ipsum in dictum scelerisque.
+\subsection{Single Target Oracle}
+
+Single target oracle is a method that creates a matrix representing an oracle gate for the given target and number of qubits. It starts by using an outside function called pull\_set\_bits() to convert the target into binary of the form of a vector. Next a series of Pauli-X gates are chained together using the multi\_gate() function with the binary calculated target being used in the input of the Pauli-X gates to indicate that the gate is being applied to the target. Because the oracle is made of the control-Z and Pauli-X gates chained together, multiplying the matrix representations of the previously discussed gates together is enough to create the single target oracle. Below is the code discussed.
+
+\begin{file}[def single\_target\_oracle(self):]
+\begin{lstlisting}[language=Python]
+not_placement = (2 ** self.size) - 1 - self.target
+t = pull_set_bits(not_placement)
+
+cz = g.control_z(self.size, 
+	[i for i in range(0, self.size - 1)],
+	self.size - 1)
+	
+selector = g.multi_gate(self.size, t, g.Gate.X)
+oracle = selector * cz
+oracle *= selector
+return oracle
+
+\end{lstlisting}
+\end{file}
+
+\subsection{Diffusion}
+
+Diffusion is a method that creates a matrix that represents the diffusion operation in Grover's Algorithm. to create the diffusion operator a series a Hadamard gates are first created and placed on either side of the gate once again using the multi-gate function. Then the control Z and Pauli-X gates are placed ethier side. The resulting matrix is then returned for use in the execute method which combines the created gates together.
+
+
+\begin{file}[def diffusion(self):]
+\begin{lstlisting}[language=Python]
+h = g.multi_gate(self.size, 
+	[i for i in range(0, self.size)], 
+	g.Gate.H)
+			
+cz = g.control_z(self.size, 
+	[i for i in range(0, self.size - 1)], 
+	self.size - 1)
+			
+x = g.multi_gate(self.size, 
+	[i for i in range(0, self.size)], 
+	g.Gate.X)
+			
+diff = h * (x * (cz * (x * h)))
+return diff
+
+\end{lstlisting}
+\end{file}
+
 
 % Warning text, with a custom title
 \begin{warn}[Notice:]
@@ -1124,7 +1173,9 @@ Vestibulum sodales orci a nisi interdum tristique. In dictum vehicula dui, eget 
 
 \section{Testing and Debugging}
 
+Once these code files were implemented a separated folder of files specifically for tests was created, this allowed for more robust code as the tests files could then be easily removed once the final program was implemented, it also allowed for the use of the tox command in the terminal to allow for analysis of the tests that showed how much of the code the tests reached. test\_tensor\_product() worked by implementing a series of matrices of different sizes and contents, some containing small numbers, large numbers, complex numbers, floating point numbers with the intention to catch corner cases. Then the tensor product was calculated all these matrices by placing inputing them into the numpy.kron() function in a separate file. The answers for these were then placed inside the functions and were compared to the calculated values from our tensor\_product() function. Almost all the tests were passed except for the tests with non-square matrices, these bugs where fixed once spotted and the tox command in the terminal let us know that we covered near 100\% of the tensor product code.
 
+Similar tests were then constructed for the single qubit gates in the file test\_gates.py. Single qubit gates such as the Hadamard were easy to construct tests for simply comparing the 0 and 1 qubit outputs to the hand calculated superpositions. Assertion statements were used to make the test functions compatible with tox in the terminal. We tested code to a satisfactory level and then moved on to the next piece of the project to help catch mistakes and kill bugs before they appear allowing the team to work more efficiently.
 
 \section{Issues and Challenges}
 

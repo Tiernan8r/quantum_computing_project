@@ -19,9 +19,12 @@
 \BOOKMARK [2][-]{subsection.4.2}{Matrices}{section.4}% 19
 \BOOKMARK [2][-]{subsection.4.3}{Gates}{section.4}% 20
 \BOOKMARK [1][-]{section.5}{Implementation}{}% 21
-\BOOKMARK [1][-]{section.6}{Testing and Debugging}{}% 22
-\BOOKMARK [1][-]{section.7}{Issues and Challenges}{}% 23
-\BOOKMARK [1][-]{section.8}{Problem title}{}% 24
-\BOOKMARK [2][-]{subsection.8.1}{Theoretical viewpoint}{section.8}% 25
-\BOOKMARK [2][-]{subsection.8.2}{Algorithmic issues}{section.8}% 26
-\BOOKMARK [1][-]{section.9}{References and Bibliography}{}% 27
+\BOOKMARK [2][-]{subsection.5.1}{Initial State}{section.5}% 22
+\BOOKMARK [2][-]{subsection.5.2}{Single Target Oracle}{section.5}% 23
+\BOOKMARK [2][-]{subsection.5.3}{Diffusion}{section.5}% 24
+\BOOKMARK [1][-]{section.6}{Testing and Debugging}{}% 25
+\BOOKMARK [1][-]{section.7}{Issues and Challenges}{}% 26
+\BOOKMARK [1][-]{section.8}{Problem title}{}% 27
+\BOOKMARK [2][-]{subsection.8.1}{Theoretical viewpoint}{section.8}% 28
+\BOOKMARK [2][-]{subsection.8.2}{Algorithmic issues}{section.8}% 29
+\BOOKMARK [1][-]{section.9}{References and Bibliography}{}% 30

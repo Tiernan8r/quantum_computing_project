@@ -42,14 +42,20 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5}Implementation}{19}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Testing and Debugging}{20}{section.6}%
+\contentsline {subsection}{\numberline {5.1}Initial State}{20}{subsection.5.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7}Issues and Challenges}{20}{section.7}%
+\contentsline {subsection}{\numberline {5.2}Single Target Oracle}{20}{subsection.5.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {8}Problem title}{21}{section.8}%
+\contentsline {subsection}{\numberline {5.3}Diffusion}{20}{subsection.5.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {8.1}Theoretical viewpoint}{21}{subsection.8.1}%
+\contentsline {section}{\numberline {6}Testing and Debugging}{21}{section.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {8.2}Algorithmic issues}{21}{subsection.8.2}%
+\contentsline {section}{\numberline {7}Issues and Challenges}{22}{section.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {9}References and Bibliography}{22}{section.9}%
+\contentsline {section}{\numberline {8}Problem title}{22}{section.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {8.1}Theoretical viewpoint}{22}{subsection.8.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {8.2}Algorithmic issues}{23}{subsection.8.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {9}References and Bibliography}{24}{section.9}%
