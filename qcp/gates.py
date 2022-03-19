@@ -35,6 +35,7 @@ class Gate(enum.Enum):
     P = "p"
     I = "i"  # noqa: E741
 
+
 # Notation note : |001> represents a 3 qubit system where the first qubit is
 # |1> and the second and third qubit is |0>
 # Targets and Controls work off this notation but you only need to enter the
@@ -64,7 +65,7 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
     elif gate is Gate.P:
         g = phase_shift(phi)
     else:
-        return DefaultMatrix.identity(2**size)
+        return DefaultMatrix.identity(2 ** size)
 
     m: Matrix = DefaultMatrix([[1]])
 
@@ -74,6 +75,7 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
         else:
             m = tp.tensor_product(c.IDENTITY, m)
     return m
+
 
 # NOTE:
 # The way the control/target bit is indexed is by indexing the
@@ -112,7 +114,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     assert target in bit_bounds, "target bit out of range"
 
     assert target not in \
-        controls, "control bits and target bit cannot be the same"
+           controls, "control bits and target bit cannot be the same"
 
     m: SPARSE = {}
 
@@ -123,10 +125,10 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     # EG: controls = [0, 2, 4]
     # corresponds to 0, 4, 16 as numbers,
     # bitmask is 10101 in binary notation
-    mask = sum(2**c for c in set(controls))
+    mask = sum(2 ** c for c in set(controls))
 
     # Find the bit index of the target
-    target_bit = 2**target
+    target_bit = 2 ** target
 
     # Iterate over states in the gate
     for i in range(0, n):
@@ -142,6 +144,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
         m[i] = {x: 1}
 
     return DefaultMatrix(m, h=n, w=n)
+
 
 # NOTE:
 # The way the control/target bit is indexed is by indexing the
@@ -183,7 +186,7 @@ def _generic_control(size: int, controls: List[int],
     assert target in bit_bounds, "target bit out of range"
 
     assert target not in \
-        controls, "control bits and target bit cannot be the same"
+           controls, "control bits and target bit cannot be the same"
 
     m: SPARSE = {}
 
@@ -194,25 +197,24 @@ def _generic_control(size: int, controls: List[int],
     # EG: controls = [0, 2, 4]
     # corresponds to 0, 4, 16 as numbers,
     # bitmask is 10101 in binary notation
-    mask = sum(2**c for c in set(controls))
-    invertor = sum(2**i for i in range(size))
-    flip_mask = mask ^ invertor
+    mask = sum(2 ** c for c in set(controls))
 
-    target_bit = 2**target
+    target_bit = 2 ** target
 
     for i in range(0, n):
-        condition = (i & target_bit) == target_bit and i ^ mask == flip_mask
-
+        condition1 = (i & target_bit)
+        condition2 = i & mask
         val: SCALARS = 1
         # Modulo 2 filters out an bits that don't meet the condition,
         # Any number that is of the form of all ones, like 3 = 11, or 7 = 111
         # Can be determined by taking their modulus with 2, since binary is in
         # powers of 2.
-        if condition:
+        if condition1 == target_bit and condition2 >= mask:
             val = cval
         m[i] = {i: val}
 
     return DefaultMatrix(m, h=n, w=n)
+
 
 # NOTE:
 # The way the control/target bit is indexed is by indexing the
@@ -239,6 +241,7 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
         Matrix: Matrix representing the gate
     """
     return _generic_control(size, controls, target, -1)
+
 
 # NOTE:
 # The way the control/target bit is indexed is by indexing the
