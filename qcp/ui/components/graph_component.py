@@ -44,7 +44,7 @@ class GraphComponent(AbstractComponent):
         """
         super().__init__(main_window, *args, **kwargs)
 
-        self.graph_widget.hide()
+        self.show()
 
     def setup_signals(self):
         """
@@ -56,9 +56,6 @@ class GraphComponent(AbstractComponent):
         self._setup_canvas()
         self._setup_layouts()
 
-        self.graph_widget.show()
-        self.display()
-
     def _find_widgets(self):
         """
         Determine the graph widget in the UI to use to embed the matplotlib
@@ -67,14 +64,13 @@ class GraphComponent(AbstractComponent):
         widgets = self.main_window.ui_component.findChildren(QtWidgets.QWidget)
         for w in widgets:
             if w.objectName() == GRAPH_WIDGET_NAME:
-                self.graph_widget = w
+                self.graph_widget: QtWidgets.QWidget = w
 
     def _setup_canvas(self):
         """
         Create a matplotlib UI canvas
         """
         self.figure = Figure()
-        self.figure.tight_layout()
         self.axes = self.figure.add_subplot()
 
         self.figure_canvas = FigureCanvas(self.figure)
@@ -83,7 +79,7 @@ class GraphComponent(AbstractComponent):
 
     def _setup_layouts(self):
         """
-        Embed this widget and the matplotlib canvase into the graph frame
+        Embed this widget and the matplotlib canvas into the graph frame
         widget
         """
         graph_frame_layout = QtWidgets.QGridLayout(parent=self.graph_widget)
@@ -92,21 +88,19 @@ class GraphComponent(AbstractComponent):
 
         self.graph_widget.setLayout(graph_frame_layout)
 
-        self.figure_canvas.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        self.figure_canvas.updateGeometry()
-
     def hide(self):
         """
         Hide the matplotlib graph if shown
         """
-        self.graph_widget.hide()
+        if self.graph_widget.isVisible():
+            self.graph_widget.hide()
 
     def show(self):
         """
         Show the matplotlib graph if hidden
         """
-        self.graph_widget.show()
+        if self.graph_widget.isHidden():
+            self.graph_widget.show()
 
     def display(self, qregister: Matrix = None):
         """
@@ -117,6 +111,7 @@ class GraphComponent(AbstractComponent):
         :param Matrix qregister: The column vector representing our qbit
             state.
         """
+        self.show()
         self.axes.clear()
 
         title = "Measured Quantum States:"
@@ -124,7 +119,8 @@ class GraphComponent(AbstractComponent):
 
         # TODO: remove placeholders
         x: List[Any] = list(range(10))
-        y = [2**i for i in x]
+        import random
+        y = [random.randint(0, 100) for i in x]
 
         if qregister is not None:
             x = list(range(qregister.num_rows))
@@ -154,6 +150,7 @@ class GraphComponent(AbstractComponent):
             lines
         """
         self.axes.plot(x, y, line_style)
+
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)

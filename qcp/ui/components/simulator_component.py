@@ -16,6 +16,7 @@ from PySide6 import QtCore
 from qcp.ui.components import AbstractComponent, \
     ButtonComponent, GraphComponent
 from qcp.ui.constants import LCD_CLASSICAL, LCD_GROVER
+from qcp.matrices import Matrix
 
 
 class SimulatorComponent(AbstractComponent):
@@ -43,8 +44,6 @@ class SimulatorComponent(AbstractComponent):
         self.button_component = button_component
         self.graph_component = graph_component
         super().__init__(main_window, *args, **kwargs)
-
-        self.graph_component.hide()
 
     def setup_signals(self):
         """
@@ -85,13 +84,13 @@ class SimulatorComponent(AbstractComponent):
             self.qcp_thread.exiting = False
             self.qcp_thread.start()
 
-    @QtCore.Slot(float)
-    def _simulation_results(self, float):
+    @QtCore.Slot(Matrix)
+    def _simulation_results(self, qregister):
         """
         Signal catcher to read in the simulation results from the
         QThread that it is calculated in.
         """
-        pass
+        self.graph_component.display(qregister)
 
     def simulation_finished(self):
         """
@@ -119,7 +118,7 @@ class SimulateQuantumComputerThread(QtCore.QThread):
     QThread object to handle the running of the Quantum Computer
     Simulation, input/output is passed back to the main thread by pipes.
     """
-    simulation_result_signal = QtCore.Signal(float)
+    simulation_result_signal = QtCore.Signal(Matrix)
 
     def __init__(self, parent=None):
         """
@@ -132,4 +131,6 @@ class SimulateQuantumComputerThread(QtCore.QThread):
         """
         Run the simulation
         """
+        # TODO: Actual calculated results would be passed back here...
+        self.simulation_result_signal.emit(None)
         self.quit()
