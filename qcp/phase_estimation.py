@@ -31,7 +31,7 @@ def optimum_qubit_size(precision: int, error: float) -> int:
     """
     Return the number of qubit required for targeted number of decimal
     and error rate.
-    
+ 
     :param int: precision: number of decimals needed
     :param float: error: targeted error rate (e.g., 0.1)
     """
