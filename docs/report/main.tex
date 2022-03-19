@@ -116,34 +116,33 @@ Where $\alpha$ and $\beta$ are normalised complex constants such that $\abs{\alp
 The quantum state of $\ket{0}$ and $\ket{1}$ are known as the computational basis state. The basis state can be visualised in a form of a Bloch Sphere:
 \vspace{5mm}
 
-\begin{figure}
-\begin{center}
-\begin{tikzpicture}[scale=1.5]
-  \clip(-2.19,-2.49) rectangle (2.66,2.58);
-  \draw [shift={(0,0)}, lightgray, fill, fill opacity=0.1] (0,0) -- (56.7:0.4) arc (56.7:90.:0.4) -- cycle;
-  \draw [shift={(0,0)}, lightgray, fill, fill opacity=0.1] (0,0) -- (-135.7:0.4) arc (-135.7:-33.2:0.4) -- cycle;
-  \draw(0,0) circle (2cm);
-  \draw [rotate around={0.:(0.,0.)},dash pattern=on 3pt off 3pt] (0,0) ellipse (2cm and 0.9cm);
-  \draw (0,0)-- (0.70,1.07);
-  \draw [->] (0,0) -- (0,2);
-  \draw [->] (0,0) -- (-0.81,-0.79);
-  \draw [->] (0,0) -- (2,0);
-  \draw [dotted] (0.7,1)-- (0.7,-0.46);
-  \draw [dotted] (0,0)-- (0.7,-0.46);
-  \draw (-0.08,-0.3) node[anchor=north west] {$\varphi$};
-  \draw (0.01,0.9) node[anchor=north west] {$\theta$};
-  \draw (-1.01,-0.72) node[anchor=north west] {$\mathbf {\hat{x}}$};
-  \draw (2.07,0.3) node[anchor=north west] {$\mathbf {\hat{y}}$};
-  \draw (-0.5,2.6) node[anchor=north west] {$\mathbf {\hat{z}=|0\rangle}$};
-  \draw (-0.4,-2) node[anchor=north west] {$-\mathbf {\hat{z}=|1\rangle}$};
-  \draw (0.4,1.65) node[anchor=north west] {$|\psi\rangle$};
-  \scriptsize
-  \draw [fill] (0,0) circle (1.5pt);
-  \draw [fill] (0.7,1.1) circle (0.5pt);
-\end{tikzpicture}
-\end{center}
-\caption{The Bloch Sphere}
-\label{fig:bloch_sphere}
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[scale=1.5]
+    \clip(-2.19,-2.49) rectangle (2.66,2.58);
+    \draw [shift={(0,0)}, lightgray, fill, fill opacity=0.1] (0,0) -- (56.7:0.4) arc (56.7:90.:0.4) -- cycle;
+    \draw [shift={(0,0)}, lightgray, fill, fill opacity=0.1] (0,0) -- (-135.7:0.4) arc (-135.7:-33.2:0.4) -- cycle;
+    \draw(0,0) circle (2cm);
+    \draw [rotate around={0.:(0.,0.)},dash pattern=on 3pt off 3pt] (0,0) ellipse (2cm and 0.9cm);
+    \draw (0,0)-- (0.70,1.07);
+    \draw [->] (0,0) -- (0,2);
+    \draw [->] (0,0) -- (-0.81,-0.79);
+    \draw [->] (0,0) -- (2,0);
+    \draw [dotted] (0.7,1)-- (0.7,-0.46);
+    \draw [dotted] (0,0)-- (0.7,-0.46);
+    \draw (-0.08,-0.3) node[anchor=north west] {$\varphi$};
+    \draw (0.01,0.9) node[anchor=north west] {$\theta$};
+    \draw (-1.01,-0.72) node[anchor=north west] {$\mathbf {\hat{x}}$};
+    \draw (2.07,0.3) node[anchor=north west] {$\mathbf {\hat{y}}$};
+    \draw (-0.5,2.6) node[anchor=north west] {$\mathbf {\hat{z}=|0\rangle}$};
+    \draw (-0.4,-2) node[anchor=north west] {$-\mathbf {\hat{z}=|1\rangle}$};
+    \draw (0.4,1.65) node[anchor=north west] {$|\psi\rangle$};
+    \scriptsize
+    \draw [fill] (0,0) circle (1.5pt);
+    \draw [fill] (0.7,1.1) circle (0.5pt);
+  \end{tikzpicture}
+  \centering
+\caption{\label{fig:bloch_sphere}The Bloch Sphere}
 \end{figure}
 \vspace{5mm}
 
