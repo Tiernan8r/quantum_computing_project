@@ -108,7 +108,7 @@ class InputComponent(AbstractComponent):
             self._target_input_error(str(ve))
             raise ve
 
-        if target < 0 or target > 2**nqbits:
+        if target < 0 or target >= 2**nqbits:
             ve = ValueError("target must be within qbit state size range")
             self._target_input_error(str(ve))
             raise ve

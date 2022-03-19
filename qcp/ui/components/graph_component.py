@@ -143,12 +143,7 @@ class GraphComponent(AbstractComponent):
         :param str line_style: The line style for the plot, defaults to solid
             lines
         """
-        xticks = list(range(len(x)))
-
-        self.axes.hist(y, bins=xticks, density=True, align="left")
-
-        self.axes.set_xticks(xticks)
-        self.axes.set_xticklabels(x)
+        self.axes.bar(x, y)
 
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
