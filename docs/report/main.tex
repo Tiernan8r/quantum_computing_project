@@ -670,7 +670,7 @@ The sequence of the Grover's Algorithm starts out with a uniform superposition s
   \caption{\label{fig:grover_step_1} Grover's Algorithm Step 1}
 \end{figure}
 
-Figure ~\ref{fig:grover_step_1} shows a two dimensional plane spanned by $\ket{\omega}$ and $\ket{s'}$. In this representation, it can be written:
+Figure \ref{fig:grover_step_1} shows a two dimensional plane spanned by $\ket{\omega}$ and $\ket{s'}$. In this representation, it can be written:
 \vspace{5mm}
 
 \qquad $\ket{s} = \sin\theta\ket{\omega} + \cos\theta\ket{s'}$
@@ -750,7 +750,7 @@ Next apply the reflection oracle $U_\omega$ to the state $\ket{s}$.
   
   \end{tikzpicture}
   
-  \caption{\label{grover_step_2} Grover's Algorithm Step 2}
+  \caption{\label{fig:grover_step_2} Grover's Algorithm Step 2}
 \end{figure}
 
 \pagebreak
@@ -769,7 +769,7 @@ $U_{{\omega }}$ is a reflection at the hyperplane orthogonal to $\ket{\omega}$  
 \vspace{5mm}
 
 \noindent
-Referring to Figure ~\ref{fig:grover_step_2}, $\ket{s}$ is reflected about $\ket{s'}$. The reflection operation on $\ket{s}$ in the negative amplitude causes the overall positive average amplitude to decrease slightly as indicated by Figure 5. 
+Referring to Figure \ref{fig:grover_step_2}, $\ket{s}$ is reflected about $\ket{s'}$. The reflection operation on $\ket{s}$ in the negative amplitude causes the overall positive average amplitude to decrease slightly as indicated by Figure 5. 
 \vspace{5mm}
 
 \textbf{Step 3:}
@@ -850,118 +850,118 @@ Referring to Figure ~\ref{fig:grover_step_2}, $\ket{s}$ is reflected about $\ket
 \vspace{10mm}
 
 \noindent
-As indicated in Figure ~\ref{fig:grover_step_3}, a diffusion operator $U_s$ is applied which results in a rotation of $\ket{s}$ by $2\theta$. 
+As indicated in Figure \ref{fig:grover_step_3}, a diffusion operator $U_s$ is applied which results in a rotation of $\ket{s}$ by $2\theta$. 
 \pagebreak
 
 
 \begin{figure}
-\begin{center}
-    
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+  \begin{center}
+      
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,392); %set diagram left start at 0, and has height of 392
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,392); %set diagram left start at 0, and has height of 392
 
-%Shape: Rectangle [id:dp8937257723636158] 
-\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (143,134) -- (175.19,134) -- (175.19,162.7) -- (143,162.7) -- cycle ;
-%Shape: Rectangle [id:dp007021083049765675] 
-\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (143,174.3) -- (175.19,174.3) -- (175.19,203) -- (143,203) -- cycle ;
-%Shape: Rectangle [id:dp8911339020880464] 
-\draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (205,133) -- (235,133) -- (235,203) -- (205,203) -- cycle ;
-%Shape: Rectangle [id:dp25845825302570513] 
-\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (265,133) -- (297.19,133) -- (297.19,161.7) -- (265,161.7) -- cycle ;
-%Shape: Rectangle [id:dp47274224679471666] 
-\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (265,174.3) -- (297.19,174.3) -- (297.19,203) -- (265,203) -- cycle ;
-%Shape: Rectangle [id:dp5929473120919728] 
-\draw  [fill={rgb, 255:red, 126; green, 211; blue, 33 }  ,fill opacity=1 ] (325,131) -- (475,131) -- (475,201) -- (325,201) -- cycle ;
-%Shape: Rectangle [id:dp561230971836093] 
-\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (505,131) -- (537.19,131) -- (537.19,159.7) -- (505,159.7) -- cycle ;
-%Shape: Rectangle [id:dp551714500077588] 
-\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (505,172.3) -- (537.19,172.3) -- (537.19,201) -- (505,201) -- cycle ;
-%Shape: Rectangle [id:dp014371224119280157] 
-\draw   (565,131) -- (596.33,131) -- (596.33,159.22) -- (565,159.22) -- cycle ;
-%Shape: Arc [id:dp45728741367881365] 
-\draw  [draw opacity=0] (569.39,151.72) .. controls (570.82,147.31) and (575.03,144.13) .. (579.99,144.13) .. controls (584.9,144.13) and (589.07,147.24) .. (590.55,151.57) -- (579.99,155.06) -- cycle ; \draw   (569.39,151.72) .. controls (570.82,147.31) and (575.03,144.13) .. (579.99,144.13) .. controls (584.9,144.13) and (589.07,147.24) .. (590.55,151.57) ;  
-%Straight Lines [id:da3994764524189143] 
-\draw    (576.46,153) -- (589.1,139.61) ;
-%Shape: Rectangle [id:dp7321580418061253] 
-\draw   (565,172) -- (596.33,172) -- (596.33,200.22) -- (565,200.22) -- cycle ;
-%Shape: Arc [id:dp575518695312089] 
-\draw  [draw opacity=0] (569.39,192.72) .. controls (570.82,188.31) and (575.03,185.13) .. (579.99,185.13) .. controls (584.9,185.13) and (589.07,188.24) .. (590.55,192.57) -- (579.99,196.06) -- cycle ; \draw   (569.39,192.72) .. controls (570.82,188.31) and (575.03,185.13) .. (579.99,185.13) .. controls (584.9,185.13) and (589.07,188.24) .. (590.55,192.57) ;  
-%Straight Lines [id:da9653097238135147] 
-\draw    (576.46,194) -- (589.1,180.61) ;
-%Straight Lines [id:da054926584620969665] 
-\draw    (95,151) -- (145,151) ;
-%Straight Lines [id:da1998461114344101] 
-\draw    (95,191) -- (145,191) ;
-%Straight Lines [id:da13455039306792682] 
-\draw    (175,151) -- (205,151) ;
-%Straight Lines [id:da8941875904744676] 
-\draw    (175,191) -- (205,191) ;
-%Straight Lines [id:da16169269211888615] 
-\draw    (235,151) -- (265,151) ;
-%Straight Lines [id:da6385231938077083] 
-\draw    (235,191) -- (265,191) ;
-%Straight Lines [id:da21590920227006993] 
-\draw    (295,151) -- (325,151) ;
-%Straight Lines [id:da44624469722388915] 
-\draw    (295,191) -- (325,191) ;
-%Straight Lines [id:da9474262709127792] 
-\draw    (475,191) -- (505,191) ;
-%Straight Lines [id:da8304606265085992] 
-\draw    (475,151) -- (505,151) ;
-%Straight Lines [id:da4700710359224989] 
-\draw    (535,151) -- (565,151) ;
-%Straight Lines [id:da09738039485721028] 
-\draw    (535,191) -- (565,191) ;
-%Straight Lines [id:da7131108234298331] 
-\draw    (595,149.5) -- (625,149.5)(595,152.5) -- (625,152.5) ;
-%Straight Lines [id:da9226246067589841] 
-\draw    (595,189.5) -- (625,189.5)(595,192.5) -- (625,192.5) ;
-%Shape: Brace [id:dp5786954336630095] 
-\draw   (208.13,205) .. controls (208.15,209.67) and (210.49,211.99) .. (215.16,211.98) -- (357.81,211.53) .. controls (364.48,211.51) and (367.82,213.83) .. (367.83,218.5) .. controls (367.82,213.83) and (371.14,211.49) .. (377.81,211.47)(374.81,211.48) -- (528.16,210.99) .. controls (532.83,210.98) and (535.15,208.64) .. (535.13,203.97) ;
-%Shape: Brace [id:dp3814057437492582] 
-\draw   (470.13,127) .. controls (470.13,122.33) and (467.8,120) .. (463.13,120) -- (410.13,120) .. controls (403.46,120) and (400.13,117.67) .. (400.13,113) .. controls (400.13,117.67) and (396.8,120) .. (390.13,120)(393.13,120) -- (334.13,120) .. controls (329.46,120) and (327.13,122.33) .. (327.13,127) ;
-%Shape: Brace [id:dp5248227356988384] 
-\draw   (66.13,152) .. controls (61.46,152) and (59.13,154.33) .. (59.13,159) -- (59.13,162.16) .. controls (59.13,168.83) and (56.8,172.16) .. (52.13,172.16) .. controls (56.8,172.16) and (59.13,175.49) .. (59.13,182.16)(59.13,179.16) -- (59.13,185) .. controls (59.13,189.67) and (61.46,192) .. (66.13,192) ;
-%Straight Lines [id:da6246903517915476] 
-\draw  [dash pattern={on 0.84pt off 2.51pt}]  (75.13,168) -- (133.13,168) ;
-%Straight Lines [id:da7651260164716407] 
-\draw  [dash pattern={on 0.84pt off 2.51pt}]  (251,168) -- (305.13,168) ;
-%Straight Lines [id:da5357419850229155] 
-\draw  [dash pattern={on 0.84pt off 2.51pt}]  (504,167) -- (592.13,167) ;
+    %Shape: Rectangle [id:dp8937257723636158] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (143,134) -- (175.19,134) -- (175.19,162.7) -- (143,162.7) -- cycle ;
+    %Shape: Rectangle [id:dp007021083049765675] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (143,174.3) -- (175.19,174.3) -- (175.19,203) -- (143,203) -- cycle ;
+    %Shape: Rectangle [id:dp8911339020880464] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (205,133) -- (235,133) -- (235,203) -- (205,203) -- cycle ;
+    %Shape: Rectangle [id:dp25845825302570513] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (265,133) -- (297.19,133) -- (297.19,161.7) -- (265,161.7) -- cycle ;
+    %Shape: Rectangle [id:dp47274224679471666] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (265,174.3) -- (297.19,174.3) -- (297.19,203) -- (265,203) -- cycle ;
+    %Shape: Rectangle [id:dp5929473120919728] 
+    \draw  [fill={rgb, 255:red, 126; green, 211; blue, 33 }  ,fill opacity=1 ] (325,131) -- (475,131) -- (475,201) -- (325,201) -- cycle ;
+    %Shape: Rectangle [id:dp561230971836093] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (505,131) -- (537.19,131) -- (537.19,159.7) -- (505,159.7) -- cycle ;
+    %Shape: Rectangle [id:dp551714500077588] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (505,172.3) -- (537.19,172.3) -- (537.19,201) -- (505,201) -- cycle ;
+    %Shape: Rectangle [id:dp014371224119280157] 
+    \draw   (565,131) -- (596.33,131) -- (596.33,159.22) -- (565,159.22) -- cycle ;
+    %Shape: Arc [id:dp45728741367881365] 
+    \draw  [draw opacity=0] (569.39,151.72) .. controls (570.82,147.31) and (575.03,144.13) .. (579.99,144.13) .. controls (584.9,144.13) and (589.07,147.24) .. (590.55,151.57) -- (579.99,155.06) -- cycle ; \draw   (569.39,151.72) .. controls (570.82,147.31) and (575.03,144.13) .. (579.99,144.13) .. controls (584.9,144.13) and (589.07,147.24) .. (590.55,151.57) ;  
+    %Straight Lines [id:da3994764524189143] 
+    \draw    (576.46,153) -- (589.1,139.61) ;
+    %Shape: Rectangle [id:dp7321580418061253] 
+    \draw   (565,172) -- (596.33,172) -- (596.33,200.22) -- (565,200.22) -- cycle ;
+    %Shape: Arc [id:dp575518695312089] 
+    \draw  [draw opacity=0] (569.39,192.72) .. controls (570.82,188.31) and (575.03,185.13) .. (579.99,185.13) .. controls (584.9,185.13) and (589.07,188.24) .. (590.55,192.57) -- (579.99,196.06) -- cycle ; \draw   (569.39,192.72) .. controls (570.82,188.31) and (575.03,185.13) .. (579.99,185.13) .. controls (584.9,185.13) and (589.07,188.24) .. (590.55,192.57) ;  
+    %Straight Lines [id:da9653097238135147] 
+    \draw    (576.46,194) -- (589.1,180.61) ;
+    %Straight Lines [id:da054926584620969665] 
+    \draw    (95,151) -- (145,151) ;
+    %Straight Lines [id:da1998461114344101] 
+    \draw    (95,191) -- (145,191) ;
+    %Straight Lines [id:da13455039306792682] 
+    \draw    (175,151) -- (205,151) ;
+    %Straight Lines [id:da8941875904744676] 
+    \draw    (175,191) -- (205,191) ;
+    %Straight Lines [id:da16169269211888615] 
+    \draw    (235,151) -- (265,151) ;
+    %Straight Lines [id:da6385231938077083] 
+    \draw    (235,191) -- (265,191) ;
+    %Straight Lines [id:da21590920227006993] 
+    \draw    (295,151) -- (325,151) ;
+    %Straight Lines [id:da44624469722388915] 
+    \draw    (295,191) -- (325,191) ;
+    %Straight Lines [id:da9474262709127792] 
+    \draw    (475,191) -- (505,191) ;
+    %Straight Lines [id:da8304606265085992] 
+    \draw    (475,151) -- (505,151) ;
+    %Straight Lines [id:da4700710359224989] 
+    \draw    (535,151) -- (565,151) ;
+    %Straight Lines [id:da09738039485721028] 
+    \draw    (535,191) -- (565,191) ;
+    %Straight Lines [id:da7131108234298331] 
+    \draw    (595,149.5) -- (625,149.5)(595,152.5) -- (625,152.5) ;
+    %Straight Lines [id:da9226246067589841] 
+    \draw    (595,189.5) -- (625,189.5)(595,192.5) -- (625,192.5) ;
+    %Shape: Brace [id:dp5786954336630095] 
+    \draw   (208.13,205) .. controls (208.15,209.67) and (210.49,211.99) .. (215.16,211.98) -- (357.81,211.53) .. controls (364.48,211.51) and (367.82,213.83) .. (367.83,218.5) .. controls (367.82,213.83) and (371.14,211.49) .. (377.81,211.47)(374.81,211.48) -- (528.16,210.99) .. controls (532.83,210.98) and (535.15,208.64) .. (535.13,203.97) ;
+    %Shape: Brace [id:dp3814057437492582] 
+    \draw   (470.13,127) .. controls (470.13,122.33) and (467.8,120) .. (463.13,120) -- (410.13,120) .. controls (403.46,120) and (400.13,117.67) .. (400.13,113) .. controls (400.13,117.67) and (396.8,120) .. (390.13,120)(393.13,120) -- (334.13,120) .. controls (329.46,120) and (327.13,122.33) .. (327.13,127) ;
+    %Shape: Brace [id:dp5248227356988384] 
+    \draw   (66.13,152) .. controls (61.46,152) and (59.13,154.33) .. (59.13,159) -- (59.13,162.16) .. controls (59.13,168.83) and (56.8,172.16) .. (52.13,172.16) .. controls (56.8,172.16) and (59.13,175.49) .. (59.13,182.16)(59.13,179.16) -- (59.13,185) .. controls (59.13,189.67) and (61.46,192) .. (66.13,192) ;
+    %Straight Lines [id:da6246903517915476] 
+    \draw  [dash pattern={on 0.84pt off 2.51pt}]  (75.13,168) -- (133.13,168) ;
+    %Straight Lines [id:da7651260164716407] 
+    \draw  [dash pattern={on 0.84pt off 2.51pt}]  (251,168) -- (305.13,168) ;
+    %Straight Lines [id:da5357419850229155] 
+    \draw  [dash pattern={on 0.84pt off 2.51pt}]  (504,167) -- (592.13,167) ;
 
-% Text Node
-\draw (151.6,139.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
-% Text Node
-\draw (151.6,181.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
-% Text Node
-\draw (209,155.4) node [anchor=north west][inner sep=0.75pt]    {$U_{\omega }$};
-% Text Node
-\draw (273.6,139.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
-% Text Node
-\draw (273.6,181.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
-% Text Node
-\draw (513.6,137.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
-% Text Node
-\draw (513.6,179.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
-% Text Node
-\draw (346,153.4) node [anchor=north west][inner sep=0.75pt]    {$2\ket{0^{n}}\bra{0^{n}} \ -\ I^{n}$};
-% Text Node
-\draw (68,142.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0}$};
-% Text Node
-\draw (68,181.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0}$};
-% Text Node
-\draw (16,162.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0^{n}}$};
-% Text Node
-\draw (316,95) node [anchor=north west][inner sep=0.75pt]   [align=left] {Grover's Diffusion Operator};
-% Text Node
-\draw (313,213) node [anchor=north west][inner sep=0.75pt]   [align=left] {Repeat $\displaystyle \approx \ \frac{\pi }{4}\sqrt{N}$ times};
+    % Text Node
+    \draw (151.6,139.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (151.6,181.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (209,155.4) node [anchor=north west][inner sep=0.75pt]    {$U_{\omega }$};
+    % Text Node
+    \draw (273.6,139.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (273.6,181.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (513.6,137.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (513.6,179.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (346,153.4) node [anchor=north west][inner sep=0.75pt]    {$2\ket{0^{n}}\bra{0^{n}} \ -\ I^{n}$};
+    % Text Node
+    \draw (68,142.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0}$};
+    % Text Node
+    \draw (68,181.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0}$};
+    % Text Node
+    \draw (16,162.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0^{n}}$};
+    % Text Node
+    \draw (316,95) node [anchor=north west][inner sep=0.75pt]   [align=left] {Grover's Diffusion Operator};
+    % Text Node
+    \draw (313,213) node [anchor=north west][inner sep=0.75pt]   [align=left] {Repeat $\displaystyle \approx \ \frac{\pi }{4}\sqrt{N}$ times};
 
-\end{tikzpicture}
-\end{center}
+    \end{tikzpicture}
+  \end{center}
 
-\caption{\label{fig:grover_circuit}Quantum circuit representation of Grover's Algorithm.}
+  \caption{\label{fig:grover_circuit}Quantum circuit representation of Grover's Algorithm.}
 \end{figure}
 
 \vspace{5mm}
