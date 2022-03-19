@@ -487,8 +487,12 @@ class SparseMatrix(Matrix):
 
     def __str__(self) -> str:
         total_string = ""
-
         for i in range(self.num_rows):
+            for j in range(self.num_columns):
+                # Remove very small numbers and show neater matrix
+                if float(self[i][j].real+self[i][j].imag) < 10**-15: 
+                    self[i][j] = 0
+                
             row_repr = [
                 f"{self[i][j]:3.3g}" for j in range(self.num_columns)]
             total_string += "[" + \

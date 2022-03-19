@@ -191,14 +191,13 @@ def _generic_control(size: int, controls: List[int],
     # EG: controls = [0, 2, 4]
     # corresponds to 0, 4, 16 as numbers,
     # bitmask is 10101 in binary notation
-    mask = sum(2**c for c in set(controls))
-    invertor = sum(2**i for i in range(size))
-    flip_mask = mask ^ invertor
+    mask = sum(2 ** c for c in set(controls))
+
 
     target_bit = 2**target
 
     for i in range(0, n):
-        condition = (i & target_bit) == target_bit and i ^ mask == flip_mask
+        condition = (i & target_bit) == target_bit and i & mask >= mask
 
         val: SCALARS = 1
         # Modulo 2 filters out an bits that don't meet the condition,
@@ -283,6 +282,8 @@ def swap(size: int, target: List[int]) -> Matrix:
     :param target int: 2 target states the swap gate will be applied to
     :return Matrix: Matrix representing the gate
     """
+    # Can be optimized further
+    
     assert size > 1, "need minimum of two states"
     assert target[0] != target[1], 'Invalid swap targets!'
     if target[0] > target[1]:
