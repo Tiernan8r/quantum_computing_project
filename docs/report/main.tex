@@ -25,7 +25,7 @@
 \usepackage{amsmath}
 \usepackage[superscript,biblabel]{cite}
 \usepackage[scale=1,bmargin=1.5cm,footnotesep=1.5cm]{geometry}
-\usepackage{subfloat} %allows us to nest figures
+\usepackage{subcaption} %allows us to nest figures
 
 \usepackage{hyperref}
 \hypersetup{
@@ -616,57 +616,74 @@ The sequence of the Grover's Algorithm starts out with a uniform superposition s
 
 
 \begin{figure}[h]
-  \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
 
-  \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-    %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+      % uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
 
-    %Shape: Axis 2D [id:dp05560542711234939] 
-    \draw  (50,247.9) -- (308,247.9)(75.8,112) -- (75.8,263) (301,242.9) -- (308,247.9) -- (301,252.9) (70.8,119) -- (75.8,112) -- (80.8,119)  ;
-    %Shape: Boxed Line [id:dp13553556978051007] 
-    \draw    (75.8,247.9) -- (298.07,185.84) ;
-    \draw [shift={(300,185.3)}, rotate = 164.4] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-    %Shape: Axis 2D [id:dp29246180096889995] 
-    \draw  (390,249.6) -- (597,249.6)(410.7,111) -- (410.7,265) (590,244.6) -- (597,249.6) -- (590,254.6) (405.7,118) -- (410.7,111) -- (415.7,118)  ;
-    %Shape: Rectangle [id:dp09588343067912675] 
-    \draw   (410.7,198) -- (431,198) -- (431,249.6) -- (410.7,249.6) -- cycle ;
-    %Shape: Rectangle [id:dp06589745305688277] 
-    \draw   (431,198) -- (451.3,198) -- (451.3,249.6) -- (431,249.6) -- cycle ;
-    %Shape: Rectangle [id:dp1570793013008731] 
-    \draw   (451.3,198) -- (471.6,198) -- (471.6,249.6) -- (451.3,249.6) -- cycle ;
-    %Shape: Rectangle [id:dp04465276081897107] 
-    \draw   (471.6,198) -- (491.9,198) -- (491.9,249.6) -- (471.6,249.6) -- cycle ;
-    %Shape: Rectangle [id:dp3205832207723005] 
-    \draw   (491.9,198) -- (512.2,198) -- (512.2,249.6) -- (491.9,249.6) -- cycle ;
-    %Shape: Rectangle [id:dp7965850817244042] 
-    \draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (512.2,198) -- (532.5,198) -- (532.5,249.6) -- (512.2,249.6) -- cycle ;
-    %Shape: Rectangle [id:dp41205715411636223] 
-    \draw   (532.5,198) -- (552.8,198) -- (552.8,249.6) -- (532.5,249.6) -- cycle ;
-    %Shape: Rectangle [id:dp6260805143227606] 
-    \draw   (552.8,198) -- (573.1,198) -- (573.1,249.6) -- (552.8,249.6) -- cycle ;
+      %Shape: Axis 2D [id:dp05560542711234939] 
+      \draw  (50,247.9) -- (308,247.9)(75.8,112) -- (75.8,263) (301,242.9) -- (308,247.9) -- (301,252.9) (70.8,119) -- (75.8,112) -- (80.8,119)  ;
+      %Shape: Boxed Line [id:dp13553556978051007] 
+      \draw    (75.8,247.9) -- (298.07,185.84) ;
+      \draw [shift={(300,185.3)}, rotate = 164.4] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
 
-    % Text Node
-    \draw (82,87.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
-    % Text Node
-    \draw (306,167.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s}$};
-    % Text Node
-    \draw (307,253.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s'}$};
-    % Text Node
-    \draw (181,220.4) node [anchor=north west][inner sep=0.75pt]    {$\theta $};
-    % Text Node
-    \draw (405,84) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
-    % Text Node
-    \draw (412.7,252.6) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
-    % Text Node
-    \draw (586,176.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$\frac{1}{\sqrt{2^{n}}}$};
-    % Text Node
-    \draw (560,256) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize N}};
-    % Text Node
-    \draw (602,251) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize items}};
-    % Text Node
-    \draw (508.2,254.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+      % Text Node
+      \draw (82,87.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+      % Text Node
+      \draw (306,167.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s}$};
+      % Text Node
+      \draw (307,253.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s'}$};
+      % Text Node
+      \draw (181,220.4) node [anchor=north west][inner sep=0.75pt]    {$\theta $};
 
-  \end{tikzpicture}
+    \end{tikzpicture}
+
+    \caption{\label{fig:grover_step_1a} Grover's Algorithm Step 1a}
+  \end{subfigure}%
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+      %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+      %Shape: Axis 2D [id:dp29246180096889995] 
+      \draw  (390,249.6) -- (597,249.6)(410.7,111) -- (410.7,265) (590,244.6) -- (597,249.6) -- (590,254.6) (405.7,118) -- (410.7,111) -- (415.7,118)  ;
+      %Shape: Rectangle [id:dp09588343067912675] 
+      \draw   (410.7,198) -- (431,198) -- (431,249.6) -- (410.7,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp06589745305688277] 
+      \draw   (431,198) -- (451.3,198) -- (451.3,249.6) -- (431,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp1570793013008731] 
+      \draw   (451.3,198) -- (471.6,198) -- (471.6,249.6) -- (451.3,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp04465276081897107] 
+      \draw   (471.6,198) -- (491.9,198) -- (491.9,249.6) -- (471.6,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp3205832207723005] 
+      \draw   (491.9,198) -- (512.2,198) -- (512.2,249.6) -- (491.9,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp7965850817244042] 
+      \draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (512.2,198) -- (532.5,198) -- (532.5,249.6) -- (512.2,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp41205715411636223] 
+      \draw   (532.5,198) -- (552.8,198) -- (552.8,249.6) -- (532.5,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp6260805143227606] 
+      \draw   (552.8,198) -- (573.1,198) -- (573.1,249.6) -- (552.8,249.6) -- cycle ;
+
+      % Text Node
+      \draw (405,84) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
+      % Text Node
+      \draw (412.7,252.6) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
+      % Text Node
+      \draw (586,176.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$\frac{1}{\sqrt{2^{n}}}$};
+      % Text Node
+      \draw (560,256) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize N}};
+      % Text Node
+      \draw (602,251) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize items}};
+      % Text Node
+      \draw (508.2,254.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+
+    \end{tikzpicture}
+    \caption{\label{fig:grover_step_1b} Grover's Algorithm Step 1b}
+  \end{subfigure}
   \caption{\label{fig:grover_step_1} Grover's Algorithm Step 1}
 \end{figure}
 
