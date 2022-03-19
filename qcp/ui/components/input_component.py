@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from multiprocessing.sharedctypes import Value
 from PySide6 import QtWidgets
 from qcp.ui.components import AbstractComponent
 from qcp.ui.constants import INPUT_SEARCH_WIDGET_NAME, \
@@ -68,16 +67,15 @@ class InputComponent(AbstractComponent):
             elif error_label.objectName() == INPUT_TARGET_ERROR_WIDGET_NAME:
                 self.input_target_error = error_label
 
-    def _search_input_error(self, error: ValueError):
-        self.input_search_error.show()
+    def _widget_error(self, widget: QtWidgets.QLabel, err: str):
+        widget.show()
+        widget.setText(err)
 
-        self.input_search_error.setText(str(error))
+    def _search_input_error(self, error: str):
+        self._widget_error(self.input_search, error)
 
-
-    def _target_input_error(self, error: ValueError):
-        self.input_target_error.show()
-
-        self.input_target_error.setText(str(error))
+    def _target_input_error(self, error: str):
+        self._widget_error(self.input_target, error)
 
     def parse_input(self) -> int:
         self.input_search_error.hide()
@@ -91,9 +89,9 @@ class InputComponent(AbstractComponent):
             raise ve
 
         if input < 2:
-            ve = ValueError("need a minimum of two qbits")
-            self._search_input_error(str(ve))
-            raise ve
+            err = "need a minimum of two qbits"
+            self._search_input_error(err)
+            raise ValueError(err)
 
         return input
 
@@ -109,8 +107,8 @@ class InputComponent(AbstractComponent):
             raise ve
 
         if target < 0 or target >= 2**nqbits:
-            ve = ValueError("target must be within qbit state size range")
-            self._target_input_error(str(ve))
-            raise ve
+            err = "target must be within qbit state size range"
+            self._target_input_error(err)
+            raise ValueError(err)
 
         return target

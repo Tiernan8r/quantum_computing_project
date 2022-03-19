@@ -21,7 +21,6 @@ from PySide6 import QtWidgets
 from qcp.ui.components import AbstractComponent
 from qcp.ui.constants import GRAPH_WIDGET_NAME
 from qcp.matrices import Matrix
-from typing import List, Any
 
 matplotlib.use('Qt5Agg')
 
@@ -117,19 +116,19 @@ class GraphComponent(AbstractComponent):
         title = "Measured Quantum States:"
         xlabel, ylabel = "states", "probabilities"
 
-        if qregister is not None:
-            x = list(range(qregister.num_rows))
-            y = reg.measure(qregister)
+        if qregister is None:
+            return
 
-        x = [f"|{bin(i)[2:]}>" for i in x]
+        x = [f"|{bin(i)[2:]}>" for i in range(qregister.num_rows)]
+        y = reg.measure(qregister)
 
         self._plot(x, y, title=title,
-                        xlabel=xlabel, ylabel=ylabel)
+                   xlabel=xlabel, ylabel=ylabel)
 
         self.figure_canvas.draw()
 
     def _plot(self, x: list, y: list, title: str, xlabel: str,
-                   ylabel: str, legend: list = None):
+              ylabel: str, legend: list = None):
         """
         Plot the given x/y values on the matplotlib canvas, displaying with
         the given xlabel/ylabel/title and legend.
