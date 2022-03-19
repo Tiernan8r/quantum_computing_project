@@ -120,7 +120,7 @@ class GraphComponent(AbstractComponent):
         # TODO: remove placeholders
         x: List[Any] = list(range(10))
         import random
-        y = [random.randint(0, 100) for i in x]
+        y: List[float] = [random.randint(0, 100) for i in x]
 
         if qregister is not None:
             x = list(range(qregister.num_rows))
