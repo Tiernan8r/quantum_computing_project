@@ -15,10 +15,11 @@
 Contains the code required calculate the required gates used to construct
 Grover's Algorithm
 """
-import cmath, math
+import math
+import cmath
 from qcp.matrices import Matrix, DefaultMatrix, SPARSE
 import qcp.constants as c
-from qcp.matrices.types import SCALARS
+from qcp.matrices.types import MATRIX, SCALARS
 import qcp.tensor_product as tp
 from typing import List
 import enum
@@ -46,6 +47,7 @@ def multi_gate(size: int, targets: List[int], gate: Gate, phi=0j) -> Matrix:
     """
     Constructs a (2**size by 2**size) gate matrix that applies a
     specific gate to one or more specified qubits
+
     :param size int: total number of qubits in circuit
     :param targets List[int]: list of qubits the specified gate will be
                     applied to, indexing from 0.
@@ -94,6 +96,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-x gate with
     given controls and target
+
     :param int size: total number of qubits in circuit
     :param List[int] controls: List of control qubits,
         if empty, 0th bit is used as the control.
@@ -112,7 +115,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     assert target in bit_bounds, "target bit out of range"
 
     assert target not in \
-           controls, "control bits and target bit cannot be the same"
+        controls, "control bits and target bit cannot be the same"
 
     m: SPARSE = {}
 
@@ -164,6 +167,7 @@ def _generic_control(size: int, controls: List[int],
     Constructs a (2**size by 2**size) control gate with
     given controls, target and the control value.
     This is a generic implementation of the logic used for
+
     :py:meth:`qcp.gates.control_z` and :py:meth:`qcp.gates.control_phase`
     :param int size: total number of qubits in circuit
     :param List[int] controls: List of control qubits
@@ -183,7 +187,7 @@ def _generic_control(size: int, controls: List[int],
     assert target in bit_bounds, "target bit out of range"
 
     assert target not in \
-           controls, "control bits and target bit cannot be the same"
+        controls, "control bits and target bit cannot be the same"
 
     m: SPARSE = {}
 
@@ -199,8 +203,6 @@ def _generic_control(size: int, controls: List[int],
     target_bit = 2 ** target
 
     for i in range(0, n):
-        condition = (i & target_bit) == target_bit and i & mask >= mask
-
         condition1 = (i & target_bit)
         condition2 = i & mask
         val: SCALARS = 1
@@ -233,6 +235,7 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-z gate with
      given controls and target
+
     :param int size: total number of qubits in circuit
     :param List[int] controls: List of control qubits
     :param int target: target qubit the z gate will be applied to
@@ -261,6 +264,7 @@ def control_phase(size: int, controls: List[int], target: int,
     """
     Constructs a (2**size by 2**size) control-phase gate with
     given controls and target
+
     :param int size: total number of qubits in circuit
     :param List[int] controls: List of control qubits
     :param int target: target qubit the phase gate will be applied to
@@ -275,63 +279,94 @@ def control_phase(size: int, controls: List[int], target: int,
 def phase_shift(phi: complex) -> Matrix:
     """
     Creates a 2 x 2 phase shift matrix
+
     :param complex phi: angle the qubit is phase shifted by
     returns:
         Matrix: Matrix representing the phase shift gate.
     """
     return DefaultMatrix([[1, 0], [0, cmath.exp(1j * phi)]])
 
-def swap(size: int, target: List[int]) -> Matrix: 
+
+def swap(size: int, target: List[int]) -> Matrix:
     """
     Construct swap gate which swaps two states
+
     :param size int: total number of qubits in circuit
     :param target int: 2 target states the swap gate will be applied to
-    :return Matrix: Matrix representing the gate
+    returns:
+        Matrix: Matrix representing the gate
     """
     # Can be optimized further
 
     assert size > 1, "need minimum of two states"
     assert target[0] != target[1], 'Invalid swap targets!'
-    if target[0] > target[1]:
-        temp = target[1]
-        target[1] = target[0]
-        target[0] = temp
+    target = sorted(target)
 
-    swapgate = DefaultMatrix.zero(2**size) 
+    n = 2 ** size
+    swapgate: Matrix = DefaultMatrix.zeros(n, n)
+
     for i in range(2**size):
-        bit = (bin(i)[2:].zfill(size)) 
-        swapbit = (bit[0:target[0]] + bit[target[1]] 
-        + bit[target[0]+1:target[1]] + bit[target[0]] + bit[target[1]+1:] )
-        bit = int(bit,2)
-        swapbit = int(swapbit,2)
-        vec = [[0] for _ in range(2**size)]
-        swapvec = [[0] for _ in range(2**size)]
-        vec[bit] = [1]
-        swapvec[swapbit] = [1]
-        vec = DefaultMatrix(vec)
-        swapvec = DefaultMatrix(swapvec)
-        swapgate += swapvec*vec.transpose() # Outer product to create matrix
-    return swapgate    
-        
+        bit = (bin(i)[2:].zfill(size))
+        swapbit = (
+            bit[0:target[0]] +
+            bit[target[1]] +
+            bit[target[0]+1:target[1]] +
+            bit[target[0]] +
+            bit[target[1]+1:]
+        )
 
-def control_U(size: int,control: int,unitary: DefaultMatrix):
+        bit = int(bit, 2)  # type: ignore
+        swapbit = int(swapbit, 2)  # type: ignore
+        vec_entries: MATRIX = [[0] for _ in range(2**size)]
+        swapvec_entries: MATRIX = [[0] for _ in range(2**size)]
+        vec_entries[bit] = [1]  # type: ignore
+        swapvec_entries[swapbit] = [1]  # type: ignore
+        vector = DefaultMatrix(vec_entries)
+        swapvector = DefaultMatrix(swapvec_entries)
+        swapgate += swapvector*vector.transpose()  # Outer product to create matrix
+
+    return swapgate
+
+
+def control_U(size: int, control: int, unitary: Matrix):
     """
     Implement the control U gate
-    :param size int: number of qubits
-    :param control int: control qubit 
-    :param unitary DefaultMatrix: Unitary gate to apply 
-    :return Matrix: Matrix representing the gate
+
+    :param int size: number of qubits
+    :param int control: control qubit
+    :param Matrix unitary: Unitary gate to apply
+    returns:
+        Matrix: Matrix representing the gate
     """
     assert size > 1, "need minimum of two qubits"
-    n = 2 ** size
+
     targetsize = int(math.log2(unitary.num_rows))
     # Make sure the control/target bits are within the qbit size
-    from tensor_product import tensor_product as tps
     assert control in range(size), "control bit out of range"
-    assert control not in range(size,size+unitary.num_rows), "control bit cannot be in auxiliary register"
+    assert control not in range(
+        size, size+unitary.num_rows), \
+        "control bit cannot be in auxiliary register"
 
-    gate0 = DefaultMatrix([[1,0],[0,0]])
-    gate1 = DefaultMatrix([[0,0],[0,1]])
-    cu_gate = tps(multi_gate(control+targetsize,[],Gate.I),tps(gate0,multi_gate(size-1-control-targetsize,[],Gate.I)))
-    cu_gate += tps(unitary,tps(tps(multi_gate(control,[],Gate.I),gate1),multi_gate(size-1-targetsize-control,[],Gate.I)))
+    gate0 = DefaultMatrix([[1, 0], [0, 0]])
+    gate1 = DefaultMatrix([[0, 0], [0, 1]])
+
+    cu_gate = tp.tensor_product(
+        multi_gate(control+targetsize, [], Gate.I),
+        tp.tensor_product(
+            gate0,
+            multi_gate(size-1-control-targetsize, [], Gate.I)
+        )
+    )
+
+    cu_gate += tp.tensor_product(
+        unitary,
+        tp.tensor_product(
+            tp.tensor_product(
+                multi_gate(control, [], Gate.I),
+                gate1
+            ),
+            multi_gate(size-1-targetsize-control, [], Gate.I)
+        )
+    )
+
     return cu_gate
