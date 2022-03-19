@@ -809,75 +809,92 @@ Referring to Figure \ref{fig:grover_step_2}, $\ket{s}$ is reflected about $\ket{
 \vspace{5mm}
 
 \begin{figure}[h]
-  \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-  \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-  %uncomment if require: \path (0,421); %set diagram left start at 0, and has height of 421
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+      %uncomment if require: \path (0,421); %set diagram left start at 0, and has height of 421
 
-  %Shape: Axis 2D [id:dp1077584187321754] 
-  \draw  (50,245) -- (308,245)(75.8,56) -- (75.8,266) (301,240) -- (308,245) -- (301,250) (70.8,63) -- (75.8,56) -- (80.8,63)  ;
-  %Shape: Boxed Line [id:dp16066044861623174] 
-  \draw    (75.8,245) -- (300.2,185.61) ;
-  \draw [shift={(302.13,185.1)}, rotate = 165.18] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-  %Shape: Axis 2D [id:dp9734077209252769] 
-  \draw  (390,249.6) -- (597,249.6)(410.7,111) -- (410.7,265) (590,244.6) -- (597,249.6) -- (590,254.6) (405.7,118) -- (410.7,111) -- (415.7,118)  ;
-  %Shape: Rectangle [id:dp3704883525061837] 
-  \draw   (410.7,211.67) -- (431,211.67) -- (431,249.6) -- (410.7,249.6) -- cycle ;
-  %Shape: Rectangle [id:dp044532975443389855] 
-  \draw   (431,211.67) -- (451.3,211.67) -- (451.3,249.6) -- (431,249.6) -- cycle ;
-  %Shape: Rectangle [id:dp7877425682227512] 
-  \draw   (451.3,211.67) -- (471.6,211.67) -- (471.6,249.6) -- (451.3,249.6) -- cycle ;
-  %Shape: Rectangle [id:dp9424861909526165] 
-  \draw   (471.6,211.67) -- (491.9,211.67) -- (491.9,249.6) -- (471.6,249.6) -- cycle ;
-  %Shape: Rectangle [id:dp22778928407890264] 
-  \draw   (491.9,211.67) -- (512.2,211.67) -- (512.2,249.6) -- (491.9,249.6) -- cycle ;
-  %Shape: Rectangle [id:dp5422997780895953] 
-  \draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (512.2,249.6) -- (532.5,249.6) -- (532.5,162) -- (512.2,162) -- cycle ;
-  %Shape: Rectangle [id:dp7263987108332439] 
-  \draw   (532.5,211.67) -- (552.8,211.67) -- (552.8,249.6) -- (532.5,249.6) -- cycle ;
-  %Shape: Rectangle [id:dp5179786757543001] 
-  \draw   (552.8,211.67) -- (573.1,211.67) -- (573.1,249.6) -- (552.8,249.6) -- cycle ;
-  %Shape: Boxed Line [id:dp9706672155769875] 
-  \draw [draw opacity=1 ][fill opacity=1 ][line width=1.5]    (75.8,245) -- (296.23,302.34) ;
-  \draw [shift={(299.13,303.1)}, rotate = 194.58] [draw opacity=1 ][line width=1.5]    (14.21,-4.28) .. controls (9.04,-1.82) and (4.3,-0.39) .. (0,0) .. controls (4.3,0.39) and (9.04,1.82) .. (14.21,4.28)   ;
-  %Shape: Arc [id:dp872952775851549] 
-  \draw  [draw opacity=0][dash pattern={on 4.5pt off 4.5pt}] (198.95,95.79) .. controls (242.68,120.59) and (271.35,171.76) .. (265.48,219.88) .. controls (261.92,249.01) and (246.41,271.27) .. (224.47,283.34) -- (164.47,187.12) -- cycle ; \draw  [dash pattern={on 4.5pt off 4.5pt}] (198.95,95.79) .. controls (242.68,120.59) and (271.35,171.76) .. (265.48,219.88) .. controls (261.92,249.01) and (246.41,271.27) .. (224.47,283.34) ;  
-  \draw   (248.03,152.19) -- (245.19,139.5) -- (256.91,145.12) ;
-  %Shape: Arc [id:dp6976856692056519] 
-  \draw  [draw opacity=0] (142.64,228.2) .. controls (146.47,229.64) and (149.27,233.11) .. (149.38,237.04) .. controls (149.48,240.72) and (147.19,243.77) .. (143.81,245.01) -- (139.59,236.56) -- cycle ; \draw   (142.64,228.2) .. controls (146.47,229.64) and (149.27,233.11) .. (149.38,237.04) .. controls (149.48,240.72) and (147.19,243.77) .. (143.81,245.01) ;  
-  %Straight Lines [id:da21954100641972407] 
-  \draw  [dash pattern={on 4.5pt off 4.5pt}]  (398.13,200) -- (579.13,200) ;
-  %Shape: Boxed Line [id:dp005988885245785669] 
-  \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=1.5]    (75.8,245) -- (223.22,67.41) ;
-  \draw [shift={(225.13,65.1)}, rotate = 129.7] [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=1.5]    (14.21,-4.28) .. controls (9.04,-1.82) and (4.3,-0.39) .. (0,0) .. controls (4.3,0.39) and (9.04,1.82) .. (14.21,4.28)   ;
-  %Shape: Arc [id:dp47337907989211914] 
-  \draw  [draw opacity=0] (138.23,172.51) .. controls (151.09,175.41) and (161.57,183.15) .. (165.41,194.07) .. controls (168.83,203.79) and (166.27,214) .. (159.46,222.26) -- (123.73,205.22) -- cycle ; \draw   (138.23,172.51) .. controls (151.09,175.41) and (161.57,183.15) .. (165.41,194.07) .. controls (168.83,203.79) and (166.27,214) .. (159.46,222.26) ;  
+      %Shape: Axis 2D [id:dp1077584187321754] 
+      \draw  (50,245) -- (308,245)(75.8,56) -- (75.8,266) (301,240) -- (308,245) -- (301,250) (70.8,63) -- (75.8,56) -- (80.8,63)  ;
+      %Shape: Boxed Line [id:dp16066044861623174] 
+      \draw    (75.8,245) -- (300.2,185.61) ;
+      \draw [shift={(302.13,185.1)}, rotate = 165.18] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+      %Shape: Boxed Line [id:dp9706672155769875] 
+      \draw [draw opacity=1 ][fill opacity=1 ][line width=1.5]    (75.8,245) -- (296.23,302.34) ;
+      \draw [shift={(299.13,303.1)}, rotate = 194.58] [draw opacity=1 ][line width=1.5]    (14.21,-4.28) .. controls (9.04,-1.82) and (4.3,-0.39) .. (0,0) .. controls (4.3,0.39) and (9.04,1.82) .. (14.21,4.28)   ;
+      %Shape: Arc [id:dp872952775851549] 
+      \draw  [draw opacity=0][dash pattern={on 4.5pt off 4.5pt}] (198.95,95.79) .. controls (242.68,120.59) and (271.35,171.76) .. (265.48,219.88) .. controls (261.92,249.01) and (246.41,271.27) .. (224.47,283.34) -- (164.47,187.12) -- cycle ; \draw  [dash pattern={on 4.5pt off 4.5pt}] (198.95,95.79) .. controls (242.68,120.59) and (271.35,171.76) .. (265.48,219.88) .. controls (261.92,249.01) and (246.41,271.27) .. (224.47,283.34) ;  
+      \draw   (248.03,152.19) -- (245.19,139.5) -- (256.91,145.12) ;
+      %Shape: Arc [id:dp6976856692056519] 
+      \draw  [draw opacity=0] (142.64,228.2) .. controls (146.47,229.64) and (149.27,233.11) .. (149.38,237.04) .. controls (149.48,240.72) and (147.19,243.77) .. (143.81,245.01) -- (139.59,236.56) -- cycle ; \draw   (142.64,228.2) .. controls (146.47,229.64) and (149.27,233.11) .. (149.38,237.04) .. controls (149.48,240.72) and (147.19,243.77) .. (143.81,245.01) ;  
+      %Shape: Boxed Line [id:dp005988885245785669] 
+      \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=1.5]    (75.8,245) -- (223.22,67.41) ;
+      \draw [shift={(225.13,65.1)}, rotate = 129.7] [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=1.5]    (14.21,-4.28) .. controls (9.04,-1.82) and (4.3,-0.39) .. (0,0) .. controls (4.3,0.39) and (9.04,1.82) .. (14.21,4.28)   ;
+      %Shape: Arc [id:dp47337907989211914] 
+      \draw  [draw opacity=0] (138.23,172.51) .. controls (151.09,175.41) and (161.57,183.15) .. (165.41,194.07) .. controls (168.83,203.79) and (166.27,214) .. (159.46,222.26) -- (123.73,205.22) -- cycle ; \draw   (138.23,172.51) .. controls (151.09,175.41) and (161.57,183.15) .. (165.41,194.07) .. controls (168.83,203.79) and (166.27,214) .. (159.46,222.26) ;  
 
-  % Text Node
-  \draw (63,34.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
-  % Text Node
-  \draw (303,185.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s}$};
-  % Text Node
-  \draw (307,256.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s'}$};
-  % Text Node
-  \draw (173,226.4) node [anchor=north west][inner sep=0.75pt]    {$\theta $};
-  % Text Node
-  \draw (405,84) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
-  % Text Node
-  \draw (412.7,252.6) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
-  % Text Node
-  \draw (560,256) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize N}};
-  % Text Node
-  \draw (602,251) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize items}};
-  % Text Node
-  \draw (507.2,138.07) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
-  % Text Node
-  \draw (235,54.4) node [anchor=north west][inner sep=0.75pt]    {$U_{s} U_{\omega }\ket{s}$};
-  % Text Node
-  \draw (177,170.4) node [anchor=north west][inner sep=0.75pt]    {$2\theta $};
+      % Text Node
+      \draw (63,34.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+      % Text Node
+      \draw (303,185.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s}$};
+      % Text Node
+      \draw (307,256.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s'}$};
+      % Text Node
+      \draw (173,226.4) node [anchor=north west][inner sep=0.75pt]    {$\theta $};
+      % Text Node
+      \draw (235,54.4) node [anchor=north west][inner sep=0.75pt]    {$U_{s} U_{\omega }\ket{s}$};
+      % Text Node
+      \draw (177,170.4) node [anchor=north west][inner sep=0.75pt]    {$2\theta $};
 
-  \draw (530,135) node [anchor=north west][inner sep=0.75pt]    {$ >\ \frac{1}{\sqrt{2^{n}}}$};
-  \end{tikzpicture}
+    \end{tikzpicture}
+    \caption{\label{fig:grover_step_3a} Grover's Algorithm Step 3a}
+  \end{subfigure}%
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+      %uncomment if require: \path (0,421); %set diagram left start at 0, and has height of 421
+
+      %Shape: Axis 2D [id:dp9734077209252769] 
+      \draw  (390,249.6) -- (597,249.6)(410.7,111) -- (410.7,265) (590,244.6) -- (597,249.6) -- (590,254.6) (405.7,118) -- (410.7,111) -- (415.7,118)  ;
+      %Shape: Rectangle [id:dp3704883525061837] 
+      \draw   (410.7,211.67) -- (431,211.67) -- (431,249.6) -- (410.7,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp044532975443389855] 
+      \draw   (431,211.67) -- (451.3,211.67) -- (451.3,249.6) -- (431,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp7877425682227512] 
+      \draw   (451.3,211.67) -- (471.6,211.67) -- (471.6,249.6) -- (451.3,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp9424861909526165] 
+      \draw   (471.6,211.67) -- (491.9,211.67) -- (491.9,249.6) -- (471.6,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp22778928407890264] 
+      \draw   (491.9,211.67) -- (512.2,211.67) -- (512.2,249.6) -- (491.9,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp5422997780895953] 
+      \draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (512.2,249.6) -- (532.5,249.6) -- (532.5,162) -- (512.2,162) -- cycle ;
+      %Shape: Rectangle [id:dp7263987108332439] 
+      \draw   (532.5,211.67) -- (552.8,211.67) -- (552.8,249.6) -- (532.5,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp5179786757543001] 
+      \draw   (552.8,211.67) -- (573.1,211.67) -- (573.1,249.6) -- (552.8,249.6) -- cycle ;
+      %Straight Lines [id:da21954100641972407] 
+      \draw  [dash pattern={on 4.5pt off 4.5pt}]  (398.13,200) -- (579.13,200) ;
+
+      % Text Node
+      \draw (405,84) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
+      % Text Node
+      \draw (412.7,252.6) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
+      % Text Node
+      \draw (560,256) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize N}};
+      % Text Node
+      \draw (602,251) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize items}};
+      % Text Node
+      \draw (507.2,138.07) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+      % Text Node
+      \draw (530,135) node [anchor=north west][inner sep=0.75pt]    {$ >\ \frac{1}{\sqrt{2^{n}}}$};
+
+    \end{tikzpicture}
+    \caption{\label{fig:grover_step_3b} Grover's Algorithm Step 3b}
+  \end{subfigure}
   \caption{\label{fig:grover_step_3} Grover's Algorithm Step 3}
 \end{figure}
 \vspace{10mm}
