@@ -27,7 +27,7 @@ def optimum_qubit_size(precision: int, error: float):
     """
     return math.ceil(precision + math.log2(2+1/(2*error)))
 
-def QFT_Gate(size: int):
+def qft_gate(size: int):
     """
     Performs Quantum Fourier Transform, which change the basis 
     :param int: size: number of qubits
@@ -36,12 +36,12 @@ def QFT_Gate(size: int):
 
     gate = g.multi_gate(size,[],g.Gate.I)
     for i in range(size-1,-1,-1):
-        gate =  QFT_Rotation_Gate(size,i)*g.multi_gate(size,[i],g.Gate.H)*gate
+        gate =  qft_rotation_gate(size,i)*g.multi_gate(size,[i],g.Gate.H)*gate
     for i in range(int(size/2)):
         gate = g.swap(size,[i,size-1-i])*gate
     return gate    
 
-def Inverse_QFT_Gate(size: int):
+def inverse_qft_gate(size: int):
     """
     Performs Inverse Quantum Fourier Transform 
     :param int: size: number of qubits
@@ -51,10 +51,10 @@ def Inverse_QFT_Gate(size: int):
     for i in range(int(size/2)):
         gate = g.swap(size, [i,size-i-1])*gate
     for i in range(0,size):
-        gate =  g.multi_gate(size,[i],g.Gate.H)*Inverse_QFT_Rotation_Gate(size,i)*gate    
+        gate =  g.multi_gate(size,[i],g.Gate.H)*inverse_qft_rotation_gate(size,i)*gate    
     return gate
 
-def QFT_Rotation_Gate(size: int, current_qubit: int):
+def qft_rotation_gate(size: int, current_qubit: int):
     """"
     Construct the R2...R(n-i) gate for Quantum Fourier Transform
     :param size: total number of qubits, n
@@ -68,7 +68,7 @@ def QFT_Rotation_Gate(size: int, current_qubit: int):
         gate = gate * g.control_phase(size,[control],current_qubit,phi)
     return gate
 
-def Inverse_QFT_Rotation_Gate(size: int, current_qubit: int):
+def inverse_qft_rotation_gate(size: int, current_qubit: int):
     """"
     Construct the R2...R(n-i) gate for Inverse Quantum Fourier Transform
     :param size: total number of qubits, n
@@ -81,7 +81,8 @@ def Inverse_QFT_Rotation_Gate(size: int, current_qubit: int):
         gate = gate * g.control_phase(size,[control],current_qubit,phi)
     return gate
 
-class Phase_Estimation:
+class phase_estimation:
+
     def __init__(self, size: int, unitary: DefaultMatrix, eigenvector: DefaultMatrix):
         """
         Implement Phase Estimation, which requires a unitary matrix and one of its eigenvector 
@@ -140,7 +141,7 @@ class Phase_Estimation:
         """"
         Inverse QFT Gate tensor for the first register
         """
-        return tp(g.multi_gate(self.auxsize,[],g.Gate.I),Inverse_QFT_Gate(self.size))
+        return tp(g.multi_gate(self.auxsize,[],g.Gate.I),inverse_qft_gate(self.size))
 
     def construct_circuit(self):
         """
