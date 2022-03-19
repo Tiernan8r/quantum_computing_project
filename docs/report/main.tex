@@ -24,6 +24,7 @@
 \usepackage{physics}
 \usepackage{amsmath}
 \usepackage[scale=1,bmargin=1.5cm,footnotesep=1.5cm]{geometry}
+\usepackage{setspace}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -51,14 +52,14 @@
 \title{Quantum Computing Project} % Title of the assignment
 
 
-\author{Group 5 \\ \\ Tiernan Stapleton\\ Riddhi Yadav\\ Jasbeth Musumba \\ Finn Onori \\ Han Yoong  \\ Yi Sheng Ng}  % Author name and email address
+\author{Group 5 \\ \\ Tiernan Stapleton\\ Riddhi Yadav\\ Jasbeth Musumba \\ Finn John Onori \\ Han Yoong  \\ Yi Sheng Ng}  % Author name and email address
 
 \date{University of Edinburgh --- \today} % University, school and/or department name(s) and a date
 
 %----------------------------------------------------------------------------------------
 
 \begin{document}
-
+\onehalfspacing
 \maketitle % Print the title
 
 %----------------------------------------------------------------------------------------
@@ -1068,11 +1069,18 @@ Due to the constraints of currently available quantum computers, Grover's Algori
 \subsection{Git}
 
 \section{Coding with Python}
+The initial step of the project was for the group to meet and choose a language to implement the system with (options included C, C++, Java, and Haskell). However, Python was our language of choice for several reasons: Most of our team was had experience with the language, it’s more general-purpose compared to languages such as Java or Haskell, and it uses high-level syntax in comparison to languages like C and C++ making it more appropriate for a high-level task such as this.
 
+\subsection{Tensor Products}
+The tensor product function allows for the combination of qubits and gates in matrix form and was therefore needed to implement Grover's algorithm. This was done in the \textit{tensor\_product.py} file which contains the tensor\_product() function. This function takes two DefaultMatrix arrays (A and B) as inputs, and outputs their tensor product (C) as a DefaultMatrix to allow for easy display and manipulation. The tensor product was calculated by creating a new empty matrix (C) with a number of columns that is equal to the number of columns that A has multiplied by the number of columns that B has, and with a number of rows that is equal to the number of rows that A has multiplied by the number of rows that B has. This empty matrix is then iterated over itself in a 2D loop with the values in A and B being multiplied together and added to the Matrix C accordingly.
 
 \subsection{Matrices}
+While some of the team worked on the tensor product function, others worked on the single qubit quantum gates. Most of these gates were implemented by simply multiplying by the corresponding matrix, therefore rather than creating a function for each gate the appropriate matrices (IDENTITY, TWO\_HADAMARD, PAULI\_X, PAULI\_Y) were stored in a new file called constants.py this reduced the number of lines of code needed for the rigid matrices. Matrices were stored under the DefaultMatrix datatype and multiplied by appropriate qubits to simulate the gates, qubits corresponding to 0 and 1 were also stored in this file (ZERO\_VECTOR, ONE\_VECTOR) to improve modularity. The only single qubit gate that didn’t have a matrix stored in the constants.py file was the phase shift gate, since it depends on a rotation angle it’s matrix is changes depending on the angle, therefore a function called phase\_shift() was created which takes in a complex datatype as an input returns an arbitrary matrix representing the phase shift gate of the corresponding inputted angle.
+
 \subsection{Gates}
-\subsection{Tensor Products}
+Once all the single qubit gates were operating correctly larger matrices representing larger gates which could take in more than one qubit as an input could be constructed from the smaller gates. One of the first large gates that was constructed was represented by a function called multi\_gate() which chains multiple single qubit gates together on specified target input qubits. The function takes in the following variables as inputs: size (int, represents the number of qubits being chained together), targets (list, which qubits to have the gate applied to), gate (Gate, which single qubit gate needs to be applied), and phi (complex, only for phase gates as it represents the amount of rotation necessary). multi\_gate() then computes the values of a large matrix by taking the specified gate and multiplying it by itself in a loop over the input size, if the loop index is currently one of the target qubits, otherwise it multiplies the matrix by an appropriately sized identity matrix. This corresponds to having many gates chained together in a row with many qubits. This will be important when many Hadamard gates need to be chained together to construct the superposition required when searching for an index in Grover’s algorithm.
+
+The other gates such as the control\_(x/y/z/phase) gates also has functions dedicated to them which constructed matrices of arbitrary size to correspond with the number of qubits they are operating on, various assertions were put in place to make sure the inputs of the function fit well, however these gates are much simpler than the multi\_gate() function. In short, single qubit gates had their corresponding matrices stored in a constants file while larger gates had functions dedicated to them. This design choice was made to improve efficiency and modularity as a large series of gates could be constructed from a single function, the multi gate function covers multiple gates making the program once again more efficient by requiring fewer lines of code.
 
 \section{Implementation}
 
