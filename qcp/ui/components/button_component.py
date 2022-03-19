@@ -18,6 +18,8 @@ from qcp.ui.components import AbstractComponent
 from qcp.ui.constants import BUTTON_CANCEL_SEARCH_BUTTON, \
     BUTTON_SEARCH_BUTTON, BUTTON_PROGRESS_BAR, BUTTON_PROGRESS_BAR_TICK_RATE, \
     THREAD_PAUSE
+from typing import List
+from qcp.ui.components import InputComponent
 
 
 class ButtonComponent(AbstractComponent):
@@ -26,7 +28,7 @@ class ButtonComponent(AbstractComponent):
     """
 
     def __init__(self, main_window: QtWidgets.QMainWindow,
-                 search: QtWidgets.QTextEdit, target: QtWidgets.QLineEdit,
+                 input_component: InputComponent,
                  *args, **kwargs):
         """
         Initialise the ButtonComponent object, referencing the main window
@@ -42,11 +44,13 @@ class ButtonComponent(AbstractComponent):
         """
         super().__init__(main_window, *args, **kwargs)
 
+        self.input_component = input_component
+
     def setup_signals(self):
         """
         Setup what happens when the buttons in the UI are clicked.
         """
-        self._find_widgets()
+        super().setup_signals()
 
         self.progress_bar.hide()
         self.progress_bar.reset()
@@ -62,13 +66,14 @@ class ButtonComponent(AbstractComponent):
         self.cancel_button.clicked.connect(self.cancel_search)
 
     def _find_widgets(self):
-        buttons = self.main_window.ui_component.findChildren(
-            QtWidgets.QPushButton)
+        buttons: List[QtWidgets.QPushButton] = \
+            self.main_window.ui_component.findChildren(
+                QtWidgets.QPushButton)
         for b in buttons:
             if b.objectName() == BUTTON_SEARCH_BUTTON:
                 self.search_button = b
             if b.objectName() == BUTTON_CANCEL_SEARCH_BUTTON:
-                self.cancel_button: QtWidgets.QPushButton = b
+                self.cancel_button = b
 
         progress_bars = self.main_window.ui_component.findChildren(
             QtWidgets.QProgressBar)
@@ -88,13 +93,25 @@ class ButtonComponent(AbstractComponent):
         overtime, to visualise that the computer is running a calculation in
         the background.
         """
+        nqbits = 0
+        try:
+            nqbits = self.input_component.parse_input()
+        except ValueError as ve:
+            print(ve)
+            return
+
+        target = 0
+        try:
+            target = self.input_component.parse_target(nqbits)
+        except ValueError as ve:
+            print(ve)
+            return
+
         self.cancel_button.show()
 
         self.tick_progress_bar()
-        self.main_window.simulator.run_simulation()
-        time.sleep(THREAD_PAUSE)
 
-        self.pb_thread.exiting = True
+        self.main_window.simulator.run_simulation(nqbits, target)
 
     def cancel_search(self):
         """
