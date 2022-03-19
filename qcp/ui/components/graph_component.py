@@ -21,7 +21,6 @@ from PySide6 import QtWidgets
 from qcp.ui.components import AbstractComponent
 from qcp.ui.constants import GRAPH_WIDGET_NAME
 from qcp.matrices import Matrix
-from typing import List, Any
 
 matplotlib.use('Qt5Agg')
 
@@ -117,25 +116,19 @@ class GraphComponent(AbstractComponent):
         title = "Measured Quantum States:"
         xlabel, ylabel = "states", "probabilities"
 
-        # TODO: remove placeholders
-        x: List[Any] = list(range(10))
-        import random
-        y: List[float] = [random.randint(0, 100) for i in x]
+        if qregister is None:
+            return
 
-        if qregister is not None:
-            x = list(range(qregister.num_rows))
-            y = reg.measure(qregister)
+        x = [f"|{bin(i)[2:]}>" for i in range(qregister.num_rows)]
+        y = reg.measure(qregister)
 
-        x = [f"|{bin(i)[2:]}>" for i in x]
-
-        self._plot_line(x, y, title=title,
-                        xlabel=xlabel, ylabel=ylabel)
+        self._plot(x, y, title=title,
+                   xlabel=xlabel, ylabel=ylabel)
 
         self.figure_canvas.draw()
 
-    def _plot_line(self, x: list, y: list, title: str, xlabel: str,
-                   ylabel: str, legend: list = None,
-                   line_style="-"):
+    def _plot(self, x: list, y: list, title: str, xlabel: str,
+              ylabel: str, legend: list = None):
         """
         Plot the given x/y values on the matplotlib canvas, displaying with
         the given xlabel/ylabel/title and legend.
@@ -149,7 +142,7 @@ class GraphComponent(AbstractComponent):
         :param str line_style: The line style for the plot, defaults to solid
             lines
         """
-        self.axes.plot(x, y, line_style)
+        self.axes.bar(x, y)
 
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
