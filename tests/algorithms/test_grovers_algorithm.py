@@ -155,7 +155,6 @@ def test_construct_circuit():
     grov = ga.Grovers(2, 0)
 
     circ4x4 = grov.construct_circuit()
-    print(circ4x4)
     expected4x4 = 0.5 * DefaultMatrix([
         [1, 1, 1, 1],
         [1, -1, 1, -1],
