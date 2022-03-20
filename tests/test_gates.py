@@ -362,3 +362,28 @@ def test_swap():
         [4]  # |11>
     ])
     assert transformed_two_qbits.get_state() == expected_transform.get_state()
+
+    swp_8x8 = gts.swap(3, 0, 1)
+    three_qbits = DefaultMatrix([
+        [1],  # |000>
+        [2],  # |001>
+        [3],  # |010>
+        [4],  # |011>
+        [5],  # |100>
+        [6],  # |101>
+        [7],  # |110>
+        [8]  # |111>
+    ])
+    transform_3qbits = swp_8x8 * three_qbits
+    expected_3qbits = DefaultMatrix([
+        [1],  # |000>
+        [2],  # |001>
+        [5],  # |010>
+        [6],  # |011>
+        [3],  # |100>
+        [4],  # |101>
+        [7],  # |110>
+        [8]  # |111>
+    ])
+
+    assert transform_3qbits.get_state() == expected_3qbits.get_state()
