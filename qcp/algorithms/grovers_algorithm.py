@@ -20,7 +20,7 @@ from typing import List, Tuple
 
 import qcp.gates as g
 import qcp.register as reg
-from qcp.algorithms import AbstractAlgorithm
+from qcp.algorithms import GeneralAlgorithm
 from qcp.matrices import MATRIX, DefaultMatrix, Matrix
 
 
@@ -44,7 +44,7 @@ def pull_set_bits(n: int) -> List[int]:
     return bits
 
 
-class Grovers(AbstractAlgorithm):
+class Grovers(GeneralAlgorithm):
 
     def __init__(self, size: int, target_state: int):
         """

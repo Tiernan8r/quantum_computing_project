@@ -24,7 +24,7 @@ import qcp.register as reg
 from qcp.matrices import MATRIX, DefaultMatrix, Matrix
 
 
-class AbstractAlgorithm(abc.ABC):
+class GeneralAlgorithm(abc.ABC):
 
     def __init__(self, size: int):
         assert size > 1, "need minimum of two qbits"

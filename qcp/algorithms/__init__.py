@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.circuits.abstract_circuit import AbstractAlgorithm  # noqa: F401
-from qcp.circuits.grovers_algorithm import Grovers  # noqa: F401
-from qcp.circuits.phase_estimation import PhaseEstimation  # noqa: F401
-from qcp.circuits.sudoku import sudoku  # noqa: F401
+from qcp.algorithms.abstract_algorithm import GeneralAlgorithm  # noqa: F401
+from qcp.algorithms.grovers_algorithm import Grovers  # noqa: F401
+from qcp.algorithms.phase_estimation import PhaseEstimation  # noqa: F401
+from qcp.algorithms.sudoku import Sudoku  # noqa: F401

@@ -1,6 +1,6 @@
 import math
 import cmath
-from qcp.algorithms.abstract_algorithm import AbstractAlgorithm
+from qcp.algorithms.abstract_algorithm import GeneralAlgorithm
 from qcp.matrices import DefaultMatrix, Matrix
 import qcp.gates as g
 from qcp.matrices.types import MATRIX
@@ -103,7 +103,7 @@ def inverse_qft_rotation_gate(size: int, current_qubit: int) -> Matrix:
     return gate
 
 
-class PhaseEstimation(AbstractAlgorithm):
+class PhaseEstimation(GeneralAlgorithm):
 
     def __init__(self, size: int, unitary: Matrix, eigenvector: Matrix):
         """
