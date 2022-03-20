@@ -271,6 +271,6 @@ def parse_cli(args: List[str]):
     alg_opt = AlgorithmOption(alg_opt_str)
 
     if TARGET_LONG not in flags:
-        flags[TARGET_LONG] = DEFAULT_TARGET
+        flags[TARGET_LONG] = str(DEFAULT_TARGET)
 
     return alg_opt, determine(alg_opt, vals, flags)

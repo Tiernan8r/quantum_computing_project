@@ -13,7 +13,7 @@
 # limitations under the License.
 import cmath
 import enum
-from typing import List, Type, Union
+from typing import List
 
 import qcp.constants as c
 from qcp.algorithms import Grovers, PhaseEstimation, Sudoku
@@ -31,12 +31,9 @@ class AlgorithmOption(enum.Enum):
 
     @classmethod
     def list(cls) -> List[str]:
-        return list(map(lambda ao: ao.value, cls))
+        return list(map(lambda ao: ao.value, cls))  # type: ignore
 
-    def get_constructor(self) -> Union[
-        Type[Grovers], Type[PhaseEstimation], Type[Sudoku], None
-    ]:
-
+    def get_constructor(self):
         if self is AlgorithmOption.Grovers:
             return Grovers
 
@@ -54,7 +51,7 @@ class UnitaryMatrices(enum.Enum):
 
     @classmethod
     def list(cls):
-        return list(map(lambda um: um.value, cls))
+        return list(map(lambda um: um.value, cls))  # type: ignore
 
     def get(self, val: float = 0.0) -> Matrix:
         if self is UnitaryMatrices.HADAMARD:
