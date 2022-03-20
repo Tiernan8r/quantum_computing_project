@@ -85,7 +85,7 @@ class Sudoku(GeneralAlgorithm):
         qubits applying the oracle and diffuser twice to maximise the amplitude
         of the solution
 
-        :return:
+        returns:
             Matrix representing our completed Grover's algorithm for sudoku
         """
         had = g.multi_gate(9, [0, 1, 2, 3], g.Gate.H)
