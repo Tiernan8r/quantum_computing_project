@@ -7,6 +7,8 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   qcp.algorithms
+   qcp.cli
    qcp.matrices
    qcp.ui
 
@@ -25,14 +27,6 @@ qcp.gates module
 ----------------
 
 .. automodule:: qcp.gates
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-qcp.grovers\_algorithm module
------------------------------
-
-.. automodule:: qcp.grovers_algorithm
    :members:
    :undoc-members:
    :show-inheritance:
