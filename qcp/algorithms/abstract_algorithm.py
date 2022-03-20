@@ -15,12 +15,9 @@
 Constructs the quantum register, circuits of composite gates, and runs the
 simulation of Grover's Algorithm
 """
-import random
 import abc
-from typing import List, Tuple
+from typing import Tuple
 
-import qcp.gates as g
-import qcp.register as reg
 from qcp.matrices import MATRIX, DefaultMatrix, Matrix
 
 
@@ -63,7 +60,7 @@ class GeneralAlgorithm(abc.ABC):
         """
         if self.circuit is not None:
             self.state = self.circuit * self.state
-    
+
         return self.state
 
     def measure(self) -> Tuple[int, float]:

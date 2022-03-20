@@ -1,12 +1,13 @@
-import math
 import cmath
+import math
+import random
+
+import qcp.gates as g
+import qcp.register as reg
+import qcp.tensor_product as tp
 from qcp.algorithms.abstract_algorithm import GeneralAlgorithm
 from qcp.matrices import DefaultMatrix, Matrix
-import qcp.gates as g
 from qcp.matrices.types import MATRIX
-import qcp.tensor_product as tp
-import qcp.register as reg
-import random
 
 
 def is_unitary(input: Matrix) -> bool:

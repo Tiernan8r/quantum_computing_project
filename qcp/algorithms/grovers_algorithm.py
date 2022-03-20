@@ -57,12 +57,10 @@ class Grovers(GeneralAlgorithm):
         :param int target_state: specific state we want to target/select
         """
         assert target_state < (2 ** size), \
-            "target must be within qbit state indices"
+            "target index must be within number of qbit indices"
         self.target = target_state
 
         super().__init__(size)
-
-        self.circuit = self.construct_circuit()
 
     def single_target_oracle(self) -> Matrix:
         """

@@ -46,7 +46,7 @@ def test_init():
     # Target out of range
     with pytest.raises(AssertionError) as ae2:
         _ = ga.Grovers(2, 10)
-    assert ae2.match("target must be within qbit state indices")
+    assert ae2.match("target index must be within number of qbit indices")
 
     # Succeed:
     grov = ga.Grovers(2, 0)
@@ -155,6 +155,7 @@ def test_construct_circuit():
     grov = ga.Grovers(2, 0)
 
     circ4x4 = grov.construct_circuit()
+    print(circ4x4)
     expected4x4 = 0.5 * DefaultMatrix([
         [1, 1, 1, 1],
         [1, -1, 1, -1],
