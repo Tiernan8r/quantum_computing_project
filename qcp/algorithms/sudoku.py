@@ -1,8 +1,8 @@
-from qcp.matrices import DefaultMatrix, Matrix, MATRIX
-import qcp.register as reg
-import qcp.gates as g
 import random
 
+import qcp.gates as g
+import qcp.register as reg
+from qcp.algorithms import GeneralAlgorithm
 
 # This class uses Grover's algorithm to solve the 2x2 sudoku board with 4
 # entries V0, V1, V2, V3 and two number choices, 0 & 1
@@ -18,24 +18,12 @@ import random
 # is met. And the final qubit representing whether all the conditions have
 # been met.
 #
-class sudoku:
+
+
+class Sudoku(GeneralAlgorithm):
 
     def __init__(self):
-        self.size = 9
-        self.state = self.initial_state()
-
-        self.circuit = self.construct_circuit()
-
-    def initial_state(self) -> Matrix:
-        """
-        Creates a (2**9 x 1) state vector corresponding to |1..0>
-
-        returns:
-            Matrix: the state vector
-        """
-        entries: MATRIX = [[0] for _ in range(2 ** self.size)]
-        entries[0][0] = 1
-        return DefaultMatrix(entries)
+        super().__init__(9)
 
     def oracle(self):
         """
@@ -70,6 +58,7 @@ class sudoku:
         cond3 = g.control_x(9, [3], 6) * g.control_x(9, [1], 6)
         cond4 = g.control_x(9, [3], 7) * g.control_x(9, [2], 7)
         cond = cond4 * cond3 * cond2 * cond1
+
         return cond
 
     def diffusion(self):
@@ -85,6 +74,7 @@ class sudoku:
         cz = g.control_z(9, [0, 1, 2], 3)
 
         diff = had * xs * cz * xs * had
+
         return diff
 
     def construct_circuit(self):
@@ -95,7 +85,7 @@ class sudoku:
         qubits applying the oracle and diffuser twice to maximise the amplitude
         of the solution
 
-        :return:
+        returns:
             Matrix representing our completed Grover's algorithm for sudoku
         """
         had = g.multi_gate(9, [0, 1, 2, 3], g.Gate.H)
@@ -105,15 +95,8 @@ class sudoku:
             circuit = self.oracle() * circuit
 
             circuit = self.diffusion() * circuit
-        return circuit
 
-    def run(self):
-        """
-        Multiplies our circuit with the initial state
-        :return: Column matrix representation of the final state
-        """
-        self.state = self.circuit * self.state
-        return self.state
+        return circuit
 
     def measure_state(self):
         """
@@ -130,6 +113,7 @@ class sudoku:
         observed = random.choices(
             [i for i in range(len(p))], p, k=1)  # type: ignore
         probability = p[observed[0]]
+
         return observed[0], probability
 
     def measure_solution(self):
@@ -151,19 +135,5 @@ class sudoku:
         chosen_prob = sol_probs[observed[0]]
 
         vx = format(observed[0], '04b')
+
         return [vx[-4], vx[-3], vx[-2], vx[-1]], chosen_prob
-
-
-def example():
-    s = sudoku()
-    s.run()
-    o1, p1 = s.measure_state()
-    vx, p = s.measure_solution()
-
-    print("Using Grover's algorithm the measured solution is:")
-    print("V0 = " + vx[0] + " V1 = " + vx[1] + " V2 = " + vx[2]
-          + " V3 = " + vx[3])
-    print("The probability of measuring this solution is: " + str(p))
-
-
-example()

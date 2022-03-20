@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import qcp.grovers_algorithm as ga
+import qcp.algorithms.grovers_algorithm as ga
 from qcp.matrices import DefaultMatrix
 import tests.test_helpers as h
 import pytest
@@ -46,7 +46,7 @@ def test_init():
     # Target out of range
     with pytest.raises(AssertionError) as ae2:
         _ = ga.Grovers(2, 10)
-    assert ae2.match("target must be within qbit state indices")
+    assert ae2.match("target index must be within number of qbit indices")
 
     # Succeed:
     grov = ga.Grovers(2, 0)
