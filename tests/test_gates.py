@@ -442,21 +442,3 @@ def test_control_u():
     ])
 
     assert cu_8x8.get_state() == expected_8x8.get_state()
-
-# vec=DefaultMatrix([[0] for _ in range(4)])
-# vec[0] = [1]
-# print(QFT_Gate(2)*vec)
-# phase = 0.25
-# unitary = DefaultMatrix([[1,0],[0,cmath.exp(2j*cmath.pi*phase)]])
-# eigenvec = DefaultMatrix([[0],[1]])
-# PE = PhaseEstimation(2,unitary,eigenvec)
-# PE.run()
-# print(PE.measure())
-
-# vec=DefaultMatrix([[0] for _ in range(8)])
-# vec[6] = [1]
-# print( Inverse_QFT_Gate(3)*vec)
-
-# print(g.control_phase(3,[0],1,math.pi))
-# print('\n')
-# print(g.control_phase(3,[2],1,math.pi))
