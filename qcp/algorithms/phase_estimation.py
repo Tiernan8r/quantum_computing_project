@@ -50,7 +50,7 @@ def qft_gate(size: int) -> Matrix:
         gate = qft_rotation_gate(
             size, i)*g.multi_gate(size, [i], g.Gate.H)*gate
     for i in range(int(size/2)):
-        gate = g.swap(size, [i, size-1-i])*gate
+        gate = g.swap(size, i, size-1-i)*gate
     return gate
 
 
@@ -63,7 +63,7 @@ def inverse_qft_gate(size: int) -> Matrix:
     """
     gate = g.multi_gate(size, [], g.Gate.I)
     for i in range(int(size/2)):
-        gate = g.swap(size, [i, size-i-1])*gate
+        gate = g.swap(size, i, size-i-1)*gate
     for i in range(0, size):
         gate = g.multi_gate(size, [i], g.Gate.H) * \
             inverse_qft_rotation_gate(size, i)*gate
@@ -159,7 +159,7 @@ class PhaseEstimation(GeneralAlgorithm):
         for i in range(0, self.size):
             for j in range(2**rep):
                 n = self.size-1-i
-                gate = g.control_U(totalsize, n, self.unitary) * gate
+                gate = g.control_u(totalsize, n, self.unitary) * gate
             rep += 1
         return gate
 

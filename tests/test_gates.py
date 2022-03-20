@@ -311,6 +311,138 @@ def test_phase_shift():
     h.compare_matrices(ps3, expected3)
     h.compare_matrices(ps4, expected4)
 
+
+def test_swap():
+    # Gate needs a minimum of two qubits to make sense
+    with pytest.raises(AssertionError) as ae1:
+        gts.swap(1, 0, 1)
+    assert ae1.match("need minimum of two qbits")
+
+    # Targets cannot be the same
+    with pytest.raises(AssertionError) as ae2:
+        gts.swap(2, 0, 0)
+    assert ae2.match("swap targets must be different")
+
+    # Target bits needs to be within qubit range:
+    with pytest.raises(AssertionError) as ae3:
+        gts.swap(2, 4, 0)
+    assert ae3.match("first target bit out of range")
+
+    # Target bits needs to be within qubit range:
+    with pytest.raises(AssertionError) as ae4:
+        gts.swap(2, 0, 4)
+    assert ae4.match("second target bit out of range")
+
+    swp_4x4_1 = gts.swap(2, 0, 1)
+    expected_4x4 = DefaultMatrix([
+        [1, 0, 0, 0],
+        [0, 0, 1, 0],
+        [0, 1, 0, 0],
+        [0, 0, 0, 1]
+    ])
+    assert swp_4x4_1.get_state() == expected_4x4.get_state()
+
+    # Target bit order shouldn't matter
+    swp_4x4_2 = gts.swap(2, 1, 0)
+    assert swp_4x4_2.get_state() == expected_4x4.get_state()
+
+    # Verify the gate swaps the bits as expected:
+    two_qubits = DefaultMatrix([
+        [1],  # |00>
+        [2],  # |01>
+        [3],  # |10>
+        [4]  # |11>
+    ])
+
+    transformed_two_qbits = swp_4x4_1 * two_qubits
+    expected_transform = DefaultMatrix([
+        [1],  # |00>
+        [3],  # |01>
+        [2],  # |10>
+        [4]  # |11>
+    ])
+    assert transformed_two_qbits.get_state() == expected_transform.get_state()
+
+    swp_8x8 = gts.swap(3, 0, 1)
+    three_qbits = DefaultMatrix([
+        [1],  # |000>
+        [2],  # |001>
+        [3],  # |010>
+        [4],  # |011>
+        [5],  # |100>
+        [6],  # |101>
+        [7],  # |110>
+        [8]  # |111>
+    ])
+    transform_3qbits = swp_8x8 * three_qbits
+    expected_3qbits = DefaultMatrix([
+        [1],  # |000>
+        [2],  # |001>
+        [5],  # |010>
+        [6],  # |011>
+        [3],  # |100>
+        [4],  # |101>
+        [7],  # |110>
+        [8]  # |111>
+    ])
+
+    assert transform_3qbits.get_state() == expected_3qbits.get_state()
+
+
+def test_control_u():
+    # Gate needs a minimum of two qubits to make sense
+    with pytest.raises(AssertionError) as ae1:
+        gts.control_u(1, 0, None)
+    assert ae1.match("need minimum of two qubits")
+
+    # Control bits need to be within qubit range:
+    with pytest.raises(AssertionError) as ae2:
+        gts.control_u(2, 2, None)
+    assert ae2.match("control bit out of range")
+
+    U = DefaultMatrix([
+        [2, 3],
+        [4, 5]
+    ])
+    # Use on too small of a control gate
+    with pytest.raises(AssertionError) as ae3:
+        gts.control_u(2, 0, U)
+    assert ae3.match("unitary matrix too big")
+
+    # Create a simple 4x4 CU gate:
+    u = DefaultMatrix([[2]])
+    cu_4x4_1 = gts.control_u(2, 0, u)
+    expected_4x4_1 = DefaultMatrix([
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 2, 0],
+        [0, 0, 0, 2]
+    ])
+    assert cu_4x4_1.get_state() == expected_4x4_1.get_state()
+
+    cu_4x4_2 = gts.control_u(2, 1, u)
+    expected_4x4_2 = DefaultMatrix([
+        [1, 0, 0, 0],
+        [0, 2, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 2]
+    ])
+    assert cu_4x4_2.get_state() == expected_4x4_2.get_state()
+
+    cu_8x8 = gts.control_u(3, 0, U)
+    expected_8x8 = DefaultMatrix([
+        [1,  0,  0,  0,  0,  0,  0,  0],
+        [0,  1,  0,  0,  0,  0,  0,  0],
+        [0,  0,  2,  0,  0,  0,  3,  0],
+        [0,  0,  0,  2,  0,  0,  0,  3],
+        [0,  0,  0,  0,  1,  0,  0,  0],
+        [0,  0,  0,  0,  0,  1,  0,  0],
+        [0,  0,  4,  0,  0,  0,  5,  0],
+        [0,  0,  0,  4,  0,  0,  0,  5]
+    ])
+
+    assert cu_8x8.get_state() == expected_8x8.get_state()
+
 # vec=DefaultMatrix([[0] for _ in range(4)])
 # vec[0] = [1]
 # print(QFT_Gate(2)*vec)

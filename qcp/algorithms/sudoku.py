@@ -85,7 +85,7 @@ class Sudoku(GeneralAlgorithm):
         qubits applying the oracle and diffuser twice to maximise the amplitude
         of the solution
 
-        :return:
+        returns:
             Matrix representing our completed Grover's algorithm for sudoku
         """
         had = g.multi_gate(9, [0, 1, 2, 3], g.Gate.H)
@@ -137,18 +137,3 @@ class Sudoku(GeneralAlgorithm):
         vx = format(observed[0], '04b')
 
         return [vx[-4], vx[-3], vx[-2], vx[-1]], chosen_prob
-
-
-# def example():
-#     s = Sudoku()
-#     s.run()
-#     o1, p1 = s.measure_state()
-#     vx, p = s.measure_solution()
-
-#     print("Using Grover's algorithm the measured solution is:")
-#     print("V0 = " + vx[0] + " V1 = " + vx[1] + " V2 = " + vx[2]
-#           + " V3 = " + vx[3])
-#     print("The probability of measuring this solution is: " + str(p))
-
-
-# example()

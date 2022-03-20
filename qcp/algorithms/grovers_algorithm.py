@@ -60,6 +60,9 @@ class Grovers(GeneralAlgorithm):
             "target index must be within number of qbit indices"
         self.target = target_state
 
+        # can only reflect size-1 times to get maximum probability
+        self.max_reflections = size - 1
+
         super().__init__(size)
 
     def single_target_oracle(self) -> Matrix:
@@ -106,9 +109,6 @@ class Grovers(GeneralAlgorithm):
         """
         self.oracle = self.single_target_oracle()
         self.diffuser = self.diffusion()
-
-        # can only reflect size-1 times to get maximum probability
-        self.max_reflections = self.size - 1
 
         circuit = g.multi_gate(self.size, [i for i in range(0, self.size)],
                                g.Gate.H)
