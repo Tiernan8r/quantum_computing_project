@@ -13,20 +13,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Entrypoint for the Simulator
+CLI initialiser to parse CLI options for the Algorithm, and to run the
+computation
 """
 import os
 import sys
 
-# Required to make sure the module 'qcp' is accessible when the
-# main.py file is run directly
+# Required to guarantee that the 'qcp' module is accessible when
+# this file is run directly.
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
-import qcp.cli as cli
-from qcp.algorithms import Grovers, PhaseEstimation, Sudoku
-from qcp.algorithms.options import AlgorithmOption
-from qcp.matrices import Matrix
+from typing import List, Tuple
+
+from qcp.grovers_algorithm import Grovers
+
+#: The default target state the Oracle will search for
+TARGET_DEF = 5
+#: The CLI help text
+USAGE_STR = f"""USAGE:
+{sys.argv[0]} [FLAGS] nqbits
+
+ARGS:
+    nqbits          The number of qbit states to simulate
+FLAGS:
+    -t/--target     The target state, defaults to {TARGET_DEF}
+    -h/--help       Display this prompt"""
 
 
 def main():
@@ -34,20 +46,71 @@ def main():
     The entrypoint for the CLI, parses the cli options and passes the read
     options to the function to run the computation.
     """
-    # Ignore the first entry in sys.argv as it is just the program name
-    alg_opt, parsed_tuple = cli.parse_cli(sys.argv[1:])
+    nqbits, target = parse_cli(sys.argv)
+    assert nqbits > 1, "must have a minimum of a 2 qbit state"
 
-    if alg_opt is AlgorithmOption.Grovers:
-        compute_grovers(*parsed_tuple)
-    elif alg_opt is AlgorithmOption.PhaseEstimation:
-        compute_phase_estimation(*parsed_tuple)
-    elif alg_opt is AlgorithmOption.Sudoku:
-        compute_sudoku()
+    compute(nqbits, target)
+
+
+def usage():
+    """
+    Prints the help text to stdout, and exits with error code 0.
+    """
+    print(USAGE_STR)
+    exit(0)
+
+
+def parse_cli(args: List[str]) -> Tuple[int, int]:
+    """
+    Parses the sys.argv CLI options to read the value for the optional flags
+    (if provided), and the required CLI arguments.
+
+    :param args List[str]: The list of CLI inputs from sys.argv
+    returns:
+        Tuple[int, int]: The two CLI values,
+        firstly the required 'nqbits' parameter,
+        and the second optional 'target' parameter.
+    """
+    num_args = len(args)
+    vals = []
+    targ = TARGET_DEF
+
+    # ignore the 1st arg as it is the program name
+    i = 1
+    while i < num_args:
+        arg = args[i]
+        if arg == "-h" or arg == "--help":
+            usage()
+        elif arg == "-t" or arg == "--target":
+            if i + 1 > num_args:
+                print("Must provide a target value!", file=sys.stderr)
+                exit(1)
+            try:
+                targ = int(args[i+1])
+            except ValueError:
+                print("target state must be an integer", file=sys.stderr)
+                exit(1)
+            i += 1
+        # Falls into the everything else category
+        else:
+            vals.append(arg)
+        i += 1
+
+    nqbits = 1
+    if len(vals) > 0:
+        try:
+            nqbits = int(vals[0])
+        except ValueError:
+            print("number of qbits must be an integer", file=sys.stderr)
+            exit(1)
     else:
-        print("D'oh!")  # This is an impossible scenario...
+        print("Must provide the number of qbits to simulate", file=sys.stderr)
+        exit(1)
+
+    return (nqbits, targ)
 
 
-def compute_grovers(nqbits: int, target: int):
+def compute(nqbits: int, target: int):
     """
     Run the Grover's Algorithm simulation and print the observed state to
     stdout with the probability of observing that state.
@@ -55,58 +118,10 @@ def compute_grovers(nqbits: int, target: int):
     :param int nqbits: The number of qbits to simulate in the simulator
     :param int target: The index of the target qbit state
     """
-    print("Simulating Grover's Algorithm...")
-
-    try:
-        grover = Grovers(nqbits, target)
-        grover.run()
-    except AssertionError as ae:
-        print(ae, file=sys.stderr)
+    grover = Grovers(nqbits, target)
+    grover.run()
 
     m, p = grover.measure()
-
-    print("Observed state: |" + bin(m)[2:] + ">")
-    print("With probability: " + str(p))
-
-
-def compute_phase_estimation(nqbits: int, unitary: Matrix, eigenvec: Matrix):
-    """
-    Run the Phase Estimation Algorithm simulation and print the observed state
-    to stdout with the probability of observing that state.
-
-    :param int nqbits: The number of qbits to simulate in the simulator
-    :param Matrix unitary: The unitary matrix to use in the algorithm
-    :param Matrix eigenvec: The eigenvector to use in the algorithm
-    """
-    print("Simulating the Phase Estimation Algorithm...")
-
-    try:
-        phase_est = PhaseEstimation(nqbits, unitary, eigenvec)
-        phase_est.run()
-    except AssertionError as ae:
-        print(ae, file=sys.stderr)
-
-    m, p = phase_est.measure()
-
-    print("Observed state: |" + bin(int(m))[2:] + ">")
-    print("With probability: " + str(p))
-
-
-def compute_sudoku():
-    """
-    Run the Sudoku simulation and print the observed state to
-    stdout with the probability of observing that state.
-    """
-    print("Simulating the Sudoku Search...")
-
-    try:
-        sudoku = Sudoku()
-        sudoku.run()
-    except AssertionError as ae:
-        print(ae, file=sys.stderr)
-
-    m, p = sudoku.measure()
-
     print("Observed state: |" + bin(m)[2:] + ">")
     print("With probability: " + str(p))
 
