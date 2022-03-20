@@ -1161,6 +1161,9 @@ return diff
 \end{file}
 
 \subsection{Construction and Running}
+
+Once all the special quantum gates previously discussed of Grover's algorithm are created, the next step is to simply combine them into a single large circuit by multiplying their matrices together which is done in the \textit{construct\_circuit()} method shown below.
+
 \begin{file}[def construct\_circuit(self) -> Matrix:]
 \begin{lstlisting}[language=Python]
 circuit = g.multi_gate(self.size, 
@@ -1177,21 +1180,21 @@ return circuit
 \end{lstlisting}
 \end{file}
 
-% Warning text, with a custom title
-\begin{warn}[Notice:]
-  In congue risus leo, in gravida enim viverra id. Donec eros mauris, bibendum vel dui at, tempor commodo augue. In vel lobortis lacus. Nam ornare ullamcorper mauris vel molestie. Maecenas vehicula ornare turpis, vitae fringilla orci consectetur vel. Nam pulvinar justo nec neque egestas tristique. Donec ac dolor at libero congue varius sed vitae lectus. Donec et tristique nulla, sit amet scelerisque orci. Maecenas a vestibulum lectus, vitae gravida nulla. Proin eget volutpat orci. Morbi eu aliquet turpis. Vivamus molestie urna quis tempor tristique. Proin hendrerit sem nec tempor sollicitudin.
-\end{warn}
+First the method uses the multi-gate function to chain together a large set of Hadamard gates to create the superposition required. In Grover's algorithm the oracle and diffusion operator are repeat a number of times that is proportional to the number of qubits,  which is done through a running total where the oracle and diffusion operators are multiplied by the current matrix of the circuit and then the attribute max\_reflections is decreased by 1, this continues until max\_reflections equals zero at which point the matrix representing the circuit is returned. The only other methods left in the class are the the measure and run methods. The run method simply multiplies the current state of the qubits (which has already been initialised), by the Matrix which represents Grover's algorithm which was created in the above methods which simulates the initial qubits having go through the Grover's Algorithm Quantum circuit. Measure simply collapses the superposition of the quantum output into a single value which is almost certainly the target value that the algorithm was designed to search for. The measure method works by first measuring the probabilities of all the possible output states using the register.measure() method and then outputs the most probable answer from that array and the associated probability for that value. By creating a grover's Class we can create specific oracles and diffusion gates depending on inputed values such as the number of qubits being measured and the target value. This make the code modular since all the gates specific to grovers algorithm are label as such while more general gates such as the Hadamard gates can be reused for other purposes in other files throughout the project. This Class lead to a simple simulation of Grover's algorithm, by creating all the gates in separate methods and then simply multiplying them together it created clean and efficient code which can then be repurposed for other searching operation such as finding solutions to sudoku puzzles. The final step is test which is explained in detail in the next chapter.
 
 %----------------------------------------------------------------------------------------
 
-
-
-
 \section{Testing and Debugging}
+
+\subsection{Testing Tensor Products and Gates}
+
 
 Once these code files were implemented a separated folder of files specifically for tests was created, this allowed for more robust code as the tests files could then be easily removed once the final program was implemented, it also allowed for the use of the tox command in the terminal to allow for analysis of the tests that showed how much of the code the tests reached. test\_tensor\_product() worked by implementing a series of matrices of different sizes and contents, some containing small numbers, large numbers, complex numbers, floating point numbers with the intention to catch corner cases. Then the tensor product was calculated all these matrices by placing inputing them into the numpy.kron() function in a separate file. The answers for these were then placed inside the functions and were compared to the calculated values from our tensor\_product() function. Almost all the tests were passed except for the tests with non-square matrices, these bugs where fixed once spotted and the tox command in the terminal let us know that we covered near 100\% of the tensor product code.
 
 Similar tests were then constructed for the single qubit gates in the file test\_gates.py. Single qubit gates such as the Hadamard were easy to construct tests for simply comparing the 0 and 1 qubit outputs to the hand calculated superpositions. Assertion statements were used to make the test functions compatible with tox in the terminal. We tested code to a satisfactory level and then moved on to the next piece of the project to help catch mistakes and kill bugs before they appear allowing the team to work more efficiently.
+
+Helper functions file was introduced to assist with further tests, however the only function that is present in this file was compare matrices which tests if two matrices are roughly equal and uses an assert to be compatible with the tox command in the terminal.  This helper function was used throughout the test files most notably in the test\_grovers\_algorithm.py file. 
+
 
 \section{Issues and Challenges}
 

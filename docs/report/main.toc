@@ -52,12 +52,14 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {6}Testing and Debugging}{22}{section.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7}Issues and Challenges}{22}{section.7}%
+\contentsline {subsection}{\numberline {6.1}Testing Tensor Products and Gates}{22}{subsection.6.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7}Issues and Challenges}{23}{section.7}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {8}Problem title}{23}{section.8}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {8.1}Theoretical viewpoint}{23}{subsection.8.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {8.2}Algorithmic issues}{23}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.2}Algorithmic issues}{24}{subsection.8.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {9}References and Bibliography}{24}{section.9}%
+\contentsline {section}{\numberline {9}References and Bibliography}{25}{section.9}%
