@@ -23,11 +23,6 @@ import os
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
-module_path = os.path.abspath(os.getcwd() + os.sep + "qcp")
-if module_path not in sys.path:
-    sys.path.append(module_path)
-
-
 import qcp.cli as cli
 from qcp.grovers_algorithm import Grovers
 
