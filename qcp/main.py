@@ -25,7 +25,7 @@ if os.getcwd() not in sys.path:
 
 import qcp.cli as cli
 from qcp.algorithms import Grovers, PhaseEstimation, Sudoku
-from qcp.algorithms.options import AlgorithmOption
+from qcp.cli.options import AlgorithmOption
 from qcp.matrices import Matrix
 
 
@@ -35,7 +35,7 @@ def main():
     options to the function to run the computation.
     """
     # Ignore the first entry in sys.argv as it is just the program name
-    alg_opt, parsed_tuple = cli.parse_cli(sys.argv[1:])
+    alg_opt, parsed_tuple = cli.read_cli(sys.argv[1:])
 
     if alg_opt is AlgorithmOption.Grovers:
         compute_grovers(*parsed_tuple)
