@@ -310,3 +310,26 @@ def test_phase_shift():
     h.compare_matrices(ps2, expected2)
     h.compare_matrices(ps3, expected3)
     h.compare_matrices(ps4, expected4)
+
+
+def test_swap():
+    # Gate needs a minimum of two qubits to make sense
+    with pytest.raises(AssertionError) as ae1:
+        gts.swap(1, 0, 1)
+    assert ae1.match("need minimum of two qbits")
+
+    # Targets cannot be the same
+    with pytest.raises(AssertionError) as ae2:
+        gts.swap(2, 0, 0)
+    assert ae2.match("swap targets must be different")
+
+    # Target bits needs to be within qubit range:
+    with pytest.raises(AssertionError) as ae3:
+        gts.swap(2, 4, 0)
+    assert ae3.match("first target bit out of range")
+
+    # Target bits needs to be within qubit range:
+    with pytest.raises(AssertionError) as ae4:
+        gts.swap(2, 0, 4)
+    assert ae4.match("second target bit out of range")
+

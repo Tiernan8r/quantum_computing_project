@@ -167,8 +167,8 @@ def _generic_control(size: int, controls: List[int],
     Constructs a (2**size by 2**size) control gate with
     given controls, target and the control value.
     This is a generic implementation of the logic used for
-
     :py:meth:`qcp.gates.control_z` and :py:meth:`qcp.gates.control_phase`
+
     :param int size: total number of qubits in circuit
     :param List[int] controls: List of control qubits
     :param int target: target qubit the gate will be applied to
@@ -287,20 +287,27 @@ def phase_shift(phi: complex) -> Matrix:
     return DefaultMatrix([[1, 0], [0, cmath.exp(1j * phi)]])
 
 
-def swap(size: int, target: List[int]) -> Matrix:
+def swap(size: int, target0: int, target1: int) -> Matrix:
     """
     Construct swap gate which swaps two states
 
-    :param size int: total number of qubits in circuit
-    :param target int: 2 target states the swap gate will be applied to
+    :param int size: total number of qubits in circuit
+    :param int target0: The first target bit to swap
+    :param int target1: The second target bit to swap
+
     returns:
         Matrix: Matrix representing the gate
     """
     # Can be optimized further
 
-    assert size > 1, "need minimum of two states"
-    assert target[0] != target[1], 'Invalid swap targets!'
-    target = sorted(target)
+    assert size > 1, "need minimum of two qbits"
+    assert target0 != target1, "swap targets must be different"
+
+    bit_bounds = range(size)
+    assert target0 in bit_bounds, "first target bit out of range"
+    assert target1 in bit_bounds, "second target bit out of range"
+
+    target0, target1 = sorted((target0, target1))
 
     n = 2 ** size
     swapgate: Matrix = DefaultMatrix.zeros(n, n)
@@ -308,11 +315,11 @@ def swap(size: int, target: List[int]) -> Matrix:
     for i in range(2**size):
         bit = (bin(i)[2:].zfill(size))
         swapbit = (
-            bit[0:target[0]] +
-            bit[target[1]] +
-            bit[target[0]+1:target[1]] +
-            bit[target[0]] +
-            bit[target[1]+1:]
+            bit[0:target0] +
+            bit[target1] +
+            bit[target0+1:target1] +
+            bit[target0] +
+            bit[target1+1:]
         )
 
         bit = int(bit, 2)  # type: ignore
