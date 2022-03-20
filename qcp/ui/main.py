@@ -18,8 +18,8 @@ Initialiser for the UI main window.
 import os
 import sys
 
-# Required to make sure the module 'qcp' is accessible when the
-# main.py file is run directly
+# Required to guarantee that the 'qcp' module is accessible when
+# this file is run directly.
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
