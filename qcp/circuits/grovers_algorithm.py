@@ -15,11 +15,13 @@
 Constructs the quantum register, circuits of composite gates, and runs the
 simulation of Grover's Algorithm
 """
-from qcp.matrices import DefaultMatrix, Matrix, MATRIX
-import qcp.register as reg
-import qcp.gates as g
 import random
 from typing import List, Tuple
+
+import qcp.gates as g
+import qcp.register as reg
+from qcp.circuits import AbstractAlgorithm
+from qcp.matrices import MATRIX, DefaultMatrix, Matrix
 
 
 def pull_set_bits(n: int) -> List[int]:
@@ -42,7 +44,7 @@ def pull_set_bits(n: int) -> List[int]:
     return bits
 
 
-class Grovers:
+class Grovers(AbstractAlgorithm):
 
     def __init__(self, size: int, target_state: int):
         """
@@ -54,12 +56,11 @@ class Grovers:
         :param int size: number of qubits in our circuit
         :param int target_state: specific state we want to target/select
         """
-        assert size > 1, "need minimum of two qbits"
+        super().__init__(size)
+
         assert target_state < (2 ** size), \
             "target must be within qbit state indices"
-        self.size = size
         self.target = target_state
-        self.state = self.initial_state()
 
         self.oracle = self.single_target_oracle()
         self.diffuser = self.diffusion()
@@ -67,17 +68,6 @@ class Grovers:
         # can only reflect size-1 times to get maximum probability
 
         self.circuit = self.construct_circuit()
-
-    def initial_state(self) -> Matrix:
-        """
-        Creates a state vector corresponding to |1..0>
-
-        returns:
-            Matrix: the state vector
-        """
-        entries: MATRIX = [[0] for _ in range(2 ** self.size)]
-        entries[0][0] = 1
-        return DefaultMatrix(entries)
 
     def single_target_oracle(self) -> Matrix:
         """
@@ -129,16 +119,6 @@ class Grovers:
             circuit = self.diffuser * circuit
             self.max_reflections -= 1
         return circuit
-
-    def run(self) -> Matrix:
-        """
-        Multiplies our Grover's circuit with the initial state
-
-        returns:
-            Matrix: Column matrix representation of the final state
-        """
-        self.state = self.circuit * self.state
-        return self.state
 
     def measure(self) -> Tuple[int, float]:
         """

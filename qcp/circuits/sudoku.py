@@ -1,8 +1,9 @@
-from qcp.matrices import DefaultMatrix, Matrix, MATRIX
-import qcp.register as reg
-import qcp.gates as g
 import random
 
+import qcp.gates as g
+import qcp.register as reg
+from qcp.circuits import AbstractAlgorithm
+from qcp.matrices import MATRIX, DefaultMatrix, Matrix
 
 # This class uses Grover's algorithm to solve the 2x2 sudoku board with 4
 # entries V0, V1, V2, V3 and two number choices, 0 & 1
@@ -18,24 +19,14 @@ import random
 # is met. And the final qubit representing whether all the conditions have
 # been met.
 #
-class sudoku:
+
+
+class sudoku(AbstractAlgorithm):
 
     def __init__(self):
-        self.size = 9
-        self.state = self.initial_state()
+        super().__init__(9)
 
         self.circuit = self.construct_circuit()
-
-    def initial_state(self) -> Matrix:
-        """
-        Creates a (2**9 x 1) state vector corresponding to |1..0>
-
-        returns:
-            Matrix: the state vector
-        """
-        entries: MATRIX = [[0] for _ in range(2 ** self.size)]
-        entries[0][0] = 1
-        return DefaultMatrix(entries)
 
     def oracle(self):
         """
@@ -106,14 +97,6 @@ class sudoku:
 
             circuit = self.diffusion() * circuit
         return circuit
-
-    def run(self):
-        """
-        Multiplies our circuit with the initial state
-        :return: Column matrix representation of the final state
-        """
-        self.state = self.circuit * self.state
-        return self.state
 
     def measure_state(self):
         """
