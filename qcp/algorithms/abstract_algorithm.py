@@ -18,7 +18,7 @@ simulation of Grover's Algorithm
 import abc
 from typing import Tuple
 
-from qcp.matrices import MATRIX, DefaultMatrix, Matrix
+from qcp.matrices import SPARSE, DefaultMatrix, Matrix
 
 
 class GeneralAlgorithm(abc.ABC):
@@ -37,7 +37,7 @@ class GeneralAlgorithm(abc.ABC):
         returns:
             Matrix: the state vector
         """
-        entries: MATRIX = [[0] for _ in range(2 ** self.size)]
+        entries: SPARSE = {i: {} for i in range(2 ** self.size)}
         entries[0][0] = 1
         return DefaultMatrix(entries)
 
