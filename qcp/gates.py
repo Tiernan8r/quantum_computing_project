@@ -361,17 +361,15 @@ def control_u(size: int, control: int, unitary: Matrix):
     n2 = 2**(size - 1 - control - targetsize)
     id2 = DefaultMatrix.identity(n2)
 
-    tmp_gate = tp.tensor_product(gate0, id2)
-    cu_gate = tp.tensor_product(id1, tmp_gate)
+    interim1 = tp.tensor_product(gate0, id2)
+    cu_gate = tp.tensor_product(id1, interim1)
 
-    n3 = 2 ** (size - 1 - targetsize - control)
+    n3 = 2**control
     id3 = DefaultMatrix.identity(n3)
-    n4 = 2**control
-    id4 = DefaultMatrix.identity(n4)
 
-    tmp_gate_2 = tp.tensor_product(id4, gate1)
-    tmp_gate_3 = tp.tensor_product(tmp_gate_2, id3)
+    interim2 = tp.tensor_product(id3, gate1)
+    interim3 = tp.tensor_product(interim2, id2)
 
-    cu_gate += tp.tensor_product(unitary, tmp_gate_3)
+    cu_gate += tp.tensor_product(unitary, interim3)
 
     return cu_gate
