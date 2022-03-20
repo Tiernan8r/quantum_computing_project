@@ -24,6 +24,7 @@
 \usepackage{physics}
 \usepackage{amsmath}
 \usepackage[scale=1,bmargin=6cm,footnotesep=6cm]{geometry} %footnote spacing
+\usepackage{float}
 \usepackage{subcaption} %allows us to nest figures
 
 \usepackage{hyperref} %enable hyperlinks 
@@ -459,8 +460,10 @@ The phase shift gate modifies the phase of the quantum state and is equivalent t
 
 
 \section{Grover's Algorithm}
-\subsection{Introduction}
+\vspace{5mm}
 
+\subsection{Introduction}
+\vspace{5mm}
 The Grover's Algorithm is a quantum search algorithm which increases quadratically the speed of unstructured search\cite{noauthor_grovers_nodate}. It uses  amplitude amplification to search an unstructured set of $N$ elements/items. 
 
 \subsection{Unstructured Search}
@@ -535,7 +538,7 @@ The Grover's Algorithm is a quantum search algorithm which increases quadratical
 
 \vspace{10mm}
 \noindent
-An unstructured search through a list of items using Grover's Algorithm can be illustrated in Figure1. In this instance, $\omega$ the red block, represents the item which we want to find and $N$ represents the number of items in the list. 
+An unstructured search through a list of items using Grover's Algorithm can be illustrated in Figure \ref{fig:grover_step_1a}. In this instance, $\omega$ the red block, represents the item which we want to find and $N$ represents the number of items in the list. 
 \vspace{5mm}
 
 \noindent
@@ -548,6 +551,7 @@ For an $N$ item search problem with $M$ number of solutions, the required number
 \pagebreak
 
 \subsection{The Oracle}
+\vspace{5mm}
 
 Let's suppose the function $f$ of $N$ integer such that $f:\{0,1, 2,...., N-1\} \rightarrow{\{0,1\}}$. 
 \vspace{5mm}
