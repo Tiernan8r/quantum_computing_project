@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Copyright 2022 Tiernan8r
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +15,25 @@
 """
 Initialiser for the UI main window.
 """
+import os
 import sys
+
+# Required to guarantee that the 'qcp' module is accessible when
+# this file is run directly.
+if os.getcwd() not in sys.path:
+    sys.path.append(os.getcwd())
+
 from PySide6.QtWidgets import QApplication
 from qcp.ui.main_window import MainWindow
 
 
-if __name__ == "__main__":
+def initialise_ui():
     app = QApplication(sys.argv)
     main_window = MainWindow()
     main_window.show()
 
     sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    initialise_ui()

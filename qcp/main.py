@@ -16,8 +16,8 @@
 CLI initialiser to parse CLI options for the Algorithm, and to run the
 computation
 """
-import sys
 import os
+import sys
 
 # Required to guarantee that the 'qcp' module is accessible when
 # this file is run directly.
