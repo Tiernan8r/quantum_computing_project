@@ -46,9 +46,9 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">CLI initialiser to parse CLI options for the Algorithm, and to run the</span>
-<span class="sd">computation</span>
+<span class="sd">Entrypoint for the Simulator</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
@@ -57,21 +57,8 @@
 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
-
-<span class="kn">from</span> <span class="nn">qcp.algorithms</span> <span class="kn">import</span> <span class="n">Grovers</span>
-
-<span class="c1">#: The default target state the Oracle will search for</span>
-<span class="n">TARGET_DEF</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="c1">#: The CLI help text</span>
-<span class="n">USAGE_STR</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;USAGE:</span>
-<span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> [FLAGS] nqbits</span>
-
-<span class="s2">ARGS:</span>
-<span class="s2">    nqbits          The number of qbit states to simulate</span>
-<span class="s2">FLAGS:</span>
-<span class="s2">    -t/--target     The target state, defaults to </span><span class="si">{</span><span class="n">TARGET_DEF</span><span class="si">}</span><span class="s2"></span>
-<span class="s2">    -h/--help       Display this prompt&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">qcp.cli</span> <span class="k">as</span> <span class="nn">cli</span>
+<span class="kn">import</span> <span class="nn">qcp.cli.progress_bar</span> <span class="k">as</span> <span class="nn">pb</span>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../qcp.html#qcp.main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
@@ -79,84 +66,63 @@
 <span class="sd">    The entrypoint for the CLI, parses the cli options and passes the read</span>
 <span class="sd">    options to the function to run the computation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">nqbits</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">parse_cli</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">nqbits</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;must have a minimum of a 2 qbit state&quot;</span>
+    <span class="c1"># Ignore the first entry in sys.argv as it is just the program name</span>
+    <span class="n">alg_opt</span><span class="p">,</span> <span class="n">parsed_tuple</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">read_cli</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 
-    <span class="n">compute</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span></div>
+    <span class="n">compute</span><span class="p">(</span><span class="n">alg_opt</span><span class="o">.</span><span class="n">get_constructor</span><span class="p">(),</span> <span class="n">alg_opt</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="o">*</span><span class="n">parsed_tuple</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="usage"><a class="viewcode-back" href="../../qcp.html#qcp.main.usage">[docs]</a><span class="k">def</span> <span class="nf">usage</span><span class="p">():</span>
+<div class="viewcode-block" id="compute"><a class="viewcode-back" href="../../qcp.html#qcp.main.compute">[docs]</a><span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">alg_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Prints the help text to stdout, and exits with error code 0.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">USAGE_STR</span><span class="p">)</span>
-    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="parse_cli"><a class="viewcode-back" href="../../qcp.html#qcp.main.parse_cli">[docs]</a><span class="k">def</span> <span class="nf">parse_cli</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Parses the sys.argv CLI options to read the value for the optional flags</span>
-<span class="sd">    (if provided), and the required CLI arguments.</span>
-
-<span class="sd">    :param args List[str]: The list of CLI inputs from sys.argv</span>
-<span class="sd">    returns:</span>
-<span class="sd">        Tuple[int, int]: The two CLI values,</span>
-<span class="sd">        firstly the required &#39;nqbits&#39; parameter,</span>
-<span class="sd">        and the second optional &#39;target&#39; parameter.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">num_args</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="n">vals</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">targ</span> <span class="o">=</span> <span class="n">TARGET_DEF</span>
-
-    <span class="c1"># ignore the 1st arg as it is the program name</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_args</span><span class="p">:</span>
-        <span class="n">arg</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s2">&quot;-h&quot;</span> <span class="ow">or</span> <span class="n">arg</span> <span class="o">==</span> <span class="s2">&quot;--help&quot;</span><span class="p">:</span>
-            <span class="n">usage</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">arg</span> <span class="o">==</span> <span class="s2">&quot;-t&quot;</span> <span class="ow">or</span> <span class="n">arg</span> <span class="o">==</span> <span class="s2">&quot;--target&quot;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">num_args</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Must provide a target value!&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">targ</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
-            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;target state must be an integer&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="c1"># Falls into the everything else category</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">vals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
-        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="n">nqbits</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;number of qbits must be an integer&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Must provide the number of qbits to simulate&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">targ</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="compute"><a class="viewcode-back" href="../../qcp.html#qcp.main.compute">[docs]</a><span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="n">nqbits</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Run the Grover&#39;s Algorithm simulation and print the observed state to</span>
+<span class="sd">    Run the Quantum Algorithm simulation and print the observed state to</span>
 <span class="sd">    stdout with the probability of observing that state.</span>
 
-<span class="sd">    :param int nqbits: The number of qbits to simulate in the simulator</span>
-<span class="sd">    :param int target: The index of the target qbit state</span>
+<span class="sd">    :param constructor: The constructor the algorithm objects, varies per</span>
+<span class="sd">        choice of algorithm</span>
+<span class="sd">    :param str alg_name: The name of the algorithm being run</span>
+<span class="sd">    :param args: All args that need to be passed in to the Algorithm</span>
+<span class="sd">        constructor</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">grover</span> <span class="o">=</span> <span class="n">Grovers</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-    <span class="n">grover</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Simulating </span><span class="si">{</span><span class="n">alg_name</span><span class="si">}</span><span class="s2"> Algorithm...&quot;</span><span class="p">)</span>
 
-    <span class="n">m</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">grover</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+    <span class="c1"># Start up the progress bar ticker</span>
+    <span class="n">progress_ticker</span> <span class="o">=</span> <span class="n">threaded_progress_bar</span><span class="p">()</span>
+
+    <span class="c1"># Create the algorithm object and run it, catching</span>
+    <span class="c1"># any errors that occur, and printing them to the</span>
+    <span class="c1"># terminal</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">alg</span> <span class="o">=</span> <span class="n">constructor</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">alg</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">ae</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">ae</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Stop the ticker before printing the results</span>
+    <span class="n">progress_ticker</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+
+    <span class="n">m</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">alg</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Observed state: |&quot;</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">(</span><span class="n">m</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span> <span class="o">+</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;With probability: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="threaded_progress_bar"><a class="viewcode-back" href="../../qcp.html#qcp.main.threaded_progress_bar">[docs]</a><span class="k">def</span> <span class="nf">threaded_progress_bar</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run the progress bar ticker in a separate process so that</span>
+<span class="sd">    we can sleep the process without hanging the main computation</span>
+
+<span class="sd">    returns:</span>
+<span class="sd">        multiprocessing.Process: The reference to the process running</span>
+<span class="sd">            the progress bar</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ticker_process</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">pb</span><span class="o">.</span><span class="n">ticker</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;Simulating: &quot;</span><span class="p">,)</span>
+    <span class="p">)</span>
+    <span class="n">ticker_process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">ticker_process</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

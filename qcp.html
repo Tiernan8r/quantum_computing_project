@@ -339,30 +339,20 @@ applied to, indexing from 0.</p></li>
 </section>
 <section id="module-qcp.main">
 <span id="qcp-main-module"></span><h2>qcp.main module<a class="headerlink" href="#module-qcp.main" title="Permalink to this headline">¶</a></h2>
-<p>CLI initialiser to parse CLI options for the Algorithm, and to run the
-computation</p>
-<dl class="py data">
-<dt class="sig sig-object py" id="qcp.main.TARGET_DEF">
-<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">TARGET_DEF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#qcp.main.TARGET_DEF" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default target state the Oracle will search for</p>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="qcp.main.USAGE_STR">
-<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">USAGE_STR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USAGE:\n/opt/hostedtoolcache/Python/3.10.2/x64/bin/sphinx-build</span> <span class="pre">[FLAGS]</span> <span class="pre">nqbits\n\nARGS:\n</span>&#160;&#160;&#160; <span class="pre">nqbits</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">The</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">qbit</span> <span class="pre">states</span> <span class="pre">to</span> <span class="pre">simulate\nFLAGS:\n</span>&#160;&#160;&#160; <span class="pre">-t/--target</span>&#160;&#160;&#160;&#160; <span class="pre">The</span> <span class="pre">target</span> <span class="pre">state,</span> <span class="pre">defaults</span> <span class="pre">to</span> <span class="pre">5\n</span>&#160;&#160;&#160; <span class="pre">-h/--help</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Display</span> <span class="pre">this</span> <span class="pre">prompt'</span></em><a class="headerlink" href="#qcp.main.USAGE_STR" title="Permalink to this definition">¶</a></dt>
-<dd><p>The CLI help text</p>
-</dd></dl>
-
+<p>Entrypoint for the Simulator</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qcp.main.compute">
-<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nqbits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/main.html#compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.compute" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run the Grover’s Algorithm simulation and print the observed state to
+<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">constructor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alg_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/main.html#compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the Quantum Algorithm simulation and print the observed state to
 stdout with the probability of observing that state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nqbits</strong> (<em>int</em>) – The number of qbits to simulate in the simulator</p></li>
-<li><p><strong>target</strong> (<em>int</em>) – The index of the target qbit state</p></li>
+<li><p><strong>constructor</strong> – The constructor the algorithm objects, varies per
+choice of algorithm</p></li>
+<li><p><strong>alg_name</strong> (<em>str</em>) – The name of the algorithm being run</p></li>
+<li><p><strong>args</strong> – All args that need to be passed in to the Algorithm
+constructor</p></li>
 </ul>
 </dd>
 </dl>
@@ -376,29 +366,22 @@ options to the function to run the computation.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qcp.main.parse_cli">
-<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">parse_cli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/main.html#parse_cli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.parse_cli" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parses the sys.argv CLI options to read the value for the optional flags
-(if provided), and the required CLI arguments.</p>
+<dt class="sig sig-object py" id="qcp.main.threaded_progress_bar">
+<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">threaded_progress_bar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">multiprocessing.context.Process</span></span></span><a class="reference internal" href="_modules/qcp/main.html#threaded_progress_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.threaded_progress_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the progress bar ticker in a separate process so that
+we can sleep the process without hanging the main computation</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>List</strong><strong>[</strong><strong>str</strong><strong>]</strong> (<em>args</em>) – The list of CLI inputs from sys.argv</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The two CLI values,
-firstly the required ‘nqbits’ parameter,
-and the second optional ‘target’ parameter.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tuple[int, int]</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The reference to the process running</dt><dd><p>the progress bar</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qcp.main.usage">
-<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">usage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/main.html#usage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.usage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prints the help text to stdout, and exits with error code 0.</p>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>multiprocessing.Process</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
