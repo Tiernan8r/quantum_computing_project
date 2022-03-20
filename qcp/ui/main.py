@@ -34,5 +34,6 @@ def initialise_ui():
 
     sys.exit(app.exec())
 
+
 if __name__ == "__main__":
     initialise_ui()

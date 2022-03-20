@@ -36,6 +36,7 @@ def main():
     """
     # Ignore the first entry in sys.argv as it is just the program name
     alg_opt, parsed_tuple = cli.parse_cli(sys.argv[1:])
+
     if alg_opt is AlgorithmOption.Grovers:
         compute_grovers(*parsed_tuple)
     elif alg_opt is AlgorithmOption.PhaseEstimation:
@@ -43,7 +44,7 @@ def main():
     elif alg_opt is AlgorithmOption.Sudoku:
         compute_sudoku()
     else:
-        print("D'oh!") # This is an impossible scenario...
+        print("D'oh!")  # This is an impossible scenario...
 
 
 def compute_grovers(nqbits: int, target: int):

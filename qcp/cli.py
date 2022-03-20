@@ -16,7 +16,6 @@
 CLI initialiser to parse CLI options for the Algorithm, and to run the
 computation
 """
-import cmath
 import re
 import sys
 from typing import Dict, List, Tuple
@@ -54,7 +53,7 @@ GROVERS:
         nqbits          The number of qbit states to simulate, must be >= 2.
     FLAGS:
         {TARGET_SHORT}/{TARGET_LONG}     The target state, defaults to {DEFAULT_TARGET}
-    
+
 PHASE ESTIMATION:
     USAGE:
     {sys.argv[0]} {ALGORITHM_LONG} pe [FLAGS] nqbits
@@ -74,7 +73,7 @@ SUDOKU:
     ARGS:
         None
     FLAGS:
-        None"""
+        None"""  # noqa: E501
 
 
 def usage():
@@ -108,7 +107,8 @@ def parse(args: List[str]) -> Tuple[Dict[str, str], List[str]]:
 
             if arg in d:
                 print(
-                    f"Duplicate flag '{arg}' detected, skipping...", file=sys.stderr)
+                    f"Duplicate flag '{arg}' detected, skipping...",
+                    file=sys.stderr)
                 i += 2
                 continue
             d[arg] = val
@@ -131,13 +131,15 @@ def determine(opt: AlgorithmOption, args: List[str], flags: Dict[str, str]):
     return None
 
 
-def determine_grover(args: List[str], flags: Dict[str, str]) -> Tuple[int, int]:
+def determine_grover(args: List[str], flags: Dict[str, str]
+                     ) -> Tuple[int, int]:
     # Determine the number of qbits
     if len(args) < 1:
         print("Must provide the number of qbits to simulate", file=sys.stderr)
         exit(1)
     elif len(args) > 1:
-        print("Too many arguments provided, discarding excess...", file=sys.stderr)
+        print("Too many arguments provided, discarding excess...",
+              file=sys.stderr)
 
     nqbits_str = args[0]
     nqbits = 2
@@ -145,7 +147,8 @@ def determine_grover(args: List[str], flags: Dict[str, str]) -> Tuple[int, int]:
         nqbits = int(nqbits_str)
     except ValueError:
         print(
-            f"Provided number of qbits '{nqbits_str}' is not an integer!", file=sys.stderr)
+            f"Provided number of qbits '{nqbits_str}' is not an integer!",
+            file=sys.stderr)
         exit(1)
 
     if nqbits < 2:
@@ -155,7 +158,8 @@ def determine_grover(args: List[str], flags: Dict[str, str]) -> Tuple[int, int]:
     target = DEFAULT_TARGET
     if TARGET_LONG not in flags:
         print(
-            f"No target bit provided, defaulting to {DEFAULT_TARGET}", file=sys.stderr)
+            f"No target bit provided, defaulting to {DEFAULT_TARGET}",
+            file=sys.stderr)
     else:
         target_str = flags[TARGET_LONG]
 
@@ -163,19 +167,22 @@ def determine_grover(args: List[str], flags: Dict[str, str]) -> Tuple[int, int]:
             target = int(target_str)
         except ValueError:
             print(
-                f"Provided target '{target_str}' is not an integer!", file=sys.stderr)
+                f"Provided target '{target_str}' is not an integer!",
+                file=sys.stderr)
             exit(1)
 
     return nqbits, target
 
 
-def determine_phase_estimation(args: List[str], flags: Dict[str, str]) -> Tuple[int, Matrix, Matrix]:
+def determine_phase_estimation(args: List[str], flags: Dict[str, str]
+                               ) -> Tuple[int, Matrix, Matrix]:
     # Determining the number of qbits:
     if len(args) < 1:
         print("Must provide the number of qbits to simulate", file=sys.stderr)
         exit(1)
     elif len(args) > 1:
-        print("Too many arguments provided, discarding excess...", file=sys.stderr)
+        print("Too many arguments provided, discarding excess...",
+              file=sys.stderr)
 
     nqbits_str = args[0]
     nqbits = 2
@@ -183,7 +190,8 @@ def determine_phase_estimation(args: List[str], flags: Dict[str, str]) -> Tuple[
         nqbits = int(nqbits_str)
     except ValueError:
         print(
-            f"Provided number of qbits '{nqbits_str}' is not an integer!", file=sys.stderr)
+            f"Provided number of qbits '{nqbits_str}' is not an integer!",
+            file=sys.stderr)
         exit(1)
 
     if nqbits < 2:
@@ -198,7 +206,8 @@ def determine_phase_estimation(args: List[str], flags: Dict[str, str]) -> Tuple[
             phase = float(phase_str)
         except ValueError:
             print(
-                f"Provided phase '{phase_str}' is not a number!", file=sys.stderr)
+                f"Provided phase '{phase_str}' is not a number!",
+                file=sys.stderr)
             exit(1)
 
     # Determining the unitary matrix
@@ -206,13 +215,16 @@ def determine_phase_estimation(args: List[str], flags: Dict[str, str]) -> Tuple[
     unitary_matrix = UnitaryMatrices(DEFAULT_UNITARY)
     if UNITARY_LONG not in flags:
         print(
-            f"No unitary matrix type provided, defaulting to '{unitary_str}'", file=sys.stderr)
+            f"No unitary matrix type provided, defaulting to '{unitary_str}'",
+            file=sys.stderr)
     else:
         unitary_str = flags[UNITARY_LONG].upper()
 
         if unitary_str not in UnitaryMatrices.list():
+            err_str = "Unitary matrix option '{0}' is not a valid option!"
             print(
-                f"Provided unitary matrix option '{unitary_str}' is not a valid option!", file=sys.stderr)
+                err_str.format(unitary_str),
+                file=sys.stderr)
             print(
                 f"The options are: {UnitaryMatrices.list()}", file=sys.stderr)
             exit(1)
@@ -222,7 +234,7 @@ def determine_phase_estimation(args: List[str], flags: Dict[str, str]) -> Tuple[
     # Determining the Eigenvector to use
     eigenvec = DefaultMatrix([[0], [1]])
 
-    return nqbits, unitary_matrix.get(), eigenvec
+    return nqbits, unitary_matrix.get(phase), eigenvec
 
 
 def determine_sudoku(args: List[str], flags: Dict[str, str]):
@@ -251,7 +263,8 @@ def parse_cli(args: List[str]):
 
     if alg_opt_str not in AlgorithmOption.list():
         print(
-            f"Provided algorithm option '{alg_opt_str}' is not a valid option!", file=sys.stderr)
+            f"Algorithm option '{alg_opt_str}' is not a valid option!",
+            file=sys.stderr)
         print(f"The options are: {AlgorithmOption.list()}", file=sys.stderr)
         exit(1)
 

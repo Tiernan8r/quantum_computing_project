@@ -21,7 +21,7 @@ from typing import List, Tuple
 import qcp.gates as g
 import qcp.register as reg
 from qcp.algorithms import GeneralAlgorithm
-from qcp.matrices import MATRIX, DefaultMatrix, Matrix
+from qcp.matrices import Matrix
 
 
 def pull_set_bits(n: int) -> List[int]:

@@ -7,7 +7,6 @@ import qcp.register as reg
 import qcp.tensor_product as tp
 from qcp.algorithms.abstract_algorithm import GeneralAlgorithm
 from qcp.matrices import DefaultMatrix, Matrix
-from qcp.matrices.types import MATRIX
 
 
 def is_unitary(input: Matrix) -> bool:

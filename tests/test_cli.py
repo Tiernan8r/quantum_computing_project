@@ -11,18 +11,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp import cli
-import pytest
 import sys
-from qcp.constants import (ALGORITHM_LONG, ALGORITHM_SHORT, FLAG_MAPPING,
-                           HELP_LONG, HELP_SHORT, PHASE_LONG, PHASE_SHORT,
-                           TARGET_LONG, TARGET_SHORT, UNITARY_LONG,
-                           UNITARY_SHORT)
+
+import pytest
+from qcp import cli
+from qcp.constants import (ALGORITHM_LONG, ALGORITHM_SHORT, HELP_LONG,
+                           HELP_SHORT, PHASE_LONG, PHASE_SHORT, TARGET_LONG,
+                           TARGET_SHORT, UNITARY_LONG, UNITARY_SHORT)
 
 DEFAULT_TARGET = 0
 DEFAULT_ALGORITHM = "g"
 DEFAULT_PHASE = 0.25
 DEFAULT_UNITARY = "H"
+
 
 EXPECTED_USAGE = f"""USAGE:
 {sys.argv[0]} [FLAGS] nqbits
@@ -43,7 +44,7 @@ GROVERS:
         nqbits          The number of qbit states to simulate, must be >= 2.
     FLAGS:
         {TARGET_SHORT}/{TARGET_LONG}     The target state, defaults to {DEFAULT_TARGET}
-    
+
 PHASE ESTIMATION:
     USAGE:
     {sys.argv[0]} {ALGORITHM_LONG} pe [FLAGS] nqbits
@@ -64,7 +65,7 @@ SUDOKU:
         None
     FLAGS:
         None
-"""
+"""  # noqa: E501
 
 
 def test_usage(capsys):

@@ -3,7 +3,6 @@ import random
 import qcp.gates as g
 import qcp.register as reg
 from qcp.algorithms import GeneralAlgorithm
-from qcp.matrices import MATRIX, DefaultMatrix, Matrix
 
 # This class uses Grover's algorithm to solve the 2x2 sudoku board with 4
 # entries V0, V1, V2, V3 and two number choices, 0 & 1
