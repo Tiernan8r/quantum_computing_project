@@ -15,8 +15,8 @@
 """
 Entrypoint for the Simulator
 """
-import sys
 import os
+import sys
 
 # Required to make sure the module 'qcp' is accessible when the
 # main.py file is run directly
@@ -24,20 +24,29 @@ if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
 import qcp.cli as cli
-from qcp.algorithms.grovers_algorithm import Grovers
+from qcp.algorithms import Grovers, PhaseEstimation, Sudoku
+from qcp.algorithms.options import AlgorithmOption
+from qcp.matrices import Matrix
+
 
 def main():
     """
     The entrypoint for the CLI, parses the cli options and passes the read
     options to the function to run the computation.
     """
-    nqbits, target = cli.parse_cli(sys.argv)
-    assert nqbits > 1, "must have a minimum of a 2 qbit state"
+    # Ignore the first entry in sys.argv as it is just the program name
+    alg_opt, parsed_tuple = cli.parse_cli(sys.argv[1:])
+    if alg_opt is AlgorithmOption.Grovers:
+        compute_grovers(*parsed_tuple)
+    elif alg_opt is AlgorithmOption.PhaseEstimation:
+        compute_phase_estimation(*parsed_tuple)
+    elif alg_opt is AlgorithmOption.Sudoku:
+        compute_sudoku()
+    else:
+        print("D'oh!") # This is an impossible scenario...
 
-    compute(nqbits, target)
 
-
-def compute(nqbits: int, target: int):
+def compute_grovers(nqbits: int, target: int):
     """
     Run the Grover's Algorithm simulation and print the observed state to
     stdout with the probability of observing that state.
@@ -45,10 +54,58 @@ def compute(nqbits: int, target: int):
     :param int nqbits: The number of qbits to simulate in the simulator
     :param int target: The index of the target qbit state
     """
-    grover = Grovers(nqbits, target)
-    grover.run()
+    print("Simulating Grover's Algorithm...")
+
+    try:
+        grover = Grovers(nqbits, target)
+        grover.run()
+    except AssertionError as ae:
+        print(ae, file=sys.stderr)
 
     m, p = grover.measure()
+
+    print("Observed state: |" + bin(m)[2:] + ">")
+    print("With probability: " + str(p))
+
+
+def compute_phase_estimation(nqbits: int, unitary: Matrix, eigenvec: Matrix):
+    """
+    Run the Phase Estimation Algorithm simulation and print the observed state
+    to stdout with the probability of observing that state.
+
+    :param int nqbits: The number of qbits to simulate in the simulator
+    :param Matrix unitary: The unitary matrix to use in the algorithm
+    :param Matrix eigenvec: The eigenvector to use in the algorithm
+    """
+    print("Simulating the Phase Estimation Algorithm...")
+
+    try:
+        phase_est = PhaseEstimation(nqbits, unitary, eigenvec)
+        phase_est.run()
+    except AssertionError as ae:
+        print(ae, file=sys.stderr)
+
+    m, p = phase_est.measure()
+
+    print("Observed state: |" + bin(int(m))[2:] + ">")
+    print("With probability: " + str(p))
+
+
+def compute_sudoku():
+    """
+    Run the Sudoku simulation and print the observed state to
+    stdout with the probability of observing that state.
+    """
+    print("Simulating the Sudoku Search...")
+
+    try:
+        sudoku = Sudoku()
+        sudoku.run()
+    except AssertionError as ae:
+        print(ae, file=sys.stderr)
+
+    m, p = sudoku.measure()
+
     print("Observed state: |" + bin(m)[2:] + ">")
     print("With probability: " + str(p))
 

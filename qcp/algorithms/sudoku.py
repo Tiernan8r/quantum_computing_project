@@ -140,16 +140,16 @@ class Sudoku(GeneralAlgorithm):
         return [vx[-4], vx[-3], vx[-2], vx[-1]], chosen_prob
 
 
-def example():
-    s = Sudoku()
-    s.run()
-    o1, p1 = s.measure_state()
-    vx, p = s.measure_solution()
+# def example():
+#     s = Sudoku()
+#     s.run()
+#     o1, p1 = s.measure_state()
+#     vx, p = s.measure_solution()
 
-    print("Using Grover's algorithm the measured solution is:")
-    print("V0 = " + vx[0] + " V1 = " + vx[1] + " V2 = " + vx[2]
-          + " V3 = " + vx[3])
-    print("The probability of measuring this solution is: " + str(p))
+#     print("Using Grover's algorithm the measured solution is:")
+#     print("V0 = " + vx[0] + " V1 = " + vx[1] + " V2 = " + vx[2]
+#           + " V3 = " + vx[3])
+#     print("The probability of measuring this solution is: " + str(p))
 
 
-example()
+# example()
