@@ -11,8 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp.matrices import DefaultMatrix
+import enum
 import math
+
+from qcp.matrices import DefaultMatrix
 
 #: The 2x2 Identity Matrix
 IDENTITY = DefaultMatrix([[1, 0], [0, 1]])
@@ -26,3 +28,13 @@ ONE_VECTOR = DefaultMatrix([[0], [1]])
 PAULI_X = DefaultMatrix([[0, 1], [1, 0]])
 #: The 2x2 Pauli-Z Gate
 PAULI_Z = DefaultMatrix([[1, 0], [0, -1]])
+
+
+class AlgorithmOptions(enum.Enum):
+    """
+    Enum of the different algorithms to simulate
+    """
+
+    Grovers = "g"
+    QFT = "qft"
+    Sudoku = "s"

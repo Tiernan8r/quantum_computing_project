@@ -16,9 +16,11 @@
 CLI initialiser to parse CLI options for the Algorithm, and to run the
 computation
 """
-from qcp.grovers_algorithm import Grovers
-from typing import List, Tuple
 import sys
+from typing import List, Tuple
+
+from qcp.constants import AlgorithmOptions
+from qcp.grovers_algorithm import Grovers
 
 #: The default target state the Oracle will search for
 TARGET_DEF = 5
@@ -29,6 +31,10 @@ USAGE_STR = f"""USAGE:
 ARGS:
     nqbits          The number of qbit states to simulate
 FLAGS:
+    -a/--algorithm  The quantum algorithm to simulate can be one of:
+                        g   = Grover's Algorithm
+                        qft = Quantum Fourier Transform
+                        s   = Toy Sudoku solver
     -t/--target     The target state, defaults to {TARGET_DEF}
     -h/--help       Display this prompt"""
 
@@ -52,16 +58,16 @@ def usage():
     exit(0)
 
 
-def parse_cli(args: List[str]) -> Tuple[int, int]:
+def parse_cli(args: List[str]) -> Tuple[int, int, AlgorithmOptions]:
     """
     Parses the sys.argv CLI options to read the value for the optional flags
     (if provided), and the required CLI arguments.
 
     :param args List[str]: The list of CLI inputs from sys.argv
     returns:
-        Tuple[int, int]: The two CLI values,
-        firstly the required 'nqbits' parameter,
-        and the second optional 'target' parameter.
+        Tuple[int, int, ~:py:obj:qcp.constants.AlgorithmOptions]: The CLI
+        values, firstly the required 'nqbits' parameter, and the second
+        optional 'target' parameter.
     """
     num_args = len(args)
     vals = []
