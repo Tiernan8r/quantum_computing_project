@@ -15,6 +15,7 @@
 """
 Entrypoint for the Simulator
 """
+import multiprocessing
 import os
 import sys
 
@@ -24,8 +25,9 @@ if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
 import qcp.cli as cli
-from qcp.algorithms import Grovers, PhaseEstimation, Sudoku
+from qcp.algorithms import GeneralAlgorithm, Grovers, PhaseEstimation, Sudoku
 from qcp.cli.options import AlgorithmOption
+import qcp.cli.progress_bar as pb
 from qcp.matrices import Matrix
 
 
@@ -57,11 +59,17 @@ def compute_grovers(nqbits: int, target: int):
     """
     print("Simulating Grover's Algorithm...")
 
+    # Start up the progress bar ticker
+    progress_ticker = threaded_progress_bar()
+
     try:
         grover = Grovers(nqbits, target)
-        grover.run()
+        threaded_compute(grover)
     except AssertionError as ae:
         print(ae, file=sys.stderr)
+
+    # Stop the ticker before printing the results
+    progress_ticker.terminate()
 
     m, p = grover.measure()
 
@@ -80,11 +88,17 @@ def compute_phase_estimation(nqbits: int, unitary: Matrix, eigenvec: Matrix):
     """
     print("Simulating the Phase Estimation Algorithm...")
 
+    # Start up the progress bar ticker
+    progress_ticker = threaded_progress_bar()
+
     try:
         phase_est = PhaseEstimation(nqbits, unitary, eigenvec)
-        phase_est.run()
+        threaded_compute(phase_est)
     except AssertionError as ae:
         print(ae, file=sys.stderr)
+
+    # Stop the ticker before printing the results
+    progress_ticker.terminate()
 
     m, p = phase_est.measure()
 
@@ -97,18 +111,45 @@ def compute_sudoku():
     Run the Sudoku simulation and print the observed state to
     stdout with the probability of observing that state.
     """
-    print("Simulating the Sudoku Search...")
+    print("Beginning the Sudoku solver simulation...")
+
+    # Start up the progress bar ticker
+    progress_ticker = threaded_progress_bar()
 
     try:
         sudoku = Sudoku()
-        sudoku.run()
+        threaded_compute(sudoku)
     except AssertionError as ae:
         print(ae, file=sys.stderr)
+
+    # Stop the ticker before printing the results
+    progress_ticker.terminate()
 
     m, p = sudoku.measure()
 
     print("Observed state: |" + bin(m)[2:] + ">")
     print("With probability: " + str(p))
+
+
+def threaded_compute(alg: GeneralAlgorithm):
+
+    def comp(alg):
+        alg.run()
+
+    thread = multiprocessing.Process(target=comp, args=(alg,))
+    thread.start()
+
+    return thread
+
+
+def threaded_progress_bar() -> multiprocessing.Process:
+    ticker_process = multiprocessing.Process(
+        target=pb.ticker,
+        args=(0.5, "Simulating: ",)
+    )
+    ticker_process.start()
+
+    return ticker_process
 
 
 if __name__ == "__main__":
