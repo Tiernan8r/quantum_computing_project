@@ -15,20 +15,26 @@
 def test_init():
     pass
 
+
 def test_oracle():
     pass
+
 
 def test_sudoku_conditions():
     pass
 
+
 def test_diffusion():
     pass
+
 
 def test_construct_circuit():
     pass
 
+
 def test_measure_state():
     pass
+
 
 def test_measure_solution():
     pass
