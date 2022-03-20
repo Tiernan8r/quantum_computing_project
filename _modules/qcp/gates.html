@@ -200,8 +200,8 @@
 <span class="sd">    Constructs a (2**size by 2**size) control gate with</span>
 <span class="sd">    given controls, target and the control value.</span>
 <span class="sd">    This is a generic implementation of the logic used for</span>
-
 <span class="sd">    :py:meth:`qcp.gates.control_z` and :py:meth:`qcp.gates.control_phase`</span>
+
 <span class="sd">    :param int size: total number of qubits in circuit</span>
 <span class="sd">    :param List[int] controls: List of control qubits</span>
 <span class="sd">    :param int target: target qubit the gate will be applied to</span>
@@ -320,40 +320,47 @@
     <span class="k">return</span> <span class="n">DefaultMatrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmath</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)]])</span></div>
 
 
-<div class="viewcode-block" id="swap"><a class="viewcode-back" href="../../qcp.html#qcp.gates.swap">[docs]</a><span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+<div class="viewcode-block" id="swap"><a class="viewcode-back" href="../../qcp.html#qcp.gates.swap">[docs]</a><span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target0</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target1</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct swap gate which swaps two states</span>
 
-<span class="sd">    :param size int: total number of qubits in circuit</span>
-<span class="sd">    :param target int: 2 target states the swap gate will be applied to</span>
+<span class="sd">    :param int size: total number of qubits in circuit</span>
+<span class="sd">    :param int target0: The first target bit to swap</span>
+<span class="sd">    :param int target1: The second target bit to swap</span>
+
 <span class="sd">    returns:</span>
 <span class="sd">        Matrix: Matrix representing the gate</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Can be optimized further</span>
 
-    <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;need minimum of two states&quot;</span>
-    <span class="k">assert</span> <span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;Invalid swap targets!&#39;</span>
-    <span class="n">target</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;need minimum of two qbits&quot;</span>
+    <span class="k">assert</span> <span class="n">target0</span> <span class="o">!=</span> <span class="n">target1</span><span class="p">,</span> <span class="s2">&quot;swap targets must be different&quot;</span>
+
+    <span class="n">bit_bounds</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">target0</span> <span class="ow">in</span> <span class="n">bit_bounds</span><span class="p">,</span> <span class="s2">&quot;first target bit out of range&quot;</span>
+    <span class="k">assert</span> <span class="n">target1</span> <span class="ow">in</span> <span class="n">bit_bounds</span><span class="p">,</span> <span class="s2">&quot;second target bit out of range&quot;</span>
+
+    <span class="n">target0</span><span class="p">,</span> <span class="n">target1</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">target0</span><span class="p">,</span> <span class="n">target1</span><span class="p">))</span>
 
     <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">size</span>
     <span class="n">swapgate</span><span class="p">:</span> <span class="n">Matrix</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">size</span><span class="p">):</span>
-        <span class="n">bit</span> <span class="o">=</span> <span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="n">i</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
-        <span class="n">swapbit</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">bit</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span>
-            <span class="n">bit</span><span class="p">[</span><span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+</span>
-            <span class="n">bit</span><span class="p">[</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+</span>
-            <span class="n">bit</span><span class="p">[</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span>
-            <span class="n">bit</span><span class="p">[</span><span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">bit_str</span> <span class="o">=</span> <span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="n">i</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+        <span class="n">swapbit_str</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">bit_str</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">target0</span><span class="p">]</span> <span class="o">+</span>
+            <span class="n">bit_str</span><span class="p">[</span><span class="n">target1</span><span class="p">]</span> <span class="o">+</span>
+            <span class="n">bit_str</span><span class="p">[</span><span class="n">target0</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">target1</span><span class="p">]</span> <span class="o">+</span>
+            <span class="n">bit_str</span><span class="p">[</span><span class="n">target0</span><span class="p">]</span> <span class="o">+</span>
+            <span class="n">bit_str</span><span class="p">[</span><span class="n">target1</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
         <span class="p">)</span>
 
-        <span class="n">bit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bit</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-        <span class="n">swapbit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">swapbit</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="n">bit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bit_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">swapbit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">swapbit_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="n">vec_entries</span><span class="p">:</span> <span class="n">MATRIX</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">size</span><span class="p">)]</span>
         <span class="n">swapvec_entries</span><span class="p">:</span> <span class="n">MATRIX</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">size</span><span class="p">)]</span>
-        <span class="n">vec_entries</span><span class="p">[</span><span class="n">bit</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
-        <span class="n">swapvec_entries</span><span class="p">[</span><span class="n">swapbit</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="n">vec_entries</span><span class="p">[</span><span class="n">bit</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">swapvec_entries</span><span class="p">[</span><span class="n">swapbit</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">vector</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="p">(</span><span class="n">vec_entries</span><span class="p">)</span>
         <span class="n">swapvector</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="p">(</span><span class="n">swapvec_entries</span><span class="p">)</span>
         <span class="c1"># Outer product to create matrix</span>
@@ -362,7 +369,7 @@
     <span class="k">return</span> <span class="n">swapgate</span></div>
 
 
-<div class="viewcode-block" id="control_U"><a class="viewcode-back" href="../../qcp.html#qcp.gates.control_U">[docs]</a><span class="k">def</span> <span class="nf">control_U</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">control</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unitary</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">):</span>
+<div class="viewcode-block" id="control_u"><a class="viewcode-back" href="../../qcp.html#qcp.gates.control_u">[docs]</a><span class="k">def</span> <span class="nf">control_u</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">control</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unitary</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implement the control U gate</span>
 
@@ -374,34 +381,34 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;need minimum of two qubits&quot;</span>
 
-    <span class="n">targetsize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">unitary</span><span class="o">.</span><span class="n">num_rows</span><span class="p">))</span>
-    <span class="c1"># Make sure the control/target bits are within the qbit size</span>
+    <span class="c1"># Make sure the control bit is within the qbit size</span>
     <span class="k">assert</span> <span class="n">control</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="s2">&quot;control bit out of range&quot;</span>
     <span class="k">assert</span> <span class="n">control</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
         <span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="o">+</span><span class="n">unitary</span><span class="o">.</span><span class="n">num_rows</span><span class="p">),</span> \
         <span class="s2">&quot;control bit cannot be in auxiliary register&quot;</span>
+    <span class="k">assert</span> <span class="n">unitary</span><span class="o">.</span><span class="n">square</span><span class="p">,</span> <span class="s2">&quot;unitary matrix must be square&quot;</span>
+    <span class="k">assert</span> <span class="n">unitary</span><span class="o">.</span><span class="n">num_rows</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">,</span> <span class="s2">&quot;unitary matrix too big&quot;</span>
 
     <span class="n">gate0</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
     <span class="n">gate1</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 
-    <span class="n">cu_gate</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
-        <span class="n">multi_gate</span><span class="p">(</span><span class="n">control</span><span class="o">+</span><span class="n">targetsize</span><span class="p">,</span> <span class="p">[],</span> <span class="n">Gate</span><span class="o">.</span><span class="n">I</span><span class="p">),</span>
-        <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
-            <span class="n">gate0</span><span class="p">,</span>
-            <span class="n">multi_gate</span><span class="p">(</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">control</span><span class="o">-</span><span class="n">targetsize</span><span class="p">,</span> <span class="p">[],</span> <span class="n">Gate</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
+    <span class="n">targetsize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">unitary</span><span class="o">.</span><span class="n">num_rows</span><span class="p">))</span>
 
-    <span class="n">cu_gate</span> <span class="o">+=</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
-        <span class="n">unitary</span><span class="p">,</span>
-        <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
-            <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
-                <span class="n">multi_gate</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="p">[],</span> <span class="n">Gate</span><span class="o">.</span><span class="n">I</span><span class="p">),</span>
-                <span class="n">gate1</span>
-            <span class="p">),</span>
-            <span class="n">multi_gate</span><span class="p">(</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">targetsize</span><span class="o">-</span><span class="n">control</span><span class="p">,</span> <span class="p">[],</span> <span class="n">Gate</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
+    <span class="n">n1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">control</span> <span class="o">+</span> <span class="n">targetsize</span><span class="p">)</span>
+    <span class="n">id1</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">n1</span><span class="p">)</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">control</span> <span class="o">-</span> <span class="n">targetsize</span><span class="p">)</span>
+    <span class="n">id2</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">n2</span><span class="p">)</span>
+
+    <span class="n">interim1</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span><span class="n">gate0</span><span class="p">,</span> <span class="n">id2</span><span class="p">)</span>
+    <span class="n">cu_gate</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">interim1</span><span class="p">)</span>
+
+    <span class="n">n3</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">control</span>
+    <span class="n">id3</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">n3</span><span class="p">)</span>
+
+    <span class="n">interim2</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span><span class="n">id3</span><span class="p">,</span> <span class="n">gate1</span><span class="p">)</span>
+    <span class="n">interim3</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span><span class="n">interim2</span><span class="p">,</span> <span class="n">id2</span><span class="p">)</span>
+
+    <span class="n">cu_gate</span> <span class="o">+=</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span><span class="n">unitary</span><span class="p">,</span> <span class="n">interim3</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">cu_gate</span></div>
 </pre></div>
