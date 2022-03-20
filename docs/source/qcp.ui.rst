@@ -8,7 +8,6 @@ Subpackages
    :maxdepth: 4
 
    qcp.ui.components
-   qcp.ui.widgets
 
 Submodules
 ----------
