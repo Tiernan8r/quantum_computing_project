@@ -13,9 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-CLI initialiser to parse CLI options for the Algorithm, and to run the
-computation
+Entrypoint for the Simulator
 """
+import multiprocessing
 import os
 import sys
 
@@ -24,21 +24,8 @@ import sys
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
-from typing import List, Tuple
-
-from qcp.algorithms import Grovers
-
-#: The default target state the Oracle will search for
-TARGET_DEF = 5
-#: The CLI help text
-USAGE_STR = f"""USAGE:
-{sys.argv[0]} [FLAGS] nqbits
-
-ARGS:
-    nqbits          The number of qbit states to simulate
-FLAGS:
-    -t/--target     The target state, defaults to {TARGET_DEF}
-    -h/--help       Display this prompt"""
+import qcp.cli as cli
+import qcp.cli.progress_bar as pb
 
 
 def main():
@@ -46,84 +33,63 @@ def main():
     The entrypoint for the CLI, parses the cli options and passes the read
     options to the function to run the computation.
     """
-    nqbits, target = parse_cli(sys.argv)
-    assert nqbits > 1, "must have a minimum of a 2 qbit state"
+    # Ignore the first entry in sys.argv as it is just the program name
+    alg_opt, parsed_tuple = cli.read_cli(sys.argv[1:])
 
-    compute(nqbits, target)
+    compute(alg_opt.get_constructor(), alg_opt.get_name(), *parsed_tuple)
 
 
-def usage():
+def compute(constructor, alg_name: str, *args):
     """
-    Prints the help text to stdout, and exits with error code 0.
-    """
-    print(USAGE_STR)
-    exit(0)
-
-
-def parse_cli(args: List[str]) -> Tuple[int, int]:
-    """
-    Parses the sys.argv CLI options to read the value for the optional flags
-    (if provided), and the required CLI arguments.
-
-    :param args List[str]: The list of CLI inputs from sys.argv
-    returns:
-        Tuple[int, int]: The two CLI values,
-        firstly the required 'nqbits' parameter,
-        and the second optional 'target' parameter.
-    """
-    num_args = len(args)
-    vals = []
-    targ = TARGET_DEF
-
-    # ignore the 1st arg as it is the program name
-    i = 1
-    while i < num_args:
-        arg = args[i]
-        if arg == "-h" or arg == "--help":
-            usage()
-        elif arg == "-t" or arg == "--target":
-            if i + 1 > num_args:
-                print("Must provide a target value!", file=sys.stderr)
-                exit(1)
-            try:
-                targ = int(args[i+1])
-            except ValueError:
-                print("target state must be an integer", file=sys.stderr)
-                exit(1)
-            i += 1
-        # Falls into the everything else category
-        else:
-            vals.append(arg)
-        i += 1
-
-    nqbits = 1
-    if len(vals) > 0:
-        try:
-            nqbits = int(vals[0])
-        except ValueError:
-            print("number of qbits must be an integer", file=sys.stderr)
-            exit(1)
-    else:
-        print("Must provide the number of qbits to simulate", file=sys.stderr)
-        exit(1)
-
-    return (nqbits, targ)
-
-
-def compute(nqbits: int, target: int):
-    """
-    Run the Grover's Algorithm simulation and print the observed state to
+    Run the Quantum Algorithm simulation and print the observed state to
     stdout with the probability of observing that state.
 
-    :param int nqbits: The number of qbits to simulate in the simulator
-    :param int target: The index of the target qbit state
+    :param constructor: The constructor the algorithm objects, varies per
+        choice of algorithm
+    :param str alg_name: The name of the algorithm being run
+    :param args: All args that need to be passed in to the Algorithm
+        constructor
     """
-    grover = Grovers(nqbits, target)
-    grover.run()
+    print(f"Simulating {alg_name} Algorithm...")
 
-    m, p = grover.measure()
+    # Start up the progress bar ticker
+    progress_ticker = threaded_progress_bar()
+
+    # Create the algorithm object and run it, catching
+    # any errors that occur, and printing them to the
+    # terminal
+    try:
+        alg = constructor(*args)
+        alg.run()
+    except AssertionError as ae:
+        print(ae, file=sys.stderr)
+        exit(1)
+
+    # Stop the ticker before printing the results
+    progress_ticker.terminate()
+
+    m, p = alg.measure()
+
     print("Observed state: |" + bin(m)[2:] + ">")
     print("With probability: " + str(p))
+
+
+def threaded_progress_bar() -> multiprocessing.Process:
+    """
+    Run the progress bar ticker in a separate process so that
+    we can sleep the process without hanging the main computation
+
+    returns:
+        multiprocessing.Process: The reference to the process running
+            the progress bar
+    """
+    ticker_process = multiprocessing.Process(
+        target=pb.ticker,
+        args=(0.5, "Simulating: ",)
+    )
+    ticker_process.start()
+
+    return ticker_process
 
 
 if __name__ == "__main__":

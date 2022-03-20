@@ -11,19 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import math
+import pytest
+import qcp.cli.usage as u
 
-from qcp.matrices import DefaultMatrix
+EXPECTED_USAGE = u.USAGE_STR + "\n"
 
-#: The 2x2 Identity Matrix
-IDENTITY = DefaultMatrix([[1, 0], [0, 1]])
-#: The 2x2 Hadamard Gate
-TWO_HADAMARD = (1/math.sqrt(2)) * DefaultMatrix([[1, 1], [1, -1]])
-#: A Column Vector representing the |0> state
-ZERO_VECTOR = DefaultMatrix([[1], [0]])
-#: A Column Vector representing the |1> state
-ONE_VECTOR = DefaultMatrix([[0], [1]])
-#: The 2x2 Pauli-X Gate
-PAULI_X = DefaultMatrix([[0, 1], [1, 0]])
-#: The 2x2 Pauli-Z Gate
-PAULI_Z = DefaultMatrix([[1, 0], [0, -1]])
+
+def test_usage(capsys):
+    with pytest.raises(SystemExit) as se:
+        u.usage()
+
+    assert se.match("0")
+    # Capture the output of stdout (the print() statements...)
+    captured = capsys.readouterr()
+    assert captured.out == EXPECTED_USAGE

@@ -98,7 +98,7 @@ class Sudoku(GeneralAlgorithm):
 
         return circuit
 
-    def measure_state(self):
+    def measure(self):
         """
         Randomly 'measures' self.state by selecting a state (out of 2**9)
         weighted by its (amplitude ** 2)
