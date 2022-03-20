@@ -37,7 +37,7 @@ def interpret_arguments(opt: AlgorithmOption, args: List[str], flags: Dict[str, 
     elif opt is AlgorithmOption.Sudoku:
         return determine_sudoku(args, flags)
 
-    return None
+    return ()
 
 
 def _determine_qbits(args: List[str]) -> int:
@@ -168,4 +168,4 @@ def determine_sudoku(args: List[str], flags: Dict[str, str]):
     :param List[str] args: The CLI arguments
     :param Dict[str,str] flags: The CLI flags
     """
-    return
+    return ()

@@ -43,6 +43,16 @@ class AlgorithmOption(enum.Enum):
         elif self is AlgorithmOption.Sudoku:
             return Sudoku
 
+    def get_name(self):
+        if self is AlgorithmOption.Grovers:
+            return "Grover's"
+
+        elif self is AlgorithmOption.PhaseEstimation:
+            return "Phase Estimation"
+
+        elif self is AlgorithmOption.Sudoku:
+            return "Sudoku"
+
 
 class UnitaryMatrices(enum.Enum):
     # TODO: Populate properly

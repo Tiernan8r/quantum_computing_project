@@ -204,4 +204,4 @@ class PhaseEstimation(GeneralAlgorithm):
             # print all the possiblities
             # Should be removed, implement GUI histogram instead
             print(i, round(p[i], 4))
-        return observed[0]/2**self.size, round(probability, 4)
+        return int(observed[0]/2**self.size), round(probability, 4)

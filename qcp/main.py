@@ -39,17 +39,10 @@ def main():
     # Ignore the first entry in sys.argv as it is just the program name
     alg_opt, parsed_tuple = cli.read_cli(sys.argv[1:])
 
-    if alg_opt is AlgorithmOption.Grovers:
-        compute_grovers(*parsed_tuple)
-    elif alg_opt is AlgorithmOption.PhaseEstimation:
-        compute_phase_estimation(*parsed_tuple)
-    elif alg_opt is AlgorithmOption.Sudoku:
-        compute_sudoku()
-    else:
-        print("D'oh!")  # This is an impossible scenario...
+    compute(alg_opt.get_constructor(), alg_opt.get_name(), *parsed_tuple)
 
 
-def compute_grovers(nqbits: int, target: int):
+def compute(constructor, alg_name, *args):
     """
     Run the Grover's Algorithm simulation and print the observed state to
     stdout with the probability of observing that state.
@@ -57,89 +50,26 @@ def compute_grovers(nqbits: int, target: int):
     :param int nqbits: The number of qbits to simulate in the simulator
     :param int target: The index of the target qbit state
     """
-    print("Simulating Grover's Algorithm...")
+    print(f"Simulating {alg_name} Algorithm...")
 
     # Start up the progress bar ticker
     progress_ticker = threaded_progress_bar()
 
+    alg: GeneralAlgorithm = None
     try:
-        grover = Grovers(nqbits, target)
-        threaded_compute(grover)
-    except AssertionError as ae:
-        print(ae, file=sys.stderr)
-
-    # Stop the ticker before printing the results
-    progress_ticker.terminate()
-
-    m, p = grover.measure()
-
-    print("Observed state: |" + bin(m)[2:] + ">")
-    print("With probability: " + str(p))
-
-
-def compute_phase_estimation(nqbits: int, unitary: Matrix, eigenvec: Matrix):
-    """
-    Run the Phase Estimation Algorithm simulation and print the observed state
-    to stdout with the probability of observing that state.
-
-    :param int nqbits: The number of qbits to simulate in the simulator
-    :param Matrix unitary: The unitary matrix to use in the algorithm
-    :param Matrix eigenvec: The eigenvector to use in the algorithm
-    """
-    print("Simulating the Phase Estimation Algorithm...")
-
-    # Start up the progress bar ticker
-    progress_ticker = threaded_progress_bar()
-
-    try:
-        phase_est = PhaseEstimation(nqbits, unitary, eigenvec)
-        threaded_compute(phase_est)
-    except AssertionError as ae:
-        print(ae, file=sys.stderr)
-
-    # Stop the ticker before printing the results
-    progress_ticker.terminate()
-
-    m, p = phase_est.measure()
-
-    print("Observed state: |" + bin(int(m))[2:] + ">")
-    print("With probability: " + str(p))
-
-
-def compute_sudoku():
-    """
-    Run the Sudoku simulation and print the observed state to
-    stdout with the probability of observing that state.
-    """
-    print("Beginning the Sudoku solver simulation...")
-
-    # Start up the progress bar ticker
-    progress_ticker = threaded_progress_bar()
-
-    try:
-        sudoku = Sudoku()
-        threaded_compute(sudoku)
-    except AssertionError as ae:
-        print(ae, file=sys.stderr)
-
-    # Stop the ticker before printing the results
-    progress_ticker.terminate()
-
-    m, p = sudoku.measure()
-
-    print("Observed state: |" + bin(m)[2:] + ">")
-    print("With probability: " + str(p))
-
-
-def threaded_compute(alg: GeneralAlgorithm):
-
-    def comp(alg):
+        alg = constructor(*args)
         alg.run()
+    except AssertionError as ae:
+        print(ae, file=sys.stderr)
+        exit(1)
 
-    thread = multiprocessing.Process(target=comp, args=(alg,))
-    thread.start()
+    # Stop the ticker before printing the results
+    progress_ticker.terminate()
 
-    return thread
+    m, p = alg.measure()
+
+    print("Observed state: |" + bin(m)[2:] + ">")
+    print("With probability: " + str(p))
 
 
 def threaded_progress_bar() -> multiprocessing.Process:
