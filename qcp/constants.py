@@ -29,12 +29,3 @@ PAULI_X = DefaultMatrix([[0, 1], [1, 0]])
 #: The 2x2 Pauli-Z Gate
 PAULI_Z = DefaultMatrix([[1, 0], [0, -1]])
 
-
-class AlgorithmOptions(enum.Enum):
-    """
-    Enum of the different algorithms to simulate
-    """
-
-    Grovers = "g"
-    QFT = "qft"
-    Sudoku = "s"
