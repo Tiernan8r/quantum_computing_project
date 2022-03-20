@@ -86,7 +86,7 @@ def read_cli(args: List[str]):
     """
     flags, vals = parse_input(args)
 
-    if HELP_LONG in flags:
+    if HELP_LONG in flags or len(vals) == 0:
         u.usage()
 
     alg_opt_str = DEFAULT_ALGORITHM
