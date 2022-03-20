@@ -16,7 +16,6 @@
 CLI initialiser to parse CLI options for the Algorithm, and to run the
 computation
 """
-import re
 import sys
 from qcp.cli.constants import (ALGORITHM_LONG, ALGORITHM_SHORT,
                                HELP_LONG, HELP_SHORT, PHASE_LONG, PHASE_SHORT,

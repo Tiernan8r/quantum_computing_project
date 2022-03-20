@@ -16,11 +16,12 @@ import time
 
 _ticks = ["-", "\\", "|", "/"]
 
+
 def ticker(tick_rate=0.2, prefix="", file=sys.stdout):
-    
+
     def show(j):
-        i = j % len(_ticks) # Loop through the ticks
-        file.write(f"{prefix}{_ticks[i]}\r") # write to the same line
+        i = j % len(_ticks)  # Loop through the ticks
+        file.write(f"{prefix}{_ticks[i]}\r")  # write to the same line
         file.flush()
 
     i = 0

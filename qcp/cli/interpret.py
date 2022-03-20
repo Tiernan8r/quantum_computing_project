@@ -19,17 +19,15 @@ computation
 import sys
 from typing import Dict, List, Tuple
 
-from qcp.cli.constants import (ALGORITHM_LONG, DEFAULT_ALGORITHM,
-                               DEFAULT_PHASE, DEFAULT_TARGET, DEFAULT_UNITARY,
-                               HELP_LONG, PHASE_LONG, TARGET_LONG,
-                               UNITARY_LONG)
+from qcp.cli.constants import (DEFAULT_PHASE, DEFAULT_TARGET, DEFAULT_UNITARY,
+                               PHASE_LONG, TARGET_LONG, UNITARY_LONG)
 from qcp.cli.options import AlgorithmOption, UnitaryMatrices
 from qcp.matrices import DefaultMatrix, Matrix
-import qcp.cli.usage as u
-import qcp.cli.parser as p
 
 
-def interpret_arguments(opt: AlgorithmOption, args: List[str], flags: Dict[str, str]):
+def interpret_arguments(opt: AlgorithmOption,
+                        args: List[str],
+                        flags: Dict[str, str]):
     if opt is AlgorithmOption.Grovers:
         return determine_grover(args, flags)
     elif opt is AlgorithmOption.PhaseEstimation:

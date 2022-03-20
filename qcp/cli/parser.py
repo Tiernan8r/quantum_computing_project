@@ -23,11 +23,9 @@ from typing import Dict, List, Tuple
 import qcp.cli.interpret as i
 import qcp.cli.usage as u
 from qcp.cli.constants import (ALGORITHM_LONG, DEFAULT_ALGORITHM,
-                               DEFAULT_PHASE, DEFAULT_TARGET, DEFAULT_UNITARY,
-                               FLAG_MAPPING, HELP_LONG, PHASE_LONG,
-                               TARGET_LONG, UNITARY_LONG)
-from qcp.cli.options import AlgorithmOption, UnitaryMatrices
-from qcp.matrices import DefaultMatrix, Matrix
+                               DEFAULT_TARGET, FLAG_MAPPING, HELP_LONG,
+                               TARGET_LONG)
+from qcp.cli.options import AlgorithmOption
 
 
 def parse_input(args: List[str]) -> Tuple[Dict[str, str], List[str]]:

@@ -25,10 +25,8 @@ if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
 import qcp.cli as cli
-from qcp.algorithms import GeneralAlgorithm, Grovers, PhaseEstimation, Sudoku
-from qcp.cli.options import AlgorithmOption
+from qcp.algorithms import GeneralAlgorithm
 import qcp.cli.progress_bar as pb
-from qcp.matrices import Matrix
 
 
 def main():
