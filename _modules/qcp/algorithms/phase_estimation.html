@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qcp.algorithms.phase_estimation &#8212; Quantum Computing Project 0.0.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for qcp.algorithms.phase_estimation</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">cmath</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">import</span> <span class="nn">qcp.gates</span> <span class="k">as</span> <span class="nn">g</span>
+<span class="kn">import</span> <span class="nn">qcp.register</span> <span class="k">as</span> <span class="nn">reg</span>
+<span class="kn">import</span> <span class="nn">qcp.tensor_product</span> <span class="k">as</span> <span class="nn">tp</span>
+<span class="kn">from</span> <span class="nn">qcp.algorithms.abstract_algorithm</span> <span class="kn">import</span> <span class="n">GeneralAlgorithm</span>
+<span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">DefaultMatrix</span><span class="p">,</span> <span class="n">Matrix</span>
+
+
+<div class="viewcode-block" id="is_unitary"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.is_unitary">[docs]</a><span class="k">def</span> <span class="nf">is_unitary</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if matrix is Unitary (can be shifted to gates.py)</span>
+
+<span class="sd">    :param Matrix: input: n x n matrix</span>
+<span class="sd">    returns:</span>
+<span class="sd">        bool: Whether the matrix is unitary</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">adjoint</span><span class="p">()</span><span class="o">*</span><span class="nb">input</span>
+    <span class="n">identity</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">num_rows</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">num_columns</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">cmath</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">identity</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]):</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="optimum_qubit_size"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.optimum_qubit_size">[docs]</a><span class="k">def</span> <span class="nf">optimum_qubit_size</span><span class="p">(</span><span class="n">precision</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the number of qubit required for targeted number of decimal</span>
+<span class="sd">    and error rate.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">error</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="qft_gate"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.qft_gate">[docs]</a><span class="k">def</span> <span class="nf">qft_gate</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Performs Quantum Fourier Transform, which change the basis</span>
+
+<span class="sd">    :param int: size: number of qubits</span>
+<span class="sd">    returns:</span>
+<span class="sd">        Matrix: gate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">gate</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="p">[],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">gate</span> <span class="o">=</span> <span class="n">qft_rotation_gate</span><span class="p">(</span>
+            <span class="n">size</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">H</span><span class="p">)</span><span class="o">*</span><span class="n">gate</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="o">/</span><span class="mi">2</span><span class="p">)):</span>
+        <span class="n">gate</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">gate</span>
+    <span class="k">return</span> <span class="n">gate</span></div>
+
+
+<div class="viewcode-block" id="inverse_qft_gate"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.inverse_qft_gate">[docs]</a><span class="k">def</span> <span class="nf">inverse_qft_gate</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Performs Inverse Quantum Fourier Transform</span>
+<span class="sd">    :param int: size: number of qubits</span>
+<span class="sd">    returns:</span>
+<span class="sd">        Matrix: gate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gate</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="p">[],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="o">/</span><span class="mi">2</span><span class="p">)):</span>
+        <span class="n">gate</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">size</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">gate</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="n">gate</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">H</span><span class="p">)</span> <span class="o">*</span> \
+            <span class="n">inverse_qft_rotation_gate</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">gate</span>
+    <span class="k">return</span> <span class="n">gate</span></div>
+
+
+<div class="viewcode-block" id="qft_rotation_gate"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.qft_rotation_gate">[docs]</a><span class="k">def</span> <span class="nf">qft_rotation_gate</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">current_qubit</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="sd">    Construct the R2...R(n-i) gate for Quantum Fourier Transform</span>
+
+<span class="sd">    :param int size: total number of qubits, n</span>
+<span class="sd">    :param intcurrent_qubit: which qubit to apply the rotation gate to, i</span>
+<span class="sd">    returns:</span>
+<span class="sd">        Matrix: gate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gate</span><span class="p">:</span> <span class="n">Matrix</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">current_qubit</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">control</span> <span class="o">=</span> <span class="n">current_qubit</span><span class="o">-</span><span class="n">i</span>
+        <span class="n">gate</span> <span class="o">=</span> <span class="n">gate</span> <span class="o">*</span> <span class="n">g</span><span class="o">.</span><span class="n">control_phase</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="p">[</span><span class="n">control</span><span class="p">],</span> <span class="n">current_qubit</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">gate</span></div>
+
+
+<div class="viewcode-block" id="inverse_qft_rotation_gate"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.inverse_qft_rotation_gate">[docs]</a><span class="k">def</span> <span class="nf">inverse_qft_rotation_gate</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">current_qubit</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="sd">    Construct the R2...R(n-i) gate for Inverse Quantum Fourier Transform</span>
+
+<span class="sd">    :param int size: total number of qubits, n</span>
+<span class="sd">    :param int current_qubit: which qubit to apply the rotation gate to, i</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gate</span><span class="p">:</span> <span class="n">Matrix</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">current_qubit</span><span class="p">):</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">current_qubit</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">control</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">gate</span> <span class="o">=</span> <span class="n">gate</span> <span class="o">*</span> <span class="n">g</span><span class="o">.</span><span class="n">control_phase</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="p">[</span><span class="n">control</span><span class="p">],</span> <span class="n">current_qubit</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">gate</span></div>
+
+
+<div class="viewcode-block" id="PhaseEstimation"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation">[docs]</a><span class="k">class</span> <span class="nc">PhaseEstimation</span><span class="p">(</span><span class="n">GeneralAlgorithm</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PhaseEstimation.__init__"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unitary</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">eigenvector</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Implement Phase Estimation, which requires a unitary matrix and one of</span>
+<span class="sd">        its eigenvector as the input.</span>
+
+<span class="sd">        :param int: size: precision of the phase output, i.e. no. of decimal</span>
+<span class="sd">        :param Matrix unitary: a unitary matrix whose eigenvalue&#39;s phase is</span>
+<span class="sd">            the target</span>
+<span class="sd">        :param Matrix eigenvector: an eigenvector of the unitary matrix</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">        phase = 0.125</span>
+<span class="sd">        unitary = DefaultMatrix([[1,0],[0,exp(1j*math.pi*phase)]])</span>
+<span class="sd">        eigenvector = DefaultMatrix([[0],[1]])</span>
+<span class="sd">        PE = Phase_Esimation(3,unitary,eigenvector)</span>
+<span class="sd">        PE.run()</span>
+<span class="sd">        print(PE.measure())</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">is_unitary</span><span class="p">(</span><span class="n">unitary</span><span class="p">),</span> <span class="s2">&quot;Matrix must be unitary!&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unitary</span> <span class="o">=</span> <span class="n">unitary</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">auxiliary</span> <span class="o">=</span> <span class="n">eigenvector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auxsize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">eigenvector</span><span class="o">.</span><span class="n">num_rows</span><span class="p">))</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">size</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PhaseEstimation.initial_state"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.initial_state">[docs]</a>    <span class="k">def</span> <span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a state vector corresponding to |0..0&gt;</span>
+<span class="sd">        :return: returns state vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">init</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auxiliary</span><span class="p">,</span> <span class="n">init</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PhaseEstimation.first_layer"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.first_layer">[docs]</a>    <span class="k">def</span> <span class="nf">first_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tensor Hadamard (first register) with Identity (auxiliary)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auxsize</span><span class="p">,</span> <span class="p">[],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
+            <span class="nb">id</span><span class="p">,</span>
+            <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">H</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PhaseEstimation.second_layer"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.second_layer">[docs]</a>    <span class="k">def</span> <span class="nf">second_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Control-U Gate applied to auxiliary register</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">totalsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">auxsize</span>
+        <span class="n">gate</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="n">totalsize</span><span class="p">,</span> <span class="p">[],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+        <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">rep</span><span class="p">):</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span>
+                <span class="n">gate</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">control_u</span><span class="p">(</span><span class="n">totalsize</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">unitary</span><span class="p">)</span> <span class="o">*</span> <span class="n">gate</span>
+            <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">gate</span></div>
+
+<div class="viewcode-block" id="PhaseEstimation.third_layer"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.third_layer">[docs]</a>    <span class="k">def</span> <span class="nf">third_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="sd">        Inverse QFT Gate tensor for the first register</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auxsize</span><span class="p">,</span> <span class="p">[],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span>
+            <span class="nb">id</span><span class="p">,</span>
+            <span class="n">inverse_qft_gate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PhaseEstimation.construct_circuit"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.construct_circuit">[docs]</a>    <span class="k">def</span> <span class="nf">construct_circuit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Combines the layers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_layer</span><span class="p">()</span>
+        <span class="n">second</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">second_layer</span><span class="p">()</span>
+        <span class="n">third</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">third_layer</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">third</span> <span class="o">*</span> <span class="n">second</span> <span class="o">*</span> <span class="n">first</span></div>
+
+<div class="viewcode-block" id="PhaseEstimation.measure"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.measure">[docs]</a>    <span class="k">def</span> <span class="nf">measure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &#39;measures&#39; self.state by selecting a state weighted by its</span>
+<span class="sd">        (amplitude ** 2)</span>
+<span class="sd">        :return: the state observed and the probability of measuring</span>
+<span class="sd">                said state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="p">([[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="n">entries</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)]</span>
+            <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">trial</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auxiliary</span><span class="p">,</span> <span class="n">DefaultMatrix</span><span class="p">(</span><span class="n">entries</span><span class="p">))</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">trial</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">observed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))],</span> <span class="n">p</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">probability</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="c1"># print all the possiblities</span>
+            <span class="c1"># Should be removed, implement GUI histogram instead</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">probability</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Quantum Computing Project</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Tiernan8r.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

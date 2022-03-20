@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qcp.cli.interpret &#8212; Quantum Computing Project 0.0.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for qcp.cli.interpret</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2022 Tiernan8r</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Convert the given CLI arguments and flags into usable input for the algorithms</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">qcp.cli.constants</span> <span class="kn">import</span> <span class="p">(</span><span class="n">DEFAULT_PHASE</span><span class="p">,</span> <span class="n">DEFAULT_TARGET</span><span class="p">,</span> <span class="n">DEFAULT_UNITARY</span><span class="p">,</span>
+                               <span class="n">PHASE_LONG</span><span class="p">,</span> <span class="n">TARGET_LONG</span><span class="p">,</span> <span class="n">UNITARY_LONG</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">qcp.cli.options</span> <span class="kn">import</span> <span class="n">AlgorithmOption</span><span class="p">,</span> <span class="n">UnitaryMatrices</span>
+<span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">DefaultMatrix</span><span class="p">,</span> <span class="n">Matrix</span>
+
+
+<div class="viewcode-block" id="interpret_arguments"><a class="viewcode-back" href="../../../qcp.cli.html#qcp.cli.interpret.interpret_arguments">[docs]</a><span class="k">def</span> <span class="nf">interpret_arguments</span><span class="p">(</span><span class="n">opt</span><span class="p">:</span> <span class="n">AlgorithmOption</span><span class="p">,</span>
+                        <span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                        <span class="n">flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parse the CLI arguments/flags based off of the algorithm</span>
+<span class="sd">    type to simulate</span>
+
+<span class="sd">    :param AlgorithmOption opt: The algorithm chosen</span>
+<span class="sd">    :param List[str]: The CLI arguments provided</span>
+<span class="sd">    :param Dict[str, str]: The CLI flags provided</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">opt</span> <span class="ow">is</span> <span class="n">AlgorithmOption</span><span class="o">.</span><span class="n">Grovers</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">determine_grover</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">opt</span> <span class="ow">is</span> <span class="n">AlgorithmOption</span><span class="o">.</span><span class="n">PhaseEstimation</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">determine_phase_estimation</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">opt</span> <span class="ow">is</span> <span class="n">AlgorithmOption</span><span class="o">.</span><span class="n">Sudoku</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">determine_sudoku</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="_determine_qbits"><a class="viewcode-back" href="../../../qcp.cli.html#qcp.cli.interpret._determine_qbits">[docs]</a><span class="k">def</span> <span class="nf">_determine_qbits</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read the number of qbits to simulate from the CLI arguments list</span>
+
+<span class="sd">    :param List[str] args: The CLI arguments</span>
+
+<span class="sd">    returns:</span>
+<span class="sd">        int: The number of qbits</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Determine the number of qbits</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Must provide the number of qbits to simulate&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Too many arguments provided, ignoring extras...&quot;</span><span class="p">,</span>
+              <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+
+    <span class="c1"># Take the number to interpret to be the first value in the arguments</span>
+    <span class="c1"># list</span>
+    <span class="n">nqbits_str</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">nqbits</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nqbits_str</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Provided number of qbits &#39;</span><span class="si">{</span><span class="n">nqbits_str</span><span class="si">}</span><span class="s2">&#39; is not an integer!&quot;</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">nqbits</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of qbits to simulate must be &gt;= 2!&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">nqbits</span></div>
+
+
+<div class="viewcode-block" id="determine_grover"><a class="viewcode-back" href="../../../qcp.cli.html#qcp.cli.interpret.determine_grover">[docs]</a><span class="k">def</span> <span class="nf">determine_grover</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+                     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read the given flags dictionary and arguments map and convert to usable</span>
+<span class="sd">    input for the Grover&#39;s algorithm.</span>
+
+<span class="sd">    The Grover&#39;s Algorithm needs two input. The first is the number of</span>
+<span class="sd">    qbits to simulate, and the second is the target state to search for.</span>
+
+<span class="sd">    :param List[str] args: The CLI arguments</span>
+<span class="sd">    :param Dict[str,str] flags: The CLI flags</span>
+
+<span class="sd">    returns:</span>
+<span class="sd">        Tuple[int, int]: Tuple of the parameters for the constructor, the</span>
+<span class="sd">            first is the number of qbits, the second the target bit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Determine the number of qbits</span>
+    <span class="n">nqbits</span> <span class="o">=</span> <span class="n">_determine_qbits</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="c1"># Read the target value from the flag</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">DEFAULT_TARGET</span>
+    <span class="k">if</span> <span class="n">TARGET_LONG</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;No target bit provided, defaulting to </span><span class="si">{</span><span class="n">DEFAULT_TARGET</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">target_str</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[</span><span class="n">TARGET_LONG</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">target_str</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Provided target &#39;</span><span class="si">{</span><span class="n">target_str</span><span class="si">}</span><span class="s2">&#39; is not an integer!&quot;</span><span class="p">,</span>
+                <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">nqbits</span><span class="p">,</span> <span class="n">target</span></div>
+
+
+<div class="viewcode-block" id="determine_phase_estimation"><a class="viewcode-back" href="../../../qcp.cli.html#qcp.cli.interpret.determine_phase_estimation">[docs]</a><span class="k">def</span> <span class="nf">determine_phase_estimation</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+                               <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read the given flags dictionary and arguments map and convert to usable</span>
+<span class="sd">    input for the PhaseEstimation algorithm.</span>
+
+<span class="sd">    The PhaseEstimation algorithm needs the number of qbits to simulate,</span>
+<span class="sd">    and two matrices. The first to use as the unitary matrix in the algorithm</span>
+<span class="sd">    and the second to use as the eigenvector.</span>
+
+<span class="sd">    :param List[str] args: The CLI arguments</span>
+<span class="sd">    :param Dict[str,str] flags: The CLI flags</span>
+
+<span class="sd">    returns:</span>
+<span class="sd">        Tuple[int, Matrix, Matrix]: Tuple of the parameters for the</span>
+<span class="sd">            constructor, the first is the number of qbits to simulate,</span>
+<span class="sd">            the second the Unitary Matrix to use, and the third the</span>
+<span class="sd">            eigenvector.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Determine the number of qbits:</span>
+    <span class="n">nqbits</span> <span class="o">=</span> <span class="n">_determine_qbits</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="c1"># Determine the phase shift to use:</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="n">DEFAULT_PHASE</span>
+    <span class="k">if</span> <span class="n">PHASE_LONG</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
+        <span class="n">phase_str</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[</span><span class="n">PHASE_LONG</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">phase</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">phase_str</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Provided phase &#39;</span><span class="si">{</span><span class="n">phase_str</span><span class="si">}</span><span class="s2">&#39; is not a number!&quot;</span><span class="p">,</span>
+                <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Determining the unitary matrix</span>
+    <span class="n">unitary_str</span> <span class="o">=</span> <span class="n">DEFAULT_UNITARY</span>
+    <span class="n">unitary_matrix</span> <span class="o">=</span> <span class="n">UnitaryMatrices</span><span class="p">(</span><span class="n">DEFAULT_UNITARY</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">UNITARY_LONG</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;No unitary matrix type provided, defaulting to &#39;</span><span class="si">{</span><span class="n">unitary_str</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">unitary_str</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[</span><span class="n">UNITARY_LONG</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">unitary_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">UnitaryMatrices</span><span class="o">.</span><span class="n">list</span><span class="p">():</span>
+            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Unitary matrix option &#39;</span><span class="si">{0}</span><span class="s2">&#39; is not a valid option!&quot;</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="n">err_str</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">unitary_str</span><span class="p">),</span>
+                <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The options are: </span><span class="si">{</span><span class="n">UnitaryMatrices</span><span class="o">.</span><span class="n">list</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">unitary_matrix</span> <span class="o">=</span> <span class="n">UnitaryMatrices</span><span class="p">(</span><span class="n">unitary_str</span><span class="p">)</span>
+
+    <span class="c1"># Determining the Eigenvector to use</span>
+    <span class="n">eigenvec</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="p">([[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+
+    <span class="k">return</span> <span class="n">nqbits</span><span class="p">,</span> <span class="n">unitary_matrix</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">phase</span><span class="p">),</span> <span class="n">eigenvec</span></div>
+
+
+<div class="viewcode-block" id="determine_sudoku"><a class="viewcode-back" href="../../../qcp.cli.html#qcp.cli.interpret.determine_sudoku">[docs]</a><span class="k">def</span> <span class="nf">determine_sudoku</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read the given flags dictionary and arguments map and convert to usable</span>
+<span class="sd">    input for the Sudoku algorithm.</span>
+
+<span class="sd">    The sudoku algorithm takes no input...</span>
+
+<span class="sd">    :param List[str] args: The CLI arguments</span>
+<span class="sd">    :param Dict[str,str] flags: The CLI flags</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">()</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Quantum Computing Project</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Tiernan8r.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -39,6 +39,7 @@
  | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
+ | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
@@ -78,9 +79,17 @@
         <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseVector.__getitem__">(qcp.matrices.sparse_matrix.SparseVector method)</a>
 </li>
       </ul></li>
-      <li><a href="qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.__init__">__init__() (qcp.matrices.dense_matrix.DenseMatrix method)</a>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.abstract_algorithm.GeneralAlgorithm.__init__">__init__() (qcp.algorithms.abstract_algorithm.GeneralAlgorithm method)</a>
 
       <ul>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.grovers_algorithm.Grovers.__init__">(qcp.algorithms.grovers_algorithm.Grovers method)</a>
+</li>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.__init__">(qcp.algorithms.phase_estimation.PhaseEstimation method)</a>
+</li>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.__init__">(qcp.algorithms.sudoku.Sudoku method)</a>
+</li>
+        <li><a href="qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.__init__">(qcp.matrices.dense_matrix.DenseMatrix method)</a>
+</li>
         <li><a href="qcp.matrices.html#qcp.matrices.matrix.Matrix.__init__">(qcp.matrices.matrix.Matrix method)</a>
 </li>
         <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.__init__">(qcp.matrices.sparse_matrix.SparseMatrix method)</a>
@@ -136,15 +145,25 @@
         <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.__sub__">(qcp.matrices.sparse_matrix.SparseMatrix method)</a>
 </li>
       </ul></li>
-      <li><a href="qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix._abc_impl">_abc_impl (qcp.matrices.dense_matrix.DenseMatrix attribute)</a>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.abstract_algorithm.GeneralAlgorithm._abc_impl">_abc_impl (qcp.algorithms.abstract_algorithm.GeneralAlgorithm attribute)</a>
 
       <ul>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.grovers_algorithm.Grovers._abc_impl">(qcp.algorithms.grovers_algorithm.Grovers attribute)</a>
+</li>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation._abc_impl">(qcp.algorithms.phase_estimation.PhaseEstimation attribute)</a>
+</li>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku._abc_impl">(qcp.algorithms.sudoku.Sudoku attribute)</a>
+</li>
+        <li><a href="qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix._abc_impl">(qcp.matrices.dense_matrix.DenseMatrix attribute)</a>
+</li>
         <li><a href="qcp.matrices.html#qcp.matrices.matrix.Matrix._abc_impl">(qcp.matrices.matrix.Matrix attribute)</a>
 </li>
         <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix._abc_impl">(qcp.matrices.sparse_matrix.SparseMatrix attribute)</a>
 </li>
       </ul></li>
       <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix._as_list">_as_list() (qcp.matrices.sparse_matrix.SparseMatrix method)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.interpret._determine_qbits">_determine_qbits() (in module qcp.cli.interpret)</a>
 </li>
       <li><a href="qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix._dot">_dot() (qcp.matrices.dense_matrix.DenseMatrix method)</a>
 
@@ -166,6 +185,8 @@
 </li>
       <li><a href="qcp.html#qcp.tensor_product._tensor_product_sparse">_tensor_product_sparse() (in module qcp.tensor_product)</a>
 </li>
+      <li><a href="qcp.cli.html#qcp.cli.progress_bar._ticks">_ticks (in module qcp.cli.progress_bar)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -173,6 +194,14 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.matrices.html#qcp.matrices.matrix.Matrix.adjoint">adjoint() (qcp.matrices.matrix.Matrix method)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.constants.ALGORITHM_LONG">ALGORITHM_LONG (in module qcp.cli.constants)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.cli.html#qcp.cli.constants.ALGORITHM_SHORT">ALGORITHM_SHORT (in module qcp.cli.constants)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.options.AlgorithmOption">AlgorithmOption (class in qcp.cli.options)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -216,6 +245,16 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.abstract_algorithm.GeneralAlgorithm.construct_circuit">construct_circuit() (qcp.algorithms.abstract_algorithm.GeneralAlgorithm method)</a>
+
+      <ul>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.grovers_algorithm.Grovers.construct_circuit">(qcp.algorithms.grovers_algorithm.Grovers method)</a>
+</li>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.construct_circuit">(qcp.algorithms.phase_estimation.PhaseEstimation method)</a>
+</li>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.construct_circuit">(qcp.algorithms.sudoku.Sudoku method)</a>
+</li>
+      </ul></li>
       <li><a href="qcp.html#qcp.gates.control_phase">control_phase() (in module qcp.gates)</a>
 </li>
       <li><a href="qcp.html#qcp.gates.control_u">control_u() (in module qcp.gates)</a>
@@ -230,11 +269,43 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.cli.html#qcp.cli.constants.DEFAULT_ALGORITHM">DEFAULT_ALGORITHM (in module qcp.cli.constants)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.constants.DEFAULT_PHASE">DEFAULT_PHASE (in module qcp.cli.constants)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.constants.DEFAULT_TARGET">DEFAULT_TARGET (in module qcp.cli.constants)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.constants.DEFAULT_UNITARY">DEFAULT_UNITARY (in module qcp.cli.constants)</a>
+</li>
       <li><a href="generated/qcp.matrices.html#qcp.matrices.DefaultMatrix">DefaultMatrix (in module qcp.matrices)</a>, <a href="qcp.matrices.html#qcp.matrices.DefaultMatrix">[1]</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix">DenseMatrix (class in qcp.matrices.dense_matrix)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.interpret.determine_grover">determine_grover() (in module qcp.cli.interpret)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.interpret.determine_phase_estimation">determine_phase_estimation() (in module qcp.cli.interpret)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.interpret.determine_sudoku">determine_sudoku() (in module qcp.cli.interpret)</a>
+</li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.grovers_algorithm.Grovers.diffusion">diffusion() (qcp.algorithms.grovers_algorithm.Grovers method)</a>
+
+      <ul>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.diffusion">(qcp.algorithms.sudoku.Sudoku method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.first_layer">first_layer() (qcp.algorithms.phase_estimation.PhaseEstimation method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.cli.html#qcp.cli.constants.FLAG_MAPPING">FLAG_MAPPING (in module qcp.cli.constants)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -244,6 +315,16 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.html#qcp.gates.Gate">Gate (class in qcp.gates)</a>
 </li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.abstract_algorithm.GeneralAlgorithm">GeneralAlgorithm (class in qcp.algorithms.abstract_algorithm)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.options.UnitaryMatrices.get">get() (qcp.cli.options.UnitaryMatrices method)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.options.AlgorithmOption.get_constructor">get_constructor() (qcp.cli.options.AlgorithmOption method)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.options.AlgorithmOption.get_name">get_name() (qcp.cli.options.AlgorithmOption method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.get_state">get_state() (qcp.matrices.dense_matrix.DenseMatrix method)</a>
 
       <ul>
@@ -252,10 +333,14 @@
         <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.get_state">(qcp.matrices.sparse_matrix.SparseMatrix method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.ui.html#qcp.ui.constants.GRAPH_WIDGET_NAME">GRAPH_WIDGET_NAME (in module qcp.ui.constants)</a>
 </li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.grovers_algorithm.Grovers">Grovers (class in qcp.algorithms.grovers_algorithm)</a>
+
+      <ul>
+        <li><a href="qcp.cli.html#qcp.cli.options.AlgorithmOption.Grovers">(qcp.cli.options.AlgorithmOption attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -263,6 +348,14 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.html#qcp.gates.Gate.H">H (qcp.gates.Gate attribute)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.options.UnitaryMatrices.HADAMARD">HADAMARD (qcp.cli.options.UnitaryMatrices attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.cli.html#qcp.cli.constants.HELP_LONG">HELP_LONG (in module qcp.cli.constants)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.constants.HELP_SHORT">HELP_SHORT (in module qcp.cli.constants)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -280,15 +373,29 @@
         <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.identity">(qcp.matrices.sparse_matrix.SparseMatrix static method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.abstract_algorithm.GeneralAlgorithm.initial_state">initial_state() (qcp.algorithms.abstract_algorithm.GeneralAlgorithm method)</a>
+
+      <ul>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.initial_state">(qcp.algorithms.phase_estimation.PhaseEstimation method)</a>
+</li>
+      </ul></li>
       <li><a href="qcp.ui.html#qcp.ui.constants.INPUT_SEARCH_ERROR_WIDGET_NAME">INPUT_SEARCH_ERROR_WIDGET_NAME (in module qcp.ui.constants)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.ui.html#qcp.ui.constants.INPUT_SEARCH_WIDGET_NAME">INPUT_SEARCH_WIDGET_NAME (in module qcp.ui.constants)</a>
 </li>
       <li><a href="qcp.ui.html#qcp.ui.constants.INPUT_TARGET_ERROR_WIDGET_NAME">INPUT_TARGET_ERROR_WIDGET_NAME (in module qcp.ui.constants)</a>
 </li>
       <li><a href="qcp.ui.html#qcp.ui.constants.INPUT_TARGET_WIDGET_NAME">INPUT_TARGET_WIDGET_NAME (in module qcp.ui.constants)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.interpret.interpret_arguments">interpret_arguments() (in module qcp.cli.interpret)</a>
+</li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.inverse_qft_gate">inverse_qft_gate() (in module qcp.algorithms.phase_estimation)</a>
+</li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.inverse_qft_rotation_gate">inverse_qft_rotation_gate() (in module qcp.algorithms.phase_estimation)</a>
+</li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.is_unitary">is_unitary() (in module qcp.algorithms.phase_estimation)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -298,10 +405,16 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.ui.html#qcp.ui.constants.LCD_CLASSICAL">LCD_CLASSICAL (in module qcp.ui.constants)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.ui.html#qcp.ui.constants.LCD_GROVER">LCD_GROVER (in module qcp.ui.constants)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.cli.html#qcp.cli.options.AlgorithmOption.list">list() (qcp.cli.options.AlgorithmOption class method)</a>
+
+      <ul>
+        <li><a href="qcp.cli.html#qcp.cli.options.UnitaryMatrices.list">(qcp.cli.options.UnitaryMatrices class method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -315,12 +428,48 @@
       <li><a href="qcp.matrices.html#qcp.matrices.types.MATRIX">MATRIX (in module qcp.matrices.types)</a>
 </li>
       <li><a href="qcp.html#qcp.register.measure">measure() (in module qcp.register)</a>
+
+      <ul>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.abstract_algorithm.GeneralAlgorithm.measure">(qcp.algorithms.abstract_algorithm.GeneralAlgorithm method)</a>
+</li>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.grovers_algorithm.Grovers.measure">(qcp.algorithms.grovers_algorithm.Grovers method)</a>
+</li>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.measure">(qcp.algorithms.phase_estimation.PhaseEstimation method)</a>
+</li>
+        <li><a href="qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.measure">(qcp.algorithms.sudoku.Sudoku method)</a>
+</li>
+      </ul></li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.measure_solution">measure_solution() (qcp.algorithms.sudoku.Sudoku method)</a>
 </li>
       <li>
     module
 
       <ul>
         <li><a href="generated/qcp.html#module-qcp">qcp</a>, <a href="qcp.html#module-qcp">[1]</a>
+</li>
+        <li><a href="qcp.algorithms.html#module-qcp.algorithms">qcp.algorithms</a>
+</li>
+        <li><a href="qcp.algorithms.html#module-qcp.algorithms.abstract_algorithm">qcp.algorithms.abstract_algorithm</a>
+</li>
+        <li><a href="qcp.algorithms.html#module-qcp.algorithms.grovers_algorithm">qcp.algorithms.grovers_algorithm</a>
+</li>
+        <li><a href="qcp.algorithms.html#module-qcp.algorithms.phase_estimation">qcp.algorithms.phase_estimation</a>
+</li>
+        <li><a href="qcp.algorithms.html#module-qcp.algorithms.sudoku">qcp.algorithms.sudoku</a>
+</li>
+        <li><a href="qcp.cli.html#module-qcp.cli">qcp.cli</a>
+</li>
+        <li><a href="qcp.cli.html#module-qcp.cli.constants">qcp.cli.constants</a>
+</li>
+        <li><a href="qcp.cli.html#module-qcp.cli.interpret">qcp.cli.interpret</a>
+</li>
+        <li><a href="qcp.cli.html#module-qcp.cli.options">qcp.cli.options</a>
+</li>
+        <li><a href="qcp.cli.html#module-qcp.cli.parser">qcp.cli.parser</a>
+</li>
+        <li><a href="qcp.cli.html#module-qcp.cli.progress_bar">qcp.cli.progress_bar</a>
+</li>
+        <li><a href="qcp.cli.html#module-qcp.cli.usage">qcp.cli.usage</a>
 </li>
         <li><a href="qcp.html#module-qcp.constants">qcp.constants</a>
 </li>
@@ -384,6 +533,12 @@
       <li><a href="qcp.html#qcp.constants.ONE_VECTOR">ONE_VECTOR (in module qcp.constants)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.optimum_qubit_size">optimum_qubit_size() (in module qcp.algorithms.phase_estimation)</a>
+</li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.oracle">oracle() (qcp.algorithms.sudoku.Sudoku method)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="P">P</h2>
@@ -391,13 +546,29 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.html#qcp.gates.Gate.P">P (qcp.gates.Gate attribute)</a>
 </li>
+      <li><a href="qcp.cli.html#qcp.cli.parser.parse_input">parse_input() (in module qcp.cli.parser)</a>
+</li>
       <li><a href="qcp.html#qcp.constants.PAULI_X">PAULI_X (in module qcp.constants)</a>
+</li>
+      <li><a href="qcp.html#qcp.constants.PAULI_Z">PAULI_Z (in module qcp.constants)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.constants.PHASE_LONG">PHASE_LONG (in module qcp.cli.constants)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="qcp.html#qcp.constants.PAULI_Z">PAULI_Z (in module qcp.constants)</a>
+      <li><a href="qcp.cli.html#qcp.cli.options.UnitaryMatrices.PHASE_SHIFT">PHASE_SHIFT (qcp.cli.options.UnitaryMatrices attribute)</a>
 </li>
       <li><a href="qcp.html#qcp.gates.phase_shift">phase_shift() (in module qcp.gates)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.constants.PHASE_SHORT">PHASE_SHORT (in module qcp.cli.constants)</a>
+</li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation">PhaseEstimation (class in qcp.algorithms.phase_estimation)</a>
+
+      <ul>
+        <li><a href="qcp.cli.html#qcp.cli.options.AlgorithmOption.PhaseEstimation">(qcp.cli.options.AlgorithmOption attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.grovers_algorithm.pull_set_bits">pull_set_bits() (in module qcp.algorithms.grovers_algorithm)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -412,6 +583,92 @@
         <li><a href="generated/qcp.html#module-qcp">module</a>, <a href="qcp.html#module-qcp">[1]</a>
 </li>
       </ul></li>
+      <li>
+    qcp.algorithms
+
+      <ul>
+        <li><a href="qcp.algorithms.html#module-qcp.algorithms">module</a>
+</li>
+      </ul></li>
+      <li>
+    qcp.algorithms.abstract_algorithm
+
+      <ul>
+        <li><a href="qcp.algorithms.html#module-qcp.algorithms.abstract_algorithm">module</a>
+</li>
+      </ul></li>
+      <li>
+    qcp.algorithms.grovers_algorithm
+
+      <ul>
+        <li><a href="qcp.algorithms.html#module-qcp.algorithms.grovers_algorithm">module</a>
+</li>
+      </ul></li>
+      <li>
+    qcp.algorithms.phase_estimation
+
+      <ul>
+        <li><a href="qcp.algorithms.html#module-qcp.algorithms.phase_estimation">module</a>
+</li>
+      </ul></li>
+      <li>
+    qcp.algorithms.sudoku
+
+      <ul>
+        <li><a href="qcp.algorithms.html#module-qcp.algorithms.sudoku">module</a>
+</li>
+      </ul></li>
+      <li>
+    qcp.cli
+
+      <ul>
+        <li><a href="qcp.cli.html#module-qcp.cli">module</a>
+</li>
+      </ul></li>
+      <li>
+    qcp.cli.constants
+
+      <ul>
+        <li><a href="qcp.cli.html#module-qcp.cli.constants">module</a>
+</li>
+      </ul></li>
+      <li>
+    qcp.cli.interpret
+
+      <ul>
+        <li><a href="qcp.cli.html#module-qcp.cli.interpret">module</a>
+</li>
+      </ul></li>
+      <li>
+    qcp.cli.options
+
+      <ul>
+        <li><a href="qcp.cli.html#module-qcp.cli.options">module</a>
+</li>
+      </ul></li>
+      <li>
+    qcp.cli.parser
+
+      <ul>
+        <li><a href="qcp.cli.html#module-qcp.cli.parser">module</a>
+</li>
+      </ul></li>
+      <li>
+    qcp.cli.progress_bar
+
+      <ul>
+        <li><a href="qcp.cli.html#module-qcp.cli.progress_bar">module</a>
+</li>
+      </ul></li>
+      <li>
+    qcp.cli.usage
+
+      <ul>
+        <li><a href="qcp.cli.html#module-qcp.cli.usage">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     qcp.constants
 
@@ -454,8 +711,6 @@
         <li><a href="qcp.matrices.html#module-qcp.matrices.matrix">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     qcp.matrices.sparse_matrix
 
@@ -498,18 +753,28 @@
         <li><a href="qcp.ui.html#module-qcp.ui.constants">module</a>
 </li>
       </ul></li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.qft_gate">qft_gate() (in module qcp.algorithms.phase_estimation)</a>
+</li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.qft_rotation_gate">qft_rotation_gate() (in module qcp.algorithms.phase_estimation)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.cli.html#qcp.cli.parser.read_cli">read_cli() (in module qcp.cli.parser)</a>
+</li>
       <li><a href="qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.rows">rows() (qcp.matrices.dense_matrix.DenseMatrix method)</a>
 
       <ul>
         <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.rows">(qcp.matrices.sparse_matrix.SparseMatrix method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.abstract_algorithm.GeneralAlgorithm.run">run() (qcp.algorithms.abstract_algorithm.GeneralAlgorithm method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -520,15 +785,27 @@
 </li>
       <li><a href="qcp.matrices.html#qcp.matrices.types.SCALARS_T">SCALARS_T (in module qcp.matrices.types)</a>
 </li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.second_layer">second_layer() (qcp.algorithms.phase_estimation.PhaseEstimation method)</a>
+</li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.grovers_algorithm.Grovers.single_target_oracle">single_target_oracle() (qcp.algorithms.grovers_algorithm.Grovers method)</a>
+</li>
       <li><a href="qcp.matrices.html#qcp.matrices.types.SPARSE">SPARSE (in module qcp.matrices.types)</a>
+</li>
+      <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix">SparseMatrix (class in qcp.matrices.sparse_matrix)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix">SparseMatrix (class in qcp.matrices.sparse_matrix)</a>
-</li>
       <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseVector">SparseVector (class in qcp.matrices.sparse_matrix)</a>
 </li>
       <li><a href="qcp.matrices.html#qcp.matrices.matrix.Matrix.square">square (qcp.matrices.matrix.Matrix property)</a>
+</li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku">Sudoku (class in qcp.algorithms.sudoku)</a>
+
+      <ul>
+        <li><a href="qcp.cli.html#qcp.cli.options.AlgorithmOption.Sudoku">(qcp.cli.options.AlgorithmOption attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.sudoku_conditions">sudoku_conditions() (qcp.algorithms.sudoku.Sudoku method)</a>
 </li>
       <li><a href="qcp.html#qcp.gates.swap">swap() (in module qcp.gates)</a>
 </li>
@@ -538,12 +815,22 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.cli.html#qcp.cli.constants.TARGET_LONG">TARGET_LONG (in module qcp.cli.constants)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.constants.TARGET_SHORT">TARGET_SHORT (in module qcp.cli.constants)</a>
+</li>
       <li><a href="qcp.html#qcp.tensor_product.tensor_product">tensor_product() (in module qcp.tensor_product)</a>
+</li>
+      <li><a href="qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.third_layer">third_layer() (qcp.algorithms.phase_estimation.PhaseEstimation method)</a>
 </li>
       <li><a href="qcp.ui.html#qcp.ui.constants.THREAD_PAUSE">THREAD_PAUSE (in module qcp.ui.constants)</a>
 </li>
       <li><a href="qcp.html#qcp.main.threaded_progress_bar">threaded_progress_bar() (in module qcp.main)</a>
 </li>
+      <li><a href="qcp.cli.html#qcp.cli.progress_bar.ticker">ticker() (in module qcp.cli.progress_bar)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.trace">trace() (qcp.matrices.dense_matrix.DenseMatrix method)</a>
 
       <ul>
@@ -552,8 +839,6 @@
         <li><a href="qcp.matrices.html#qcp.matrices.sparse_matrix.SparseMatrix.trace">(qcp.matrices.sparse_matrix.SparseMatrix method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.matrices.html#qcp.matrices.dense_matrix.DenseMatrix.transpose">transpose() (qcp.matrices.dense_matrix.DenseMatrix method)</a>
 
       <ul>
@@ -571,6 +856,18 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="qcp.ui.html#qcp.ui.constants.UI_FILENAME">UI_FILENAME (in module qcp.ui.constants)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.constants.UNITARY_LONG">UNITARY_LONG (in module qcp.cli.constants)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.constants.UNITARY_SHORT">UNITARY_SHORT (in module qcp.cli.constants)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="qcp.cli.html#qcp.cli.options.UnitaryMatrices">UnitaryMatrices (class in qcp.cli.options)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.usage.usage">usage() (in module qcp.cli.usage)</a>
+</li>
+      <li><a href="qcp.cli.html#qcp.cli.usage.USAGE_STR">USAGE_STR (in module qcp.cli.usage)</a>
 </li>
   </ul></td>
 </tr></table>

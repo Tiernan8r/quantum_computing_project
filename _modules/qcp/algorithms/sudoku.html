@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qcp.algorithms.sudoku &#8212; Quantum Computing Project 0.0.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for qcp.algorithms.sudoku</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">import</span> <span class="nn">qcp.gates</span> <span class="k">as</span> <span class="nn">g</span>
+<span class="kn">import</span> <span class="nn">qcp.register</span> <span class="k">as</span> <span class="nn">reg</span>
+<span class="kn">from</span> <span class="nn">qcp.algorithms</span> <span class="kn">import</span> <span class="n">GeneralAlgorithm</span>
+
+<span class="c1"># This class uses Grover&#39;s algorithm to solve the 2x2 sudoku board with 4</span>
+<span class="c1"># entries V0, V1, V2, V3 and two number choices, 0 &amp; 1</span>
+<span class="c1">#   +----+----+</span>
+<span class="c1">#   | V0 | V1 |</span>
+<span class="c1">#   +----+----+</span>
+<span class="c1">#   | V2 | V3 |</span>
+<span class="c1">#   +----+----+</span>
+<span class="c1">#</span>
+<span class="c1"># To do this we use 9 qubits with the first 4 representing our inputs</span>
+<span class="c1"># V0, V1, V2, V3. The second 4 representing the four conditions we have for a</span>
+<span class="c1"># solution for this sudoku board, such that when the qubit is 1, the condition</span>
+<span class="c1"># is met. And the final qubit representing whether all the conditions have</span>
+<span class="c1"># been met.</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="Sudoku"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku">[docs]</a><span class="k">class</span> <span class="nc">Sudoku</span><span class="p">(</span><span class="n">GeneralAlgorithm</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Sudoku.__init__"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Sudoku.oracle"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.oracle">[docs]</a>    <span class="k">def</span> <span class="nf">oracle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The oracle gate for this problem checks the inputs to see whether the</span>
+<span class="sd">        conditions have been met, using self.sudoku_conditions(), stores</span>
+<span class="sd">        whether all of the conditions have been met or not in the 9th qubit by</span>
+<span class="sd">        using a cnot gate, and then resets all the condition qubits that were</span>
+<span class="sd">        changed by self.sudoku_conditions()</span>
+
+<span class="sd">        :return: Matrix: representing the oracle gate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sudoku_conditions</span><span class="p">()</span>
+        <span class="n">cnot</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">control_x</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="n">oracle</span> <span class="o">=</span> <span class="n">cond</span> <span class="o">*</span> <span class="n">cnot</span> <span class="o">*</span> <span class="n">cond</span>
+        <span class="k">return</span> <span class="n">oracle</span></div>
+
+<div class="viewcode-block" id="Sudoku.sudoku_conditions"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.sudoku_conditions">[docs]</a>    <span class="k">def</span> <span class="nf">sudoku_conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For the 2x2 sudoku board there are 4 conditions which must be true for</span>
+<span class="sd">        a solution to be valid:</span>
+<span class="sd">        V0 != V1</span>
+<span class="sd">        V0 != V2</span>
+<span class="sd">        V1 != V3</span>
+<span class="sd">        V2 != V3</span>
+<span class="sd">        the variables cond1,..,cond4 respectively enforce these conditions by</span>
+<span class="sd">        applying XOR gates across the relevant input qubits and outputting in</span>
+<span class="sd">        the relative condition qubit</span>
+<span class="sd">        :return: Matrix: representing all of the sudoku conditions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cond1</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">control_x</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="n">g</span><span class="o">.</span><span class="n">control_x</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">cond2</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">control_x</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">5</span><span class="p">)</span> <span class="o">*</span> <span class="n">g</span><span class="o">.</span><span class="n">control_x</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="n">cond3</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">control_x</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="n">g</span><span class="o">.</span><span class="n">control_x</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">6</span><span class="p">)</span>
+        <span class="n">cond4</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">control_x</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">7</span><span class="p">)</span> <span class="o">*</span> <span class="n">g</span><span class="o">.</span><span class="n">control_x</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">7</span><span class="p">)</span>
+        <span class="n">cond</span> <span class="o">=</span> <span class="n">cond4</span> <span class="o">*</span> <span class="n">cond3</span> <span class="o">*</span> <span class="n">cond2</span> <span class="o">*</span> <span class="n">cond1</span>
+
+        <span class="k">return</span> <span class="n">cond</span></div>
+
+<div class="viewcode-block" id="Sudoku.diffusion"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.diffusion">[docs]</a>    <span class="k">def</span> <span class="nf">diffusion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a diffusion gate - a gate which amplifies the probability of</span>
+<span class="sd">        selecting our target state</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix: Matrix representing diffusion gate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">had</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">H</span><span class="p">)</span>
+        <span class="n">xs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">cz</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">control_z</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">had</span> <span class="o">*</span> <span class="n">xs</span> <span class="o">*</span> <span class="n">cz</span> <span class="o">*</span> <span class="n">xs</span> <span class="o">*</span> <span class="n">had</span>
+
+        <span class="k">return</span> <span class="n">diff</span></div>
+
+<div class="viewcode-block" id="Sudoku.construct_circuit"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.construct_circuit">[docs]</a>    <span class="k">def</span> <span class="nf">construct_circuit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the circuit to solve the sudoku problem by implementing the</span>
+<span class="sd">        hadamard on the first 4 qubits, then the oracle gate across the</span>
+<span class="sd">        entire circuit, followed by the diffusion gate that acts on the first 4</span>
+<span class="sd">        qubits applying the oracle and diffuser twice to maximise the amplitude</span>
+<span class="sd">        of the solution</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Matrix representing our completed Grover&#39;s algorithm for sudoku</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">had</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">multi_gate</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">g</span><span class="o">.</span><span class="n">Gate</span><span class="o">.</span><span class="n">H</span><span class="p">)</span>
+        <span class="n">circuit</span> <span class="o">=</span> <span class="n">had</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">circuit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">()</span> <span class="o">*</span> <span class="n">circuit</span>
+
+            <span class="n">circuit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">diffusion</span><span class="p">()</span> <span class="o">*</span> <span class="n">circuit</span>
+
+        <span class="k">return</span> <span class="n">circuit</span></div>
+
+<div class="viewcode-block" id="Sudoku.measure"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.measure">[docs]</a>    <span class="k">def</span> <span class="nf">measure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Randomly &#39;measures&#39; self.state by selecting a state (out of 2**9)</span>
+<span class="sd">        weighted by its (amplitude ** 2)</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            Tuple[int, float]: The state observed and the probability of</span>
+<span class="sd">            measuring said state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+        <span class="c1"># list of weighted probabilities with the index representing the state</span>
+
+        <span class="n">observed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))],</span> <span class="n">p</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="n">probability</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">probability</span></div>
+
+<div class="viewcode-block" id="Sudoku.measure_solution"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.measure_solution">[docs]</a>    <span class="k">def</span> <span class="nf">measure_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Randomly measures 1 of 16 possible options that the 4 input variables</span>
+<span class="sd">        can be with the probability of measuring a certain option determined by</span>
+<span class="sd">        the probabilities associated with each state</span>
+<span class="sd">        :return:</span>
+<span class="sd">            Tuple[[str], float]: The input solution observed and the</span>
+<span class="sd">            probability of observing that solution</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">sol_probs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">16</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prob</span><span class="p">)):</span>
+            <span class="n">sol_probs</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="mi">16</span><span class="p">]</span> <span class="o">+=</span> <span class="n">prob</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="n">observed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sol_probs</span><span class="p">))],</span> <span class="n">sol_probs</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="n">chosen_prob</span> <span class="o">=</span> <span class="n">sol_probs</span><span class="p">[</span><span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="n">vx</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;04b&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">vx</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">],</span> <span class="n">vx</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">],</span> <span class="n">vx</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">vx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">chosen_prob</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Quantum Computing Project</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Tiernan8r.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

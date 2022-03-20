@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>qcp.cli package &#8212; Quantum Computing Project 0.0.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="qcp-cli-package">
+<h1>qcp.cli package<a class="headerlink" href="#qcp-cli-package" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-qcp.cli.constants">
+<span id="qcp-cli-constants-module"></span><h2>qcp.cli.constants module<a class="headerlink" href="#module-qcp.cli.constants" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.ALGORITHM_LONG">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">ALGORITHM_LONG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'--algorithm'</span></em><a class="headerlink" href="#qcp.cli.constants.ALGORITHM_LONG" title="Permalink to this definition">¶</a></dt>
+<dd><p>The long flag for the algorithm choice</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.ALGORITHM_SHORT">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">ALGORITHM_SHORT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'-a'</span></em><a class="headerlink" href="#qcp.cli.constants.ALGORITHM_SHORT" title="Permalink to this definition">¶</a></dt>
+<dd><p>The short flag for the algorithm choice</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.DEFAULT_ALGORITHM">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_ALGORITHM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'g'</span></em><a class="headerlink" href="#qcp.cli.constants.DEFAULT_ALGORITHM" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default algorithm type to simulate</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.DEFAULT_PHASE">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_PHASE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.25</span></em><a class="headerlink" href="#qcp.cli.constants.DEFAULT_PHASE" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default phase to use in the unitary matrix, if required</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.DEFAULT_TARGET">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_TARGET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#qcp.cli.constants.DEFAULT_TARGET" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default target state the Oracle will search for</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.DEFAULT_UNITARY">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_UNITARY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'H'</span></em><a class="headerlink" href="#qcp.cli.constants.DEFAULT_UNITARY" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default unitary matrix type to use.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.FLAG_MAPPING">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">FLAG_MAPPING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'-a':</span> <span class="pre">'--algorithm',</span> <span class="pre">'-h':</span> <span class="pre">'--help',</span> <span class="pre">'-p':</span> <span class="pre">'--phase',</span> <span class="pre">'-t':</span> <span class="pre">'--target',</span> <span class="pre">'-u':</span> <span class="pre">'--unitary'}</span></em><a class="headerlink" href="#qcp.cli.constants.FLAG_MAPPING" title="Permalink to this definition">¶</a></dt>
+<dd><p>All the flags accepted by the CLI, mapping their short name to
+the more verbose one</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.HELP_LONG">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">HELP_LONG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'--help'</span></em><a class="headerlink" href="#qcp.cli.constants.HELP_LONG" title="Permalink to this definition">¶</a></dt>
+<dd><p>The long flag for the help message</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.HELP_SHORT">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">HELP_SHORT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'-h'</span></em><a class="headerlink" href="#qcp.cli.constants.HELP_SHORT" title="Permalink to this definition">¶</a></dt>
+<dd><p>The short flag for the help message</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.PHASE_LONG">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">PHASE_LONG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'--phase'</span></em><a class="headerlink" href="#qcp.cli.constants.PHASE_LONG" title="Permalink to this definition">¶</a></dt>
+<dd><p>The long flag for the phase value</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.PHASE_SHORT">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">PHASE_SHORT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'-p'</span></em><a class="headerlink" href="#qcp.cli.constants.PHASE_SHORT" title="Permalink to this definition">¶</a></dt>
+<dd><p>The short flag for the phase value</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.TARGET_LONG">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">TARGET_LONG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'--target'</span></em><a class="headerlink" href="#qcp.cli.constants.TARGET_LONG" title="Permalink to this definition">¶</a></dt>
+<dd><p>The long flag for the target</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.TARGET_SHORT">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">TARGET_SHORT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'-t'</span></em><a class="headerlink" href="#qcp.cli.constants.TARGET_SHORT" title="Permalink to this definition">¶</a></dt>
+<dd><p>The short flag for the target</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.UNITARY_LONG">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">UNITARY_LONG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'--unitary'</span></em><a class="headerlink" href="#qcp.cli.constants.UNITARY_LONG" title="Permalink to this definition">¶</a></dt>
+<dd><p>The long flag for the unitary matrix choice</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.constants.UNITARY_SHORT">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.constants.</span></span><span class="sig-name descname"><span class="pre">UNITARY_SHORT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'-u'</span></em><a class="headerlink" href="#qcp.cli.constants.UNITARY_SHORT" title="Permalink to this definition">¶</a></dt>
+<dd><p>The short flag for the unitary matrix choice</p>
+</dd></dl>
+
+</section>
+<section id="module-qcp.cli.interpret">
+<span id="qcp-cli-interpret-module"></span><h2>qcp.cli.interpret module<a class="headerlink" href="#module-qcp.cli.interpret" title="Permalink to this headline">¶</a></h2>
+<p>Convert the given CLI arguments and flags into usable input for the algorithms</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.cli.interpret._determine_qbits">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.interpret.</span></span><span class="sig-name descname"><span class="pre">_determine_qbits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/qcp/cli/interpret.html#_determine_qbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.interpret._determine_qbits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the number of qbits to simulate from the CLI arguments list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>args</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The CLI arguments</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of qbits</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.cli.interpret.determine_grover">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.interpret.</span></span><span class="sig-name descname"><span class="pre">determine_grover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/cli/interpret.html#determine_grover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.interpret.determine_grover" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the given flags dictionary and arguments map and convert to usable
+input for the Grover’s algorithm.</p>
+<p>The Grover’s Algorithm needs two input. The first is the number of
+qbits to simulate, and the second is the target state to search for.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The CLI arguments</p></li>
+<li><p><strong>flags</strong> (<em>Dict</em><em>[</em><em>str</em><em>,</em><em>str</em><em>]</em>) – The CLI flags</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Tuple of the parameters for the constructor, the</dt><dd><p>first is the number of qbits, the second the target bit.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[int, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.cli.interpret.determine_phase_estimation">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.interpret.</span></span><span class="sig-name descname"><span class="pre">determine_phase_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/cli/interpret.html#determine_phase_estimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.interpret.determine_phase_estimation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the given flags dictionary and arguments map and convert to usable
+input for the PhaseEstimation algorithm.</p>
+<p>The PhaseEstimation algorithm needs the number of qbits to simulate,
+and two matrices. The first to use as the unitary matrix in the algorithm
+and the second to use as the eigenvector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The CLI arguments</p></li>
+<li><p><strong>flags</strong> (<em>Dict</em><em>[</em><em>str</em><em>,</em><em>str</em><em>]</em>) – The CLI flags</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Tuple of the parameters for the</dt><dd><p>constructor, the first is the number of qbits to simulate,
+the second the Unitary Matrix to use, and the third the
+eigenvector.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[int, <a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a>, <a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.cli.interpret.determine_sudoku">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.interpret.</span></span><span class="sig-name descname"><span class="pre">determine_sudoku</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/cli/interpret.html#determine_sudoku"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.interpret.determine_sudoku" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the given flags dictionary and arguments map and convert to usable
+input for the Sudoku algorithm.</p>
+<p>The sudoku algorithm takes no input…</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The CLI arguments</p></li>
+<li><p><strong>flags</strong> (<em>Dict</em><em>[</em><em>str</em><em>,</em><em>str</em><em>]</em>) – The CLI flags</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.cli.interpret.interpret_arguments">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.interpret.</span></span><span class="sig-name descname"><span class="pre">interpret_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qcp.cli.options.AlgorithmOption" title="qcp.cli.options.AlgorithmOption"><span class="pre">qcp.cli.options.AlgorithmOption</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/cli/interpret.html#interpret_arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.interpret.interpret_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the CLI arguments/flags based off of the algorithm
+type to simulate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>opt</strong> (<a class="reference internal" href="#qcp.cli.options.AlgorithmOption" title="qcp.cli.options.AlgorithmOption"><em>AlgorithmOption</em></a>) – The algorithm chosen</p></li>
+<li><p><strong>List</strong><strong>[</strong><strong>str</strong><strong>]</strong> – The CLI arguments provided</p></li>
+<li><p><strong>str</strong><strong>]</strong> (<em>Dict</em><em>[</em><em>str</em><em>,</em>) – The CLI flags provided</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-qcp.cli.options">
+<span id="qcp-cli-options-module"></span><h2>qcp.cli.options module<a class="headerlink" href="#module-qcp.cli.options" title="Permalink to this headline">¶</a></h2>
+<p>Defines the enums that encode the CLI option values</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qcp.cli.options.AlgorithmOption">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.cli.options.</span></span><span class="sig-name descname"><span class="pre">AlgorithmOption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/cli/options.html#AlgorithmOption"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.options.AlgorithmOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enum of the different algorithms to simulate</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qcp.cli.options.AlgorithmOption.Grovers">
+<span class="sig-name descname"><span class="pre">Grovers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'g'</span></em><a class="headerlink" href="#qcp.cli.options.AlgorithmOption.Grovers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qcp.cli.options.AlgorithmOption.PhaseEstimation">
+<span class="sig-name descname"><span class="pre">PhaseEstimation</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pe'</span></em><a class="headerlink" href="#qcp.cli.options.AlgorithmOption.PhaseEstimation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qcp.cli.options.AlgorithmOption.Sudoku">
+<span class="sig-name descname"><span class="pre">Sudoku</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'s'</span></em><a class="headerlink" href="#qcp.cli.options.AlgorithmOption.Sudoku" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.cli.options.AlgorithmOption.get_constructor">
+<span class="sig-name descname"><span class="pre">get_constructor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/cli/options.html#AlgorithmOption.get_constructor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.options.AlgorithmOption.get_constructor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the constructor that matches the enum</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.cli.options.AlgorithmOption.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/cli/options.html#AlgorithmOption.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.options.AlgorithmOption.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string name of the Algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The Algorithm display name.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.cli.options.AlgorithmOption.list">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/cli/options.html#AlgorithmOption.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.options.AlgorithmOption.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all the enum options’ values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>All the strings the enums correspond to</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qcp.cli.options.UnitaryMatrices">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qcp.cli.options.</span></span><span class="sig-name descname"><span class="pre">UnitaryMatrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/cli/options.html#UnitaryMatrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.options.UnitaryMatrices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enum of all the available unitary matrices to use in the Phase
+Estimation algorithm</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qcp.cli.options.UnitaryMatrices.HADAMARD">
+<span class="sig-name descname"><span class="pre">HADAMARD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'H'</span></em><a class="headerlink" href="#qcp.cli.options.UnitaryMatrices.HADAMARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qcp.cli.options.UnitaryMatrices.PHASE_SHIFT">
+<span class="sig-name descname"><span class="pre">PHASE_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'P'</span></em><a class="headerlink" href="#qcp.cli.options.UnitaryMatrices.PHASE_SHIFT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.cli.options.UnitaryMatrices.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix"><span class="pre">qcp.matrices.matrix.Matrix</span></a></span></span><a class="reference internal" href="_modules/qcp/cli/options.html#UnitaryMatrices.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.options.UnitaryMatrices.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the actual Unitary Matrix the enum corresponds to</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>val</strong> (<em>float</em>) – Optional value required when creating certain
+matrix types</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Unitary Matrix</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="qcp.matrices.html#qcp.matrices.matrix.Matrix" title="qcp.matrices.matrix.Matrix">Matrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qcp.cli.options.UnitaryMatrices.list">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/cli/options.html#UnitaryMatrices.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.options.UnitaryMatrices.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all the enum options’ values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>All the strings the enums correspond to</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-qcp.cli.parser">
+<span id="qcp-cli-parser-module"></span><h2>qcp.cli.parser module<a class="headerlink" href="#module-qcp.cli.parser" title="Permalink to this headline">¶</a></h2>
+<p>Code to parse CLI options for the Algorithm, to determing the flags and
+arguments given</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.cli.parser.parse_input">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.parser.</span></span><span class="sig-name descname"><span class="pre">parse_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qcp/cli/parser.html#parse_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.parser.parse_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the given list of cli arguments into a mapping between the
+CLI flags and their value, and a list or CLI arguments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>args</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The CLI arguments</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple of the flags dictionary</dt><dd><p>and the arguments list.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[Dict[str, str], List[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.cli.parser.read_cli">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.parser.</span></span><span class="sig-name descname"><span class="pre">read_cli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/cli/parser.html#read_cli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.parser.read_cli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the sys.argv CLI options to read the value for the optional flags
+(if provided), and the required CLI arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>args</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The list of CLI inputs from sys.argv</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>py:obj:qcp.cli.constants.AlgorithmOptions, Any…]: The CLI</dt><dd><p>values, firstly the algorithm chosen to run, and then a tuple of
+the parameters required to run that algorithm.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[~</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-qcp.cli.progress_bar">
+<span id="qcp-cli-progress-bar-module"></span><h2>qcp.cli.progress_bar module<a class="headerlink" href="#module-qcp.cli.progress_bar" title="Permalink to this headline">¶</a></h2>
+<p>File containing the code to add an animated progress bar</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.progress_bar._ticks">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.progress_bar.</span></span><span class="sig-name descname"><span class="pre">_ticks</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['-',</span> <span class="pre">'\\',</span> <span class="pre">'|',</span> <span class="pre">'/']</span></em><a class="headerlink" href="#qcp.cli.progress_bar._ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of the ASCII art tickers</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.cli.progress_bar.ticker">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.progress_bar.</span></span><span class="sig-name descname"><span class="pre">ticker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tick_rate=0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file=&lt;_io.TextIOWrapper</span> <span class="pre">name='&lt;stdout&gt;'</span> <span class="pre">mode='w'</span> <span class="pre">encoding='utf-8'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/cli/progress_bar.html#ticker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.progress_bar.ticker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows a swirling ticker on the terminal to indicate that an operation
+is in progress.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tick_rate</strong> (<em>float</em>) – The interval to sleep between refreshes in seconds.</p></li>
+<li><p><strong>file</strong> (<em>TextIO</em>) – Override for the default I/O printed to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parma str prefix</dt>
+<dd class="field-even"><p>An optional prefix to show before the ticker.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-qcp.cli.usage">
+<span id="qcp-cli-usage-module"></span><h2>qcp.cli.usage module<a class="headerlink" href="#module-qcp.cli.usage" title="Permalink to this headline">¶</a></h2>
+<p>CLI help messages live here</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="qcp.cli.usage.USAGE_STR">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.usage.</span></span><span class="sig-name descname"><span class="pre">USAGE_STR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;USAGE:\n/opt/hostedtoolcache/Python/3.10.2/x64/bin/sphinx-build</span> <span class="pre">[FLAGS]</span> <span class="pre">nqbits\nFLAGS:\n</span>&#160;&#160;&#160; <span class="pre">-a/--algorithm</span>&#160; <span class="pre">The</span> <span class="pre">quantum</span> <span class="pre">algorithm</span> <span class="pre">to</span> <span class="pre">simulate,</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">one</span> <span class="pre">of:\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">g</span>&#160;&#160; <span class="pre">=</span> <span class="pre">Grover's</span> <span class="pre">Algorithm\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">pe</span>&#160; <span class="pre">=</span> <span class="pre">Phase</span> <span class="pre">Estimation\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">s</span>&#160;&#160; <span class="pre">=</span> <span class="pre">Toy</span> <span class="pre">Sudoku</span> <span class="pre">solver\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Defaults</span> <span class="pre">to</span> <span class="pre">'g'</span> <span class="pre">if</span> <span class="pre">unset\n</span>&#160;&#160;&#160; <span class="pre">-h/--help</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Display</span> <span class="pre">this</span> <span class="pre">prompt\n\nThe</span> <span class="pre">CLI</span> <span class="pre">options</span> <span class="pre">vary</span> <span class="pre">by</span> <span class="pre">choice</span> <span class="pre">of</span> <span class="pre">algorithm:\n\nGROVERS:\n</span>&#160;&#160;&#160; <span class="pre">USAGE:\n</span>&#160;&#160;&#160; <span class="pre">/opt/hostedtoolcache/Python/3.10.2/x64/bin/sphinx-build</span> <span class="pre">--algorithm</span> <span class="pre">g</span> <span class="pre">[FLAGS]</span> <span class="pre">nqbits\n</span>&#160;&#160;&#160; <span class="pre">ARGS:\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">nqbits</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">The</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">qbit</span> <span class="pre">states</span> <span class="pre">to</span> <span class="pre">simulate,</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">&gt;=</span> <span class="pre">2.\n</span>&#160;&#160;&#160; <span class="pre">FLAGS:\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">-t/--target</span>&#160;&#160;&#160;&#160; <span class="pre">The</span> <span class="pre">target</span> <span class="pre">state,</span> <span class="pre">defaults</span> <span class="pre">to</span> <span class="pre">0\n\nPHASE</span> <span class="pre">ESTIMATION:\n</span>&#160;&#160;&#160; <span class="pre">USAGE:\n</span>&#160;&#160;&#160; <span class="pre">/opt/hostedtoolcache/Python/3.10.2/x64/bin/sphinx-build</span> <span class="pre">--algorithm</span> <span class="pre">pe</span> <span class="pre">[FLAGS]</span> <span class="pre">nqbits\n</span>&#160;&#160;&#160; <span class="pre">ARGS:\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">nqbits</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">The</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">qbit</span> <span class="pre">states</span> <span class="pre">to</span> <span class="pre">simulate,</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">&gt;=</span> <span class="pre">2.\n</span>&#160;&#160;&#160; <span class="pre">FLAGS:\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">-p/--phase</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">The</span> <span class="pre">phase</span> <span class="pre">to</span> <span class="pre">use</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">Phase</span> <span class="pre">Shift</span> <span class="pre">Gate</span> <span class="pre">(if</span> <span class="pre">using).\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">defaults</span> <span class="pre">to</span> <span class="pre">0.25.\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">-u/--unitary</span>&#160;&#160;&#160; <span class="pre">The</span> <span class="pre">choice</span> <span class="pre">of</span> <span class="pre">unitary</span> <span class="pre">gate</span> <span class="pre">to</span> <span class="pre">simulate</span> <span class="pre">with,</span> <span class="pre">can</span> <span class="pre">be\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">one</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">following:\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">*</span> <span class="pre">H</span> <span class="pre">=</span> <span class="pre">Hadamard</span> <span class="pre">Gate\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">*</span> <span class="pre">P</span> <span class="pre">=</span> <span class="pre">Phase</span> <span class="pre">Shift</span> <span class="pre">Gate</span> <span class="pre">(requires</span> <span class="pre">the</span> <span class="pre">-p</span> <span class="pre">flag)\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Defaults</span> <span class="pre">to</span> <span class="pre">'H'</span> <span class="pre">if</span> <span class="pre">unset\nSUDOKU:\n</span>&#160;&#160;&#160; <span class="pre">USAGE:\n</span>&#160;&#160;&#160; <span class="pre">/opt/hostedtoolcache/Python/3.10.2/x64/bin/sphinx-build</span> <span class="pre">--algorithm</span> <span class="pre">s\n</span>&#160;&#160;&#160; <span class="pre">ARGS:\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">None\n</span>&#160;&#160;&#160; <span class="pre">FLAGS:\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">None&quot;</span></em><a class="headerlink" href="#qcp.cli.usage.USAGE_STR" title="Permalink to this definition">¶</a></dt>
+<dd><p>The CLI help text</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.cli.usage.usage">
+<span class="sig-prename descclassname"><span class="pre">qcp.cli.usage.</span></span><span class="sig-name descname"><span class="pre">usage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/cli/usage.html#usage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.cli.usage.usage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints the help text to stdout, and exits with error code 0.</p>
+</dd></dl>
+
+</section>
+<section id="module-qcp.cli">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-qcp.cli" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Quantum Computing Project</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Tiernan8r.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/qcp.cli.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
