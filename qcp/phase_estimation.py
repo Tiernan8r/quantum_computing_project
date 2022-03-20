@@ -160,7 +160,7 @@ class PhaseEstimation:
         for i in range(0, self.size):
             for j in range(2**rep):
                 n = self.size-1-i
-                gate = g.control_U(totalsize, n, self.unitary) * gate
+                gate = g.control_u(totalsize, n, self.unitary) * gate
             rep += 1
         return gate
 

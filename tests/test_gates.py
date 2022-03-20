@@ -387,3 +387,33 @@ def test_swap():
     ])
 
     assert transform_3qbits.get_state() == expected_3qbits.get_state()
+
+
+def test_control_u():
+    # Gate needs a minimum of two qubits to make sense
+    with pytest.raises(AssertionError) as ae1:
+        gts.control_u(1, 0, None)
+    assert ae1.match("need minimum of two qubits")
+
+    # Control bits need to be within qubit range:
+    with pytest.raises(AssertionError) as ae2:
+        gts.control_u(2, 2, None)
+    assert ae2.match("control bit out of range")
+
+    U = DefaultMatrix([
+        [2, 3],
+        [4, 5]
+    ])
+    cu_8x8 = gts.control_u(3, 0, U)
+    expected_8x8 = DefaultMatrix([
+        [1,  0,  0,  0,  0,  0,  0,  0],
+        [0,  1,  0,  0,  0,  0,  0,  0],
+        [0,  0,  2,  0,  0,  0,  3,  0],
+        [0,  0,  0,  2,  0,  0,  0,  3],
+        [0,  0,  0,  0,  1,  0,  0,  0],
+        [0,  0,  0,  0,  0,  1,  0,  0],
+        [0,  0,  4,  0,  0,  0,  5,  0],
+        [0,  0,  0,  4,  0,  0,  0,  5]
+    ])
+
+    assert cu_8x8.get_state() == expected_8x8.get_state()
