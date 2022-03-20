@@ -49,9 +49,17 @@
 <span class="sd">CLI initialiser to parse CLI options for the Algorithm, and to run the</span>
 <span class="sd">computation</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">qcp.grovers_algorithm</span> <span class="kn">import</span> <span class="n">Grovers</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># Required to guarantee that the &#39;qcp&#39; module is accessible when</span>
+<span class="c1"># this file is run directly.</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">qcp.grovers_algorithm</span> <span class="kn">import</span> <span class="n">Grovers</span>
 
 <span class="c1">#: The default target state the Oracle will search for</span>
 <span class="n">TARGET_DEF</span> <span class="o">=</span> <span class="mi">5</span>
