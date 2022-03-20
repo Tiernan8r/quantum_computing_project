@@ -404,6 +404,31 @@ def test_control_u():
         [2, 3],
         [4, 5]
     ])
+    # Use on too small of a control gate
+    with pytest.raises(AssertionError) as ae3:
+        gts.control_u(2, 0, U)
+    assert ae3.match("unitary matrix too big")
+
+    # Create a simple 4x4 CU gate:
+    u = DefaultMatrix([[2]])
+    cu_4x4_1 = gts.control_u(2, 0, u)
+    expected_4x4_1 = DefaultMatrix([
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 2, 0],
+        [0, 0, 0, 2]
+    ])
+    assert cu_4x4_1.get_state() == expected_4x4_1.get_state()
+
+    cu_4x4_2 = gts.control_u(2, 1, u)
+    expected_4x4_2 = DefaultMatrix([
+        [1, 0, 0, 0],
+        [0, 2, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 2]
+    ])
+    assert cu_4x4_2.get_state() == expected_4x4_2.get_state()
+
     cu_8x8 = gts.control_u(3, 0, U)
     expected_8x8 = DefaultMatrix([
         [1,  0,  0,  0,  0,  0,  0,  0],

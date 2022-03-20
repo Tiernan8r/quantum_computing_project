@@ -350,6 +350,11 @@ def control_u(size: int, control: int, unitary: Matrix):
 
     # Make sure the control bit is within the qbit size
     assert control in range(size), "control bit out of range"
+    assert control not in range(
+        size, size+unitary.num_rows), \
+        "control bit cannot be in auxiliary register"
+    assert unitary.square, "unitary matrix must be square"
+    assert unitary.num_rows < size, "unitary matrix too big"
 
     gate0 = DefaultMatrix([[1, 0], [0, 0]])
     gate1 = DefaultMatrix([[0, 0], [0, 1]])
