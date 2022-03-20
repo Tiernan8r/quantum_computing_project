@@ -23,10 +23,10 @@
 \usepackage{mathtools}
 \usepackage{physics}
 \usepackage{amsmath}
-\usepackage[scale=1,bmargin=1.5cm,footnotesep=1.5cm]{geometry}
+\usepackage[scale=1,bmargin=6cm,footnotesep=6cm]{geometry} %footnote spacing
 \usepackage{subcaption} %allows us to nest figures
 
-\usepackage{hyperref}
+\usepackage{hyperref} %enable hyperlinks 
 \hypersetup{
     colorlinks=true,
     linkcolor=violet,
@@ -138,7 +138,7 @@ Where $\alpha$ and $\beta$ are normalised complex constants such that $\abs{\alp
 \vspace{5mm}
 
 \noindent
-The quantum state of $\ket{0}$ and $\ket{1}$ are known as the computational basis state. The basis state can be visualised in a form of a Bloch Sphere:
+The quantum state of $\ket{0}$ and $\ket{1}$ are known as the computational basis state in the $\hat{\textbf{z}}$-axis on a Bloch Sphere. The basis state can be visualised in a form of a Bloch Sphere:
 \vspace{5mm}
 
 \begin{figure}[h]
@@ -753,7 +753,7 @@ Next apply the reflection oracle $U_\omega$ to the state $\ket{s}$.
         \draw  [draw opacity=0] (140.64,251.2) .. controls (144.47,252.64) and (147.27,256.11) .. (147.38,260.04) .. controls (147.48,263.72) and (145.19,266.77) .. (141.81,268.01) -- (137.59,259.56) -- cycle ; \draw   (140.64,251.2) .. controls (144.47,252.64) and (147.27,256.11) .. (147.38,260.04) .. controls (147.48,263.72) and (145.19,266.77) .. (141.81,268.01) ;  
         
         % Text Node
-        \draw (82,90.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+        \draw (70,90.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
         % Text Node
         \draw (303,185.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s}$};
         % Text Node
@@ -761,7 +761,7 @@ Next apply the reflection oracle $U_\omega$ to the state $\ket{s}$.
         % Text Node
         \draw (157,255.4) node [anchor=north west][inner sep=0.75pt]    {$\theta $};
         % Text Node
-        \draw (304,302.4) node [anchor=north west][inner sep=0.75pt]    {$U_{\omega }\ket{s}$};
+        \draw (300,302.4) node [anchor=north west][inner sep=0.75pt]    {$U_{\omega }\ket{s}$};
     \end{tikzpicture}
     
     \caption{\label{fig:grover_step_2a} Grover's Algorithm Step 2a}
@@ -774,38 +774,36 @@ Next apply the reflection oracle $U_\omega$ to the state $\ket{s}$.
         %uncomment if require: \path (0,421); %set diagram left start at 0, and has height of 421
       
         %Shape: Axis 2D [id:dp13230548671390374] 
-        \draw  (390,249.6) -- (597,249.6)(410.7,111) -- (410.7,265) (590,244.6) -- (597,249.6) -- (590,254.6) (405.7,118) -- (410.7,111) -- (415.7,118)  ;
-        %Shape: Rectangle [id:dp05277599517068765] 
-        \draw   (411.7,211.67) -- (432,211.67) -- (432,249.6) -- (411.7,249.6) -- cycle ;
-        %Shape: Rectangle [id:dp9567149694615606] 
-        \draw   (432,211.67) -- (452.3,211.67) -- (452.3,249.6) -- (432,249.6) -- cycle ;
-        %Shape: Rectangle [id:dp33156724904270707] 
-        \draw   (452.3,211.67) -- (472.6,211.67) -- (472.6,249.6) -- (452.3,249.6) -- cycle ;
-        %Shape: Rectangle [id:dp7921289702689205] 
-        \draw   (472.6,211.67) -- (492.9,211.67) -- (492.9,249.6) -- (472.6,249.6) -- cycle ;
-        %Shape: Rectangle [id:dp7099186384950043] 
-        \draw   (491.9,211.67) -- (512.2,211.67) -- (512.2,249.6) -- (491.9,249.6) -- cycle ;
-        %Shape: Rectangle [id:dp6243887993660082] 
-        \draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (512.2,249.6) -- (532.5,249.6) -- (532.5,289.33) -- (512.2,289.33) -- cycle ;
-        %Shape: Rectangle [id:dp9966482917344106] 
-        \draw   (532.5,211.67) -- (552.8,211.67) -- (552.8,249.6) -- (532.5,249.6) -- cycle ;
-        %Shape: Rectangle [id:dp29247452792340645] 
-        \draw   (552.8,211.67) -- (573.1,211.67) -- (573.1,249.6) -- (552.8,249.6) -- cycle ;
-        %Straight Lines [id:da8789026389017109] 
-        \draw  [dash pattern={on 4.5pt off 4.5pt}]  (398.13,200) -- (579.13,200) ;
+      \draw  (388,254.6) -- (595,254.6)(408.7,116) -- (408.7,270) (588,249.6) -- (595,254.6) -- (588,259.6) (403.7,123) -- (408.7,116) -- (413.7,123)  ;
+%Shape: Rectangle [id:dp05277599517068765] 
+\draw   (408.7,216.67) -- (429,216.67) -- (429,254.6) -- (408.7,254.6) -- cycle ;
+%Shape: Rectangle [id:dp9567149694615606] 
+\draw   (429,216.67) -- (449.3,216.67) -- (449.3,254.6) -- (429,254.6) -- cycle ;
+%Shape: Rectangle [id:dp33156724904270707] 
+\draw   (449.3,216.67) -- (469.6,216.67) -- (469.6,254.6) -- (449.3,254.6) -- cycle ;
+%Shape: Rectangle [id:dp7921289702689205] 
+\draw   (469.6,216.67) -- (489.9,216.67) -- (489.9,254.6) -- (469.6,254.6) -- cycle ;
+%Shape: Rectangle [id:dp7099186384950043] 
+\draw   (489.9,216.67) -- (510.2,216.67) -- (510.2,254.6) -- (489.9,254.6) -- cycle ;
+%Shape: Rectangle [id:dp6243887993660082] 
+\draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (510.2,254.6) -- (530.5,254.6) -- (530.5,294.33) -- (510.2,294.33) -- cycle ;
+%Shape: Rectangle [id:dp9966482917344106] 
+\draw   (530.5,216.67) -- (550.8,216.67) -- (550.8,254.6) -- (530.5,254.6) -- cycle ;
+%Shape: Rectangle [id:dp29247452792340645] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (396.13,205) -- (577.13,205) ;
         
         % Text Node
-        \draw (405,84) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
+        \draw (395,100) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
         % Text Node
-        \draw (412.7,252.6) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
+        \draw (410,260) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
         % Text Node
-        \draw (586,176.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$\frac{1}{\sqrt{2^{n}}}$};
+        \draw (586,195) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$\frac{1}{\sqrt{2^{n}}}$};
         % Text Node
         \draw (560,256) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize N}};
         % Text Node
         \draw (602,251) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize items}};
         % Text Node
-        \draw (509.2,319.07) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+        \draw (509.2,300) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
     
       \end{tikzpicture}
       
@@ -1131,6 +1129,94 @@ One of the few drawbacks of the Grover's Algorithm is that it is probabilistic. 
 \noindent
 Due to the constraints of currently available quantum computers, Grover's Algorithm is yet to yield any  meaningful quadratic speed up compared to classical algorithms\cite{noauthor_grovers_2022}.   
 \pagebreak
+
+\section{Other Quantum Algorithms Explored}
+\vspace{5mm}
+
+\subsection{Quantum Fourier Transform}
+\vspace{5mm}
+
+\noindent
+The quantum Fourier transform is a linear transformation of vector amplitudes of a quantum state of a qubit. It is the quantum equivalent of Discrete Fourier Transform, which is an important tool used in signal processing. 
+\vspace{5mm}
+
+\noindent
+The quantum Fourier transform can be implemented into a circuit simply by using Hadamard and controlled phase shift gate. The QFT short hand for quantum Fourier transform is a unitary transformation. 
+\vspace{5mm}
+
+\noindent
+The action of QFT on a quantum state\cite{noauthor_quantum_nodate-1} $\ket{X} = \sum\limits_{j=0}^{N-1} x_j\ket{j}$ maps it to a quantum state $\ket{Y} = \sum\limits_{k=0}^{N-1} y_k\ket{k}$ according to:
+\vspace{5mm}
+
+
+\qquad $y_k = \frac{1}{\sqrt{2}}\sum\limits_{j=0}^{N-1}x_je^{2i\pi\frac{jk}{N}}$ \ , \ recalling that $N = 2^n$
+\vspace{5mm}
+
+\noindent
+Note that only the amplitudes of the state were affected by this transformation.
+\vspace{5mm}
+
+\noindent
+This can be expressed as the mapping of the quantum state $\ket{j} \rightarrow \ket{k}$ such that:
+\vspace{5mm}
+
+
+\qquad $\ket{j}= \frac{1}{\sqrt{2}}\sum\limits_{k=0}^{N-1}e^{2i\pi\frac{jk}{N}}\ket{k}$ 
+\vspace{5mm}
+
+\noindent
+The QFT can be expressed as a unitary quantum operator as:
+\vspace{5mm}
+
+\qquad $U_{QFT} =  \frac{1}{\sqrt{2}}\sum\limits_{j=0}^{N-1}\sum\limits_{k=0}^{N-1}e^{2i\pi\frac{jk}{N}}\ket{k}\bra{j}$ 
+\vspace{5mm}
+
+\noindent
+Similar to Fourier transform which decomposes functions depending on space or time into functions depending on spatial frequency or temporal frequency, QFT maps the computational basis states between the $\hat{\textbf{z}}$-basis states to the $\hat{\textbf{x}}$-basis states.
+\vspace{5mm}
+
+\noindent
+The $\hat{\textbf{x}}$-basis states are defined as:
+\vspace{5mm}
+
+\qquad $\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})$ \ and \ $\ket{-} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})$
+\vspace{5mm}
+
+\noindent
+For multi-qubit states in the computational basis have corresponding states in the Fourier basis. The QFT is the function that transforms between these bases:
+\vspace{5mm}
+
+\qquad $\ket{\text{State in computational basis}} \rightarrow{\text{QFT}} \ket{\text{State in Fourier basis}} $
+\vspace{5mm}
+
+\qquad $\text{QFT}\ket{x} = \ket{\tilde{x}}$
+\pagebreak
+
+The QFT can be generalised and extended to multiple qubits and states\cite{noauthor_quantum_nodate-1}:
+\vspace{5mm}
+
+\qquad $\text{QFT}_N\ket{x} = \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}e^{2i\pi\frac{xy}{2^n}}\ket{y}$ \ , \ for $N = 2^n$
+\vspace{5mm}
+
+\qquad \qquad $ =  \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}e^{2i\pi x(\sum_{k=1}^{n}\frac{y_k}{2^k})}\ket{y...y_n}$ , \ rewriting $y$ in binary fraction $y= y_1 ... y_n, \frac{y}{2^n} = \sum\limits_{k=1}^{n}\frac{y_k}{2^k}$
+\vspace{5mm}
+
+\qquad \qquad $= \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}\prod\limits_{k=1}^{n}e^{2i\pi x\frac{y_k}{2^k}}\ket{y...y_n}$
+\vspace{5mm}
+
+\noindent
+After expanding the exponential of a sum to a product of exponentials.
+\vspace{5mm}
+
+\qquad \qquad $ = \frac{1}{\sqrt{N}}\bigotimes\limits_{k=1}^{n}(\ket{0} + e^{\frac{2i\pi x}{2^k}}\ket{1})$
+\vspace{5mm}
+
+\noindent
+After rearranging the sum and products, and expanding $\sum\limits_{y=0}^{N-1} = \sum\limits_{y_1=0}^{1}\sum\limits_{y_2=0}^{1}...\sum\limits_{y_0=0}^{1} $
+\vspace{5mm}
+
+\qquad \qquad $ = \frac{1}{\sqrt{N}}(\ket{0} + e^{\frac{2i\pi x}{2}}\ket{1}) \bigotimes (\ket{0} + e^{\frac{2i\pi x}{2^2}}\ket{1}) \bigotimes ... \bigotimes(\ket{0} + e^{\frac{2i\pi x}{2^{n-1}}}\ket{1}) \bigotimes (\ket{0} + e^{\frac{2i\pi x}{2^n}}\ket{1})$
+
 
 \section{Methodology}
 
