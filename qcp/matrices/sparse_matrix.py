@@ -187,6 +187,20 @@ class SparseMatrix(Matrix):
 
         return SparseMatrix({i: {i: 1} for i in range(n)}, w=n, h=n)
 
+    @staticmethod
+    def zeros(nrow: int, ncol: int = 1) -> SparseMatrix:
+        """
+        Create a SparseMatrix of given dimensions, where each value of the
+        matrix is zero.
+
+        :param int nrow: The row dimension of the SparseMatrix
+        :param int ncol: The (optional) column dimenion of the SparseMatrix
+            defaults to 1, to be a column vector.
+        returns:
+            SparseMatrix: The matrix object of our given size.
+        """
+        return SparseMatrix({i: {} for i in range(nrow)}, w=ncol, h=nrow)
+
     @property
     def num_rows(self) -> int:
         """
@@ -471,8 +485,15 @@ class SparseMatrix(Matrix):
 
     def __str__(self) -> str:
         total_string = ""
-
         for i in range(self.num_rows):
+            for j in range(self.num_columns):
+                # Remove very small numbers and show neater matrix
+                v = self[i][j]
+                if not isinstance(v, complex):
+                    continue
+                if cmath.isclose(v.real + v.imag, 0):
+                    self[i][j] = 0
+
             row_repr = [
                 f"{self[i][j]:3.3g}" for j in range(self.num_columns)]
             total_string += "[" + \
