@@ -1,11 +1,12 @@
-import math
 import cmath
-from qcp.matrices import DefaultMatrix, Matrix
-import qcp.gates as g
-from qcp.matrices.types import MATRIX
-from qcp.tensor_product import tensor_product as tp
-import qcp.register as reg
+import math
 import random
+
+import qcp.gates as g
+import qcp.register as reg
+import qcp.tensor_product as tp
+from qcp.algorithms.abstract_algorithm import GeneralAlgorithm
+from qcp.matrices import DefaultMatrix, Matrix
 
 
 def is_unitary(input: Matrix) -> bool:
@@ -102,7 +103,7 @@ def inverse_qft_rotation_gate(size: int, current_qubit: int) -> Matrix:
     return gate
 
 
-class PhaseEstimation:
+class PhaseEstimation(GeneralAlgorithm):
 
     def __init__(self, size: int, unitary: Matrix, eigenvector: Matrix):
         """
@@ -123,30 +124,28 @@ class PhaseEstimation:
         print(PE.measure())
         """
         assert is_unitary(unitary), "Matrix must be unitary!"
-
-        self.size = size
         self.unitary = unitary
+
         self.auxiliary = eigenvector
         self.auxsize = int(math.log2(eigenvector.num_rows))
-        self.state = self.initial_state()
 
-        self.circuit = self.construct_circuit()
+        super().__init__(size)
 
     def initial_state(self) -> Matrix:
         """
         Creates a state vector corresponding to |0..0>
         :return: returns state vector
         """
-        entries: MATRIX = [[0] for _ in range(2 ** self.size)]
-        entries[0][0] = 1
-        return tp(self.auxiliary, DefaultMatrix(entries))
+        init = super().initial_state()
+        return tp.tensor_product(self.auxiliary, init)
 
     def first_layer(self) -> Matrix:
         """
         Tensor Hadamard (first register) with Identity (auxiliary)
         """
-        return tp(
-            g.multi_gate(self.auxsize, [], g.Gate.I),
+        id = g.multi_gate(self.auxsize, [], g.Gate.I)
+        return tp.tensor_product(
+            id,
             g.multi_gate(self.size, [i for i in range(self.size)], g.Gate.H)
         )
 
@@ -168,8 +167,9 @@ class PhaseEstimation:
         """"
         Inverse QFT Gate tensor for the first register
         """
-        return tp(
-            g.multi_gate(self.auxsize, [], g.Gate.I),
+        id = g.multi_gate(self.auxsize, [], g.Gate.I)
+        return tp.tensor_product(
+            id,
             inverse_qft_gate(self.size)
         )
 
@@ -177,17 +177,11 @@ class PhaseEstimation:
         """
         Combines the layers
         """
-        return self.third_layer() * \
-            self.second_layer() * \
-            self.first_layer()
+        first = self.first_layer()
+        second = self.second_layer()
+        third = self.third_layer()
 
-    def run(self):
-        """
-        Multiplies our Phase Esimation's circuit with the initial state
-        :return: Final state
-        """
-        self.state = self.circuit * self.state
-        return self.state
+        return third * second * first
 
     def measure(self):
         """
@@ -200,7 +194,7 @@ class PhaseEstimation:
         for i in range(2**self.size):
             entries = [[0] for _ in range(2**self.size)]
             entries[i] = [1]
-            trial = tp(self.auxiliary, DefaultMatrix(entries))
+            trial = tp.tensor_product(self.auxiliary, DefaultMatrix(entries))
             result[i] = (trial.transpose()*self.state)[0]
 
         p = reg.measure(result)
