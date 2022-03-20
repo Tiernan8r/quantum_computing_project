@@ -25,7 +25,6 @@ if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
 import qcp.cli as cli
-from qcp.algorithms import GeneralAlgorithm
 import qcp.cli.progress_bar as pb
 
 
@@ -40,20 +39,25 @@ def main():
     compute(alg_opt.get_constructor(), alg_opt.get_name(), *parsed_tuple)
 
 
-def compute(constructor, alg_name, *args):
+def compute(constructor, alg_name: str, *args):
     """
-    Run the Grover's Algorithm simulation and print the observed state to
+    Run the Quantum Algorithm simulation and print the observed state to
     stdout with the probability of observing that state.
 
-    :param int nqbits: The number of qbits to simulate in the simulator
-    :param int target: The index of the target qbit state
+    :param constructor: The constructor the algorithm objects, varies per
+        choice of algorithm
+    :param str alg_name: The name of the algorithm being run
+    :param args: All args that need to be passed in to the Algorithm
+        constructor
     """
     print(f"Simulating {alg_name} Algorithm...")
 
     # Start up the progress bar ticker
     progress_ticker = threaded_progress_bar()
 
-    alg: GeneralAlgorithm = None
+    # Create the algorithm object and run it, catching
+    # any errors that occur, and printing them to the
+    # terminal
     try:
         alg = constructor(*args)
         alg.run()
@@ -71,6 +75,14 @@ def compute(constructor, alg_name, *args):
 
 
 def threaded_progress_bar() -> multiprocessing.Process:
+    """
+    Run the progress bar ticker in a separate process so that
+    we can sleep the process without hanging the main computation
+
+    returns:
+        multiprocessing.Process: The reference to the process running
+            the progress bar
+    """
     ticker_process = multiprocessing.Process(
         target=pb.ticker,
         args=(0.5, "Simulating: ",)

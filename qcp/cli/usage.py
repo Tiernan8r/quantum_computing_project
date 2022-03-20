@@ -12,20 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-CLI initialiser to parse CLI options for the Algorithm, and to run the
-computation
+CLI help messages live here
 """
 import sys
+
 from qcp.cli.constants import (ALGORITHM_LONG, ALGORITHM_SHORT,
-                               HELP_LONG, HELP_SHORT, PHASE_LONG, PHASE_SHORT,
+                               DEFAULT_ALGORITHM, DEFAULT_PHASE,
+                               DEFAULT_TARGET, DEFAULT_UNITARY, HELP_LONG,
+                               HELP_SHORT, PHASE_LONG, PHASE_SHORT,
                                TARGET_LONG, TARGET_SHORT, UNITARY_LONG,
                                UNITARY_SHORT)
-
-#: The default target state the Oracle will search for
-DEFAULT_TARGET = 0
-DEFAULT_ALGORITHM = "g"
-DEFAULT_PHASE = 0.25
-DEFAULT_UNITARY = "H"
 
 #: The CLI help text
 USAGE_STR = f"""USAGE:

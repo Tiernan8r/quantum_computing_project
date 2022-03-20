@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-CLI initialiser to parse CLI options for the Algorithm, and to run the
-computation
+Code to parse CLI options for the Algorithm, to determing the flags and
+arguments given
 """
 import re
 import sys
@@ -80,9 +80,9 @@ def read_cli(args: List[str]):
 
     :param List[str] args: The list of CLI inputs from sys.argv
     returns:
-        Tuple[int, int, ~:py:obj:qcp.cli.constants.AlgorithmOptions]: The CLI
-        values, firstly the algorithm chosen to run, and then a tuple of the
-        parameters required to run that algorithm.
+        Tuple[~:py:obj:qcp.cli.constants.AlgorithmOptions, Any...]: The CLI
+            values, firstly the algorithm chosen to run, and then a tuple of
+            the parameters required to run that algorithm.
     """
     flags, vals = parse_input(args)
 

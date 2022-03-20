@@ -11,6 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+Defines the enums that encode the CLI option values
+"""
 import cmath
 import enum
 from typing import List
@@ -31,9 +34,18 @@ class AlgorithmOption(enum.Enum):
 
     @classmethod
     def list(cls) -> List[str]:
+        """
+        Return all the enum options' values
+
+        returns:
+            List[str]: All the strings the enums correspond to
+        """
         return list(map(lambda ao: ao.value, cls))  # type: ignore
 
     def get_constructor(self):
+        """
+        Return the constructor that matches the enum
+        """
         if self is AlgorithmOption.Grovers:
             return Grovers
 
@@ -44,6 +56,12 @@ class AlgorithmOption(enum.Enum):
             return Sudoku
 
     def get_name(self):
+        """
+        Return a string name of the Algorithm
+
+        returns:
+            str: The Algorithm display name.
+        """
         if self is AlgorithmOption.Grovers:
             return "Grover's"
 
@@ -55,15 +73,34 @@ class AlgorithmOption(enum.Enum):
 
 
 class UnitaryMatrices(enum.Enum):
+    """
+    Enum of all the available unitary matrices to use in the Phase
+    Estimation algorithm
+    """
     # TODO: Populate properly
     HADAMARD = "H"
     PHASE_SHIFT = "P"
 
     @classmethod
     def list(cls):
+        """
+        Return all the enum options' values
+
+        returns:
+            List[str]: All the strings the enums correspond to
+        """
         return list(map(lambda um: um.value, cls))  # type: ignore
 
     def get(self, val: float = 0.0) -> Matrix:
+        """
+        Get the actual Unitary Matrix the enum corresponds to
+
+        :param float val: Optional value required when creating certain
+            matrix types
+
+        returns:
+            Matrix: The Unitary Matrix
+        """
         if self is UnitaryMatrices.HADAMARD:
             return c.TWO_HADAMARD
         elif self is UnitaryMatrices.PHASE_SHIFT:

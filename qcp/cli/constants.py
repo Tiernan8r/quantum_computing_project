@@ -14,20 +14,34 @@
 
 #: The default target state the Oracle will search for
 DEFAULT_TARGET = 0
+#: The default algorithm type to simulate
 DEFAULT_ALGORITHM = "g"
+#: The default phase to use in the unitary matrix, if required
 DEFAULT_PHASE = 0.25
+#: The default unitary matrix type to use.
 DEFAULT_UNITARY = "H"
 
-#: CLI flag values:
+# CLI flag values:
+
+#: The short flag for the help message
 HELP_SHORT = "-h"
+#: The long flag for the help message
 HELP_LONG = "--help"
+#: The short flag for the algorithm choice
 ALGORITHM_SHORT = "-a"
+#: The long flag for the algorithm choice
 ALGORITHM_LONG = "--algorithm"
+#: The short flag for the target
 TARGET_SHORT = "-t"
+#: The long flag for the target
 TARGET_LONG = "--target"
+#: The short flag for the unitary matrix choice
 UNITARY_SHORT = "-u"
+#: The long flag for the unitary matrix choice
 UNITARY_LONG = "--unitary"
+#: The short flag for the phase value
 PHASE_SHORT = "-p"
+#: The long flag for the phase value
 PHASE_LONG = "--phase"
 
 #: All the flags accepted by the CLI, mapping their short name to

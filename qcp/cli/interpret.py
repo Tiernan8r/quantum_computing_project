@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-CLI initialiser to parse CLI options for the Algorithm, and to run the
-computation
+Convert the given CLI arguments and flags into usable input for the algorithms
 """
 import sys
 from typing import Dict, List, Tuple
@@ -27,6 +26,14 @@ from qcp.matrices import DefaultMatrix, Matrix
 def interpret_arguments(opt: AlgorithmOption,
                         args: List[str],
                         flags: Dict[str, str]):
+    """
+    Parse the CLI arguments/flags based off of the algorithm
+    type to simulate
+
+    :param AlgorithmOption opt: The algorithm chosen
+    :param List[str]: The CLI arguments provided
+    :param Dict[str, str]: The CLI flags provided
+    """
     if opt is AlgorithmOption.Grovers:
         return determine_grover(args, flags)
     elif opt is AlgorithmOption.PhaseEstimation:
@@ -38,14 +45,24 @@ def interpret_arguments(opt: AlgorithmOption,
 
 
 def _determine_qbits(args: List[str]) -> int:
+    """
+    Read the number of qbits to simulate from the CLI arguments list
+
+    :param List[str] args: The CLI arguments
+
+    returns:
+        int: The number of qbits
+    """
     # Determine the number of qbits
     if len(args) < 1:
         print("Must provide the number of qbits to simulate", file=sys.stderr)
         exit(1)
     elif len(args) > 1:
-        print("Too many arguments provided, discarding excess...",
+        print("Too many arguments provided, ignoring extras...",
               file=sys.stderr)
 
+    # Take the number to interpret to be the first value in the arguments
+    # list
     nqbits_str = args[0]
 
     nqbits = 2
@@ -75,6 +92,10 @@ def determine_grover(args: List[str], flags: Dict[str, str]
 
     :param List[str] args: The CLI arguments
     :param Dict[str,str] flags: The CLI flags
+
+    returns:
+        Tuple[int, int]: Tuple of the parameters for the constructor, the
+            first is the number of qbits, the second the target bit.
     """
     # Determine the number of qbits
     nqbits = _determine_qbits(args)
@@ -111,6 +132,12 @@ def determine_phase_estimation(args: List[str], flags: Dict[str, str]
 
     :param List[str] args: The CLI arguments
     :param Dict[str,str] flags: The CLI flags
+
+    returns:
+        Tuple[int, Matrix, Matrix]: Tuple of the parameters for the
+            constructor, the first is the number of qbits to simulate,
+            the second the Unitary Matrix to use, and the third the
+            eigenvector.
     """
     # Determine the number of qbits:
     nqbits = _determine_qbits(args)

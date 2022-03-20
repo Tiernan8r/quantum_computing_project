@@ -11,13 +11,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+File containing the code to add an animated progress bar
+"""
 import sys
 import time
 
+#: List of the ASCII art tickers
 _ticks = ["-", "\\", "|", "/"]
 
 
 def ticker(tick_rate=0.2, prefix="", file=sys.stdout):
+    """
+    Shows a swirling ticker on the terminal to indicate that an operation
+    is in progress.
+
+    :param float tick_rate: The interval to sleep between refreshes in seconds.
+    :parma str prefix: An optional prefix to show before the ticker.
+    :param TextIO file: Override for the default I/O printed to.
+    """
 
     def show(j):
         i = j % len(_ticks)  # Loop through the ticks
