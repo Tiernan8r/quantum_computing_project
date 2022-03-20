@@ -17,14 +17,13 @@ from tests.cli.test_usage import EXPECTED_USAGE
 
 
 def test_read_cli(capsys):
-    # No args provided (except for 'program name') errors with missing number
-    # of qbits:
+    # No args provided just shows the help message
     dummy_args0 = []
     with pytest.raises(SystemExit) as se0:
         cli.read_cli(dummy_args0)
-    assert se0.match("1")
+    assert se0.match("0")
     captured0 = capsys.readouterr()
-    assert "Must provide the number of qbits to simulate" in captured0.err
+    assert "USAGE" in captured0.out
 
     # Non-integer qbits number:
     dummy_args1 = ["ten"]
