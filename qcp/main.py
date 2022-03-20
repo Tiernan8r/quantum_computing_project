@@ -16,9 +16,17 @@
 CLI initialiser to parse CLI options for the Algorithm, and to run the
 computation
 """
-from qcp.grovers_algorithm import Grovers
-from typing import List, Tuple
+import os
 import sys
+
+# Required to guarantee that the 'qcp' module is accessible when
+# this file is run directly.
+if os.getcwd() not in sys.path:
+    sys.path.append(os.getcwd())
+
+from typing import List, Tuple
+
+from qcp.grovers_algorithm import Grovers
 
 #: The default target state the Oracle will search for
 TARGET_DEF = 5
