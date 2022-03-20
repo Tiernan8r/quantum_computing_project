@@ -17,7 +17,7 @@ from qcp.ui.components import AbstractComponent, \
     ButtonComponent, GraphComponent
 from qcp.ui.constants import LCD_CLASSICAL, LCD_GROVER
 from qcp.matrices import Matrix
-import qcp.algorithms.grovers_algorithm as ga
+import qcp.algorithms as ga
 import math
 
 
