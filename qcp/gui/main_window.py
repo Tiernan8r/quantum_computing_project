@@ -38,6 +38,7 @@ class MainWindow(QMainWindow):
         self.ui_component = self.load_ui()
         self.ui_component.setWindowTitle("Grover's Algorithm")
 
+        self.combo_box_component = comp.ComboBoxComponent(self)
         self.graph_component = comp.GraphComponent(self)
         self.input_component = comp.InputComponent(self)
         self.button_component = comp.ButtonComponent(

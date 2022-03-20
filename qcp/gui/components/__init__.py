@@ -19,4 +19,5 @@ from qcp.gui.components.abstract_component import AbstractComponent  # noqa: F40
 from qcp.gui.components.graph_component import GraphComponent  # noqa: F401
 from qcp.gui.components.input_component import InputComponent  # noqa: F401
 from qcp.gui.components.button_component import ButtonComponent  # noqa: F401
+from qcp.gui.components.combo_box_component import ComboBoxComponent  # noqa: F401
 from qcp.gui.components.simulator_component import SimulatorComponent  # noqa: F401, E501

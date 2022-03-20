@@ -21,6 +21,37 @@ UI_FILENAME = "form.ui"
 #: graph will appear in
 GRAPH_WIDGET_NAME = "graph"
 
+#: Name of the combo box for the algorithm choices
+COMBO_BOX_NAME = "algorithm_options"
+
+#: Label to show the current algorithm choice
+LABEL_TITLE = "title"
+LABEL_TEXT_FORMAT = "<html><head/><body><p><span style=\" font-weight:700;\">{}:</span></p></body></html>"
+
+COMBO_BOX_OPTION_GROVER = "Grover's Algorithm"
+COMBO_BOX_OPTION_PHASE_ESTIMATION = "Phase Estimation"
+COMBO_BOX_OPTION_SUDOKU = "Sudoku"
+
+COMBO_BOX_OPTIONS = [COMBO_BOX_OPTION_GROVER,
+                     COMBO_BOX_OPTION_PHASE_ESTIMATION, COMBO_BOX_OPTION_SUDOKU]
+
+#: The layout containing input for Grover's Algorithm
+GROVER_LAYOUT = "grover_frame"
+#: The layout containing input for Phase Estimation
+PHASE_ESTIMATION_LAYOUT = "phase_estimation_frame"
+#: The layout containing input for Sudoku
+SUDOKU_LAYOUT = "sudoku_frame"
+
+ALGORITHM_LAYOUTS = [GROVER_LAYOUT, PHASE_ESTIMATION_LAYOUT, SUDOKU_LAYOUT]
+
+COMBO_BOX_LAYOUT_MAPPING = {
+    COMBO_BOX_OPTION_GROVER: GROVER_LAYOUT,
+    COMBO_BOX_OPTION_PHASE_ESTIMATION: PHASE_ESTIMATION_LAYOUT,
+    COMBO_BOX_OPTION_SUDOKU: SUDOKU_LAYOUT
+}
+
+LAYOUT_COMBO_MAPPING = {v: k for k, v in COMBO_BOX_LAYOUT_MAPPING.items()}
+
 #: The widget name for the input search text box
 INPUT_SEARCH_WIDGET_NAME = "input_search"
 #: The widget name for the label to display any error message about search
