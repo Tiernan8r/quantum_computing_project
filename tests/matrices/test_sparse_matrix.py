@@ -47,11 +47,13 @@ def test_sp_m_identity():
     i3x3 = SparseMatrix.identity(3)
     assert i3x3.get_state() == expected3x3
 
+
 def test_sp_m_zeros():
     A = SparseMatrix.zeros(2, 3)
     expected = SparseMatrix([[0 for _ in range(3)] for _ in range(2)])
 
     assert A.get_state() == expected.get_state()
+
 
 def test_sp_m_init():
     # Test initialisation with a dict of dicts

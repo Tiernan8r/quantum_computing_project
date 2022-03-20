@@ -313,21 +313,21 @@ def swap(size: int, target0: int, target1: int) -> Matrix:
     swapgate: Matrix = DefaultMatrix.zeros(n, n)
 
     for i in range(2**size):
-        bit = (bin(i)[2:].zfill(size))
-        swapbit = (
-            bit[0:target0] +
-            bit[target1] +
-            bit[target0+1:target1] +
-            bit[target0] +
-            bit[target1+1:]
+        bit_str = (bin(i)[2:].zfill(size))
+        swapbit_str = (
+            bit_str[0:target0] +
+            bit_str[target1] +
+            bit_str[target0+1:target1] +
+            bit_str[target0] +
+            bit_str[target1+1:]
         )
 
-        bit = int(bit, 2)  # type: ignore
-        swapbit = int(swapbit, 2)  # type: ignore
+        bit = int(bit_str, 2)
+        swapbit = int(swapbit_str, 2)
         vec_entries: MATRIX = [[0] for _ in range(2**size)]
         swapvec_entries: MATRIX = [[0] for _ in range(2**size)]
-        vec_entries[bit] = [1]  # type: ignore
-        swapvec_entries[swapbit] = [1]  # type: ignore
+        vec_entries[bit] = [1]
+        swapvec_entries[swapbit] = [1]
         vector = DefaultMatrix(vec_entries)
         swapvector = DefaultMatrix(swapvec_entries)
         # Outer product to create matrix

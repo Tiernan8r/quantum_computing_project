@@ -333,3 +333,32 @@ def test_swap():
         gts.swap(2, 0, 4)
     assert ae4.match("second target bit out of range")
 
+    swp_4x4_1 = gts.swap(2, 0, 1)
+    expected_4x4 = DefaultMatrix([
+        [1, 0, 0, 0],
+        [0, 0, 1, 0],
+        [0, 1, 0, 0],
+        [0, 0, 0, 1]
+    ])
+    assert swp_4x4_1.get_state() == expected_4x4.get_state()
+
+    # Target bit order shouldn't matter
+    swp_4x4_2 = gts.swap(2, 1, 0)
+    assert swp_4x4_2.get_state() == expected_4x4.get_state()
+
+    # Verify the gate swaps the bits as expected:
+    two_qubits = DefaultMatrix([
+        [1],  # |00>
+        [2],  # |01>
+        [3],  # |10>
+        [4]  # |11>
+    ])
+
+    transformed_two_qbits = swp_4x4_1 * two_qubits
+    expected_transform = DefaultMatrix([
+        [1],  # |00>
+        [3],  # |01>
+        [2],  # |10>
+        [4]  # |11>
+    ])
+    assert transformed_two_qbits.get_state() == expected_transform.get_state()
