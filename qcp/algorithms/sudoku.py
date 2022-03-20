@@ -26,8 +26,6 @@ class Sudoku(AbstractAlgorithm):
     def __init__(self):
         super().__init__(9)
 
-        self.circuit = self.construct_circuit()
-
     def oracle(self):
         """
         The oracle gate for this problem checks the inputs to see whether the
@@ -61,6 +59,7 @@ class Sudoku(AbstractAlgorithm):
         cond3 = g.control_x(9, [3], 6) * g.control_x(9, [1], 6)
         cond4 = g.control_x(9, [3], 7) * g.control_x(9, [2], 7)
         cond = cond4 * cond3 * cond2 * cond1
+
         return cond
 
     def diffusion(self):
@@ -76,6 +75,7 @@ class Sudoku(AbstractAlgorithm):
         cz = g.control_z(9, [0, 1, 2], 3)
 
         diff = had * xs * cz * xs * had
+
         return diff
 
     def construct_circuit(self):
@@ -96,6 +96,7 @@ class Sudoku(AbstractAlgorithm):
             circuit = self.oracle() * circuit
 
             circuit = self.diffusion() * circuit
+
         return circuit
 
     def measure_state(self):
@@ -113,6 +114,7 @@ class Sudoku(AbstractAlgorithm):
         observed = random.choices(
             [i for i in range(len(p))], p, k=1)  # type: ignore
         probability = p[observed[0]]
+
         return observed[0], probability
 
     def measure_solution(self):
@@ -134,6 +136,7 @@ class Sudoku(AbstractAlgorithm):
         chosen_prob = sol_probs[observed[0]]
 
         vx = format(observed[0], '04b')
+
         return [vx[-4], vx[-3], vx[-2], vx[-1]], chosen_prob
 
 

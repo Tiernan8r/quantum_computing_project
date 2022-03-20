@@ -56,16 +56,11 @@ class Grovers(AbstractAlgorithm):
         :param int size: number of qubits in our circuit
         :param int target_state: specific state we want to target/select
         """
-        super().__init__(size)
-
         assert target_state < (2 ** size), \
             "target must be within qbit state indices"
         self.target = target_state
 
-        self.oracle = self.single_target_oracle()
-        self.diffuser = self.diffusion()
-        self.max_reflections = self.size - 1
-        # can only reflect size-1 times to get maximum probability
+        super().__init__(size)
 
         self.circuit = self.construct_circuit()
 
@@ -111,6 +106,12 @@ class Grovers(AbstractAlgorithm):
         returns:
             Matrix: Matrix representing our completed Grover's algorithm
         """
+        self.oracle = self.single_target_oracle()
+        self.diffuser = self.diffusion()
+
+        # can only reflect size-1 times to get maximum probability
+        self.max_reflections = self.size - 1
+
         circuit = g.multi_gate(self.size, [i for i in range(0, self.size)],
                                g.Gate.H)
 
@@ -118,6 +119,7 @@ class Grovers(AbstractAlgorithm):
             circuit = self.oracle * circuit
             circuit = self.diffuser * circuit
             self.max_reflections -= 1
+
         return circuit
 
     def measure(self) -> Tuple[int, float]:

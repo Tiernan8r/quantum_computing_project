@@ -31,7 +31,7 @@ class AbstractAlgorithm(abc.ABC):
         self.size = size
 
         self.state = self.initial_state()
-        self.circuit = None
+        self.circuit = self.construct_circuit()
 
     def initial_state(self) -> Matrix:
         """
