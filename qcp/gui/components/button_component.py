@@ -14,12 +14,12 @@
 import time
 from PySide6 import QtWidgets
 from PySide6 import QtCore
-from qcp.ui.components import AbstractComponent
-from qcp.ui.constants import BUTTON_CANCEL_SEARCH_BUTTON, \
+from qcp.gui.components import AbstractComponent
+from qcp.gui.constants import BUTTON_CANCEL_SEARCH_BUTTON, \
     BUTTON_SEARCH_BUTTON, BUTTON_PROGRESS_BAR, BUTTON_PROGRESS_BAR_TICK_RATE, \
     THREAD_PAUSE
 from typing import List
-from qcp.ui.components import InputComponent
+from qcp.gui.components import InputComponent
 
 
 class ButtonComponent(AbstractComponent):

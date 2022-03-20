@@ -13,9 +13,9 @@
 # limitations under the License.
 from PySide6 import QtWidgets
 from PySide6 import QtCore
-from qcp.ui.components import AbstractComponent, \
+from qcp.gui.components import AbstractComponent, \
     ButtonComponent, GraphComponent
-from qcp.ui.constants import LCD_CLASSICAL, LCD_GROVER
+from qcp.gui.constants import LCD_CLASSICAL, LCD_GROVER
 from qcp.matrices import Matrix
 import qcp.algorithms as ga
 import math

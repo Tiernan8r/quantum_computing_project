@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from PySide6 import QtWidgets
-from qcp.ui.components import AbstractComponent
-from qcp.ui.constants import INPUT_SEARCH_WIDGET_NAME, \
+from qcp.gui.components import AbstractComponent
+from qcp.gui.constants import INPUT_SEARCH_WIDGET_NAME, \
     INPUT_TARGET_WIDGET_NAME, INPUT_SEARCH_ERROR_WIDGET_NAME, \
     INPUT_TARGET_ERROR_WIDGET_NAME
 from typing import List

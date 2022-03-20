@@ -18,8 +18,8 @@ from matplotlib.backends.backend_qt5agg import \
     NavigationToolbar2QT as NavigationToolbar
 import qcp.register as reg
 from PySide6 import QtWidgets
-from qcp.ui.components import AbstractComponent
-from qcp.ui.constants import GRAPH_WIDGET_NAME
+from qcp.gui.components import AbstractComponent
+from qcp.gui.constants import GRAPH_WIDGET_NAME
 from qcp.matrices import Matrix
 
 matplotlib.use('Qt5Agg')

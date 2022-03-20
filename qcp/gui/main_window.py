@@ -16,8 +16,8 @@ import os
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import QFile, QIODevice
-from qcp.ui.constants import UI_FILENAME
-import qcp.ui.components as comp
+from qcp.gui.constants import UI_FILENAME
+import qcp.gui.components as comp
 
 
 class MainWindow(QMainWindow):

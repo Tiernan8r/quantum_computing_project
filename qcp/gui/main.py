@@ -24,7 +24,7 @@ if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
 from PySide6.QtWidgets import QApplication
-from qcp.ui.main_window import MainWindow
+from qcp.gui.main_window import MainWindow
 
 
 def initialise_ui():
