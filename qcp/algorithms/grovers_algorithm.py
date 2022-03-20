@@ -20,7 +20,7 @@ from typing import List, Tuple
 
 import qcp.gates as g
 import qcp.register as reg
-from qcp.circuits import AbstractAlgorithm
+from qcp.algorithms import AbstractAlgorithm
 from qcp.matrices import MATRIX, DefaultMatrix, Matrix
 
 

@@ -2,7 +2,7 @@ import random
 
 import qcp.gates as g
 import qcp.register as reg
-from qcp.circuits import AbstractAlgorithm
+from qcp.algorithms import AbstractAlgorithm
 from qcp.matrices import MATRIX, DefaultMatrix, Matrix
 
 # This class uses Grover's algorithm to solve the 2x2 sudoku board with 4
@@ -21,7 +21,7 @@ from qcp.matrices import MATRIX, DefaultMatrix, Matrix
 #
 
 
-class sudoku(AbstractAlgorithm):
+class Sudoku(AbstractAlgorithm):
 
     def __init__(self):
         super().__init__(9)
@@ -138,7 +138,7 @@ class sudoku(AbstractAlgorithm):
 
 
 def example():
-    s = sudoku()
+    s = Sudoku()
     s.run()
     o1, p1 = s.measure_state()
     vx, p = s.measure_solution()

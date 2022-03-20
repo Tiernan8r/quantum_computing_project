@@ -1,6 +1,6 @@
 import math
 import cmath
-from qcp.circuits.abstract_circuit import AbstractAlgorithm
+from qcp.algorithms.abstract_algorithm import AbstractAlgorithm
 from qcp.matrices import DefaultMatrix, Matrix
 import qcp.gates as g
 from qcp.matrices.types import MATRIX

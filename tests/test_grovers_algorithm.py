@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import qcp.grovers_algorithm as ga
+import qcp.algorithms.grovers_algorithm as ga
 from qcp.matrices import DefaultMatrix
 import tests.test_helpers as h
 import pytest

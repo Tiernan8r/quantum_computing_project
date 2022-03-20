@@ -24,7 +24,7 @@ if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
 import qcp.cli as cli
-from qcp.grovers_algorithm import Grovers
+from qcp.algorithms.grovers_algorithm import Grovers
 
 def main():
     """

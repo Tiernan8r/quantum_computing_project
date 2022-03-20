@@ -20,7 +20,7 @@ import sys
 from typing import List, Tuple
 
 from qcp.constants import AlgorithmOptions
-from qcp.grovers_algorithm import Grovers
+from qcp.algorithms.grovers_algorithm import Grovers
 
 #: The default target state the Oracle will search for
 TARGET_DEF = 5
