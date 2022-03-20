@@ -26,7 +26,7 @@ if os.getcwd() not in sys.path:
 
 from typing import List, Tuple
 
-from qcp.grovers_algorithm import Grovers
+from qcp.algorithms import Grovers
 
 #: The default target state the Oracle will search for
 TARGET_DEF = 5
