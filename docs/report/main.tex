@@ -1160,6 +1160,22 @@ return diff
 \end{lstlisting}
 \end{file}
 
+\subsection{Construction and Running}
+\begin{file}[def construct\_circuit(self) -> Matrix:]
+\begin{lstlisting}[language=Python]
+circuit = g.multi_gate(self.size, 
+	[i for i in range(0, self.size)],
+	g.Gate.H)
+
+while self.max_reflections > 0:
+	circuit = self.oracle * circuit
+	circuit = self.diffuser * circuit
+	self.max_reflections -= 1
+	
+return circuit
+
+\end{lstlisting}
+\end{file}
 
 % Warning text, with a custom title
 \begin{warn}[Notice:]

@@ -48,13 +48,15 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {5.3}Diffusion}{20}{subsection.5.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Testing and Debugging}{21}{section.6}%
+\contentsline {subsection}{\numberline {5.4}Construction and Running}{21}{subsection.5.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6}Testing and Debugging}{22}{section.6}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {7}Issues and Challenges}{22}{section.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {8}Problem title}{22}{section.8}%
+\contentsline {section}{\numberline {8}Problem title}{23}{section.8}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {8.1}Theoretical viewpoint}{22}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.1}Theoretical viewpoint}{23}{subsection.8.1}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {8.2}Algorithmic issues}{23}{subsection.8.2}%
 \defcounter {refsection}{0}\relax 
