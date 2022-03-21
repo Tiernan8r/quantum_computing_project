@@ -71,8 +71,6 @@ class ComboBoxComponent(AbstractComponent):
             if l.objectName() in ALGORITHM_LAYOUTS:
                 self.layouts[l.objectName()] = l
 
-        print(self.layouts)
-
     @QtCore.Slot(str)
     def update_label(self, label: str):
         self.label_title.setText(LABEL_TEXT_FORMAT.format(label))
