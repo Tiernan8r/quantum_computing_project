@@ -89,11 +89,11 @@ class PhaseButtonComponent(AbstractComponent):
 
         labels = self.main_window.ui_component.findChildren(
             QtWidgets.QLabel)
-        for l in labels:
-            if l.objectName() == UNITARY_ERROR_LABEL:
-                self.unitary_error_label: QtWidgets.QLabel = l
-            elif l.objectName() == EIGENVECTOR_ERROR_LABEL:
-                self.eigenvector_error_label: QtWidgets.QLabel = l
+        for lab in labels:
+            if lab.objectName() == UNITARY_ERROR_LABEL:
+                self.unitary_error_label: QtWidgets.QLabel = lab
+            elif lab.objectName() == EIGENVECTOR_ERROR_LABEL:
+                self.eigenvector_error_label: QtWidgets.QLabel = lab
 
     def initiate_simulation(self):
         """

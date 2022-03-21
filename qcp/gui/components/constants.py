@@ -24,14 +24,15 @@ COMBO_BOX_NAME = "algorithm_options"
 
 #: Label to show the current algorithm choice
 LABEL_TITLE = "title"
-LABEL_TEXT_FORMAT = "<html><head/><body><p><span style=\" font-weight:700;\">{}:</span></p></body></html>"
+LABEL_TEXT_FORMAT = "<html><head/><body><p><span style=\" font-weight:700;\">{}:</span></p></body></html>"  # noqa: E501
 
 COMBO_BOX_OPTION_GROVER = "Grover's Algorithm"
 COMBO_BOX_OPTION_PHASE_ESTIMATION = "Phase Estimation"
 COMBO_BOX_OPTION_SUDOKU = "Sudoku"
 
 COMBO_BOX_OPTIONS = [COMBO_BOX_OPTION_GROVER,
-                     COMBO_BOX_OPTION_PHASE_ESTIMATION, COMBO_BOX_OPTION_SUDOKU]
+                     COMBO_BOX_OPTION_PHASE_ESTIMATION,
+                     COMBO_BOX_OPTION_SUDOKU]
 
 #: The layout containing input for Grover's Algorithm
 GROVER_LAYOUT = "grover_frame"

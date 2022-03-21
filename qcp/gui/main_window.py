@@ -22,7 +22,6 @@ from PySide6.QtCore import QFile, QIODevice
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QMainWindow
 from qcp.gui.constants import UI_FILENAME
-from typing_extensions import Self
 
 
 class MainWindow(QMainWindow):

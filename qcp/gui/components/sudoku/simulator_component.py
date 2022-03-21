@@ -11,15 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import math
-from typing import List, Tuple
-
 import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
-from PySide6.QtWidgets import QHBoxLayout, QHeaderView, QSizePolicy
 from qcp.gui.components import AbstractComponent, GraphComponent
 from qcp.gui.components.sudoku import SudokuButtonComponent, SudokuResultsTable
-from qcp.gui.components.sudoku.constants import PROBABILITY_DISPLAY, PROBABILITY_LABEL, RESULT_TABLE
+from qcp.gui.components.sudoku.constants import (PROBABILITY_DISPLAY,
+                                                 PROBABILITY_LABEL,
+                                                 RESULT_TABLE)
 from qcp.matrices import Matrix
 
 
@@ -78,23 +76,23 @@ class SudokuSimulatorComponent(AbstractComponent):
         self.qcp_thread.finished.connect(self.simulation_finished)
 
     def _find_widgets(self):
-        tables: List[QtWidgets.QTableView] = self.main_window.ui_component.findChildren(
+        tables = self.main_window.ui_component.findChildren(
             QtWidgets.QTableView)
         for t in tables:
             if t.objectName() == RESULT_TABLE:
-                self.result_table = t
+                self.result_table: QtWidgets.QTableView = t
 
-        labels: List[QtWidgets.QLabel] = self.main_window.ui_component.findChildren(
+        labels = self.main_window.ui_component.findChildren(
             QtWidgets.QLabel)
-        for l in labels:
-            if l.objectName() == PROBABILITY_LABEL:
-                self.probability_label = l
+        for lab in labels:
+            if lab.objectName() == PROBABILITY_LABEL:
+                self.probability_label: QtWidgets.QLabel = lab
 
-        progress_bars: List[QtWidgets.QProgressBar] = self.main_window.ui_component.findChildren(
+        progress_bars = self.main_window.ui_component.findChildren(
             QtWidgets.QProgressBar)
         for pb in progress_bars:
             if pb.objectName() == PROBABILITY_DISPLAY:
-                self.probability_display = pb
+                self.probability_display: QtWidgets.QProgressBar = pb
 
     def run_simulation(self):
         """

@@ -17,9 +17,8 @@ from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import AbstractComponent
 from qcp.gui.components.constants import (ALGORITHM_LAYOUTS,
                                           COMBO_BOX_LAYOUT_MAPPING,
-                                          COMBO_BOX_NAME, GROVER_LAYOUT,
-                                          LABEL_TEXT_FORMAT, LABEL_TITLE,
-                                          LAYOUT_COMBO_MAPPING)
+                                          COMBO_BOX_NAME,
+                                          LABEL_TEXT_FORMAT, LABEL_TITLE)
 
 
 class ComboBoxComponent(AbstractComponent):
@@ -62,18 +61,20 @@ class ComboBoxComponent(AbstractComponent):
             if cb.objectName() == COMBO_BOX_NAME:
                 self.combo_box = cb
 
-        all_layouts = self.main_window.ui_component.findChildren(
+        labels = self.main_window.ui_component.findChildren(
             QtWidgets.QLabel)
-        for l in all_layouts:
-            if l.objectName() == LABEL_TITLE:
-                self.label_title: QtWidgets.QLabel = l
+        for lab in labels:
+            if lab.objectName() == LABEL_TITLE:
+                self.label_title: QtWidgets.QLabel = lab
 
+        # Dict mapping the containers for each algorithm to it's
+        # name
         self.layouts = {}
         all_layouts = self.main_window.ui_component.findChildren(
             QtWidgets.QWidget)
-        for l in all_layouts:
-            if l.objectName() in ALGORITHM_LAYOUTS:
-                self.layouts[l.objectName()] = l
+        for layout in all_layouts:
+            if layout.objectName() in ALGORITHM_LAYOUTS:
+                self.layouts[layout.objectName()] = layout
 
     @QtCore.Slot(str)
     def update_label(self, label: str):
@@ -95,7 +96,7 @@ class ComboBoxComponent(AbstractComponent):
         key = COMBO_BOX_LAYOUT_MAPPING[label]
         layout = self.layouts[key]
 
-        for l in self.layouts.values():
-            l.hide()
+        for layout in self.layouts.values():
+            layout.hide()
 
         layout.show()

@@ -11,9 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import math
-
-import qcp.algorithms as ga
+import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import AbstractComponent, GraphComponent
 from qcp.gui.components.phase_estimation import PhaseButtonComponent
@@ -66,7 +64,9 @@ class PhaseSimulatorComponent(AbstractComponent):
 
         self.qcp_thread.finished.connect(self.simulation_finished)
 
-    def run_simulation(self, nqbits: int, unitary: Matrix, eigenvector: Matrix):
+    def run_simulation(self, nqbits: int,
+                       unitary: Matrix,
+                       eigenvector: Matrix):
         """
         Pass the input parameters to the QThread, and start up the
         simulation
@@ -132,7 +132,7 @@ class SimulateQuantumComputerThread(QtCore.QThread):
         """
         Run the simulation
         """
-        phase_estimator = ga.PhaseEstimation(
+        phase_estimator = alg.PhaseEstimation(
             self.nqbits, self.unitary_matrix, self.eigenvector)
         qregister = None
         try:

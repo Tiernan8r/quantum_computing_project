@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import cmath
-from typing import List
 
 from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import AbstractComponent
@@ -51,24 +50,21 @@ class PhaseInputComponent(AbstractComponent):
         self.resize_tables(2)
 
     def _find_widgets(self):
-        spin_boxes: List[QtWidgets.QSpinBox] = self.main_window.ui_component.findChildren(
+        spin_boxes = self.main_window.ui_component.findChildren(
             QtWidgets.QSpinBox
         )
         for spin_box in spin_boxes:
             if spin_box.objectName() == INPUT_NQBITS_WIDGET_NAME:
-                self.nqbit_input = spin_box
+                self.nqbit_input: QtWidgets.QSpinBox = spin_box
 
-        tables: List[QtWidgets.QTableWidget] = self.main_window.ui_component.findChildren(
+        tables = self.main_window.ui_component.findChildren(
             QtWidgets.QTableWidget
         )
-        for t in tables:
-            if t.objectName() == INPUT_UNITARY_WIDGET_NAME:
-                self.unitary_table = t
-            elif t.objectName() == INPUT_EIGENVECTOR_WIDGET_NAME:
-                self.eigenvector_table = t
-
-    def parse_nqbit_input(self) -> int:
-        return self.unitary_table.value()
+        for tab in tables:
+            if tab.objectName() == INPUT_UNITARY_WIDGET_NAME:
+                self.unitary_table: QtWidgets.QTableWidget = tab
+            elif tab.objectName() == INPUT_EIGENVECTOR_WIDGET_NAME:
+                self.eigenvector_table: QtWidgets.QTableWidget = tab
 
     @QtCore.Slot(int)
     def resize_tables(self, size: int):
@@ -81,7 +77,7 @@ class PhaseInputComponent(AbstractComponent):
             for j in range(size):
                 itm = self.unitary_table.item(i, j)
                 if itm is None:
-                    val = lambda i, j: "1" if i == j else "0"
+                    def val(i, j): return "1" if i == j else "0"
                     table_entry = QtWidgets.QTableWidgetItem(val(i, j))
                     self.unitary_table.setItem(i, j, table_entry)
 
@@ -94,11 +90,11 @@ class PhaseInputComponent(AbstractComponent):
         for i in range(n):
             itm = self.eigenvector_table.item(i, 0)
             if itm is None:
-                val = lambda i: "1" if i == 0 else "0"
+                def val(i): return "1" if i == 0 else "0"
                 table_entry = QtWidgets.QTableWidgetItem(val(i))
                 self.eigenvector_table.setItem(i, 0, table_entry)
 
-    def parse_nqbit_input(self):
+    def parse_nqbit_input(self) -> int:
         return self.nqbit_input.value()
 
     def _parse_table_input(self, table: QtWidgets.QTableWidget) -> Matrix:
