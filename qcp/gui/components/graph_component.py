@@ -12,14 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import matplotlib
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_qt5agg import \
-    FigureCanvasQTAgg as FigureCanvas, \
-    NavigationToolbar2QT as NavigationToolbar
 import qcp.register as reg
+from matplotlib.backends.backend_qt5agg import \
+    FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import \
+    NavigationToolbar2QT as NavigationToolbar
+from matplotlib.figure import Figure
 from PySide6 import QtWidgets
-from qcp.ui.components import AbstractComponent
-from qcp.ui.constants import GRAPH_WIDGET_NAME
+from qcp.gui.components import AbstractComponent
+from qcp.gui.components.constants import GRAPH_WIDGET_NAME
 from qcp.matrices import Matrix
 
 matplotlib.use('Qt5Agg')
@@ -119,7 +120,7 @@ class GraphComponent(AbstractComponent):
         if qregister is None:
             return
 
-        x = [f"|{bin(i)[2:]}>" for i in range(qregister.num_rows)]
+        x = [f"|{i}>" for i in range(qregister.num_rows)]
         y = reg.measure(qregister)
 
         self._plot(x, y, title=title,
