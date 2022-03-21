@@ -53,6 +53,6 @@ LAYOUT_COMBO_MAPPING = {v: k for k, v in COMBO_BOX_LAYOUT_MAPPING.items()}
 
 
 #: The widget name for the progress bar widget
-BUTTON_PROGRESS_BAR = "progress_bar"
+PROGRESS_BAR = "progress_bar"
 #: The tick rate in ms of the progress bar
-BUTTON_PROGRESS_BAR_TICK_RATE = 100  # in milliseconds
+PROGRESS_BAR_TICK_RATE = 100  # in milliseconds
