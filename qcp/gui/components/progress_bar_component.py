@@ -12,23 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import time
-from PySide6 import QtWidgets
-from PySide6 import QtCore
-from qcp.ui.components import AbstractComponent
-from qcp.ui.constants import BUTTON_CANCEL_SEARCH_BUTTON, \
-    BUTTON_SEARCH_BUTTON, BUTTON_PROGRESS_BAR, BUTTON_PROGRESS_BAR_TICK_RATE, \
-    THREAD_PAUSE
-from typing import List
-from qcp.ui.components import InputComponent
+
+from PySide6 import QtCore, QtWidgets
+from qcp.gui.components import AbstractComponent
+from qcp.gui.components.constants import (PROGRESS_BAR,
+                                          PROGRESS_BAR_TICK_RATE)
+from qcp.gui.constants import THREAD_PAUSE
 
 
-class ButtonComponent(AbstractComponent):
+class ProgressBarComponent(AbstractComponent):
     """
     Component of the UI that handles button click behaviour.
     """
 
     def __init__(self, main_window: QtWidgets.QMainWindow,
-                 input_component: InputComponent,
                  *args, **kwargs):
         """
         Initialise the ButtonComponent object, referencing the main window
@@ -44,8 +41,6 @@ class ButtonComponent(AbstractComponent):
         """
         super().__init__(main_window, *args, **kwargs)
 
-        self.input_component = input_component
-
     def setup_signals(self):
         """
         Setup what happens when the buttons in the UI are clicked.
@@ -55,81 +50,18 @@ class ButtonComponent(AbstractComponent):
         self.progress_bar.hide()
         self.progress_bar.reset()
 
-        self.cancel_button.hide()
-
         self.pb_thread = ProgressBarThread(self.progress_bar.minimum(),
                                            self.progress_bar.maximum())
         self.pb_thread.progress_bar_value_change.connect(self._draw_progress)
         self.pb_thread.finished.connect(self._hide_progress_bar)
 
-        self.search_button.clicked.connect(self.initiate_search)
-        self.cancel_button.clicked.connect(self.cancel_search)
-
     def _find_widgets(self):
-        buttons: List[QtWidgets.QPushButton] = \
-            self.main_window.ui_component.findChildren(
-                QtWidgets.QPushButton)
-        for b in buttons:
-            if b.objectName() == BUTTON_SEARCH_BUTTON:
-                self.search_button = b
-            if b.objectName() == BUTTON_CANCEL_SEARCH_BUTTON:
-                self.cancel_button = b
 
         progress_bars = self.main_window.ui_component.findChildren(
             QtWidgets.QProgressBar)
         for pb in progress_bars:
-            if pb.objectName() == BUTTON_PROGRESS_BAR:
+            if pb.objectName() == PROGRESS_BAR:
                 self.progress_bar: QtWidgets.QProgressBar = pb
-
-    def initiate_search(self):
-        """
-        Start the running of the Quantum Computer Simulator on a
-        separate QThread.
-
-        Show the cancel button, so that the QThread can be killed before the
-        calculation completes.
-
-        Startup the QThread that updates the progress bar so that it swirls
-        overtime, to visualise that the computer is running a calculation in
-        the background.
-        """
-        nqbits = 0
-        try:
-            nqbits = self.input_component.parse_input()
-        except ValueError as ve:
-            print(ve)
-            return
-
-        target = 0
-        try:
-            target = self.input_component.parse_target(nqbits)
-        except ValueError as ve:
-            print(ve)
-            return
-
-        self.cancel_button.show()
-
-        self.tick_progress_bar()
-
-        self.main_window.simulator.run_simulation(nqbits, target)
-
-    def cancel_search(self):
-        """
-        Kill the Simulation QThread when the button is clicked.
-
-        Hide and reset the progress bar.
-
-        Then hide the cancel button as a calculation is no longer running.
-        """
-        if self.pb_thread.isRunning():
-            self.pb_thread.exiting = True
-            while self.pb_thread.isRunning():
-                time.sleep(THREAD_PAUSE)
-        if self.main_window.simulator.qcp_thread.isRunning():
-            self.qcp_thread.quit()
-            time.sleep(THREAD_PAUSE)
-
-        self.cancel_button.hide()
 
     def tick_progress_bar(self):
         """
@@ -198,6 +130,6 @@ class ProgressBarThread(QtCore.QThread):
 
             self.progress_bar_value_change.emit(val)
             self.pb_val = val
-            self.msleep(BUTTON_PROGRESS_BAR_TICK_RATE)
+            self.msleep(PROGRESS_BAR_TICK_RATE)
 
         self.quit()
