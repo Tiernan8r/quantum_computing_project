@@ -11,14 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from PySide6 import QtWidgets
-from PySide6 import QtCore
-from qcp.gui.components import AbstractComponent, \
-    ButtonComponent, GraphComponent
+import math
+
+import qcp.algorithms as ga
+from PySide6 import QtCore, QtWidgets
+from qcp.gui.components import (AbstractComponent, GraphComponent,
+                                GroverButtonComponent)
 from qcp.gui.constants import LCD_CLASSICAL, LCD_GROVER
 from qcp.matrices import Matrix
-import qcp.algorithms as ga
-import math
 
 
 class SimulatorComponent(AbstractComponent):
@@ -28,7 +28,7 @@ class SimulatorComponent(AbstractComponent):
     """
 
     def __init__(self, main_window: QtWidgets.QMainWindow,
-                 button_component: ButtonComponent,
+                 button_component: GroverButtonComponent,
                  graph_component: GraphComponent, *args, **kwargs):
         """
         Initialise the SimulatorComponent object, referencing the main window

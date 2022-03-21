@@ -11,13 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import sys
 import os
+import sys
+
+import qcp.gui.components as comp
+from PySide6.QtCore import QFile, QIODevice
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QMainWindow
-from PySide6.QtCore import QFile, QIODevice
 from qcp.gui.constants import UI_FILENAME
-import qcp.gui.components as comp
 
 
 class MainWindow(QMainWindow):
@@ -40,8 +41,8 @@ class MainWindow(QMainWindow):
 
         self.combo_box_component = comp.ComboBoxComponent(self)
         self.graph_component = comp.GraphComponent(self)
-        self.input_component = comp.InputComponent(self)
-        self.button_component = comp.ButtonComponent(
+        self.input_component = comp.GroverInputComponent(self)
+        self.button_component = comp.GroverButtonComponent(
             self, self.input_component)
 
         self.simulator = comp.SimulatorComponent(

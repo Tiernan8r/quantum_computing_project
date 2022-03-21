@@ -15,7 +15,10 @@ from typing import List
 
 from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import AbstractComponent
-from qcp.gui.constants import ALGORITHM_LAYOUTS, COMBO_BOX_LAYOUT_MAPPING, COMBO_BOX_NAME, GROVER_LAYOUT, LABEL_TITLE, LABEL_TEXT_FORMAT, LAYOUT_COMBO_MAPPING
+from qcp.gui.constants import (ALGORITHM_LAYOUTS, COMBO_BOX_LAYOUT_MAPPING,
+                               COMBO_BOX_NAME, GROVER_LAYOUT,
+                               LABEL_TEXT_FORMAT, LABEL_TITLE,
+                               LAYOUT_COMBO_MAPPING)
 
 
 class ComboBoxComponent(AbstractComponent):

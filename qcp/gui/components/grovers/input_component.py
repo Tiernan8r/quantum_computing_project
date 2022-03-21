@@ -11,15 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from PySide6 import QtWidgets
-from qcp.gui.components import AbstractComponent
-from qcp.gui.constants import INPUT_SEARCH_WIDGET_NAME, \
-    INPUT_TARGET_WIDGET_NAME, INPUT_SEARCH_ERROR_WIDGET_NAME, \
-    INPUT_TARGET_ERROR_WIDGET_NAME
 from typing import List
 
+from PySide6 import QtWidgets
+from qcp.gui.components import AbstractComponent
+from qcp.gui.components.grovers.constants import (
+    INPUT_SEARCH_ERROR_WIDGET_NAME, INPUT_SEARCH_WIDGET_NAME,
+    INPUT_TARGET_ERROR_WIDGET_NAME, INPUT_TARGET_WIDGET_NAME)
 
-class InputComponent(AbstractComponent):
+
+class GroverInputComponent(AbstractComponent):
     """
     UI component that handles the reading of input from the search and target
     text boxes

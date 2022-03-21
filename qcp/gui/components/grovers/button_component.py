@@ -12,23 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import time
-from PySide6 import QtWidgets
-from PySide6 import QtCore
-from qcp.gui.components import AbstractComponent
-from qcp.gui.constants import BUTTON_CANCEL_SEARCH_BUTTON, \
-    BUTTON_SEARCH_BUTTON, BUTTON_PROGRESS_BAR, BUTTON_PROGRESS_BAR_TICK_RATE, \
-    THREAD_PAUSE
 from typing import List
-from qcp.gui.components import InputComponent
+
+from PySide6 import QtCore, QtWidgets
+from qcp.gui.components import AbstractComponent, GroverInputComponent
+from qcp.gui.components.grovers.constants import (
+    BUTTON_CANCEL_SEARCH_BUTTON, BUTTON_PROGRESS_BAR,
+    BUTTON_PROGRESS_BAR_TICK_RATE, BUTTON_SEARCH_BUTTON)
+from qcp.gui.constants import THREAD_PAUSE
 
 
-class ButtonComponent(AbstractComponent):
+class GroverButtonComponent(AbstractComponent):
     """
     Component of the UI that handles button click behaviour.
     """
 
     def __init__(self, main_window: QtWidgets.QMainWindow,
-                 input_component: InputComponent,
+                 input_component: GroverInputComponent,
                  *args, **kwargs):
         """
         Initialise the ButtonComponent object, referencing the main window
