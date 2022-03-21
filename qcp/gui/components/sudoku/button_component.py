@@ -18,19 +18,17 @@ from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import AbstractComponent
 from qcp.gui.components.constants import (BUTTON_PROGRESS_BAR,
                                           BUTTON_PROGRESS_BAR_TICK_RATE)
-from qcp.gui.components.grovers.constants import (BUTTON_CANCEL_SEARCH_BUTTON,
-                                                  BUTTON_SEARCH_BUTTON)
-from qcp.gui.components.grovers.input_component import GroverInputComponent
+from qcp.gui.components.sudoku.constants import (BUTTON_CANCEL_SEARCH_BUTTON,
+                                                 BUTTON_SEARCH_BUTTON)
 from qcp.gui.constants import THREAD_PAUSE
 
 
-class GroverButtonComponent(AbstractComponent):
+class SudokuButtonComponent(AbstractComponent):
     """
     Component of the UI that handles button click behaviour.
     """
 
     def __init__(self, main_window: QtWidgets.QMainWindow,
-                 input_component: GroverInputComponent,
                  *args, **kwargs):
         """
         Initialise the ButtonComponent object, referencing the main window
@@ -38,15 +36,11 @@ class GroverButtonComponent(AbstractComponent):
 
         :param QtWidgets.QMainWindow main_window: The main window element of
             the UI.
-        :param QtWidgets.QTextEdit search: The search input box of the UI
-        :param QtWidgets.QLineEdit target: The target input box of the UI
         :param *args: variable length extra arguments to pass down
             to QtCore.QObject
         :param **kwargs: dictionary parameters to pass to QtCore.QObject
         """
         super().__init__(main_window, *args, **kwargs)
-
-        self.input_component = input_component
 
     def setup_signals(self):
         """
@@ -64,8 +58,8 @@ class GroverButtonComponent(AbstractComponent):
         self.pb_thread.progress_bar_value_change.connect(self._draw_progress)
         self.pb_thread.finished.connect(self._hide_progress_bar)
 
-        self.search_button.clicked.connect(self.initiate_search)
-        self.cancel_button.clicked.connect(self.cancel_search)
+        self.start_button.clicked.connect(self.initiate_simulation)
+        self.cancel_button.clicked.connect(self.cancel_simulation)
 
     def _find_widgets(self):
         buttons: List[QtWidgets.QPushButton] = \
@@ -73,7 +67,7 @@ class GroverButtonComponent(AbstractComponent):
                 QtWidgets.QPushButton)
         for b in buttons:
             if b.objectName() == BUTTON_SEARCH_BUTTON:
-                self.search_button = b
+                self.start_button = b
             if b.objectName() == BUTTON_CANCEL_SEARCH_BUTTON:
                 self.cancel_button = b
 
@@ -83,7 +77,7 @@ class GroverButtonComponent(AbstractComponent):
             if pb.objectName() == BUTTON_PROGRESS_BAR:
                 self.progress_bar: QtWidgets.QProgressBar = pb
 
-    def initiate_search(self):
+    def initiate_simulation(self):
         """
         Start the running of the Quantum Computer Simulator on a
         separate QThread.
@@ -95,16 +89,13 @@ class GroverButtonComponent(AbstractComponent):
         overtime, to visualise that the computer is running a calculation in
         the background.
         """
-        nqbits = self.input_component.parse_input()
-        target = self.input_component.parse_target()
-
         self.cancel_button.show()
 
         self.tick_progress_bar()
 
-        self.main_window.grov_simulator.run_simulation(nqbits, target)
+        self.main_window.sudoku_simulator.run_simulation()
 
-    def cancel_search(self):
+    def cancel_simulation(self):
         """
         Kill the Simulation QThread when the button is clicked.
 
@@ -116,8 +107,8 @@ class GroverButtonComponent(AbstractComponent):
             self.pb_thread.exiting = True
             while self.pb_thread.isRunning():
                 time.sleep(THREAD_PAUSE)
-        if self.main_window.grov_simulator.qcp_thread.isRunning():
-            self.grov_simulator.qcp_thread.quit()
+        if self.main_window.sudoku_simulator.qcp_thread.isRunning():
+            self.sudoku_simulator.qcp_thread.quit()
             time.sleep(THREAD_PAUSE)
 
         self.cancel_button.hide()
