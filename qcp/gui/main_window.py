@@ -15,6 +15,7 @@ import os
 import sys
 
 import qcp.gui.components as comp
+import qcp.gui.components.grovers as grov_comp
 from PySide6.QtCore import QFile, QIODevice
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QMainWindow
@@ -41,12 +42,12 @@ class MainWindow(QMainWindow):
 
         self.combo_box_component = comp.ComboBoxComponent(self)
         self.graph_component = comp.GraphComponent(self)
-        self.input_component = comp.GroverInputComponent(self)
-        self.button_component = comp.GroverButtonComponent(
-            self, self.input_component)
+        self.grov_input_component = grov_comp.GroverInputComponent(self)
+        self.grov_button_component = grov_comp.GroverButtonComponent(
+            self, self.grov_input_component)
 
-        self.simulator = comp.SimulatorComponent(
-            self, self.button_component, self.graph_component)
+        self.simulator = grov_comp.GroverSimulatorComponent(
+            self, self.grov_button_component, self.graph_component)
 
     def show(self):
         """

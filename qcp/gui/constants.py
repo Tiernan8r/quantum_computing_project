@@ -52,13 +52,5 @@ COMBO_BOX_LAYOUT_MAPPING = {
 
 LAYOUT_COMBO_MAPPING = {v: k for k, v in COMBO_BOX_LAYOUT_MAPPING.items()}
 
-#: The widget name for the LCD ticker to display the number of iterations
-#: a classical computer would have taken to find the result on average.
-LCD_CLASSICAL = "lcd_number_classic"
-#: The widget name for the LCD ticker to display the number of iterations
-#: our simulation of Grover's Algorithm would take on average to find the
-#: result
-LCD_GROVER = "lcd_number_grover"
-
 #: The duration in seconds to wait for a thread to initialise when started.
 THREAD_PAUSE = 0.01

@@ -19,3 +19,5 @@ from qcp.gui.components.grovers.button_component import \
     GroverButtonComponent  # noqa: F401
 from qcp.gui.components.grovers.input_component import \
     GroverInputComponent  # noqa: F401
+from qcp.gui.components.grovers.simulator_component import \
+    GroverSimulatorComponent  # noqa: F401

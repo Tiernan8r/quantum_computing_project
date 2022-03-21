@@ -15,9 +15,8 @@
 Code to handle the behaviour of elements of our UI, split into smaller
 UI components for clarity.
 """
-from qcp.gui.components.abstract_component import AbstractComponent  # noqa: F401, E501
+from qcp.gui.components.abstract_component import \
+    AbstractComponent  # noqa: F401, E501
+from qcp.gui.components.combo_box_component import \
+    ComboBoxComponent  # noqa: F401
 from qcp.gui.components.graph_component import GraphComponent  # noqa: F401
-from qcp.gui.components.grovers import GroverInputComponent  # noqa: F401
-from qcp.gui.components.grovers import GroverButtonComponent  # noqa: F401
-from qcp.gui.components.combo_box_component import ComboBoxComponent  # noqa: F401
-from qcp.gui.components.simulator_component import SimulatorComponent  # noqa: F401, E501

@@ -35,3 +35,11 @@ BUTTON_CANCEL_SEARCH_BUTTON = "cancel_button"
 BUTTON_PROGRESS_BAR = "progress_bar"
 #: The tick rate in ms of the progress bar
 BUTTON_PROGRESS_BAR_TICK_RATE = 100  # in milliseconds
+
+#: The widget name for the LCD ticker to display the number of iterations
+#: a classical computer would have taken to find the result on average.
+LCD_CLASSICAL = "lcd_number_classic"
+#: The widget name for the LCD ticker to display the number of iterations
+#: our simulation of Grover's Algorithm would take on average to find the
+#: result
+LCD_GROVER = "lcd_number_grover"

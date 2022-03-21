@@ -15,13 +15,13 @@ import math
 
 import qcp.algorithms as ga
 from PySide6 import QtCore, QtWidgets
-from qcp.gui.components import (AbstractComponent, GraphComponent,
-                                GroverButtonComponent)
-from qcp.gui.constants import LCD_CLASSICAL, LCD_GROVER
+from qcp.gui.components import AbstractComponent, GraphComponent
+from qcp.gui.components.grovers import GroverButtonComponent
+from qcp.gui.components.grovers.constants import LCD_CLASSICAL, LCD_GROVER
 from qcp.matrices import Matrix
 
 
-class SimulatorComponent(AbstractComponent):
+class GroverSimulatorComponent(AbstractComponent):
     """
     UI Component that handles the background task of running the Quantum
     Computer Simulator code on a separate QThread.

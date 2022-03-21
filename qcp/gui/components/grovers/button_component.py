@@ -15,7 +15,8 @@ import time
 from typing import List
 
 from PySide6 import QtCore, QtWidgets
-from qcp.gui.components import AbstractComponent, GroverInputComponent
+from qcp.gui.components import AbstractComponent
+from qcp.gui.components.grovers.input_component import GroverInputComponent
 from qcp.gui.components.grovers.constants import (
     BUTTON_CANCEL_SEARCH_BUTTON, BUTTON_PROGRESS_BAR,
     BUTTON_PROGRESS_BAR_TICK_RATE, BUTTON_SEARCH_BUTTON)
