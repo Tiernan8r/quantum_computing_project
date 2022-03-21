@@ -27,6 +27,10 @@ DEFAULT_UNITARY = "H"
 HELP_SHORT = "-h"
 #: The long flag for the help message
 HELP_LONG = "--help"
+#: The short flag the GUI initialiser
+GUI_SHORT = "-g"
+#: The long flag for the GUI initialiser
+GUI_LONG = "--gui"
 #: The short flag for the algorithm choice
 ALGORITHM_SHORT = "-a"
 #: The long flag for the algorithm choice
@@ -48,6 +52,7 @@ PHASE_LONG = "--phase"
 #: the more verbose one
 FLAG_MAPPING = {
     HELP_SHORT: HELP_LONG,
+    GUI_SHORT: GUI_LONG,
     ALGORITHM_SHORT: ALGORITHM_LONG,
     TARGET_SHORT: TARGET_LONG,
     UNITARY_SHORT: UNITARY_LONG,

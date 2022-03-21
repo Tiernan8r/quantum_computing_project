@@ -73,3 +73,10 @@ class GeneralAlgorithm(abc.ABC):
             measuring said state
         """
         pass
+
+    def measure_probabilities(self):
+        """
+        Print a table of the probabilities associated with each
+        measured state.
+        """
+        pass

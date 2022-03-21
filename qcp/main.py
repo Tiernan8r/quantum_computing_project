@@ -26,6 +26,8 @@ if os.getcwd() not in sys.path:
 
 import qcp.cli as cli
 import qcp.cli.progress_bar as pb
+from qcp.algorithms.abstract_algorithm import GeneralAlgorithm
+from qcp.algorithms.sudoku import Sudoku
 
 
 def main():
@@ -59,7 +61,7 @@ def compute(constructor, alg_name: str, *args):
     # any errors that occur, and printing them to the
     # terminal
     try:
-        alg = constructor(*args)
+        alg: GeneralAlgorithm = constructor(*args)
         alg.run()
     except AssertionError as ae:
         print(ae, file=sys.stderr)
@@ -70,8 +72,34 @@ def compute(constructor, alg_name: str, *args):
 
     m, p = alg.measure()
 
-    print("Observed state: |" + bin(m)[2:] + ">")
-    print("With probability: " + str(p))
+    print_solution(alg, m, p)
+
+
+def print_solution(alg: GeneralAlgorithm, m: int, p: float):
+    """
+    Output the result of the algorithm to the terminal, handling the
+    special outputs required for PhaseEstimation and Sudoku
+
+    :param GeneralAlgorithm alg: The algorithm object used to run the
+        simulation.
+    :param int m: The measured state
+    :param float p: The probability of measuring that state.
+    """
+    if isinstance(alg, Sudoku):
+        vx, p = alg.measure_solution()
+        print("\nUsing Grover's algorithm the measured solution is:\n")
+        print("+---+---+")
+        print(f"| {vx[0]} | {vx[1]} |")
+        print("+---+---+")
+        print(f"| {vx[2]} | {vx[3]} |")
+        print("+---+---+\n")
+        print(f"The probability of measuring this solution is: {p:.4g}")
+    else:
+        print("\nThe measured probabilities for each state are:\n")
+        alg.measure_probabilities()
+
+    print(f"\nObserved state: |{bin(m)[2:]}>")
+    print(f"With probability: {p:.4g}")
 
 
 def threaded_progress_bar() -> multiprocessing.Process:
