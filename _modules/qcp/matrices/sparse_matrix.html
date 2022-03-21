@@ -172,7 +172,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span> <span class="o">=</span> <span class="n">state</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="n">given_height</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_row</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># indexes from 0...</span>
+                <span class="c1"># max() errors on calls with empty lists</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_row</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_row</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># indexes from 0...</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="n">given_width</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_col</span> <span class="o">=</span> <span class="mi">0</span>

@@ -9,8 +9,8 @@ Subpackages
 
    qcp.algorithms
    qcp.cli
+   qcp.gui
    qcp.matrices
-   qcp.ui
 
 Submodules
 ----------

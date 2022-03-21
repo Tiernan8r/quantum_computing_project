@@ -105,17 +105,60 @@ one of the following:</p>
 ## CLI Usage:</p></li>
 </ul>
 <p>The Help message for the CLI gives an overview of the program usage</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m qcp.main --help
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./qcp/main.py -h
 <span class="go">USAGE:</span>
-<span class="go">/home/tiernan/quantum_computing_project/qcp/main.py [FLAGS] nqbits</span>
-
-<span class="go">ARGS:</span>
-<span class="go">    nqbits          The number of qbit states to simulate</span>
+<span class="go">./qcp/main.py [FLAGS] nqbits</span>
 <span class="go">FLAGS:</span>
-<span class="go">    -t/--target     The target state, defaults to 5</span>
+<span class="go">    -a/--algorithm  The quantum algorithm to simulate, can be one of:</span>
+<span class="go">                        g   = Grover&#39;s Algorithm</span>
+<span class="go">                        pe  = Phase Estimation</span>
+<span class="go">                        s   = Toy Sudoku solver</span>
+<span class="go">                    Defaults to &#39;g&#39; if unset</span>
 <span class="go">    -h/--help       Display this prompt</span>
+
+<span class="go">The CLI options vary by choice of algorithm:</span>
+
+<span class="go">GROVERS:</span>
+<span class="go">    USAGE:</span>
+<span class="go">    ./qcp/main.py --algorithm g [FLAGS] nqbits</span>
+<span class="go">    ARGS:</span>
+<span class="go">        nqbits          The number of qbit states to simulate, must be &gt;= 2.</span>
+<span class="go">    FLAGS:</span>
+<span class="go">        -t/--target     The target state, defaults to 0</span>
+
+<span class="go">PHASE ESTIMATION:</span>
+<span class="go">    USAGE:</span>
+<span class="go">    ./qcp/main.py --algorithm pe [FLAGS] nqbits</span>
+<span class="go">    ARGS:</span>
+<span class="go">        nqbits          The number of qbit states to simulate, must be &gt;= 2.</span>
+<span class="go">    FLAGS:</span>
+<span class="go">        -p/--phase      The phase to use for the Phase Shift Gate (if using).</span>
+<span class="go">                        defaults to 0.25.</span>
+<span class="go">        -u/--unitary    The choice of unitary gate to simulate with, can be</span>
+<span class="go">                        one of the following:</span>
+<span class="go">                            * H = Hadamard Gate</span>
+<span class="go">                            * P = Phase Shift Gate (requires the -p flag)</span>
+<span class="go">                        Defaults to &#39;H&#39; if unset</span>
+<span class="go">SUDOKU:</span>
+<span class="go">    USAGE:</span>
+<span class="go">    ./qcp/main.py --algorithm s</span>
+<span class="go">    ARGS:</span>
+<span class="go">        None</span>
+<span class="go">    FLAGS:</span>
+<span class="go">        None</span>
 </pre></div>
 </div>
+<p>As you can see, the program is capable of simulating three different quantum algorithms and use cases.</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">Grover’s Algorithm</span></p></li>
+<li><p><span class="xref std std-ref">Phase Estimation Algorithm</span></p></li>
+<li><p><span class="xref std std-ref">Sample Sudoku Application</span></p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="grover-s-algorithm">
+<h2>Grover’s Algorithm<a class="headerlink" href="#grover-s-algorithm" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">nqbits</span></code>: is a required parameter, and controls the number of qbibts to simulate in the simulator</p>
 <blockquote>
 <div><p><strong>Note:</strong>
@@ -124,37 +167,79 @@ The simulation takes exponentially longer for each extra qbit simulated.</p>
 </div></blockquote>
 <p><code class="docutils literal notranslate"><span class="pre">-t</span></code>/<code class="docutils literal notranslate"><span class="pre">--target</span></code>: is the target state to search for, must be bounded within <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">&lt;</span> <span class="pre">t</span> <span class="pre">&lt;</span> <span class="pre">2^nqbits</span></code></p>
 </section>
+<section id="phase-estimation-algorithm">
+<h2>Phase Estimation Algorithm:<a class="headerlink" href="#phase-estimation-algorithm" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">nqbits</span></code>: is a required parameter, and controls the number of qbibts to simulate in the simulator</p>
+<blockquote>
+<div><p><strong>Note:</strong>
+The quantum simulator simulates matrices of size <code class="docutils literal notranslate"><span class="pre">2^nqbits</span></code>, so be aware that
+The simulation takes exponentially longer for each extra qbit simulated.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">-u</span></code>/<code class="docutils literal notranslate"><span class="pre">--unitary</span></code> is the unitary matrix to use in the phase estimation algorithm, currently there are two choices:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">H</span> <span class="o">=</span> <span class="n">Hadamard</span> <span class="n">Gate</span>
+<span class="o">*</span> <span class="n">P</span> <span class="o">=</span> <span class="n">Phase</span> <span class="n">Shift</span> <span class="n">Gate</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>Note:</strong>
+When the Phase Shift Gate is chosen, the phase to shift by can be
+overwritten using the <code class="docutils literal notranslate"><span class="pre">-p</span></code>/<code class="docutils literal notranslate"><span class="pre">--phase</span></code> flag.</p>
+</div></blockquote>
 </section>
+<section id="sudoku-application">
+<h2>Sudoku Application<a class="headerlink" href="#sudoku-application" title="Permalink to this headline">¶</a></h2>
+<p>A sample application of Grover’s Algorithm, where we solve the toy problem of a 2x2 sudoku. Takes no input</p>
 </section>
 <section id="gui">
 <h2>GUI:<a class="headerlink" href="#gui" title="Permalink to this headline">¶</a></h2>
-<p>A User Interface is provided with the program to make interaction with it
+<p>A Graphical User Interface (GUI) is provided with the program to make interaction with it
 easier.</p>
 <p>The GUI can be initialised with the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m qcp.ui.main
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./qcp/gui/main.py
 </pre></div>
 </div>
-<p>This will bring up the following interface</p>
-<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_overview.png"><img alt="Initial UI" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_overview.png" /></a>
-<section id="search-input">
-<h3>Search Input:<a class="headerlink" href="#search-input" title="Permalink to this headline">¶</a></h3>
-<p>The “Search” box can either be populated manually, or alternatively the
-“browse” dialog can be used to read the contents of a file of <code class="docutils literal notranslate"><span class="pre">.txt</span></code>/<code class="docutils literal notranslate"><span class="pre">.csv</span></code>/
-<code class="docutils literal notranslate"><span class="pre">.json</span></code>/<code class="docutils literal notranslate"><span class="pre">.yaml</span></code></p>
-<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_filedialog.png"><img alt="File Dialog" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_filedialog.png" /></a>
+<p>This will bring up the GUI, defaulting to Grover’s Algorithm.</p>
+<p>At the top of the GUI is a drop down list, with the options for the algorithms to simulate, choosing each algorithm in sequence will update the GUI to reflect the input parameters of that algorithm</p>
+<section id="id1">
+<h3>Grover’s Algorithm<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_overview_grovers.png"><img alt="Initial UI" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_overview_grovers.png" /></a>
+<p>Grover’s Algorithm has two input fields.</p>
+<p>The first field sets the number of qbits to simulate.</p>
+<p>The second is the target state, and is bounded within <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">t</span> <span class="pre">&lt;</span> <span class="pre">2**nqbits</span></code></p>
 </section>
-<section id="target">
-<h3>Target:<a class="headerlink" href="#target" title="Permalink to this headline">¶</a></h3>
-<p>The “Target” text box must be populated manually with the value that we want to
-search for.</p>
+<section id="phase-estimation">
+<h3>Phase Estimation<a class="headerlink" href="#phase-estimation" title="Permalink to this headline">¶</a></h3>
+<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_overview_phase_estimation.png"><img alt="Phase Estimation Overview" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_overview_phase_estimation.png" /></a>
+<p>The phase estimation is the most complicated GUI element.</p>
+<p>As with Grover’s Algorithm, the first input is the number of qbits to simulate.</p>
+<p>The next two input elements allow the user to draw in matrices to use for the unitary matrix and the eigenvector. These matrix sizes are determined by the number of qbits.</p>
+<p>The unitary matrix gets automatically populated as an identity matrix, but this can be manually changed by the user, where any <code class="docutils literal notranslate"><span class="pre">integer</span></code>/<code class="docutils literal notranslate"><span class="pre">float</span></code>/<code class="docutils literal notranslate"><span class="pre">complex</span></code> is an acceptable parameter.</p>
+<p>The eigenvector input operates the same way, except that is is automaticaly populated as a column vector with the first entry <code class="docutils literal notranslate"><span class="pre">=</span> <span class="pre">1</span></code>.</p>
+<p>If there are any issues with the inputs of the two matrices once the simulation is set to start, the simulation will quit and a useful error message will appear beside the matrix at fault with a message pin-pointing the entry at fault.</p>
+</section>
+<section id="sudoku">
+<h3>Sudoku<a class="headerlink" href="#sudoku" title="Permalink to this headline">¶</a></h3>
+<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_overview_sudoku.png"><img alt="Sudoku Overview" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_overview_sudoku.png" /></a>
+<p>The sudoku has no explicit input, which segues nicely to:</p>
 </section>
 <section id="search-button">
 <h3>Search Button:<a class="headerlink" href="#search-button" title="Permalink to this headline">¶</a></h3>
-<p>Once ready to search, hit the “Search!” button, and the program will simulate a
-search of the input data using the Grover’s Algorithm quantum algorithm.</p>
+<p>Once ready to begin running the quantum algorithm simulation, click the button at the bottom of the GUI labeled “search” or “start”.</p>
+<p>This will begin the simulation of the chosen algorithm in the background.</p>
+<p>While the simulation is running, a visual indicator will appear to show that the simulation is still in progress</p>
+<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_calculation_inprogress_sudoku.png"><img alt="Simulation in Progress" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_calculation_inprogress_sudoku.png" /></a>
 <p>Once the search is completed, a plot of the probability of the quantum state
 being in the target state will be shown on the right.</p>
-<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_with_computed_graph.png"><img alt="Sample Calculated Result" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/ui_with_computed_graph.png" /></a>
+<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_calculation_grovers.png"><img alt="Sample Calculated Result" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_calculation_grovers.png" /></a>
+<p><strong>Grover’s Algorithm</strong></p>
+<p>As shown in the figure above, the simulation results for Grover’s Algorithm also outputs the number of iterations that the quantum simulator took to find the result, and compares it to the equivalent for a classical algorithm.</p>
+<p><strong>Phase Estimation</strong></p>
+<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_calculation_phase_estimation.png"><img alt="Phase Estimation Result" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_calculation_phase_estimation.png" /></a>
+<p>When the phase estimation result is computed, the probabilities are shown in the graph on the right for each state.</p>
+<p><strong>Sudoku</strong></p>
+<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_calculation_phase_estimation.png"><img alt="Sudoku Result" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_calculation_phase_estimation.png" /></a>
+<p>Sudoku also outputs a probability distribution in the graph on the right.</p>
+<p>For the simple 2x2 sudoku problem, a sample layout is also shown in a table, with the probability calculated by the algorithm for that state to be the accepted result.</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
