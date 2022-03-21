@@ -120,7 +120,7 @@ class GraphComponent(AbstractComponent):
         if qregister is None:
             return
 
-        x = [f"|{bin(i)[2:]}>" for i in range(qregister.num_rows)]
+        x = [f"|{i}>" for i in range(qregister.num_rows)]
         y = reg.measure(qregister)
 
         self._plot(x, y, title=title,
