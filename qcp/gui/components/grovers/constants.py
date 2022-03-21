@@ -25,10 +25,6 @@ BUTTON_SEARCH_BUTTON = "search_button"
 #: The widget name for the button to cancel a search simulation once
 #: it is initialised
 BUTTON_CANCEL_SEARCH_BUTTON = "cancel_button"
-#: The widget name for the progress bar widget
-BUTTON_PROGRESS_BAR = "progress_bar"
-#: The tick rate in ms of the progress bar
-BUTTON_PROGRESS_BAR_TICK_RATE = 100  # in milliseconds
 
 #: The widget name for the LCD ticker to display the number of iterations
 #: a classical computer would have taken to find the result on average.

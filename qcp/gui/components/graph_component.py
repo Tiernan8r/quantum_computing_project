@@ -20,7 +20,7 @@ from matplotlib.backends.backend_qt5agg import \
 from matplotlib.figure import Figure
 from PySide6 import QtWidgets
 from qcp.gui.components import AbstractComponent
-from qcp.gui.constants import GRAPH_WIDGET_NAME
+from qcp.gui.components.constants import GRAPH_WIDGET_NAME
 from qcp.matrices import Matrix
 
 matplotlib.use('Qt5Agg')
