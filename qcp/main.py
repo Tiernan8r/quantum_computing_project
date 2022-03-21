@@ -27,7 +27,6 @@ if os.getcwd() not in sys.path:
 import qcp.cli as cli
 import qcp.cli.progress_bar as pb
 from qcp.algorithms.abstract_algorithm import GeneralAlgorithm
-from qcp.algorithms.phase_estimation import PhaseEstimation
 from qcp.algorithms.sudoku import Sudoku
 
 
@@ -81,7 +80,8 @@ def print_solution(alg: GeneralAlgorithm, m: int, p: float):
     Output the result of the algorithm to the terminal, handling the
     special outputs required for PhaseEstimation and Sudoku
 
-    :param GeneralAlgorithm alg: The algorithm object used to run the simulation.
+    :param GeneralAlgorithm alg: The algorithm object used to run the
+        simulation.
     :param int m: The measured state
     :param float p: The probability of measuring that state.
     """
