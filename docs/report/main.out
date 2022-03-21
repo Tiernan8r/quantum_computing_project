@@ -24,9 +24,10 @@
 \BOOKMARK [2][-]{subsection.5.3}{Diffusion}{section.5}% 24
 \BOOKMARK [2][-]{subsection.5.4}{Construction and Running}{section.5}% 25
 \BOOKMARK [1][-]{section.6}{Testing and Debugging}{}% 26
-\BOOKMARK [2][-]{subsection.6.1}{Testing Tensor Products and Gates}{section.6}% 27
-\BOOKMARK [1][-]{section.7}{Issues and Challenges}{}% 28
-\BOOKMARK [1][-]{section.8}{Problem title}{}% 29
-\BOOKMARK [2][-]{subsection.8.1}{Theoretical viewpoint}{section.8}% 30
-\BOOKMARK [2][-]{subsection.8.2}{Algorithmic issues}{section.8}% 31
-\BOOKMARK [1][-]{section.9}{References and Bibliography}{}% 32
+\BOOKMARK [2][-]{subsection.6.1}{Testing Simple functions}{section.6}% 27
+\BOOKMARK [2][-]{subsection.6.2}{Testing Grover's Algorithm}{section.6}% 28
+\BOOKMARK [1][-]{section.7}{Issues and Challenges}{}% 29
+\BOOKMARK [1][-]{section.8}{Problem title}{}% 30
+\BOOKMARK [2][-]{subsection.8.1}{Theoretical viewpoint}{section.8}% 31
+\BOOKMARK [2][-]{subsection.8.2}{Algorithmic issues}{section.8}% 32
+\BOOKMARK [1][-]{section.9}{References and Bibliography}{}% 33
