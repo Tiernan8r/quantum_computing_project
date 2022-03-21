@@ -16,11 +16,11 @@ File where all constants related to UI functionality are defined.
 """
 
 #: The widget name for the input search text box
-INPUT_NQBITS_WIDGET_NAME = "input_nqbits_pe"
+INPUT_NQBITS_NAME = "input_nqbits_pe"
 #: The widget name for the input target text box
-INPUT_UNITARY_WIDGET_NAME = "table_input_unitary_pe"
+INPUT_UNITARY_NAME = "table_input_unitary_pe"
 #: The widget name for the input target text box
-INPUT_EIGENVECTOR_WIDGET_NAME = "table_input_eigenvector_pe"
+INPUT_EIGENVECTOR_NAME = "table_input_eigenvector_pe"
 
 #: The widget name for the button to initialise the search
 BUTTON_START = "estimate_phase_button_pe"

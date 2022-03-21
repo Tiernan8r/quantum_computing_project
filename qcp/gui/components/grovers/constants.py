@@ -16,15 +16,15 @@ File where all constants related to UI functionality are defined.
 """
 
 #: The widget name for the input search text box
-INPUT_SEARCH_WIDGET_NAME = "input_search"
+INPUT_SEARCH_NAME = "input_search"
 #: The widget name for the input target text box
-INPUT_TARGET_WIDGET_NAME = "input_target"
+INPUT_TARGET_NAME = "input_target"
 
 #: The widget name for the button to initialise the search
-BUTTON_SEARCH_BUTTON = "search_button"
+SEARCH_BUTTON = "search_button"
 #: The widget name for the button to cancel a search simulation once
 #: it is initialised
-BUTTON_CANCEL_SEARCH_BUTTON = "cancel_button"
+CANCEL_BUTTON = "cancel_button"
 
 #: The widget name for the LCD ticker to display the number of iterations
 #: a classical computer would have taken to find the result on average.

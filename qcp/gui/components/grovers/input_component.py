@@ -15,8 +15,8 @@ from typing import List
 
 from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import AbstractComponent
-from qcp.gui.components.grovers.constants import (INPUT_SEARCH_WIDGET_NAME,
-                                                  INPUT_TARGET_WIDGET_NAME)
+from qcp.gui.components.grovers.constants import (INPUT_SEARCH_NAME,
+                                                  INPUT_TARGET_NAME)
 
 
 class GroverInputComponent(AbstractComponent):
@@ -51,9 +51,9 @@ class GroverInputComponent(AbstractComponent):
                 QtWidgets.QSpinBox
         )
         for spin_box in spin_boxes:
-            if spin_box.objectName() == INPUT_TARGET_WIDGET_NAME:
+            if spin_box.objectName() == INPUT_TARGET_NAME:
                 self.input_target = spin_box
-            elif spin_box.objectName() == INPUT_SEARCH_WIDGET_NAME:
+            elif spin_box.objectName() == INPUT_SEARCH_NAME:
                 self.input_search = spin_box
 
     @QtCore.Slot(int)

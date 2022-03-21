@@ -16,10 +16,10 @@ File where all constants related to UI functionality are defined.
 """
 
 #: The widget name for the button to initialise the search
-BUTTON_SEARCH_BUTTON = "search_button_sudoku"
+SEARCH_BUTTON = "search_button_sudoku"
 #: The widget name for the button to cancel a search simulation once
 #: it is initialised
-BUTTON_CANCEL_SEARCH_BUTTON = "cancel_button_sudoku"
+CANCEL_BUTTON = "cancel_button_sudoku"
 
 RESULT_TABLE = "table_sudoku"
 

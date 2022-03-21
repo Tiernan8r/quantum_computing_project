@@ -18,8 +18,8 @@ from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import ProgressBarComponent
 from qcp.gui.components.constants import (PROGRESS_BAR,
                                           PROGRESS_BAR_TICK_RATE)
-from qcp.gui.components.sudoku.constants import (BUTTON_CANCEL_SEARCH_BUTTON,
-                                                 BUTTON_SEARCH_BUTTON)
+from qcp.gui.components.sudoku.constants import (CANCEL_BUTTON,
+                                                 SEARCH_BUTTON)
 from qcp.gui.constants import THREAD_PAUSE
 
 
@@ -60,9 +60,9 @@ class SudokuButtonComponent(ProgressBarComponent):
             self.main_window.ui_component.findChildren(
                 QtWidgets.QPushButton)
         for b in buttons:
-            if b.objectName() == BUTTON_SEARCH_BUTTON:
+            if b.objectName() == SEARCH_BUTTON:
                 self.start_button = b
-            if b.objectName() == BUTTON_CANCEL_SEARCH_BUTTON:
+            if b.objectName() == CANCEL_BUTTON:
                 self.cancel_button = b
 
     def initiate_simulation(self):

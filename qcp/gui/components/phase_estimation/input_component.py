@@ -16,8 +16,8 @@ import cmath
 from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import AbstractComponent
 from qcp.gui.components.phase_estimation.constants import (
-    INPUT_EIGENVECTOR_WIDGET_NAME, INPUT_NQBITS_WIDGET_NAME,
-    INPUT_UNITARY_WIDGET_NAME)
+    INPUT_EIGENVECTOR_NAME, INPUT_NQBITS_NAME,
+    INPUT_UNITARY_NAME)
 from qcp.matrices import DefaultMatrix, Matrix
 from qcp.matrices.types import SPARSE
 
@@ -55,16 +55,16 @@ class PhaseInputComponent(AbstractComponent):
             QtWidgets.QSpinBox
         )
         for spin_box in spin_boxes:
-            if spin_box.objectName() == INPUT_NQBITS_WIDGET_NAME:
+            if spin_box.objectName() == INPUT_NQBITS_NAME:
                 self.nqbit_input: QtWidgets.QSpinBox = spin_box
 
         tables = self.main_window.ui_component.findChildren(
             QtWidgets.QTableWidget
         )
         for tab in tables:
-            if tab.objectName() == INPUT_UNITARY_WIDGET_NAME:
+            if tab.objectName() == INPUT_UNITARY_NAME:
                 self.unitary_table: QtWidgets.QTableWidget = tab
-            elif tab.objectName() == INPUT_EIGENVECTOR_WIDGET_NAME:
+            elif tab.objectName() == INPUT_EIGENVECTOR_NAME:
                 self.eigenvector_table: QtWidgets.QTableWidget = tab
 
     @QtCore.Slot(int)
