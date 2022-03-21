@@ -19,7 +19,6 @@ from qcp.gui.components.sudoku import SudokuButtonComponent, SudokuResultsTable
 from qcp.gui.components.sudoku.constants import (PROBABILITY_DISPLAY,
                                                  PROBABILITY_LABEL,
                                                  RESULT_TABLE)
-from qcp.matrices import Matrix
 
 
 class SudokuSimulatorComponent(AbstractComponent):

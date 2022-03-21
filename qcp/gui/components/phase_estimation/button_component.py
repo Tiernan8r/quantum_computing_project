@@ -16,7 +16,6 @@ from typing import List
 
 from PySide6 import QtWidgets
 from qcp.gui.components import ProgressBarComponent
-from qcp.gui.components.constants import PROGRESS_BAR
 from qcp.gui.components.phase_estimation.constants import (
     BUTTON_CANCEL, BUTTON_START, EIGENVECTOR_ERROR_LABEL, UNITARY_ERROR_LABEL)
 from qcp.gui.components.phase_estimation.input_component import \

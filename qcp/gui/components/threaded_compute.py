@@ -11,11 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import math
-
 import qcp.algorithms as alg
 from PySide6 import QtCore
-from qcp.matrices import Matrix
 
 
 class SimulateAlgorithmThread(QtCore.QThread):

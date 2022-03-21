@@ -13,7 +13,8 @@
 # limitations under the License.
 import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
-from qcp.gui.components import AbstractComponent, GraphComponent, SimulateAlgorithmThread
+from qcp.gui.components import (AbstractComponent, GraphComponent,
+                                SimulateAlgorithmThread)
 from qcp.gui.components.phase_estimation import PhaseButtonComponent
 from qcp.matrices import Matrix
 

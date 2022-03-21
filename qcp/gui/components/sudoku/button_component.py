@@ -14,12 +14,9 @@
 import time
 from typing import List
 
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtWidgets
 from qcp.gui.components import ProgressBarComponent
-from qcp.gui.components.constants import (PROGRESS_BAR,
-                                          PROGRESS_BAR_TICK_RATE)
-from qcp.gui.components.sudoku.constants import (CANCEL_BUTTON,
-                                                 SEARCH_BUTTON)
+from qcp.gui.components.sudoku.constants import CANCEL_BUTTON, SEARCH_BUTTON
 from qcp.gui.constants import THREAD_PAUSE
 
 
