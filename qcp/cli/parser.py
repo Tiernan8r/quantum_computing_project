@@ -86,7 +86,12 @@ def read_cli(args: List[str]):
     """
     flags, vals = parse_input(args)
 
-    if HELP_LONG in flags or len(vals) == 0:
+    if HELP_LONG in flags:
+        u.usage()
+
+    # Show the help message on no args provided, but only if sudoku algorithm
+    # not chosen
+    if len(vals) == 0 and flags[ALGORITHM_LONG] != "s":
         u.usage()
 
     alg_opt_str = DEFAULT_ALGORITHM

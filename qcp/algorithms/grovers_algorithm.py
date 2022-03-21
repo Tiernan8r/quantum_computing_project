@@ -16,6 +16,7 @@ Constructs the quantum register, circuits of composite gates, and runs the
 simulation of Grover's Algorithm
 """
 import random
+import math
 from typing import List, Tuple
 
 import qcp.gates as g
@@ -119,6 +120,14 @@ class Grovers(GeneralAlgorithm):
             self.max_reflections -= 1
 
         return circuit
+
+    def measure_probabilities(self):
+        p = reg.measure(self.state)
+        n_bits = int(math.log2(2**self.size))
+
+        for i in range(2**self.size):
+            binary = bin(i)[2:].zfill(n_bits)
+            print(f"|{binary}> : {p[i]:.4g}")
 
     def measure(self) -> Tuple[int, float]:
         """
