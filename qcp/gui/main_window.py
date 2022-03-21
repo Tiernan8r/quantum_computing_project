@@ -13,15 +13,16 @@
 # limitations under the License.
 import os
 import sys
-from typing_extensions import Self
 
 import qcp.gui.components as comp
 import qcp.gui.components.grovers as grov_comp
+import qcp.gui.components.phase_estimation as pe_comp
 import qcp.gui.components.sudoku as sud_comp
 from PySide6.QtCore import QFile, QIODevice
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QMainWindow
 from qcp.gui.constants import UI_FILENAME
+from typing_extensions import Self
 
 
 class MainWindow(QMainWindow):
@@ -52,6 +53,13 @@ class MainWindow(QMainWindow):
             self, self.grov_input_component)
         self.grov_simulator = grov_comp.GroverSimulatorComponent(
             self, self.grov_button_component, self.graph_component)
+
+        # Phase Estimation components:
+        self.pe_input_component = pe_comp.PhaseInputComponent(self)
+        self.pe_button_component = pe_comp.PhaseButtonComponent(
+            self, self.pe_input_component)
+        self.pe_simulator = pe_comp.PhaseSimulatorComponent(
+            self, self.pe_button_component, self.graph_component)
 
         # Sudoku solver components:
         self.sudoku_button_component = sud_comp.SudokuButtonComponent(self)
