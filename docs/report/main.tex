@@ -23,27 +23,70 @@
 \usepackage{mathtools}
 \usepackage{physics}
 \usepackage{amsmath}
+\usepackage[scale=1,bmargin=6cm,footnotesep=6cm]{geometry} %footnote spacing
+\usepackage{float}
+\usepackage{subcaption} %allows us to nest figures
 
-\usepackage[scale=1,bmargin=1.5cm,footnotesep=1.5cm]{geometry}
+\usepackage{hyperref} %enable hyperlinks 
+\hypersetup{
+    colorlinks=true,
+    linkcolor=violet,
+    filecolor=green,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+% To get references:
+\usepackage[nottoc,numbib]{tocbibind} % To get bibliography into table of contents
+\usepackage[backend=bibtex, style=ieee]{biblatex}
+\bibliography{references} 
+
+\urlstyle{same}
 
 \input{structure.tex} % Include the file specifying the document structure and custom commands
-
-%----------------------------------------------------------------------------------------
-%	ASSIGNMENT INFORMATION
-%----------------------------------------------------------------------------------------
-
-\title{Quantum Computing Project} % Title of the assignment
-
-
-\author{Group 5 \\ \\ Tiernan Stapleton\\ Riddhi Yadav\\ Jasbeth Musumba \\ Finn Onori \\ Han Yoong  \\ Yi Sheng Ng}  % Author name and email address
-
-\date{University of Edinburgh --- \today} % University, school and/or department name(s) and a date
 
 %----------------------------------------------------------------------------------------
 
 \begin{document}
 
-\maketitle % Print the title
+\parindent=0pt          %  Switch off indent of paragraphs
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\thispagestyle{empty}
+
+\vspace*{0.1\textheight}
+
+\begin{center}
+        \huge{\bfseries Quantum Computing Project}\\
+\end{center}
+
+\bigskip
+
+\begin{center}
+        \large{\textbf{Group 5:}}\\
+        \large{Jasbeth Musumba}\\
+        \large{Yi Sheng Ng}\\
+        \large{Finn Onori}\\
+        \large{Tiernan Stapleton}\\
+        \large{Riddhi Yadav}\\
+        \large{Han Yoong}\\
+        \bigskip
+        \large{March 23, 2022}
+\end{center}
+
+\vspace*{0.4\textheight}
+
+\begin{center}
+        \includegraphics[width=35mm]{crest.pdf}
+\end{center}
+
+\medskip
+
+\newpage
 
 %----------------------------------------------------------------------------------------
 %	INTRODUCTION
@@ -56,13 +99,15 @@
 \section*{Introduction} % Unnumbered section
 \vspace{10mm}
 
-The objective of our project is to build an application which implements the Grover's Algorithm to perform an unstructured search from a list of information. 
+The objective of our project is to build an application which implements the Grover's Algorithm to perform an unstructured search from a list of information.
 \vspace{5mm}
 
+\noindent
 The programming language used in our project is Python. We use Git to plan, manage and organise the codes and work flow of this project. 
 \vspace{5mm}
 
-The aim of this project is to demonstrate the basic working principle of Grover's Algorithm in a shape of a simple GUI with input and output feature.
+\noindent
+The aim of this project is to demonstrate the basic working principle of Grover's Algorithm in the shape of a simple GUI with input and output feature.
 \pagebreak
 
 \tableofcontents % Unnumbered section
@@ -74,15 +119,15 @@ The aim of this project is to demonstrate the basic working principle of Grover'
 \subsection{Qubits}
 \vspace{5mm}
 
-The qubit can the thought of the "quantum" counterpart to the classical bit. 
+The qubit can be thought of as the "quantum" counterpart to the classical bit. 
 \vspace{5mm}
 
 \noindent
-A bit is expressed in binary number of 0 and 1. In the most simple case of a classical bit, a bit can only be in the state of 0 or 1. However as for the quantum analogue, a qubit is expressed in a superposition of the binary state of 0 and 1.
+A bit is expressed in binary numbers of 0 and 1. In the most simple case of a classical bit, a bit can only be in the state of 0 or 1. However as for the quantum analogue, a qubit is expressed in a superposition of both the binary state of 0 and 1.
 \vspace{5mm}
 
 \noindent
-This superposition state of a qubit $\ket{\psi}$ can be written as:
+This superposition of state of a qubit $\ket{\psi}$ can be written as:
 \vspace{5mm}
 
 \noindent
@@ -90,45 +135,45 @@ This superposition state of a qubit $\ket{\psi}$ can be written as:
 \vspace{5mm}
 
 \noindent
-Where $\alpha$ and $\beta$ are normalised complex constant such that $\abs{\alpha}^2 + \abs{\beta}^2 = 1$  for $\alpha, \ \beta \in \mathbb{C} $
+Where $\alpha$ and $\beta$ are normalised complex constants such that $\abs{\alpha}^2 + \abs{\beta}^2 = 1$  for $\alpha, \ \beta \in \mathbb{C} $
 \vspace{5mm}
 
 \noindent
-
-The quantum state $\ket{0}$ and $\ket{1}$ is known as the computational basis state. The basis state can be visualised in a form of a Bloch Sphere:
+The quantum state of $\ket{0}$ and $\ket{1}$ are known as the computational basis state in the $\hat{\textbf{z}}$-axis on a Bloch Sphere. The basis state can be visualised in a form of a Bloch Sphere:
 \vspace{5mm}
 
-\begin{center}
-\begin{tikzpicture}[scale=1.5]
-  \clip(-2.19,-2.49) rectangle (2.66,2.58);
-  \draw [shift={(0,0)}, lightgray, fill, fill opacity=0.1] (0,0) -- (56.7:0.4) arc (56.7:90.:0.4) -- cycle;
-  \draw [shift={(0,0)}, lightgray, fill, fill opacity=0.1] (0,0) -- (-135.7:0.4) arc (-135.7:-33.2:0.4) -- cycle;
-  \draw(0,0) circle (2cm);
-  \draw [rotate around={0.:(0.,0.)},dash pattern=on 3pt off 3pt] (0,0) ellipse (2cm and 0.9cm);
-  \draw (0,0)-- (0.70,1.07);
-  \draw [->] (0,0) -- (0,2);
-  \draw [->] (0,0) -- (-0.81,-0.79);
-  \draw [->] (0,0) -- (2,0);
-  \draw [dotted] (0.7,1)-- (0.7,-0.46);
-  \draw [dotted] (0,0)-- (0.7,-0.46);
-  \draw (-0.08,-0.3) node[anchor=north west] {$\varphi$};
-  \draw (0.01,0.9) node[anchor=north west] {$\theta$};
-  \draw (-1.01,-0.72) node[anchor=north west] {$\mathbf {\hat{x}}$};
-  \draw (2.07,0.3) node[anchor=north west] {$\mathbf {\hat{y}}$};
-  \draw (-0.5,2.6) node[anchor=north west] {$\mathbf {\hat{z}=|0\rangle}$};
-  \draw (-0.4,-2) node[anchor=north west] {$-\mathbf {\hat{z}=|1\rangle}$};
-  \draw (0.4,1.65) node[anchor=north west] {$|\psi\rangle$};
-  \scriptsize
-  \draw [fill] (0,0) circle (1.5pt);
-  \draw [fill] (0.7,1.1) circle (0.5pt);
-\end{tikzpicture}
-\end{center}
-\begin{center} \textbf{The Bloch Sphere} \end{center}
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[scale=1.5]
+    \clip(-2.19,-2.49) rectangle (2.66,2.58);
+    \draw [shift={(0,0)}, lightgray, fill, fill opacity=0.1] (0,0) -- (56.7:0.4) arc (56.7:90.:0.4) -- cycle;
+    \draw [shift={(0,0)}, lightgray, fill, fill opacity=0.1] (0,0) -- (-135.7:0.4) arc (-135.7:-33.2:0.4) -- cycle;
+    \draw(0,0) circle (2cm);
+    \draw [rotate around={0.:(0.,0.)},dash pattern=on 3pt off 3pt] (0,0) ellipse (2cm and 0.9cm);
+    \draw (0,0)-- (0.70,1.07);
+    \draw [->] (0,0) -- (0,2);
+    \draw [->] (0,0) -- (-0.81,-0.79);
+    \draw [->] (0,0) -- (2,0);
+    \draw [dotted] (0.7,1)-- (0.7,-0.46);
+    \draw [dotted] (0,0)-- (0.7,-0.46);
+    \draw (-0.08,-0.3) node[anchor=north west] {$\varphi$};
+    \draw (0.01,0.9) node[anchor=north west] {$\theta$};
+    \draw (-1.01,-0.72) node[anchor=north west] {$\mathbf {\hat{x}}$};
+    \draw (2.07,0.3) node[anchor=north west] {$\mathbf {\hat{y}}$};
+    \draw (-0.5,2.6) node[anchor=north west] {$\mathbf {\hat{z}=|0\rangle}$};
+    \draw (-0.4,-2) node[anchor=north west] {$-\mathbf {\hat{z}=|1\rangle}$};
+    \draw (0.4,1.65) node[anchor=north west] {$|\psi\rangle$};
+    \scriptsize
+    \draw [fill] (0,0) circle (1.5pt);
+    \draw [fill] (0.7,1.1) circle (0.5pt);
+  \end{tikzpicture}
+  \centering
+\caption{\label{fig:bloch_sphere}The Bloch Sphere}
+\end{figure}
 \vspace{5mm}
 
 \noindent
-
-These two qubit states can be expressed in column matrices as:
+These qubit states can be expressed in column matrices as:
 \vspace{5mm}
 
 \qquad $\ket{0} = \begin{pmatrix}1 \\ 0 \end{pmatrix}$ \ and \ $\ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$
@@ -136,22 +181,22 @@ These two qubit states can be expressed in column matrices as:
 \vspace{5mm}
 
 \noindent
-The state of a quantum system can be represented as the spin, energy, angular momentum and magnetic moment of an elementary particle. However for the sake simplicity and brevity the state $\ket{0}$ and $\ket{1}$ will denote spin up and spin down of an electron. 
+The state of a quantum system can be represented as the spin, energy, angular momentum and magnetic moment of an elementary particle. However for the sake of brevity the state $\ket{0}$ and $\ket{1}$ will denote spin up and spin down of the electron in this report.
 \pagebreak
 
 \subsection{Quantum Register}
 \vspace{5mm}
 
 \noindent
-The qubits in a quantum computer is stored in a quantum register. The size of the quantum register is dictated by the number of qubits. 
+The qubits in a quantum computer are stored in a quantum register. The size of the quantum register is dictated by the number of qubits. 
 \vspace{5mm}
 
 \noindent
-The vector state of the quantum register $\mathcal{H}$ with $n$ qubits can be expressed in tensor product:
+The vector state of the quantum register $\mathcal{H}$ with $n$ qubits can be expressed in tensor product \cite{noauthor_lecture_nodate}:
 \vspace{5mm}
 
 
-\qquad $\mathcal{H} = \mathbb{C}^{2\bigotimes N} = \mathbb{C}^2 \bigotimes\mathbb{C}^2 ....\bigotimes\mathbb{C}^2 = \mathbb{C}^{2^N} $ , \  where qubits are 2-dimensional complex spaces $\mathbb{C}$.
+\qquad $\mathcal{H} = \mathbb{C}^{2\bigotimes N} = \mathbb{C}^2 \bigotimes\mathbb{C}^2 ....\bigotimes\mathbb{C}^2 = \mathbb{C}^{2^N} $ , \  where the qubits are in 2-dimensional complex spaces $\mathbb{C}$.
 \vspace{5mm}
 
 \noindent
@@ -161,11 +206,11 @@ Each qubit has an index in this register, starting at index 0 and counting up by
 \vspace{5mm}
 
 \noindent
-Tensor product is used a function which combines elements of two or more vector space to yield an additional vector space. 
+Tensor product is used as a function which combines elements of two or more vector space to yield an additional vector space. 
 \vspace{5mm}
 
 \noindent
-Tensor products are distributive and associative and shown here is the tensor product of two qubit in Hilbert space (complex vector space):
+Tensor products are distributive and associative and shown here is the tensor product of two qubit in the Hilbert space (complex vector space)\cite{noauthor_lecture_nodate}:
 \vspace{5mm}
 
 
@@ -220,7 +265,7 @@ spaces (Hilbert space).
 \vspace{5mm}
 
 \noindent
-A generic quantum state $\ket{\psi}$ can be described as a linear combination of basis states such as:
+A generic quantum state $\ket{\psi}$ can be described as a linear combination of basis states such as \cite{noauthor_lecture_nodate}:
 \vspace{5mm}
 
 
@@ -240,7 +285,7 @@ The action of quantum operators on a state is linear. For a quantum operator $U$
 \vspace{5mm}
 
 \noindent
-The action of a quantum linear operator on a basis state determines the type of operator it is. It can also acts on multiple or superposition of basis states:
+The action of a quantum linear operator on a basis state determines the type of operator it is. It can also act on multiple or superposition of basis states:
 \vspace{5mm}
 
 \noindent
@@ -251,9 +296,10 @@ The action of a quantum linear operator on a basis state determines the type of 
 \vspace{5mm}
 
 \noindent
-Linear operators $U$ acting on some basis states can be written in matrix form:
+Linear operators $U$ acting on some basis states can be written in matrix form \cite{noauthor_lecture_nodate}:
+\vspace{5mm}
 
-\qquad $U_{kj} = \bra{k}U\ket{j}$ \ , for some basis state $\ket{k}$ and $\ket{k}$
+\qquad $U_{kj} = \bra{k}U\ket{j}$ \ , for some basis state $\ket{j}$ and $\ket{k}$
 \vspace{5mm}
 
 \noindent
@@ -283,8 +329,9 @@ And on the state:
 
 \qquad $\ket{\psi'} = U\ket{\psi}$
 \pagebreak
+
 \noindent
-Additionally, all quantum operators(quantum gates) are unitary with the exception of measurement and reset operators. 
+Additionally, all quantum operators (quantum gates) are unitary with the exception of measurement and reset operators. 
 \vspace{5mm}
 
 \noindent
@@ -292,14 +339,14 @@ A quantum operator $U$ has its conjugate transpose (adjoint) which can be expres
 \vspace{5mm}
 
 \noindent
-The unitary operator has the following property:
+The unitary operator has the following property\cite{noauthor_unitary_2022}:
 \vspace{5mm}
 
 \qquad $UU^{\dagger} = UU^{-1} = 1$
 \vspace{5mm}
 
 \noindent
-Another consequence of unitary is that it preserves the inner product between two arbitrary states $\braket{\phi}{\psi}$. For example apply the unitary opeartor $U$ to two states $\ket{\phi}$ and $\ket{\psi}$:
+Another consequence of unitarity is that it preserves the inner product between two arbitrary states $\braket{\phi}{\psi}$. For example apply the unitary operator $U$ to two states $\ket{\phi}$ and $\ket{\psi}$:
 \vspace{5mm}
 
 \qquad $ \bra{\phi} U^{\dagger} U\ket{\psi} = \braket{\phi}{\psi}$
@@ -317,7 +364,7 @@ Quantum gates are unitary quantum operators and are described as unitary matrice
 \vspace{5mm}
 
 \noindent
-The following are some of the common types of quantum gates which will be used in constructing the Grover's circuit.
+The following are some of the common types of quantum gates\cite{voorhoede_pauli-x_nodate} which will be used in constructing the Grover's circuit.
 \vspace{5mm}
 
 \textbf{Hadamard Gate}: \qquad $H = \frac{1}{\sqrt{2}}= \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$
@@ -352,7 +399,7 @@ The Pauli X Gate essentially swaps the qubits around. This effect of this gate i
 \vspace{5mm}
 
 
-\textbf{Pauli Y Gate}: \qquad $X = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}$
+\textbf{Pauli Y Gate}: \qquad $Y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}$
 \vspace{5mm}
 
 
@@ -360,7 +407,7 @@ The Pauli X Gate essentially swaps the qubits around. This effect of this gate i
 \vspace{5mm}
 
 \noindent
-The Pauli Y Gate rotates a single qubit in the y(complex)-axis by $\pi$.
+The Pauli Y Gate rotates a single qubit in the y (complex)-axis by $\pi$.
 \pagebreak
 
 
@@ -404,7 +451,7 @@ It leaves the control qubit unchanged and performs the Pauli Z Gate to the targe
 \vspace{5mm}
 
 \noindent
-The phase shift gate modifies the phase of the quantum state and is equivalent to tracing a horizontal circle  on the Bloch Sphere(Refer to page 3) by $\varphi$ radians. 
+The phase shift gate modifies the phase of the quantum state and is equivalent to tracing a horizontal circle on the Bloch Sphere (see Figure \ref{fig:bloch_sphere}) by $\varphi$ radians\cite{noauthor_quantum_nodate}. 
 \pagebreak
 
 
@@ -413,102 +460,112 @@ The phase shift gate modifies the phase of the quantum state and is equivalent t
 
 
 \section{Grover's Algorithm}
-\subsection{Introduction}
+\vspace{5mm}
 
-The Grover's Algorithm is a quantum search algorithm which increases quadratically the speed of unstructured search. It uses  amplitude amplification to search an unstructured set of $N$ elements/items. 
+\subsection{Introduction}
+\vspace{5mm}
+The Grover's Algorithm is a quantum search algorithm which increases quadratically the speed of unstructured search\cite{noauthor_grovers_nodate}. It uses  amplitude amplification to search an unstructured set of $N$ elements/items. 
 
 \subsection{Unstructured Search}
 \vspace{10mm}
 
-\begin{center}
+\begin{figure}[h]
+  \begin{center}
 
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+      %uncomment if require: \path (0,310); %set diagram left start at 0, and has height of 310
 
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+      %Shape: Axis 2D [id:dp7326811016330554] 
+      \draw  (54,256.57) -- (514,256.57)(100,150.37) -- (100,268.37) (507,251.57) -- (514,256.57) -- (507,261.57) (95,157.37) -- (100,150.37) -- (105,157.37)  ;
+      %Shape: Rectangle [id:dp9165080769461678] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (100,220) -- (123.02,220) -- (123.02,256.57) -- (100,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp6197087457024866] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (123.02,220) -- (146.04,220) -- (146.04,256.57) -- (123.02,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp5818508515663341] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (146.04,220) -- (169.06,220) -- (169.06,256.57) -- (146.04,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp6466988498042014] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (169.06,220) -- (192.08,220) -- (192.08,256.57) -- (169.06,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp9241747490680354] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (192.08,220) -- (215.1,220) -- (215.1,256.57) -- (192.08,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp6900943731279547] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (215.1,220) -- (238.12,220) -- (238.12,256.57) -- (215.1,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp9784662305616809] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (238.12,220) -- (261.14,220) -- (261.14,256.57) -- (238.12,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp3189854749942387] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (261.14,220) -- (284.16,220) -- (284.16,256.57) -- (261.14,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp19644432939638312] 
+      \draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (284.04,220) -- (307.06,220) -- (307.06,256.57) -- (284.04,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp4454731461786199] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (307.06,220) -- (330.08,220) -- (330.08,256.57) -- (307.06,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp8963311487850567] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (330.08,220) -- (353.1,220) -- (353.1,256.57) -- (330.08,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp8621164913285171] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (353.1,220) -- (376.12,220) -- (376.12,256.57) -- (353.1,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp7667099225825136] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (376.12,220) -- (399.14,220) -- (399.14,256.57) -- (376.12,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp1405504024872024] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (399.14,220) -- (422.16,220) -- (422.16,256.57) -- (399.14,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp6549374163542783] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (422.16,220) -- (445.18,220) -- (445.18,256.57) -- (422.16,256.57) -- cycle ;
+      %Shape: Rectangle [id:dp26369533307147797] 
+      \draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (445.18,220) -- (468.2,220) -- (468.2,256.57) -- (445.18,256.57) -- cycle ;
 
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,310); %set diagram left start at 0, and has height of 310
+      % Text Node
+      \draw (491,261) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize elements/items}};
+      % Text Node
+      \draw (61,131) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
+      % Text Node
+      \draw (109,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {1};
+      % Text Node
+      \draw (129,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {2};
+      % Text Node
+      \draw (171,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {................................};
+      % Text Node
+      \draw (151,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {3};
+      % Text Node
+      \draw (311,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {................................};
+      % Text Node
+      \draw (291,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle \omega $};
+      % Text Node
+      \draw (436,262) node [anchor=north west][inner sep=0.75pt]   [align=left] {N};
 
-%Shape: Axis 2D [id:dp7326811016330554] 
-\draw  (54,256.57) -- (514,256.57)(100,150.37) -- (100,268.37) (507,251.57) -- (514,256.57) -- (507,261.57) (95,157.37) -- (100,150.37) -- (105,157.37)  ;
-%Shape: Rectangle [id:dp9165080769461678] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (100,220) -- (123.02,220) -- (123.02,256.57) -- (100,256.57) -- cycle ;
-%Shape: Rectangle [id:dp6197087457024866] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (123.02,220) -- (146.04,220) -- (146.04,256.57) -- (123.02,256.57) -- cycle ;
-%Shape: Rectangle [id:dp5818508515663341] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (146.04,220) -- (169.06,220) -- (169.06,256.57) -- (146.04,256.57) -- cycle ;
-%Shape: Rectangle [id:dp6466988498042014] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (169.06,220) -- (192.08,220) -- (192.08,256.57) -- (169.06,256.57) -- cycle ;
-%Shape: Rectangle [id:dp9241747490680354] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (192.08,220) -- (215.1,220) -- (215.1,256.57) -- (192.08,256.57) -- cycle ;
-%Shape: Rectangle [id:dp6900943731279547] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (215.1,220) -- (238.12,220) -- (238.12,256.57) -- (215.1,256.57) -- cycle ;
-%Shape: Rectangle [id:dp9784662305616809] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (238.12,220) -- (261.14,220) -- (261.14,256.57) -- (238.12,256.57) -- cycle ;
-%Shape: Rectangle [id:dp3189854749942387] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (261.14,220) -- (284.16,220) -- (284.16,256.57) -- (261.14,256.57) -- cycle ;
-%Shape: Rectangle [id:dp19644432939638312] 
-\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (284.04,220) -- (307.06,220) -- (307.06,256.57) -- (284.04,256.57) -- cycle ;
-%Shape: Rectangle [id:dp4454731461786199] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (307.06,220) -- (330.08,220) -- (330.08,256.57) -- (307.06,256.57) -- cycle ;
-%Shape: Rectangle [id:dp8963311487850567] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (330.08,220) -- (353.1,220) -- (353.1,256.57) -- (330.08,256.57) -- cycle ;
-%Shape: Rectangle [id:dp8621164913285171] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (353.1,220) -- (376.12,220) -- (376.12,256.57) -- (353.1,256.57) -- cycle ;
-%Shape: Rectangle [id:dp7667099225825136] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (376.12,220) -- (399.14,220) -- (399.14,256.57) -- (376.12,256.57) -- cycle ;
-%Shape: Rectangle [id:dp1405504024872024] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (399.14,220) -- (422.16,220) -- (422.16,256.57) -- (399.14,256.57) -- cycle ;
-%Shape: Rectangle [id:dp6549374163542783] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (422.16,220) -- (445.18,220) -- (445.18,256.57) -- (422.16,256.57) -- cycle ;
-%Shape: Rectangle [id:dp26369533307147797] 
-\draw  [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ] (445.18,220) -- (468.2,220) -- (468.2,256.57) -- (445.18,256.57) -- cycle ;
+    \end{tikzpicture}    
+  \end{center}
+  \caption{\label{fig:intial_quantum_state} The initial quantum state}
+\end{figure}
 
-% Text Node
-\draw (491,261) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize elements/items}};
-% Text Node
-\draw (61,131) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
-% Text Node
-\draw (109,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {1};
-% Text Node
-\draw (129,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {2};
-% Text Node
-\draw (171,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {................................};
-% Text Node
-\draw (151,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {3};
-% Text Node
-\draw (311,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {................................};
-% Text Node
-\draw (291,262) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle \omega $};
-% Text Node
-\draw (436,262) node [anchor=north west][inner sep=0.75pt]   [align=left] {N};
-% Text Node
-\draw (258,292) node [anchor=north west][inner sep=0.75pt]   [align=left] {Figure 1.};
-
-
-\end{tikzpicture}    
-\end{center}
 \vspace{10mm}
 \noindent
-An unstructured search through a list of items using Grover's Algorithm can be illustrated in Figure1. In this instance, $\omega$ the red block, represents the item which we want to find and $N$ represents the number of items in the list. 
+An unstructured search through a list of items using Grover's Algorithm can be illustrated in Figure \ref{fig:grover_step_1a}. In this instance, $\omega$ the red block, represents the item which we want to find and $N$ represents the number of items in the list. 
 \vspace{5mm}
 
 \noindent
 On classical computation, $\omega$ must check at least on average $O(N/2)$ entries of the list which gives $\frac{1}{2}$ the probability of finding $\omega$ or worse the entire N elements in the list.
-With Grover's Algorithm, only $O(\sqrt{N})$ steps is required to find $\omega$.
+With Grover's Algorithm, only $O(\sqrt{N})$ steps are required to find $\omega$.
 \vspace{5mm}
 
 \noindent
-For an $N$ item search problem with $M$ number of solutions, the required number of times of searches will be $O(\sqrt{\frac{N}{M}})$.
+For an $N$ item search problem with $M$ number of solutions, the required number of times of searches will be $O(\sqrt{\frac{N}{M}})$\cite{nielsen_quantum_2010}.
 \pagebreak
 
 \subsection{The Oracle}
-
-Let's suppose the function $f$ of $N$ integer such that $f:\{0,1, 2,...., N-1\} \rightarrow{\{0,1\}}$. The integers in the domain corresponds to the indices of the list and $f(x) =1$ if and only if $x$ corresponds to the item which is searched conversely $f(x) =0$ for $x$ not corresponding the item searched. There will be only one value of $x$ which satisfies $f(x)=1$ and this index corresponds to item $\omega$.
-\noindent
 \vspace{5mm}
--
-So $f$ can be accessed with an unitary operator $U_{\omega}$ of  an oracle which satisfies:
+
+Let's suppose the function $f$ of $N$ integer such that $f:\{0,1, 2,...., N-1\} \rightarrow{\{0,1\}}$. 
+\vspace{5mm}
+
+\noindent
+The integers in the domain corresponds to the indices of the list and $f(x) =1$ if and only if $x$ corresponds to the item which is searched conversely $f(x) =0$ for $x$ not corresponding the item searched. 
+\vspace{5mm}
+
+\noindent
+There will be only one value of $x$ which satisfies $f(x)=1$ and this index corresponds to item $\omega$\cite{noauthor_grovers_2022}.
+\vspace{5mm}
+
+\noindent
+So $f$ can be accessed with a unitary operator $U_{\omega}$ of  an oracle which satisfies:
 \vspace{5mm}
 
 $\hspace{30mm} \begin{cases}
@@ -517,7 +574,7 @@ $\hspace{30mm} \begin{cases}
 \end{cases}$
 \vspace{5mm}
 
-The oracle function of a two qubit system is defined as:
+The oracle function of a two qubit system is defined as\cite{hui_qc_2019}:
 \vspace{5mm}
 
 \qquad $\ket{x} \bigotimes\ \ket{q} \rightarrow{O_f} \ket{x} \bigotimes \ket{q \bigoplus f(x)}$ \footnote{$\bigotimes$ denotes tensor product and $\bigoplus$ denotes denotes addition modulo 2}
@@ -538,17 +595,19 @@ Substitute $\ket{q}$ into the oracle function $O_f$:
 \qquad if $f(x) =1 \rightarrow \ket{x}\frac{\ket{1 \bigoplus 0} - \ket{1 \bigoplus 1}}{\sqrt{2}} = -\ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}$
 \vspace{5mm}
 
+\noindent
 \qquad if $f(x) =0 \rightarrow \ket{x}\frac{\ket{0 \bigoplus 0} - \ket{0 \bigoplus 1}}{\sqrt{2}} = \ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}$
 \vspace{5mm}
 
+\noindent
 When $f(x) = 1 $, the amplitude $\ket{x}$ changed to negative and remains unchanged when $f(x) = 0$.
-\vspace{5mm}
+\pagebreak
 
 \noindent
-The oracle will be in the form a diagonal matrix $U_{\omega}$
+The oracle takes the form of a diagonal matrix $U_{\omega}$
 \vspace{5mm}
 \noindent
-For example, for a three qubit state and we are looking for 6 which corresponds to $\ket{110}$. In matrix form $\omega =6$ will be:
+For example, in a three qubit state, we want to look for the number 6 which corresponds to $\ket{110}$. In matrix form $\omega =6$ will be:
 \vspace{5mm}
 
 \qquad $ U_\omega = \begin{bmatrix}
@@ -571,7 +630,7 @@ Hence the oracle can be described as:
 \qquad $U_\omega\ket{x} = (-1)^{f(x)} \ket{x}$
 \vspace{5mm}
 
-This is essentially a reflection on the state $\ket{x}$
+This is essentially a reflection on the state $\ket{x}$.
 
 \pagebreak
 
@@ -581,157 +640,183 @@ This is essentially a reflection on the state $\ket{x}$
 \textbf{Step 1:}
 \vspace{5mm}
 \noindent
-The sequence of the Grover's Algorithm starts out with a uniform superposition state $\ket{s}$
+The sequence of the Grover's Algorithm starts out with a uniform superposition state $\ket{s}$\cite{noauthor_grovers_nodate}:
 \vspace{5mm}
 
 \qquad $ \ket{s}= H^{\bigotimes n} \ket{0}^n = \frac{1}{\sqrt{2^n}}\sum\limits_{x \in \{0,1\}^n}\ket{x} $ , \qquad for $N = 2^n$ , where $n$ is the number of qubits.
 \vspace{5mm}
 
 
+\begin{figure}[h]
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
 
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+      % uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
 
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+      %Shape: Axis 2D [id:dp05560542711234939] 
+      \draw  (50,247.9) -- (308,247.9)(75.8,112) -- (75.8,263) (301,242.9) -- (308,247.9) -- (301,252.9) (70.8,119) -- (75.8,112) -- (80.8,119)  ;
+      %Shape: Boxed Line [id:dp13553556978051007] 
+      \draw    (75.8,247.9) -- (298.07,185.84) ;
+      \draw [shift={(300,185.3)}, rotate = 164.4] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
 
-%Shape: Axis 2D [id:dp05560542711234939] 
-\draw  (50,247.9) -- (308,247.9)(75.8,112) -- (75.8,263) (301,242.9) -- (308,247.9) -- (301,252.9) (70.8,119) -- (75.8,112) -- (80.8,119)  ;
-%Shape: Boxed Line [id:dp13553556978051007] 
-\draw    (75.8,247.9) -- (298.07,185.84) ;
-\draw [shift={(300,185.3)}, rotate = 164.4] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-%Shape: Axis 2D [id:dp29246180096889995] 
-\draw  (390,249.6) -- (597,249.6)(410.7,111) -- (410.7,265) (590,244.6) -- (597,249.6) -- (590,254.6) (405.7,118) -- (410.7,111) -- (415.7,118)  ;
-%Shape: Rectangle [id:dp09588343067912675] 
-\draw   (410.7,198) -- (431,198) -- (431,249.6) -- (410.7,249.6) -- cycle ;
-%Shape: Rectangle [id:dp06589745305688277] 
-\draw   (431,198) -- (451.3,198) -- (451.3,249.6) -- (431,249.6) -- cycle ;
-%Shape: Rectangle [id:dp1570793013008731] 
-\draw   (451.3,198) -- (471.6,198) -- (471.6,249.6) -- (451.3,249.6) -- cycle ;
-%Shape: Rectangle [id:dp04465276081897107] 
-\draw   (471.6,198) -- (491.9,198) -- (491.9,249.6) -- (471.6,249.6) -- cycle ;
-%Shape: Rectangle [id:dp3205832207723005] 
-\draw   (491.9,198) -- (512.2,198) -- (512.2,249.6) -- (491.9,249.6) -- cycle ;
-%Shape: Rectangle [id:dp7965850817244042] 
-\draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (512.2,198) -- (532.5,198) -- (532.5,249.6) -- (512.2,249.6) -- cycle ;
-%Shape: Rectangle [id:dp41205715411636223] 
-\draw   (532.5,198) -- (552.8,198) -- (552.8,249.6) -- (532.5,249.6) -- cycle ;
-%Shape: Rectangle [id:dp6260805143227606] 
-\draw   (552.8,198) -- (573.1,198) -- (573.1,249.6) -- (552.8,249.6) -- cycle ;
+      % Text Node
+      \draw (82,87.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+      % Text Node
+      \draw (306,167.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s}$};
+      % Text Node
+      \draw (307,253.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s'}$};
+      % Text Node
+      \draw (181,220.4) node [anchor=north west][inner sep=0.75pt]    {$\theta $};
 
-% Text Node
-\draw (82,87.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
-% Text Node
-\draw (306,167.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s}$};
-% Text Node
-\draw (307,253.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s'}$};
-% Text Node
-\draw (181,220.4) node [anchor=north west][inner sep=0.75pt]    {$\theta $};
-% Text Node
-\draw (405,84) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
-% Text Node
-\draw (412.7,252.6) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
-% Text Node
-\draw (586,176.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$\frac{1}{\sqrt{2^{n}}}$};
-% Text Node
-\draw (560,256) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize N}};
-% Text Node
-\draw (602,251) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize items}};
-% Text Node
-\draw (173.07,275) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\scriptsize Figure 2}};
-% Text Node
-\draw (491.8,281) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\scriptsize Figure 3}};
-% Text Node
-\draw (508.2,254.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+    \end{tikzpicture}
 
+    \caption{\label{fig:grover_step_1a} Grover's Algorithm Step 1a}
+  \end{subfigure}%
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-\end{tikzpicture}
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+      %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
 
-Figure 2 shows a two dimensional plane spanned by $\ket{\omega}$ and $\ket{s'}$. In this representation, we can write:
+      %Shape: Axis 2D [id:dp29246180096889995] 
+      \draw  (390,249.6) -- (597,249.6)(410.7,111) -- (410.7,265) (590,244.6) -- (597,249.6) -- (590,254.6) (405.7,118) -- (410.7,111) -- (415.7,118)  ;
+      %Shape: Rectangle [id:dp09588343067912675] 
+      \draw   (410.7,198) -- (431,198) -- (431,249.6) -- (410.7,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp06589745305688277] 
+      \draw   (431,198) -- (451.3,198) -- (451.3,249.6) -- (431,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp1570793013008731] 
+      \draw   (451.3,198) -- (471.6,198) -- (471.6,249.6) -- (451.3,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp04465276081897107] 
+      \draw   (471.6,198) -- (491.9,198) -- (491.9,249.6) -- (471.6,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp3205832207723005] 
+      \draw   (491.9,198) -- (512.2,198) -- (512.2,249.6) -- (491.9,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp7965850817244042] 
+      \draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (512.2,198) -- (532.5,198) -- (532.5,249.6) -- (512.2,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp41205715411636223] 
+      \draw   (532.5,198) -- (552.8,198) -- (552.8,249.6) -- (532.5,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp6260805143227606] 
+      \draw   (552.8,198) -- (573.1,198) -- (573.1,249.6) -- (552.8,249.6) -- cycle ;
+
+      % Text Node
+      \draw (405,84) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
+      % Text Node
+      \draw (412.7,252.6) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
+      % Text Node
+      \draw (586,176.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$\frac{1}{\sqrt{2^{n}}}$};
+      % Text Node
+      \draw (560,256) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize N}};
+      % Text Node
+      \draw (602,251) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize items}};
+      % Text Node
+      \draw (508.2,254.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+
+    \end{tikzpicture}
+    \caption{\label{fig:grover_step_1b} Grover's Algorithm Step 1b}
+  \end{subfigure}
+  \caption{\label{fig:grover_step_1} Grover's Algorithm Step 1}
+\end{figure}
+
+Figure \ref{fig:grover_step_1a} shows a two dimensional plane spanned by $\ket{\omega}$ and $\ket{s'}$. In this representation, it can be written:
 \vspace{5mm}
 
 \qquad $\ket{s} = \sin\theta\ket{\omega} + \cos\theta\ket{s'}$
 \vspace{5mm}
 
-\qquad $\sin\theta = \frac{1}{\sqrt{2^n}}$ , \ where the amplitude of $\ket{s}$ is as shown in Figure 3.
+\qquad $\sin\theta = \frac{1}{\sqrt{2^n}}$ , \ where the amplitude of $\ket{s}$ is as shown in Figure \ref{fig:grover_step_1b}.
 \vspace{5mm}
 
 \textbf{Step 2:}
 \vspace{5mm}
-
-Next the apply the reflection oracle $U_\omega$ to the state $\ket{s}$.
+Next apply the reflection oracle $U_\omega$ to the state $\ket{s}$.
 \vspace{5mm}
 
 
-
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
-
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,421); %set diagram left start at 0, and has height of 421
-
-%Shape: Axis 2D [id:dp9468133521588677] 
-\draw  (50,250.9) -- (308,250.9)(75.8,115) -- (75.8,266) (301,245.9) -- (308,250.9) -- (301,255.9) (70.8,122) -- (75.8,115) -- (80.8,122)  ;
-%Shape: Boxed Line [id:dp05857323871196929] 
-\draw    (75.8,250.9) -- (300.2,191.51) ;
-\draw [shift={(302.13,191)}, rotate = 165.18] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-%Shape: Axis 2D [id:dp13230548671390374] 
-\draw  (390,249.6) -- (597,249.6)(410.7,111) -- (410.7,265) (590,244.6) -- (597,249.6) -- (590,254.6) (405.7,118) -- (410.7,111) -- (415.7,118)  ;
+\begin{figure}[h]
+  \begin{subfigure}{0.5\textwidth}
+    \centering
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+    
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,421); %set diagram left start at 0, and has height of 421
+        
+        %Shape: Axis 2D [id:dp9468133521588677] 
+        \draw  (50,250.9) -- (308,250.9)(75.8,115) -- (75.8,266) (301,245.9) -- (308,250.9) -- (301,255.9) (70.8,122) -- (75.8,115) -- (80.8,122)  ;
+        %Shape: Boxed Line [id:dp05857323871196929] 
+        \draw    (75.8,250.9) -- (300.2,191.51) ;
+        \draw [shift={(302.13,191)}, rotate = 165.18] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+        %Shape: Boxed Line [id:dp6041685570388957] 
+        \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=1.5]    (75.8,250.9) -- (296.23,308.24) ;
+        \draw [shift={(299.13,309)}, rotate = 194.58] [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=1.5]    (14.21,-4.28) .. controls (9.04,-1.82) and (4.3,-0.39) .. (0,0) .. controls (4.3,0.39) and (9.04,1.82) .. (14.21,4.28)   ;
+        %Shape: Arc [id:dp7847818797073434] 
+        \draw  [draw opacity=0][dash pattern={on 4.5pt off 4.5pt}] (243.13,206.74) .. controls (255.6,216.75) and (261.2,241.7) .. (255.64,263.91) .. controls (252.12,278.01) and (244.9,287.75) .. (236.73,291.16) -- (231.03,247.47) -- cycle ; \draw  [dash pattern={on 4.5pt off 4.5pt}] (243.13,206.74) .. controls (255.6,216.75) and (261.2,241.7) .. (255.64,263.91) .. controls (252.12,278.01) and (244.9,287.75) .. (236.73,291.16) ;  
+        \draw   (262.62,257.57) -- (254.59,267.79) -- (251.53,255.15) ;
+        %Shape: Arc [id:dp2964811498005937] 
+        \draw  [draw opacity=0] (140.64,251.2) .. controls (144.47,252.64) and (147.27,256.11) .. (147.38,260.04) .. controls (147.48,263.72) and (145.19,266.77) .. (141.81,268.01) -- (137.59,259.56) -- cycle ; \draw   (140.64,251.2) .. controls (144.47,252.64) and (147.27,256.11) .. (147.38,260.04) .. controls (147.48,263.72) and (145.19,266.77) .. (141.81,268.01) ;  
+        
+        % Text Node
+        \draw (70,90.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+        % Text Node
+        \draw (303,185.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s}$};
+        % Text Node
+        \draw (307,256.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s'}$};
+        % Text Node
+        \draw (157,255.4) node [anchor=north west][inner sep=0.75pt]    {$\theta $};
+        % Text Node
+        \draw (300,302.4) node [anchor=north west][inner sep=0.75pt]    {$U_{\omega }\ket{s}$};
+    \end{tikzpicture}
+    
+    \caption{\label{fig:grover_step_2a} Grover's Algorithm Step 2a}
+  \end{subfigure}%
+  \begin{subfigure}{0.5\textwidth}
+      \centering
+      \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+      
+      \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,421); %set diagram left start at 0, and has height of 421
+      
+        %Shape: Axis 2D [id:dp13230548671390374] 
+      \draw  (388,254.6) -- (595,254.6)(408.7,116) -- (408.7,270) (588,249.6) -- (595,254.6) -- (588,259.6) (403.7,123) -- (408.7,116) -- (413.7,123)  ;
 %Shape: Rectangle [id:dp05277599517068765] 
-\draw   (411.7,211.67) -- (432,211.67) -- (432,249.6) -- (411.7,249.6) -- cycle ;
+\draw   (408.7,216.67) -- (429,216.67) -- (429,254.6) -- (408.7,254.6) -- cycle ;
 %Shape: Rectangle [id:dp9567149694615606] 
-\draw   (432,211.67) -- (452.3,211.67) -- (452.3,249.6) -- (432,249.6) -- cycle ;
+\draw   (429,216.67) -- (449.3,216.67) -- (449.3,254.6) -- (429,254.6) -- cycle ;
 %Shape: Rectangle [id:dp33156724904270707] 
-\draw   (452.3,211.67) -- (472.6,211.67) -- (472.6,249.6) -- (452.3,249.6) -- cycle ;
+\draw   (449.3,216.67) -- (469.6,216.67) -- (469.6,254.6) -- (449.3,254.6) -- cycle ;
 %Shape: Rectangle [id:dp7921289702689205] 
-\draw   (472.6,211.67) -- (492.9,211.67) -- (492.9,249.6) -- (472.6,249.6) -- cycle ;
+\draw   (469.6,216.67) -- (489.9,216.67) -- (489.9,254.6) -- (469.6,254.6) -- cycle ;
 %Shape: Rectangle [id:dp7099186384950043] 
-\draw   (491.9,211.67) -- (512.2,211.67) -- (512.2,249.6) -- (491.9,249.6) -- cycle ;
+\draw   (489.9,216.67) -- (510.2,216.67) -- (510.2,254.6) -- (489.9,254.6) -- cycle ;
 %Shape: Rectangle [id:dp6243887993660082] 
-\draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (512.2,249.6) -- (532.5,249.6) -- (532.5,289.33) -- (512.2,289.33) -- cycle ;
+\draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (510.2,254.6) -- (530.5,254.6) -- (530.5,294.33) -- (510.2,294.33) -- cycle ;
 %Shape: Rectangle [id:dp9966482917344106] 
-\draw   (532.5,211.67) -- (552.8,211.67) -- (552.8,249.6) -- (532.5,249.6) -- cycle ;
+\draw   (530.5,216.67) -- (550.8,216.67) -- (550.8,254.6) -- (530.5,254.6) -- cycle ;
 %Shape: Rectangle [id:dp29247452792340645] 
-\draw   (552.8,211.67) -- (573.1,211.67) -- (573.1,249.6) -- (552.8,249.6) -- cycle ;
-%Shape: Boxed Line [id:dp6041685570388957] 
-\draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=1.5]    (75.8,250.9) -- (296.23,308.24) ;
-\draw [shift={(299.13,309)}, rotate = 194.58] [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=1.5]    (14.21,-4.28) .. controls (9.04,-1.82) and (4.3,-0.39) .. (0,0) .. controls (4.3,0.39) and (9.04,1.82) .. (14.21,4.28)   ;
-%Shape: Arc [id:dp7847818797073434] 
-\draw  [draw opacity=0][dash pattern={on 4.5pt off 4.5pt}] (243.13,206.74) .. controls (255.6,216.75) and (261.2,241.7) .. (255.64,263.91) .. controls (252.12,278.01) and (244.9,287.75) .. (236.73,291.16) -- (231.03,247.47) -- cycle ; \draw  [dash pattern={on 4.5pt off 4.5pt}] (243.13,206.74) .. controls (255.6,216.75) and (261.2,241.7) .. (255.64,263.91) .. controls (252.12,278.01) and (244.9,287.75) .. (236.73,291.16) ;  
-\draw   (262.62,257.57) -- (254.59,267.79) -- (251.53,255.15) ;
-%Shape: Arc [id:dp2964811498005937] 
-\draw  [draw opacity=0] (140.64,251.2) .. controls (144.47,252.64) and (147.27,256.11) .. (147.38,260.04) .. controls (147.48,263.72) and (145.19,266.77) .. (141.81,268.01) -- (137.59,259.56) -- cycle ; \draw   (140.64,251.2) .. controls (144.47,252.64) and (147.27,256.11) .. (147.38,260.04) .. controls (147.48,263.72) and (145.19,266.77) .. (141.81,268.01) ;  
-%Straight Lines [id:da8789026389017109] 
-\draw  [dash pattern={on 4.5pt off 4.5pt}]  (398.13,200) -- (579.13,200) ;
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (396.13,205) -- (577.13,205) ;
+        
+        % Text Node
+        \draw (395,100) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
+        % Text Node
+        \draw (410,260) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
+        % Text Node
+        \draw (586,195) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$\frac{1}{\sqrt{2^{n}}}$};
+        % Text Node
+        \draw (560,256) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize N}};
+        % Text Node
+        \draw (602,251) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize items}};
+        % Text Node
+        \draw (509.2,300) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+    
+      \end{tikzpicture}
+      
+      \caption{\label{fig:grover_step_2b} Grover's Algorithm Step 2b}
+  \end{subfigure}
+  \caption{\label{fig:grover_step_2} Grover's Algorithm Step 2}
+\end{figure}
 
-% Text Node
-\draw (82,90.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
-% Text Node
-\draw (303,185.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s}$};
-% Text Node
-\draw (307,256.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s'}$};
-% Text Node
-\draw (157,255.4) node [anchor=north west][inner sep=0.75pt]    {$\theta $};
-% Text Node
-\draw (405,84) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
-% Text Node
-\draw (412.7,252.6) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
-% Text Node
-\draw (586,176.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$\frac{1}{\sqrt{2^{n}}}$};
-% Text Node
-\draw (560,256) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize N}};
-% Text Node
-\draw (602,251) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize items}};
-% Text Node
-\draw (509.2,319.07) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
-% Text Node
-\draw (166.07,307) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\scriptsize Figure 4}};
-% Text Node
-\draw (492.8,346) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\scriptsize Figure 5}};
-% Text Node
-\draw (304,302.4) node [anchor=north west][inner sep=0.75pt]    {$U_{\omega }\ket{s}$};
-
-
-\end{tikzpicture}
-\vspace{5mm}
+\pagebreak
 
 The reflection oracle $U_\omega$ can be expressed as:
 \vspace{5mm}
@@ -742,94 +827,225 @@ The reflection oracle $U_\omega$ can be expressed as:
 \qquad $U_\omega \ket{s} = -\sin\theta\ket{\omega} +  \cos\theta\ket{\omega} $ 
 \vspace{5mm}
 
-$U_{{\omega }}$ is a reflection at the hyperplane orthogonal to $\ket{\omega}$  for vectors in the plane spanned by $\ket{s'}$  and $\ket{\omega}$ 
+\noindent
+$U_{{\omega }}$ is a reflection at the hyperplane orthogonal to $\ket{\omega}$  for vectors in the plane spanned by $\ket{s'}$  and $\ket{\omega}$\cite{noauthor_grovers_2022}.
 \vspace{5mm}
 
-Referring to Figure 4, $\ket{s}$ is reflected about $\ket{s'}$. The reflection operation on $\ket{s}$ in the negative amplitude causes the overall positive average amplitude to decrease slightly as indicated by Figure 5. 
+\noindent
+Referring to Figure \ref{fig:grover_step_2a}, $\ket{s}$ is reflected about $\ket{s'}$. The reflection operation on $\ket{s}$ in the negative amplitude causes the overall positive average amplitude to decrease slightly as indicated by Figure \ref{fig:grover_step_2b}. 
 \vspace{5mm}
 
 \textbf{Step 3:}
 \vspace{5mm}
 
+\begin{figure}[h]
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+      %uncomment if require: \path (0,421); %set diagram left start at 0, and has height of 421
 
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,421); %set diagram left start at 0, and has height of 421
+      %Shape: Axis 2D [id:dp1077584187321754] 
+      \draw  (50,245) -- (308,245)(75.8,56) -- (75.8,266) (301,240) -- (308,245) -- (301,250) (70.8,63) -- (75.8,56) -- (80.8,63)  ;
+      %Shape: Boxed Line [id:dp16066044861623174] 
+      \draw    (75.8,245) -- (300.2,185.61) ;
+      \draw [shift={(302.13,185.1)}, rotate = 165.18] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+      %Shape: Boxed Line [id:dp9706672155769875] 
+      \draw [draw opacity=1 ][fill opacity=1 ][line width=1.5]    (75.8,245) -- (296.23,302.34) ;
+      \draw [shift={(299.13,303.1)}, rotate = 194.58] [draw opacity=1 ][line width=1.5]    (14.21,-4.28) .. controls (9.04,-1.82) and (4.3,-0.39) .. (0,0) .. controls (4.3,0.39) and (9.04,1.82) .. (14.21,4.28)   ;
+      %Shape: Arc [id:dp872952775851549] 
+      \draw  [draw opacity=0][dash pattern={on 4.5pt off 4.5pt}] (198.95,95.79) .. controls (242.68,120.59) and (271.35,171.76) .. (265.48,219.88) .. controls (261.92,249.01) and (246.41,271.27) .. (224.47,283.34) -- (164.47,187.12) -- cycle ; \draw  [dash pattern={on 4.5pt off 4.5pt}] (198.95,95.79) .. controls (242.68,120.59) and (271.35,171.76) .. (265.48,219.88) .. controls (261.92,249.01) and (246.41,271.27) .. (224.47,283.34) ;  
+      \draw   (248.03,152.19) -- (245.19,139.5) -- (256.91,145.12) ;
+      %Shape: Arc [id:dp6976856692056519] 
+      \draw  [draw opacity=0] (142.64,228.2) .. controls (146.47,229.64) and (149.27,233.11) .. (149.38,237.04) .. controls (149.48,240.72) and (147.19,243.77) .. (143.81,245.01) -- (139.59,236.56) -- cycle ; \draw   (142.64,228.2) .. controls (146.47,229.64) and (149.27,233.11) .. (149.38,237.04) .. controls (149.48,240.72) and (147.19,243.77) .. (143.81,245.01) ;  
+      %Shape: Boxed Line [id:dp005988885245785669] 
+      \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=1.5]    (75.8,245) -- (223.22,67.41) ;
+      \draw [shift={(225.13,65.1)}, rotate = 129.7] [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=1.5]    (14.21,-4.28) .. controls (9.04,-1.82) and (4.3,-0.39) .. (0,0) .. controls (4.3,0.39) and (9.04,1.82) .. (14.21,4.28)   ;
+      %Shape: Arc [id:dp47337907989211914] 
+      \draw  [draw opacity=0] (138.23,172.51) .. controls (151.09,175.41) and (161.57,183.15) .. (165.41,194.07) .. controls (168.83,203.79) and (166.27,214) .. (159.46,222.26) -- (123.73,205.22) -- cycle ; \draw   (138.23,172.51) .. controls (151.09,175.41) and (161.57,183.15) .. (165.41,194.07) .. controls (168.83,203.79) and (166.27,214) .. (159.46,222.26) ;  
 
-%Shape: Axis 2D [id:dp1077584187321754] 
-\draw  (50,245) -- (308,245)(75.8,56) -- (75.8,266) (301,240) -- (308,245) -- (301,250) (70.8,63) -- (75.8,56) -- (80.8,63)  ;
-%Shape: Boxed Line [id:dp16066044861623174] 
-\draw    (75.8,245) -- (300.2,185.61) ;
-\draw [shift={(302.13,185.1)}, rotate = 165.18] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-%Shape: Axis 2D [id:dp9734077209252769] 
-\draw  (390,249.6) -- (597,249.6)(410.7,111) -- (410.7,265) (590,244.6) -- (597,249.6) -- (590,254.6) (405.7,118) -- (410.7,111) -- (415.7,118)  ;
-%Shape: Rectangle [id:dp3704883525061837] 
-\draw   (410.7,211.67) -- (431,211.67) -- (431,249.6) -- (410.7,249.6) -- cycle ;
-%Shape: Rectangle [id:dp044532975443389855] 
-\draw   (431,211.67) -- (451.3,211.67) -- (451.3,249.6) -- (431,249.6) -- cycle ;
-%Shape: Rectangle [id:dp7877425682227512] 
-\draw   (451.3,211.67) -- (471.6,211.67) -- (471.6,249.6) -- (451.3,249.6) -- cycle ;
-%Shape: Rectangle [id:dp9424861909526165] 
-\draw   (471.6,211.67) -- (491.9,211.67) -- (491.9,249.6) -- (471.6,249.6) -- cycle ;
-%Shape: Rectangle [id:dp22778928407890264] 
-\draw   (491.9,211.67) -- (512.2,211.67) -- (512.2,249.6) -- (491.9,249.6) -- cycle ;
-%Shape: Rectangle [id:dp5422997780895953] 
-\draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (512.2,249.6) -- (532.5,249.6) -- (532.5,162) -- (512.2,162) -- cycle ;
-%Shape: Rectangle [id:dp7263987108332439] 
-\draw   (532.5,211.67) -- (552.8,211.67) -- (552.8,249.6) -- (532.5,249.6) -- cycle ;
-%Shape: Rectangle [id:dp5179786757543001] 
-\draw   (552.8,211.67) -- (573.1,211.67) -- (573.1,249.6) -- (552.8,249.6) -- cycle ;
-%Shape: Boxed Line [id:dp9706672155769875] 
-\draw [draw opacity=1 ][fill opacity=1 ][line width=1.5]    (75.8,245) -- (296.23,302.34) ;
-\draw [shift={(299.13,303.1)}, rotate = 194.58] [draw opacity=1 ][line width=1.5]    (14.21,-4.28) .. controls (9.04,-1.82) and (4.3,-0.39) .. (0,0) .. controls (4.3,0.39) and (9.04,1.82) .. (14.21,4.28)   ;
-%Shape: Arc [id:dp872952775851549] 
-\draw  [draw opacity=0][dash pattern={on 4.5pt off 4.5pt}] (198.95,95.79) .. controls (242.68,120.59) and (271.35,171.76) .. (265.48,219.88) .. controls (261.92,249.01) and (246.41,271.27) .. (224.47,283.34) -- (164.47,187.12) -- cycle ; \draw  [dash pattern={on 4.5pt off 4.5pt}] (198.95,95.79) .. controls (242.68,120.59) and (271.35,171.76) .. (265.48,219.88) .. controls (261.92,249.01) and (246.41,271.27) .. (224.47,283.34) ;  
-\draw   (248.03,152.19) -- (245.19,139.5) -- (256.91,145.12) ;
-%Shape: Arc [id:dp6976856692056519] 
-\draw  [draw opacity=0] (142.64,228.2) .. controls (146.47,229.64) and (149.27,233.11) .. (149.38,237.04) .. controls (149.48,240.72) and (147.19,243.77) .. (143.81,245.01) -- (139.59,236.56) -- cycle ; \draw   (142.64,228.2) .. controls (146.47,229.64) and (149.27,233.11) .. (149.38,237.04) .. controls (149.48,240.72) and (147.19,243.77) .. (143.81,245.01) ;  
-%Straight Lines [id:da21954100641972407] 
-\draw  [dash pattern={on 4.5pt off 4.5pt}]  (398.13,200) -- (579.13,200) ;
-%Shape: Boxed Line [id:dp005988885245785669] 
-\draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=1.5]    (75.8,245) -- (223.22,67.41) ;
-\draw [shift={(225.13,65.1)}, rotate = 129.7] [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=1.5]    (14.21,-4.28) .. controls (9.04,-1.82) and (4.3,-0.39) .. (0,0) .. controls (4.3,0.39) and (9.04,1.82) .. (14.21,4.28)   ;
-%Shape: Arc [id:dp47337907989211914] 
-\draw  [draw opacity=0] (138.23,172.51) .. controls (151.09,175.41) and (161.57,183.15) .. (165.41,194.07) .. controls (168.83,203.79) and (166.27,214) .. (159.46,222.26) -- (123.73,205.22) -- cycle ; \draw   (138.23,172.51) .. controls (151.09,175.41) and (161.57,183.15) .. (165.41,194.07) .. controls (168.83,203.79) and (166.27,214) .. (159.46,222.26) ;  
+      % Text Node
+      \draw (63,34.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+      % Text Node
+      \draw (303,185.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s}$};
+      % Text Node
+      \draw (307,256.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s'}$};
+      % Text Node
+      \draw (173,226.4) node [anchor=north west][inner sep=0.75pt]    {$\theta $};
+      % Text Node
+      \draw (235,54.4) node [anchor=north west][inner sep=0.75pt]    {$U_{s} U_{\omega }\ket{s}$};
+      % Text Node
+      \draw (177,170.4) node [anchor=north west][inner sep=0.75pt]    {$2\theta $};
 
-% Text Node
-\draw (63,34.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
-% Text Node
-\draw (303,185.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s}$};
-% Text Node
-\draw (307,256.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{s'}$};
-% Text Node
-\draw (173,226.4) node [anchor=north west][inner sep=0.75pt]    {$\theta $};
-% Text Node
-\draw (405,84) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
-% Text Node
-\draw (412.7,252.6) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
-% Text Node
-\draw (560,256) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize N}};
-% Text Node
-\draw (602,251) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize items}};
-% Text Node
-\draw (507.2,138.07) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
-% Text Node
-\draw (171.07,307) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\scriptsize Figure 6}};
-% Text Node
-\draw (488.8,305) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\scriptsize Figure 7}};
-% Text Node
-\draw (235,54.4) node [anchor=north west][inner sep=0.75pt]    {$U_{s} U_{\omega }\ket{s}$};
-% Text Node
-\draw (177,170.4) node [anchor=north west][inner sep=0.75pt]    {$2\theta $};
+    \end{tikzpicture}
+    \caption{\label{fig:grover_step_3a} Grover's Algorithm Step 3a}
+  \end{subfigure}%
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-\draw (530,135) node [anchor=north west][inner sep=0.75pt]    {$ >\ \frac{1}{\sqrt{2^{n}}}$};
-\end{tikzpicture}
-\vspace{5mm}
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+      %uncomment if require: \path (0,421); %set diagram left start at 0, and has height of 421
+
+      %Shape: Axis 2D [id:dp9734077209252769] 
+      \draw  (390,249.6) -- (597,249.6)(410.7,111) -- (410.7,265) (590,244.6) -- (597,249.6) -- (590,254.6) (405.7,118) -- (410.7,111) -- (415.7,118)  ;
+      %Shape: Rectangle [id:dp3704883525061837] 
+      \draw   (410.7,211.67) -- (431,211.67) -- (431,249.6) -- (410.7,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp044532975443389855] 
+      \draw   (431,211.67) -- (451.3,211.67) -- (451.3,249.6) -- (431,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp7877425682227512] 
+      \draw   (451.3,211.67) -- (471.6,211.67) -- (471.6,249.6) -- (451.3,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp9424861909526165] 
+      \draw   (471.6,211.67) -- (491.9,211.67) -- (491.9,249.6) -- (471.6,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp22778928407890264] 
+      \draw   (491.9,211.67) -- (512.2,211.67) -- (512.2,249.6) -- (491.9,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp5422997780895953] 
+      \draw  [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (512.2,249.6) -- (532.5,249.6) -- (532.5,162) -- (512.2,162) -- cycle ;
+      %Shape: Rectangle [id:dp7263987108332439] 
+      \draw   (532.5,211.67) -- (552.8,211.67) -- (552.8,249.6) -- (532.5,249.6) -- cycle ;
+      %Shape: Rectangle [id:dp5179786757543001] 
+      \draw   (552.8,211.67) -- (573.1,211.67) -- (573.1,249.6) -- (552.8,249.6) -- cycle ;
+      %Straight Lines [id:da21954100641972407] 
+      \draw  [dash pattern={on 4.5pt off 4.5pt}]  (398.13,200) -- (579.13,200) ;
+
+      % Text Node
+      \draw (405,84) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize Amplitude}};
+      % Text Node
+      \draw (412.7,252.6) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize 0}};
+      % Text Node
+      \draw (560,256) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize N}};
+      % Text Node
+      \draw (602,251) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\footnotesize items}};
+      % Text Node
+      \draw (507.2,138.07) node [anchor=north west][inner sep=0.75pt]    {$\ket{\omega }$};
+      % Text Node
+      \draw (530,135) node [anchor=north west][inner sep=0.75pt]    {$ >\ \frac{1}{\sqrt{2^{n}}}$};
+
+    \end{tikzpicture}
+    \caption{\label{fig:grover_step_3b} Grover's Algorithm Step 3b}
+  \end{subfigure}
+  \caption{\label{fig:grover_step_3} Grover's Algorithm Step 3}
+\end{figure}
+\vspace{10mm}
 
 \noindent
-As indicated in Figure 6, a diffusion operator $U_s$ is applied which result in a rotation of $\ket{s}$ by $2\theta$. 
+As indicated in Figure \ref{fig:grover_step_3a}, a diffusion operator $U_s$ is applied which results in a rotation of $\ket{s}$ by $2\theta$. 
+\pagebreak
+
+
+\begin{figure}
+  \begin{center}
+      
+    \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,392); %set diagram left start at 0, and has height of 392
+
+    %Shape: Rectangle [id:dp8937257723636158] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (143,134) -- (175.19,134) -- (175.19,162.7) -- (143,162.7) -- cycle ;
+    %Shape: Rectangle [id:dp007021083049765675] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (143,174.3) -- (175.19,174.3) -- (175.19,203) -- (143,203) -- cycle ;
+    %Shape: Rectangle [id:dp8911339020880464] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (205,133) -- (235,133) -- (235,203) -- (205,203) -- cycle ;
+    %Shape: Rectangle [id:dp25845825302570513] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (265,133) -- (297.19,133) -- (297.19,161.7) -- (265,161.7) -- cycle ;
+    %Shape: Rectangle [id:dp47274224679471666] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (265,174.3) -- (297.19,174.3) -- (297.19,203) -- (265,203) -- cycle ;
+    %Shape: Rectangle [id:dp5929473120919728] 
+    \draw  [fill={rgb, 255:red, 126; green, 211; blue, 33 }  ,fill opacity=1 ] (325,131) -- (475,131) -- (475,201) -- (325,201) -- cycle ;
+    %Shape: Rectangle [id:dp561230971836093] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (505,131) -- (537.19,131) -- (537.19,159.7) -- (505,159.7) -- cycle ;
+    %Shape: Rectangle [id:dp551714500077588] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (505,172.3) -- (537.19,172.3) -- (537.19,201) -- (505,201) -- cycle ;
+    %Shape: Rectangle [id:dp014371224119280157] 
+    \draw   (565,131) -- (596.33,131) -- (596.33,159.22) -- (565,159.22) -- cycle ;
+    %Shape: Arc [id:dp45728741367881365] 
+    \draw  [draw opacity=0] (569.39,151.72) .. controls (570.82,147.31) and (575.03,144.13) .. (579.99,144.13) .. controls (584.9,144.13) and (589.07,147.24) .. (590.55,151.57) -- (579.99,155.06) -- cycle ; \draw   (569.39,151.72) .. controls (570.82,147.31) and (575.03,144.13) .. (579.99,144.13) .. controls (584.9,144.13) and (589.07,147.24) .. (590.55,151.57) ;  
+    %Straight Lines [id:da3994764524189143] 
+    \draw    (576.46,153) -- (589.1,139.61) ;
+    %Shape: Rectangle [id:dp7321580418061253] 
+    \draw   (565,172) -- (596.33,172) -- (596.33,200.22) -- (565,200.22) -- cycle ;
+    %Shape: Arc [id:dp575518695312089] 
+    \draw  [draw opacity=0] (569.39,192.72) .. controls (570.82,188.31) and (575.03,185.13) .. (579.99,185.13) .. controls (584.9,185.13) and (589.07,188.24) .. (590.55,192.57) -- (579.99,196.06) -- cycle ; \draw   (569.39,192.72) .. controls (570.82,188.31) and (575.03,185.13) .. (579.99,185.13) .. controls (584.9,185.13) and (589.07,188.24) .. (590.55,192.57) ;  
+    %Straight Lines [id:da9653097238135147] 
+    \draw    (576.46,194) -- (589.1,180.61) ;
+    %Straight Lines [id:da054926584620969665] 
+    \draw    (95,151) -- (145,151) ;
+    %Straight Lines [id:da1998461114344101] 
+    \draw    (95,191) -- (145,191) ;
+    %Straight Lines [id:da13455039306792682] 
+    \draw    (175,151) -- (205,151) ;
+    %Straight Lines [id:da8941875904744676] 
+    \draw    (175,191) -- (205,191) ;
+    %Straight Lines [id:da16169269211888615] 
+    \draw    (235,151) -- (265,151) ;
+    %Straight Lines [id:da6385231938077083] 
+    \draw    (235,191) -- (265,191) ;
+    %Straight Lines [id:da21590920227006993] 
+    \draw    (295,151) -- (325,151) ;
+    %Straight Lines [id:da44624469722388915] 
+    \draw    (295,191) -- (325,191) ;
+    %Straight Lines [id:da9474262709127792] 
+    \draw    (475,191) -- (505,191) ;
+    %Straight Lines [id:da8304606265085992] 
+    \draw    (475,151) -- (505,151) ;
+    %Straight Lines [id:da4700710359224989] 
+    \draw    (535,151) -- (565,151) ;
+    %Straight Lines [id:da09738039485721028] 
+    \draw    (535,191) -- (565,191) ;
+    %Straight Lines [id:da7131108234298331] 
+    \draw    (595,149.5) -- (625,149.5)(595,152.5) -- (625,152.5) ;
+    %Straight Lines [id:da9226246067589841] 
+    \draw    (595,189.5) -- (625,189.5)(595,192.5) -- (625,192.5) ;
+    %Shape: Brace [id:dp5786954336630095] 
+    \draw   (208.13,205) .. controls (208.15,209.67) and (210.49,211.99) .. (215.16,211.98) -- (357.81,211.53) .. controls (364.48,211.51) and (367.82,213.83) .. (367.83,218.5) .. controls (367.82,213.83) and (371.14,211.49) .. (377.81,211.47)(374.81,211.48) -- (528.16,210.99) .. controls (532.83,210.98) and (535.15,208.64) .. (535.13,203.97) ;
+    %Shape: Brace [id:dp3814057437492582] 
+    \draw   (470.13,127) .. controls (470.13,122.33) and (467.8,120) .. (463.13,120) -- (410.13,120) .. controls (403.46,120) and (400.13,117.67) .. (400.13,113) .. controls (400.13,117.67) and (396.8,120) .. (390.13,120)(393.13,120) -- (334.13,120) .. controls (329.46,120) and (327.13,122.33) .. (327.13,127) ;
+    %Shape: Brace [id:dp5248227356988384] 
+    \draw   (66.13,152) .. controls (61.46,152) and (59.13,154.33) .. (59.13,159) -- (59.13,162.16) .. controls (59.13,168.83) and (56.8,172.16) .. (52.13,172.16) .. controls (56.8,172.16) and (59.13,175.49) .. (59.13,182.16)(59.13,179.16) -- (59.13,185) .. controls (59.13,189.67) and (61.46,192) .. (66.13,192) ;
+    %Straight Lines [id:da6246903517915476] 
+    \draw  [dash pattern={on 0.84pt off 2.51pt}]  (75.13,168) -- (133.13,168) ;
+    %Straight Lines [id:da7651260164716407] 
+    \draw  [dash pattern={on 0.84pt off 2.51pt}]  (251,168) -- (305.13,168) ;
+    %Straight Lines [id:da5357419850229155] 
+    \draw  [dash pattern={on 0.84pt off 2.51pt}]  (504,167) -- (592.13,167) ;
+
+    % Text Node
+    \draw (151.6,139.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (151.6,181.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (209,155.4) node [anchor=north west][inner sep=0.75pt]    {$U_{\omega }$};
+    % Text Node
+    \draw (273.6,139.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (273.6,181.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (513.6,137.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (513.6,179.4) node [anchor=north west][inner sep=0.75pt]    {$H$};
+    % Text Node
+    \draw (346,153.4) node [anchor=north west][inner sep=0.75pt]    {$2\ket{0^{n}}\bra{0^{n}} \ -\ I^{n}$};
+    % Text Node
+    \draw (68,142.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0}$};
+    % Text Node
+    \draw (68,181.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0}$};
+    % Text Node
+    \draw (16,162.4) node [anchor=north west][inner sep=0.75pt]    {$\ket{0^{n}}$};
+    % Text Node
+    \draw (316,95) node [anchor=north west][inner sep=0.75pt]   [align=left] {Grover's Diffusion Operator};
+    % Text Node
+    \draw (313,213) node [anchor=north west][inner sep=0.75pt]   [align=left] {Repeat $\displaystyle \approx \ \frac{\pi }{4}\sqrt{N}$ times};
+
+    \end{tikzpicture}
+  \end{center}
+
+  \caption{\label{fig:grover_circuit} Quantum circuit representation of Grover's Algorithm.}
+\end{figure}
+
 \vspace{5mm}
+
 
 \noindent
 The diffusion operator is expressed as:
@@ -839,11 +1055,11 @@ The diffusion operator is expressed as:
 \vspace{5mm}
 
 \noindent
-$U_s$ is a reflection at the hyperplane orthogonal to $\ket{\perp s}$  for vectors in the plane spanned by $\ket{s}$  and $\ket{\perp s}$, in another words a reflection about $\ket{s}$. 
+$U_s$ is a reflection at the hyperplane orthogonal to $\ket{\perp s}$  for vectors in the plane spanned by $\ket{s}$  and $\ket{\perp s}$, in other words a reflection about $\ket{s}$. 
 \vspace{5mm}
 
 \noindent
-The product of two reflection operator $U_\omega$ and $U_s$ is a rotation in the plane spanned by $\ket{\omega}$ and $\ket{s'}$ through twice the angle $\theta$.
+The product of two reflection operators $U_\omega$ and $U_s$ is a rotation in the plane spanned by $\ket{\omega}$ and $\ket{s'}$ through twice the angle $\theta$.
 \vspace{5mm}
 
 \noindent
@@ -856,19 +1072,19 @@ outputs a solution to the search problem with high probability.
 \vspace{5mm}
 
 \noindent
-By looking at Figure 7, the amplitude of $\ket{\omega}$ is reflected about the average amplitude. Referring to Figure 5, the average amplitude is lowered below the dashed line and the reflection boosts the amplitude by about three times its original value, as depicted in Figure 7.
-\pagebreak
-
-\noindent
-Step 2 and Step 3 will be repeated where necessary for $T$ times until the average amplitude approaches zero so that the amplitude for $\ket{\omega} \sim 1$.
+By looking at Figure \ref{fig:grover_step_3b}, the amplitude of $\ket{\omega}$ is reflected about the average amplitude. Referring to Figure \ref{fig:grover_step_2b}, the average amplitude is lowered below the dashed line and the reflection boosts the amplitude by about three times its original value, as depicted in Figure \ref{fig:grover_step_3b}.
 \vspace{5mm}
 
 \noindent
-By observation, the number of times $T$ required to apply the Grover's Algorithm according to Figure 6 can be written as:
+Step 2 and Step 3 will be repeated where necessary for $T$ times until the average amplitude approaches zero so that the amplitude for $\ket{\omega} \sim 1$\cite{de_wolf_main_nodate}.
 \vspace{5mm}
 
 \noindent
-\qquad $\theta_T = (2T + 1)\theta$, \ where \ $\theta_T \approx \frac{\pi}{2}$  
+By observation, the number of times $T$ is required to apply the Grover's Algorithm according to Figure \ref{fig:grover_step_3a} can be written as:
+\vspace{5mm}
+
+\noindent
+\qquad $\theta_T = (2T + 1)\theta$, \ where \ $\theta_T \approx \frac{\pi}{2}$ \ , $T$ is chosen to the nearest integer. 
 \vspace{5mm}
 
 \noindent
@@ -888,24 +1104,26 @@ Hence:
 \vspace{5mm}
 
 \noindent
-Consequently, it is shown that the number of iteration is directly proportional to the order $O(\sqrt{N}$. 
-\\draw (540,130.4) node [anchor=north west][inner sep=0.75pt]    {$ >\ \frac{1}{\sqrt{2^{n}}}$};
+Consequently, it is shown that $T$ is directly proportional to the order $O(\sqrt{N})$.
+\pagebreak
+
+\noindent
 In terms of the amplitude of the state $\ket{s}$, it is observed to grow linearly with the number of application of $\sim T\sqrt{N}$. Therefore the amplitude and the probability are both amplified in Grover's Algorithm.
 \vspace{5mm}
 
 \noindent
-For multiple search solutions, $M$ the number of Grover's iteration would be roughly $\sqrt{\frac{N}{M}}$.
+For multiple search entries $M$, the number of Grover's iteration would be roughly $\sqrt{\frac{N}{M}}$.
 \vspace{10mm}
 
 \subsection{Advantages and Disadvantages}
 \vspace{5mm}
 
 \noindent
-The obvious advantage of the Grover's Algorithm is the quadratic speed up over classical search algorithm. 
+The obvious advantage of the Grover's Algorithm is the quadratic speed up over classical search algorithms. 
 \vspace{5mm}
 
 \noindent
-In the previous chapter, Grover's Algorithm shows amplitude amplification on the target state $\ket{\omega}$ and this can be used to speed up a wide variety of other algorithms. 
+In the previous chapter, Grover's Algorithm shows amplitude amplification on the target state $\ket{\omega}$ and this can be used to speed up a wide variety of other algorithms\cite{noauthor_grovers_nodate}. 
 \vspace{5mm}
 
 \noindent
@@ -913,7 +1131,95 @@ One of the few drawbacks of the Grover's Algorithm is that it is probabilistic. 
 \vspace{5mm}
 
 \noindent
-Due to the constraints of currently available quantum computers, Grover's Algorithm is yet to yield any  meaningful quadratic speed up compared to classical algorithms.   
+Due to the constraints of currently available quantum computers, Grover's Algorithm is yet to yield any  meaningful quadratic speed up compared to classical algorithms\cite{noauthor_grovers_2022}.   
+\pagebreak
+
+\section{Other Quantum Algorithms Explored}
+\vspace{5mm}
+
+\subsection{Quantum Fourier Transform}
+\vspace{5mm}
+
+\noindent
+The quantum Fourier transform is a linear transformation of vector amplitudes of a quantum state of a qubit. It is the quantum equivalent of Discrete Fourier Transform, which is an important tool used in signal processing. 
+\vspace{5mm}
+
+\noindent
+The quantum Fourier transform can be implemented into a circuit simply by using Hadamard and controlled phase shift gate. The QFT short hand for quantum Fourier transform is a unitary transformation. 
+\vspace{5mm}
+
+\noindent
+The action of QFT on a quantum state\cite{noauthor_quantum_nodate-1} $\ket{X} = \sum\limits_{j=0}^{N-1} x_j\ket{j}$ maps it to a quantum state $\ket{Y} = \sum\limits_{k=0}^{N-1} y_k\ket{k}$ according to:
+\vspace{5mm}
+
+
+\qquad $y_k = \frac{1}{\sqrt{2}}\sum\limits_{j=0}^{N-1}x_je^{2i\pi\frac{jk}{N}}$ \ , \ recalling that $N = 2^n$
+\vspace{5mm}
+
+\noindent
+Note that only the amplitudes of the state were affected by this transformation.
+\vspace{5mm}
+
+\noindent
+This can be expressed as the mapping of the quantum state $\ket{j} \rightarrow \ket{k}$ such that:
+\vspace{5mm}
+
+
+\qquad $\ket{j}= \frac{1}{\sqrt{2}}\sum\limits_{k=0}^{N-1}e^{2i\pi\frac{jk}{N}}\ket{k}$ 
+\vspace{5mm}
+
+\noindent
+The QFT can be expressed as a unitary quantum operator as:
+\vspace{5mm}
+
+\qquad $U_{QFT} =  \frac{1}{\sqrt{2}}\sum\limits_{j=0}^{N-1}\sum\limits_{k=0}^{N-1}e^{2i\pi\frac{jk}{N}}\ket{k}\bra{j}$ 
+\vspace{5mm}
+
+\noindent
+Similar to Fourier transform which decomposes functions depending on space or time into functions depending on spatial frequency or temporal frequency, QFT maps the computational basis states between the $\hat{\textbf{z}}$-basis states to the $\hat{\textbf{x}}$-basis states.
+\vspace{5mm}
+
+\noindent
+The $\hat{\textbf{x}}$-basis states are defined as:
+\vspace{5mm}
+
+\qquad $\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})$ \ and \ $\ket{-} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})$
+\vspace{5mm}
+
+\noindent
+For multi-qubit states in the computational basis have corresponding states in the Fourier basis. The QFT is the function that transforms between these bases:
+\vspace{5mm}
+
+\qquad $\ket{\text{State in computational basis}} \rightarrow{\text{QFT}} \ket{\text{State in Fourier basis}} $
+\vspace{5mm}
+
+\qquad $\text{QFT}\ket{x} = \ket{\tilde{x}}$
+\pagebreak
+
+The QFT can be generalised and extended to multiple qubits and states\cite{noauthor_quantum_nodate-1}:
+\vspace{5mm}
+
+\qquad $\text{QFT}_N\ket{x} = \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}e^{2i\pi\frac{xy}{2^n}}\ket{y}$ \ , \ for $N = 2^n$
+\vspace{5mm}
+
+\qquad \qquad $ =  \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}e^{2i\pi x(\sum_{k=1}^{n}\frac{y_k}{2^k})}\ket{y...y_n}$ , \ rewriting $y$ in binary fraction $y= y_1 ... y_n, \frac{y}{2^n} = \sum\limits_{k=1}^{n}\frac{y_k}{2^k}$
+\vspace{5mm}
+
+\qquad \qquad $= \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}\prod\limits_{k=1}^{n}e^{2i\pi x\frac{y_k}{2^k}}\ket{y...y_n}$
+\vspace{5mm}
+
+\noindent
+After expanding the exponential of a sum to a product of exponentials.
+\vspace{5mm}
+
+\qquad \qquad $ = \frac{1}{\sqrt{N}}\bigotimes\limits_{k=1}^{n}(\ket{0} + e^{\frac{2i\pi x}{2^k}}\ket{1})$
+\vspace{5mm}
+
+\noindent
+After rearranging the sum and products, and expanding $\sum\limits_{y=0}^{N-1} = \sum\limits_{y_1=0}^{1}\sum\limits_{y_2=0}^{1}...\sum\limits_{y_0=0}^{1} $
+\vspace{5mm}
+
+\qquad \qquad $ = \frac{1}{\sqrt{N}}(\ket{0} + e^{\frac{2i\pi x}{2}}\ket{1}) \bigotimes (\ket{0} + e^{\frac{2i\pi x}{2^2}}\ket{1}) \bigotimes ... \bigotimes(\ket{0} + e^{\frac{2i\pi x}{2^{n-1}}}\ket{1}) \bigotimes (\ket{0} + e^{\frac{2i\pi x}{2^n}}\ket{1})$
 
 
 \section{Methodology}
@@ -1057,18 +1363,8 @@ Mauris interdum porttitor fringilla. Proin tincidunt sodales leo at ornare. Done
 %	PROBLEM 2
 %----------------------------------------------------------------------------------------
 
-\section{References and Bibliographies}
-
-
-
-
-
-
-
-
-
-
-
+\section{References and Bibliography}
+\printbibliography[heading=none]
 
 \end{document}
 https://www.overleaf.com/project/621f925c52bf57288226281e

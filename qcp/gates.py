@@ -15,10 +15,11 @@
 Contains the code required calculate the required gates used to construct
 Grover's Algorithm
 """
+import math
 import cmath
 from qcp.matrices import Matrix, DefaultMatrix, SPARSE
 import qcp.constants as c
-from qcp.matrices.types import SCALARS
+from qcp.matrices.types import MATRIX, SCALARS
 import qcp.tensor_product as tp
 from typing import List
 import enum
@@ -114,7 +115,7 @@ def control_x(size: int, controls: List[int], target: int) -> Matrix:
     assert target in bit_bounds, "target bit out of range"
 
     assert target not in \
-           controls, "control bits and target bit cannot be the same"
+        controls, "control bits and target bit cannot be the same"
 
     m: SPARSE = {}
 
@@ -186,7 +187,7 @@ def _generic_control(size: int, controls: List[int],
     assert target in bit_bounds, "target bit out of range"
 
     assert target not in \
-           controls, "control bits and target bit cannot be the same"
+        controls, "control bits and target bit cannot be the same"
 
     m: SPARSE = {}
 
@@ -234,6 +235,7 @@ def control_z(size: int, controls: List[int], target: int) -> Matrix:
     """
     Constructs a (2**size by 2**size) control-z gate with
      given controls and target
+
     :param int size: total number of qubits in circuit
     :param List[int] controls: List of control qubits
     :param int target: target qubit the z gate will be applied to
@@ -283,3 +285,96 @@ def phase_shift(phi: complex) -> Matrix:
         Matrix: Matrix representing the phase shift gate.
     """
     return DefaultMatrix([[1, 0], [0, cmath.exp(1j * phi)]])
+
+
+def swap(size: int, target0: int, target1: int) -> Matrix:
+    """
+    Construct swap gate which swaps two states
+
+    :param int size: total number of qubits in circuit
+    :param int target0: The first target bit to swap
+    :param int target1: The second target bit to swap
+
+    returns:
+        Matrix: Matrix representing the gate
+    """
+    # Can be optimized further
+
+    assert size > 1, "need minimum of two qbits"
+    assert target0 != target1, "swap targets must be different"
+
+    bit_bounds = range(size)
+    assert target0 in bit_bounds, "first target bit out of range"
+    assert target1 in bit_bounds, "second target bit out of range"
+
+    target0, target1 = sorted((target0, target1))
+
+    n = 2 ** size
+    swapgate: Matrix = DefaultMatrix.zeros(n, n)
+
+    for i in range(2**size):
+        bit_str = (bin(i)[2:].zfill(size))
+        swapbit_str = (
+            bit_str[0:target0] +
+            bit_str[target1] +
+            bit_str[target0+1:target1] +
+            bit_str[target0] +
+            bit_str[target1+1:]
+        )
+
+        bit = int(bit_str, 2)
+        swapbit = int(swapbit_str, 2)
+        vec_entries: MATRIX = [[0] for _ in range(2**size)]
+        swapvec_entries: MATRIX = [[0] for _ in range(2**size)]
+        vec_entries[bit] = [1]
+        swapvec_entries[swapbit] = [1]
+        vector = DefaultMatrix(vec_entries)
+        swapvector = DefaultMatrix(swapvec_entries)
+        # Outer product to create matrix
+        swapgate += swapvector*vector.transpose()
+
+    return swapgate
+
+
+def control_u(size: int, control: int, unitary: Matrix):
+    """
+    Implement the control U gate
+
+    :param int size: number of qubits
+    :param int control: control qubit
+    :param Matrix unitary: Unitary gate to apply
+    returns:
+        Matrix: Matrix representing the gate
+    """
+    assert size > 1, "need minimum of two qubits"
+
+    # Make sure the control bit is within the qbit size
+    assert control in range(size), "control bit out of range"
+    assert control not in range(
+        size, size+unitary.num_rows), \
+        "control bit cannot be in auxiliary register"
+    assert unitary.square, "unitary matrix must be square"
+    assert unitary.num_rows < size, "unitary matrix too big"
+
+    gate0 = DefaultMatrix([[1, 0], [0, 0]])
+    gate1 = DefaultMatrix([[0, 0], [0, 1]])
+
+    targetsize = int(math.log2(unitary.num_rows))
+
+    n1 = 2**(control + targetsize)
+    id1 = DefaultMatrix.identity(n1)
+    n2 = 2**(size - 1 - control - targetsize)
+    id2 = DefaultMatrix.identity(n2)
+
+    interim1 = tp.tensor_product(gate0, id2)
+    cu_gate = tp.tensor_product(id1, interim1)
+
+    n3 = 2**control
+    id3 = DefaultMatrix.identity(n3)
+
+    interim2 = tp.tensor_product(id3, gate1)
+    interim3 = tp.tensor_product(interim2, id2)
+
+    cu_gate += tp.tensor_product(unitary, interim3)
+
+    return cu_gate

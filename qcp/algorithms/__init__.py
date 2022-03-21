@@ -11,9 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-Define custom widgets to handle embedding of a matplotlib chart into
-our UI.
-"""
-from qcp.ui.widgets.embedded_graph import EmbeddedGraph  # noqa: F401
-from qcp.ui.widgets.graph_widget import GraphWidget  # noqa: F401
+from qcp.algorithms.abstract_algorithm import GeneralAlgorithm  # noqa: F401
+from qcp.algorithms.grovers_algorithm import Grovers  # noqa: F401
+from qcp.algorithms.phase_estimation import PhaseEstimation  # noqa: F401
+from qcp.algorithms.sudoku import Sudoku  # noqa: F401

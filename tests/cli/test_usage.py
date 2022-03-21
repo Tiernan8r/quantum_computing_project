@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Copyright 2022 Tiernan8r
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,28 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-Initialiser for the UI main window.
-"""
-import os
-import sys
+import pytest
+import qcp.cli.usage as u
 
-# Required to guarantee that the 'qcp' module is accessible when
-# this file is run directly.
-if os.getcwd() not in sys.path:
-    sys.path.append(os.getcwd())
-
-from PySide6.QtWidgets import QApplication
-from qcp.ui.main_window import MainWindow
+EXPECTED_USAGE = u.USAGE_STR + "\n"
 
 
-def initialise_ui():
-    app = QApplication(sys.argv)
-    main_window = MainWindow()
-    main_window.show()
+def test_usage(capsys):
+    with pytest.raises(SystemExit) as se:
+        u.usage()
 
-    sys.exit(app.exec())
-
-
-if __name__ == "__main__":
-    initialise_ui()
+    assert se.match("0")
+    # Capture the output of stdout (the print() statements...)
+    captured = capsys.readouterr()
+    assert captured.out == EXPECTED_USAGE

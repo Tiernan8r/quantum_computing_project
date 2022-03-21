@@ -16,6 +16,9 @@ from PySide6 import QtCore
 from qcp.ui.components import AbstractComponent, \
     ButtonComponent, GraphComponent
 from qcp.ui.constants import LCD_CLASSICAL, LCD_GROVER
+from qcp.matrices import Matrix
+import qcp.algorithms as ga
+import math
 
 
 class SimulatorComponent(AbstractComponent):
@@ -44,8 +47,6 @@ class SimulatorComponent(AbstractComponent):
         self.graph_component = graph_component
         super().__init__(main_window, *args, **kwargs)
 
-        self.graph_component.hide()
-
     def setup_signals(self):
         """
         Initialise the QThread to run the simulation on and have it ready
@@ -54,7 +55,8 @@ class SimulatorComponent(AbstractComponent):
         Setup signals to display the graph when the calculation completes,
         and to hide the cancel button and progress bar.
         """
-        self._find_widgets()
+        super().setup_signals()
+
         self.qcp_thread = SimulateQuantumComputerThread()
         self.qcp_thread.simulation_result_signal.connect(
             self._simulation_results)
@@ -74,23 +76,25 @@ class SimulatorComponent(AbstractComponent):
             elif lcd.objectName() == LCD_GROVER:
                 self.lcd_grover = lcd
 
-    def run_simulation(self):
+    def run_simulation(self, nqbits, target):
         """
         Pass the input parameters to the QThread, and start up the
         simulation
         """
         # Code to initialise the qcp simulation on the qthread
-        if not self.qcp_thread.isRunning():
-            self.qcp_thread.exiting = False
-            self.qcp_thread.start()
+        # Pass the number of qbits and target bit over to the thread
+        self.nqbits = nqbits
+        self.qcp_thread.simulation_input_signal.emit(nqbits, target)
 
-    @QtCore.Slot(float)
-    def _simulation_results(self, float):
+    @QtCore.Slot(Matrix)
+    def _simulation_results(self, qregister):
         """
         Signal catcher to read in the simulation results from the
         QThread that it is calculated in.
         """
-        pass
+        self.graph_component.display(qregister)
+
+        self.button_component.pb_thread.exiting = True
 
     def simulation_finished(self):
         """
@@ -106,11 +110,16 @@ class SimulatorComponent(AbstractComponent):
         computer would have needed to run the search, versus the number
         of iterations our quantum simulation took.
         """
-        classical_value = self.lcd_classical.value()
-        self.lcd_classical.display(classical_value + 1)
+        if not self.nqbits:
+            return
 
-        quantum_value = self.lcd_grover.value()
-        self.lcd_grover.display(quantum_value + 1)
+        # TODO: Don't know if this reasoning makes sense...
+        number_entries = math.log2(self.nqbits)
+        classical_average = math.ceil(number_entries / 2)
+        quantum_average = math.ceil(math.sqrt(number_entries))
+
+        self.lcd_classical.display(classical_average)
+        self.lcd_grover.display(quantum_average)
 
 
 class SimulateQuantumComputerThread(QtCore.QThread):
@@ -118,17 +127,37 @@ class SimulateQuantumComputerThread(QtCore.QThread):
     QThread object to handle the running of the Quantum Computer
     Simulation, input/output is passed back to the main thread by pipes.
     """
-    simulation_result_signal = QtCore.Signal(float)
+    simulation_result_signal = QtCore.Signal(Matrix)
+    simulation_input_signal = QtCore.Signal(int, int)
 
     def __init__(self, parent=None):
         """
         Setup the SimulateQuantumComputerThread QThread.
         """
         super().__init__(parent)
+        self.simulation_input_signal.connect(self.input)
         self.exiting = False
+
+    @QtCore.Slot(int, int)
+    def input(self, qbits, target):
+        if not self.isRunning():
+            self.nqbits = qbits
+            self.target = target
+            self.exiting = False
+            self.start()
+        else:
+            print("simulation already running!")
 
     def run(self):
         """
         Run the simulation
         """
+        # TODO: Actual calculated results would be passed back here...
+        grovers = ga.Grovers(self.nqbits, self.target)
+        qregister = None
+        try:
+            qregister = grovers.run()
+        except AssertionError as ae:
+            print(ae)
+        self.simulation_result_signal.emit(qregister)
         self.quit()

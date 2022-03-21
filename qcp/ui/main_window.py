@@ -41,8 +41,7 @@ class MainWindow(QMainWindow):
         self.graph_component = comp.GraphComponent(self)
         self.input_component = comp.InputComponent(self)
         self.button_component = comp.ButtonComponent(
-            self, self.input_component.input_search,
-            self.input_component.input_target)
+            self, self.input_component)
 
         self.simulator = comp.SimulatorComponent(
             self, self.button_component, self.graph_component)
