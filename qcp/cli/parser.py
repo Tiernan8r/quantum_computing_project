@@ -21,11 +21,11 @@ from typing import Dict, List, Tuple
 
 import qcp.cli.interpret as i
 import qcp.cli.usage as u
-from qcp.cli.constants import (ALGORITHM_LONG, DEFAULT_ALGORITHM,
-                               DEFAULT_TARGET, FLAG_MAPPING, GUI_LONG, HELP_LONG,
-                               TARGET_LONG)
-from qcp.cli.options import AlgorithmOption
 import qcp.ui.main as ui
+from qcp.cli.constants import (ALGORITHM_LONG, DEFAULT_ALGORITHM,
+                               DEFAULT_TARGET, FLAG_MAPPING, GUI_LONG,
+                               HELP_LONG, TARGET_LONG)
+from qcp.cli.options import AlgorithmOption
 
 
 def parse_input(args: List[str]) -> Tuple[Dict[str, str], List[str]]:
