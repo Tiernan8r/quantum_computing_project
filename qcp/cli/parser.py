@@ -21,7 +21,7 @@ from typing import Dict, List, Tuple
 
 import qcp.cli.interpret as i
 import qcp.cli.usage as u
-import qcp.ui.main as ui
+import qcp.gui.main as gui
 from qcp.cli.constants import (ALGORITHM_LONG, DEFAULT_ALGORITHM,
                                DEFAULT_TARGET, FLAG_MAPPING, GUI_LONG,
                                HELP_LONG, TARGET_LONG)
@@ -91,7 +91,7 @@ def read_cli(args: List[str]):
         u.usage()
 
     if GUI_LONG in flags:
-        ui.initialise_ui()
+        gui.initialise_ui()
 
     if ALGORITHM_LONG not in flags:
         flags[ALGORITHM_LONG] = DEFAULT_ALGORITHM
