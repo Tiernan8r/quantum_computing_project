@@ -94,19 +94,8 @@ class GroverButtonComponent(AbstractComponent):
         overtime, to visualise that the computer is running a calculation in
         the background.
         """
-        nqbits = 0
-        try:
-            nqbits = self.input_component.parse_input()
-        except ValueError as ve:
-            print(ve)
-            return
-
-        target = 0
-        try:
-            target = self.input_component.parse_target(nqbits)
-        except ValueError as ve:
-            print(ve)
-            return
+        nqbits = self.input_component.parse_input()
+        target = self.input_component.parse_target()
 
         self.cancel_button.show()
 

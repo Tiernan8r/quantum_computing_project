@@ -17,14 +17,8 @@ File where all constants related to UI functionality are defined.
 
 #: The widget name for the input search text box
 INPUT_SEARCH_WIDGET_NAME = "input_search"
-#: The widget name for the label to display any error message about search
-#: input
-INPUT_SEARCH_ERROR_WIDGET_NAME = "input_search_error"
 #: The widget name for the input target text box
 INPUT_TARGET_WIDGET_NAME = "input_target"
-#: The widget name for the label to display any error message about
-#: target input
-INPUT_TARGET_ERROR_WIDGET_NAME = "input_target_error"
 
 #: The widget name for the button to initialise the search
 BUTTON_SEARCH_BUTTON = "search_button"
