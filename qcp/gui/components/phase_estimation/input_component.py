@@ -19,6 +19,7 @@ from qcp.gui.components.phase_estimation.constants import (
     INPUT_EIGENVECTOR_WIDGET_NAME, INPUT_NQBITS_WIDGET_NAME,
     INPUT_UNITARY_WIDGET_NAME)
 from qcp.matrices import DefaultMatrix, Matrix
+from qcp.matrices.types import SPARSE
 
 
 class PhaseInputComponent(AbstractComponent):
@@ -99,7 +100,7 @@ class PhaseInputComponent(AbstractComponent):
 
     def _parse_table_input(self, table: QtWidgets.QTableWidget) -> Matrix:
         n, m = table.rowCount(), table.columnCount()
-        entries = {i: {} for i in range(n)}
+        entries: SPARSE = {i: {} for i in range(n)}
 
         for i in range(n):
             for j in range(m):

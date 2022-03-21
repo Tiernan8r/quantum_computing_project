@@ -127,9 +127,9 @@ class Sudoku(GeneralAlgorithm):
             probability of observing that solution
         """
         prob = reg.measure(self.state)
-        sol_probs = [0] * 16
+        sol_probs = [0 for _ in range(16)]
         for i in range(len(prob)):
-            sol_probs[i % 16] += prob[i]
+            sol_probs[i % 16] += prob[i]  # type: ignore
 
         observed = random.choices(
             [i for i in range(len(sol_probs))], sol_probs, k=1)  # type: ignore
