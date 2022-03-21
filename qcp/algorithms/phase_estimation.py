@@ -183,6 +183,28 @@ class PhaseEstimation(GeneralAlgorithm):
 
         return third * second * first
 
+    def measure_probabilities(self):
+        p = self._amplitude()
+        n_bits = int(math.log2(2**self.size))
+
+        for i in range(2**self.size):
+            binary = bin(i)[2:].zfill(n_bits)
+            print(f"|{binary}> : {p[i]:.4g}")
+
+    def _amplitude(self):
+        n = 2 ** self.size
+
+        result = DefaultMatrix.zeros(n)
+        for i in range(2**self.size):
+            tp_mat = DefaultMatrix.zeros(n)
+            tp_mat[i][0] = 1
+            trial = tp.tensor_product(self.auxiliary, tp_mat)
+            result[i] = (trial.transpose()*self.state)[0]
+
+        p = reg.measure(result)
+
+        return p
+
     def measure(self):
         """
         'measures' self.state by selecting a state weighted by its
@@ -190,18 +212,9 @@ class PhaseEstimation(GeneralAlgorithm):
         :return: the state observed and the probability of measuring
                 said state
         """
-        result = DefaultMatrix([[0] for _ in range(2**self.size)])
-        for i in range(2**self.size):
-            entries = [[0] for _ in range(2**self.size)]
-            entries[i] = [1]
-            trial = tp.tensor_product(self.auxiliary, DefaultMatrix(entries))
-            result[i] = (trial.transpose()*self.state)[0]
 
-        p = reg.measure(result)
+        p = self._amplitude()
         observed = random.choices([i for i in range(len(p))], p, k=1)
         probability = p[observed[0]]
-        for i in range(2**self.size):
-            # print all the possiblities
-            # Should be removed, implement GUI histogram instead
-            print(i, round(p[i], 4))
-        return int(observed[0]/2**self.size), round(probability, 4)
+
+        return int(observed[0]/2**self.size), probability

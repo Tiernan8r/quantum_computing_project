@@ -86,6 +86,7 @@ FLAGS:
                         s   = Toy Sudoku solver
                     Defaults to 'g' if unset
     -h/--help       Display this prompt
+    -g/--gui      Display the GUI.
 
 The CLI options vary by choice of algorithm:
 
@@ -159,7 +160,7 @@ easier.
 
 The GUI can be initialised with the following command:
 ```console
-$ ./qcp/gui/main.py
+$ ./qcp/main.py -g
 ```
 
 This will bring up the GUI, defaulting to Grover's Algorithm.
