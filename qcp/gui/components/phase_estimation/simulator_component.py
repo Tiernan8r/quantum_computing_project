@@ -11,24 +11,22 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from PySide6 import QtWidgets
-from PySide6 import QtCore
-from qcp.ui.components import AbstractComponent, \
-    ButtonComponent, GraphComponent
-from qcp.ui.constants import LCD_CLASSICAL, LCD_GROVER
+import qcp.algorithms as alg
+from PySide6 import QtCore, QtWidgets
+from qcp.gui.components import (AbstractComponent, GraphComponent,
+                                SimulateAlgorithmThread)
+from qcp.gui.components.phase_estimation import PhaseButtonComponent
 from qcp.matrices import Matrix
-import qcp.algorithms as ga
-import math
 
 
-class SimulatorComponent(AbstractComponent):
+class PhaseSimulatorComponent(AbstractComponent):
     """
     UI Component that handles the background task of running the Quantum
     Computer Simulator code on a separate QThread.
     """
 
     def __init__(self, main_window: QtWidgets.QMainWindow,
-                 button_component: ButtonComponent,
+                 button_component: PhaseButtonComponent,
                  graph_component: GraphComponent, *args, **kwargs):
         """
         Initialise the SimulatorComponent object, referencing the main window
@@ -57,26 +55,19 @@ class SimulatorComponent(AbstractComponent):
         """
         super().setup_signals()
 
-        self.qcp_thread = SimulateQuantumComputerThread()
+        self.qcp_thread = SimulateAlgorithmThread()
         self.qcp_thread.simulation_result_signal.connect(
             self._simulation_results)
 
-        self.qcp_thread.finished.connect(self.update_lcd_displays)
         # Hide the cancel button if the calculation finishes
         self.qcp_thread.finished.connect(
             self.button_component.cancel_button.hide)
 
         self.qcp_thread.finished.connect(self.simulation_finished)
 
-    def _find_widgets(self):
-        lcds = self.main_window.ui_component.findChildren(QtWidgets.QLCDNumber)
-        for lcd in lcds:
-            if lcd.objectName() == LCD_CLASSICAL:
-                self.lcd_classical = lcd
-            elif lcd.objectName() == LCD_GROVER:
-                self.lcd_grover = lcd
-
-    def run_simulation(self, nqbits, target):
+    def run_simulation(self, nqbits: int,
+                       unitary: Matrix,
+                       eigenvector: Matrix):
         """
         Pass the input parameters to the QThread, and start up the
         simulation
@@ -84,14 +75,22 @@ class SimulatorComponent(AbstractComponent):
         # Code to initialise the qcp simulation on the qthread
         # Pass the number of qbits and target bit over to the thread
         self.nqbits = nqbits
-        self.qcp_thread.simulation_input_signal.emit(nqbits, target)
+        input_tuple = (
+            alg.PhaseEstimation,
+            nqbits,
+            unitary,
+            eigenvector
+        )
 
-    @QtCore.Slot(Matrix)
-    def _simulation_results(self, qregister):
+        self.qcp_thread.simulation_input_signal.emit(input_tuple)
+
+    @QtCore.Slot(tuple)
+    def _simulation_results(self, results_tuple):
         """
         Signal catcher to read in the simulation results from the
         QThread that it is calculated in.
         """
+        qregister = results_tuple[1]
         self.graph_component.display(qregister)
 
         self.button_component.pb_thread.exiting = True
@@ -103,61 +102,3 @@ class SimulatorComponent(AbstractComponent):
         Shows the quantum state on the matplotlib graph
         """
         self.graph_component.show()
-
-    def update_lcd_displays(self):
-        """
-        Show the comparison between the number of iterations a classical
-        computer would have needed to run the search, versus the number
-        of iterations our quantum simulation took.
-        """
-        if not self.nqbits:
-            return
-
-        # TODO: Don't know if this reasoning makes sense...
-        number_entries = math.log2(self.nqbits)
-        classical_average = math.ceil(number_entries / 2)
-        quantum_average = math.ceil(math.sqrt(number_entries))
-
-        self.lcd_classical.display(classical_average)
-        self.lcd_grover.display(quantum_average)
-
-
-class SimulateQuantumComputerThread(QtCore.QThread):
-    """
-    QThread object to handle the running of the Quantum Computer
-    Simulation, input/output is passed back to the main thread by pipes.
-    """
-    simulation_result_signal = QtCore.Signal(Matrix)
-    simulation_input_signal = QtCore.Signal(int, int)
-
-    def __init__(self, parent=None):
-        """
-        Setup the SimulateQuantumComputerThread QThread.
-        """
-        super().__init__(parent)
-        self.simulation_input_signal.connect(self.input)
-        self.exiting = False
-
-    @QtCore.Slot(int, int)
-    def input(self, qbits, target):
-        if not self.isRunning():
-            self.nqbits = qbits
-            self.target = target
-            self.exiting = False
-            self.start()
-        else:
-            print("simulation already running!")
-
-    def run(self):
-        """
-        Run the simulation
-        """
-        # TODO: Actual calculated results would be passed back here...
-        grovers = ga.Grovers(self.nqbits, self.target)
-        qregister = None
-        try:
-            qregister = grovers.run()
-        except AssertionError as ae:
-            print(ae)
-        self.simulation_result_signal.emit(qregister)
-        self.quit()

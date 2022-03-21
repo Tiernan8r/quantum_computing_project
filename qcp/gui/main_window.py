@@ -11,13 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import sys
 import os
+import sys
+
+import qcp.gui.components as comp
+import qcp.gui.components.grovers as grov_comp
+import qcp.gui.components.phase_estimation as pe_comp
+import qcp.gui.components.sudoku as sud_comp
+from PySide6.QtCore import QFile, QIODevice
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QMainWindow
-from PySide6.QtCore import QFile, QIODevice
-from qcp.ui.constants import UI_FILENAME
-import qcp.ui.components as comp
+from qcp.gui.constants import UI_FILENAME
 
 
 class MainWindow(QMainWindow):
@@ -38,13 +42,28 @@ class MainWindow(QMainWindow):
         self.ui_component = self.load_ui()
         self.ui_component.setWindowTitle("Grover's Algorithm")
 
+        # General Components:
+        self.combo_box_component = comp.ComboBoxComponent(self)
         self.graph_component = comp.GraphComponent(self)
-        self.input_component = comp.InputComponent(self)
-        self.button_component = comp.ButtonComponent(
-            self, self.input_component)
 
-        self.simulator = comp.SimulatorComponent(
-            self, self.button_component, self.graph_component)
+        # Grover's Algorithm specific components:
+        self.grov_input_component = grov_comp.GroverInputComponent(self)
+        self.grov_button_component = grov_comp.GroverButtonComponent(
+            self, self.grov_input_component)
+        self.grov_simulator = grov_comp.GroverSimulatorComponent(
+            self, self.grov_button_component, self.graph_component)
+
+        # Phase Estimation components:
+        self.pe_input_component = pe_comp.PhaseInputComponent(self)
+        self.pe_button_component = pe_comp.PhaseButtonComponent(
+            self, self.pe_input_component)
+        self.pe_simulator = pe_comp.PhaseSimulatorComponent(
+            self, self.pe_button_component, self.graph_component)
+
+        # Sudoku solver components:
+        self.sudoku_button_component = sud_comp.SudokuButtonComponent(self)
+        self.sudoku_simulator = sud_comp.SudokuSimulatorComponent(
+            self, self.sudoku_button_component, self.graph_component)
 
     def show(self):
         """
