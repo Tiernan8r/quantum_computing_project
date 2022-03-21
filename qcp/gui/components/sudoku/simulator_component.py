@@ -13,7 +13,8 @@
 # limitations under the License.
 import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
-from qcp.gui.components import AbstractComponent, GraphComponent
+from qcp.gui.components import (AbstractComponent, GraphComponent,
+                                SimulateQuantumComputerThread)
 from qcp.gui.components.sudoku import SudokuButtonComponent, SudokuResultsTable
 from qcp.gui.components.sudoku.constants import (PROBABILITY_DISPLAY,
                                                  PROBABILITY_LABEL,
@@ -63,12 +64,9 @@ class SudokuSimulatorComponent(AbstractComponent):
         self.result_table.hide()
 
         self.qcp_thread = SimulateQuantumComputerThread()
-        self.qcp_thread.simulation_qregister_result_signal.connect(
-            self._qregister_simulation_result)
-        self.qcp_thread.simulation_solutions_result_signal.connect(
-            self._solution_simulation_result)
+        self.qcp_thread.simulation_result_signal.connect(
+            self._simulation_result)
 
-        self.qcp_thread.finished.connect(self.update_table)
         # Hide the cancel button if the calculation finishes
         self.qcp_thread.finished.connect(
             self.button_component.cancel_button.hide)
@@ -99,24 +97,25 @@ class SudokuSimulatorComponent(AbstractComponent):
         Pass the input parameters to the QThread, and start up the
         simulation
         """
-        self.qcp_thread.start_simulation()
-
-    @QtCore.Slot(Matrix)
-    def _qregister_simulation_result(self, qregister):
-        """
-        Signal catcher to read in the simulation results from the
-        QThread that it is calculated in.
-        """
-        self.graph_component.display(qregister)
-
-        self.button_component.pb_thread.exiting = True
+        input_tuple = (
+            alg.Sudoku,
+        )
+        self.qcp_thread.simulation_input_signal.emit(input_tuple)
 
     @QtCore.Slot(tuple)
-    def _solution_simulation_result(self, solutions):
+    def _simulation_result(self, result_tuple):
         """
         Signal catcher to read in the simulation results from the
         QThread that it is calculated in.
         """
+        algorithm: alg.Sudoku = result_tuple[0]
+        qregister = result_tuple[1]
+
+        # Update the graph
+        self.graph_component.display(qregister)
+
+        # update the table
+        solutions = algorithm.measure_solution()
         self.table_model = SudokuResultsTable(solutions[0])
         self.result_table.setModel(self.table_model)
         self.result_table.show()
@@ -127,6 +126,7 @@ class SudokuSimulatorComponent(AbstractComponent):
         self.probability_display.setValue(solution_probability)
         self.probability_display.show()
 
+        # Stop the progress bar thread
         self.button_component.pb_thread.exiting = True
 
     def simulation_finished(self):
@@ -136,59 +136,3 @@ class SudokuSimulatorComponent(AbstractComponent):
         Shows the quantum state on the matplotlib graph
         """
         self.graph_component.show()
-
-    def update_table(self):
-        """
-        Show the comparison between the number of iterations a classical
-        computer would have needed to run the search, versus the number
-        of iterations our quantum simulation took.
-        """
-        # if not self.nqbits:
-        #     return
-
-        # # TODO: Don't know if this reasoning makes sense...
-        # number_entries = math.log2(self.nqbits)
-        # classical_average = math.ceil(number_entries / 2)
-        # quantum_average = math.ceil(math.sqrt(number_entries))
-
-        # self.lcd_classical.display(classical_average)
-        # self.lcd_grover.display(quantum_average)
-
-
-class SimulateQuantumComputerThread(QtCore.QThread):
-    """
-    QThread object to handle the running of the Quantum Computer
-    Simulation, input/output is passed back to the main thread by pipes.
-    """
-    simulation_qregister_result_signal = QtCore.Signal(Matrix)
-    simulation_solutions_result_signal = QtCore.Signal(tuple)
-
-    def __init__(self, parent=None):
-        """
-        Setup the SimulateQuantumComputerThread QThread.
-        """
-        super().__init__(parent)
-        self.exiting = False
-
-    def start_simulation(self):
-        if not self.isRunning():
-            self.exiting = False
-            self.start()
-        else:
-            print("simulation already running!")
-
-    def run(self):
-        """
-        Run the simulation
-        """
-        # TODO: Actual calculated results would be passed back here...
-        sudoku = alg.Sudoku()
-        qregister = None
-        try:
-            qregister = sudoku.run()
-            solutions = sudoku.measure_solution()
-        except AssertionError as ae:
-            print(ae)
-        self.simulation_qregister_result_signal.emit(qregister)
-        self.simulation_solutions_result_signal.emit(solutions)
-        self.quit()

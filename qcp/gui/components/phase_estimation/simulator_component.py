@@ -13,7 +13,7 @@
 # limitations under the License.
 import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
-from qcp.gui.components import AbstractComponent, GraphComponent
+from qcp.gui.components import AbstractComponent, GraphComponent, SimulateQuantumComputerThread
 from qcp.gui.components.phase_estimation import PhaseButtonComponent
 from qcp.matrices import Matrix
 
@@ -74,16 +74,22 @@ class PhaseSimulatorComponent(AbstractComponent):
         # Code to initialise the qcp simulation on the qthread
         # Pass the number of qbits and target bit over to the thread
         self.nqbits = nqbits
+        input_tuple = (
+            alg.PhaseEstimation,
+            nqbits,
+            unitary,
+            eigenvector
+        )
 
-        tuple_input = (nqbits, unitary, eigenvector)
-        self.qcp_thread.simulation_input_signal.emit(tuple_input)
+        self.qcp_thread.simulation_input_signal.emit(input_tuple)
 
-    @QtCore.Slot(Matrix)
-    def _simulation_results(self, qregister):
+    @QtCore.Slot(tuple)
+    def _simulation_results(self, results_tuple):
         """
         Signal catcher to read in the simulation results from the
         QThread that it is calculated in.
         """
+        qregister = results_tuple[1]
         self.graph_component.display(qregister)
 
         self.button_component.pb_thread.exiting = True
@@ -95,49 +101,3 @@ class PhaseSimulatorComponent(AbstractComponent):
         Shows the quantum state on the matplotlib graph
         """
         self.graph_component.show()
-
-
-class SimulateQuantumComputerThread(QtCore.QThread):
-    """
-    QThread object to handle the running of the Quantum Computer
-    Simulation, input/output is passed back to the main thread by pipes.
-    """
-    simulation_result_signal = QtCore.Signal(Matrix)
-    simulation_input_signal = QtCore.Signal(tuple)
-
-    def __init__(self, parent=None):
-        """
-        Setup the SimulateQuantumComputerThread QThread.
-        """
-        super().__init__(parent)
-        self.simulation_input_signal.connect(self.input)
-        self.exiting = False
-
-    @QtCore.Slot(tuple)
-    def input(self, tuple_input):
-        if not self.isRunning():
-            if len(tuple_input) != 3:
-                print("Wrong tuple provided!")
-                return
-            self.nqbits = tuple_input[0]
-            self.unitary_matrix = tuple_input[1]
-            self.eigenvector = tuple_input[2]
-
-            self.exiting = False
-            self.start()
-        else:
-            print("simulation already running!")
-
-    def run(self):
-        """
-        Run the simulation
-        """
-        phase_estimator = alg.PhaseEstimation(
-            self.nqbits, self.unitary_matrix, self.eigenvector)
-        qregister = None
-        try:
-            qregister = phase_estimator.run()
-        except AssertionError as ae:
-            print(ae)
-        self.simulation_result_signal.emit(qregister)
-        self.quit()

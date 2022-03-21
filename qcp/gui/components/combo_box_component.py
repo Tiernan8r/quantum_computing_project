@@ -96,7 +96,7 @@ class ComboBoxComponent(AbstractComponent):
         key = COMBO_BOX_LAYOUT_MAPPING[label]
         layout = self.layouts[key]
 
-        for layout in self.layouts.values():
-            layout.hide()
+        for layouts_to_hide in self.layouts.values():
+            layouts_to_hide.hide()
 
         layout.show()

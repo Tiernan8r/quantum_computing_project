@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>478</width>
-    <height>712</height>
+    <height>754</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,7 +21,17 @@
   </property>
   <widget class="QWidget" name="central_widget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="3" column="0">
+    <item row="0" column="0">
+     <widget class="QLabel" name="title">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Grover's Algorithm:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::RichText</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <layout class="QVBoxLayout" name="algorithms_layout">
@@ -294,94 +304,7 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <layout class="QGridLayout" name="phase_estimation_grid_layout">
-             <item row="3" column="1">
-              <widget class="QTableWidget" name="table_input_eigenvector_pe">
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-               <property name="rowCount">
-                <number>4</number>
-               </property>
-               <property name="columnCount">
-                <number>1</number>
-               </property>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <column/>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_nqbits_pe">
-               <property name="text">
-                <string>Number of qbits:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_eigenvactor_pe">
-               <property name="text">
-                <string>Eigenvector:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QPushButton" name="estimate_phase_button_pe">
-               <property name="text">
-                <string>Estimate Phase</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QPushButton" name="cancel_button_pe">
-               <property name="text">
-                <string>Cancel</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QTableWidget" name="table_input_unitary_pe">
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-               <property name="rowCount">
-                <number>4</number>
-               </property>
-               <property name="columnCount">
-                <number>4</number>
-               </property>
-               <attribute name="horizontalHeaderVisible">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="horizontalHeaderCascadingSectionResizes">
-                <bool>false</bool>
-               </attribute>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_unitary_pe">
-               <property name="text">
-                <string>Unitary Matrix:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QSpinBox" name="input_nqbits_pe">
-               <property name="minimum">
-                <number>2</number>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
+             <item row="4" column="1">
               <widget class="QLabel" name="unitary_error_label">
                <property name="palette">
                 <palette>
@@ -511,7 +434,105 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="1">
+             <item row="6" column="1">
+              <widget class="QTableWidget" name="table_input_eigenvector_pe">
+               <property name="alternatingRowColors">
+                <bool>true</bool>
+               </property>
+               <property name="rowCount">
+                <number>4</number>
+               </property>
+               <property name="columnCount">
+                <number>1</number>
+               </property>
+               <row/>
+               <row/>
+               <row/>
+               <row/>
+               <column/>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_unitary_pe">
+               <property name="text">
+                <string>Unitary Matrix:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <spacer name="verticalSpacer_11">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="10" column="1">
+              <widget class="QPushButton" name="estimate_phase_button_pe">
+               <property name="text">
+                <string>Estimate Phase</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <spacer name="verticalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_eigenvactor_pe">
+               <property name="text">
+                <string>Eigenvector:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <spacer name="verticalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="3" column="1">
+              <spacer name="verticalSpacer_10">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="1">
+              <widget class="QSpinBox" name="input_nqbits_pe">
+               <property name="minimum">
+                <number>2</number>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
               <widget class="QLabel" name="eigenvector_error_label">
                <property name="palette">
                 <palette>
@@ -641,6 +662,60 @@
                </property>
               </widget>
              </item>
+             <item row="10" column="0">
+              <widget class="QPushButton" name="cancel_button_pe">
+               <property name="text">
+                <string>Cancel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1">
+              <spacer name="verticalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_nqbits_pe">
+               <property name="text">
+                <string>Number of qbits:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QTableWidget" name="table_input_unitary_pe">
+               <property name="alternatingRowColors">
+                <bool>true</bool>
+               </property>
+               <property name="rowCount">
+                <number>4</number>
+               </property>
+               <property name="columnCount">
+                <number>4</number>
+               </property>
+               <attribute name="horizontalHeaderVisible">
+                <bool>true</bool>
+               </attribute>
+               <attribute name="horizontalHeaderCascadingSectionResizes">
+                <bool>false</bool>
+               </attribute>
+               <row/>
+               <row/>
+               <row/>
+               <row/>
+               <column/>
+               <column/>
+               <column/>
+               <column/>
+              </widget>
+             </item>
             </layout>
            </item>
           </layout>
@@ -651,15 +726,28 @@
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
             <layout class="QGridLayout" name="sudoku_layout">
-             <item row="6" column="1">
-              <widget class="QPushButton" name="search_button_sudoku">
-               <property name="text">
-                <string>Simulate Simple Sudoku Solver</string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="1">
               <widget class="QTableView" name="table_sudoku"/>
+             </item>
+             <item row="5" column="1">
+              <spacer name="verticalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="9" column="1">
+              <widget class="QPushButton" name="cancel_button_sudoku">
+               <property name="text">
+                <string>Cancel</string>
+               </property>
+              </widget>
              </item>
              <item row="4" column="1">
               <widget class="QLabel" name="probability_label">
@@ -668,17 +756,10 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="2">
+             <item row="6" column="1">
               <widget class="QProgressBar" name="solution_probability">
                <property name="value">
                 <number>24</number>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="2">
-              <widget class="QPushButton" name="cancel_button_sudoku">
-               <property name="text">
-                <string>Cancel</string>
                </property>
               </widget>
              </item>
@@ -695,8 +776,15 @@
                </property>
               </spacer>
              </item>
-             <item row="5" column="1">
-              <spacer name="verticalSpacer_3">
+             <item row="8" column="1">
+              <widget class="QPushButton" name="search_button_sudoku">
+               <property name="text">
+                <string>Simulate Simple Sudoku Solver</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <spacer name="verticalSpacer_5">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -727,6 +815,19 @@
       </item>
      </layout>
     </item>
+    <item row="10" column="0">
+     <widget class="QProgressBar" name="progress_bar">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="0">
      <widget class="QComboBox" name="algorithm_options">
       <property name="frame">
@@ -747,42 +848,6 @@
         <string>Sudoku</string>
        </property>
       </item>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="title">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Grover's Algorithm:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::RichText</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="11" column="0">
-     <widget class="QProgressBar" name="progress_bar">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="value">
-       <number>0</number>
-      </property>
-      <property name="textVisible">
-       <bool>false</bool>
-      </property>
      </widget>
     </item>
    </layout>

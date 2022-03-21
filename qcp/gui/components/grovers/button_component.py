@@ -117,7 +117,7 @@ class GroverButtonComponent(AbstractComponent):
             while self.pb_thread.isRunning():
                 time.sleep(THREAD_PAUSE)
         if self.main_window.grov_simulator.qcp_thread.isRunning():
-            self.grov_simulator.qcp_thread.quit()
+            self.main_window.grov_simulator.qcp_thread.quit()
             time.sleep(THREAD_PAUSE)
 
         self.cancel_button.hide()
