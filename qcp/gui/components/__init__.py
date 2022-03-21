@@ -20,5 +20,5 @@ from qcp.gui.components.abstract_component import \
 from qcp.gui.components.combo_box_component import \
     ComboBoxComponent  # noqa: F401
 from qcp.gui.components.graph_component import GraphComponent  # noqa: F401
-from qcp.gui.components.simulator_component import \
-    SimulateQuantumComputerThread  # noqa: F401
+from qcp.gui.components.threaded_compute import \
+    SimulateAlgorithmThread  # noqa: F401

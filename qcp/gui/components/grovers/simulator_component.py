@@ -15,7 +15,7 @@ import math
 
 import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
-from qcp.gui.components import AbstractComponent, GraphComponent, SimulateQuantumComputerThread
+from qcp.gui.components import AbstractComponent, GraphComponent, SimulateAlgorithmThread
 from qcp.gui.components.grovers import GroverButtonComponent
 from qcp.gui.components.grovers.constants import LCD_CLASSICAL, LCD_GROVER
 from qcp.matrices import Matrix
@@ -57,7 +57,7 @@ class GroverSimulatorComponent(AbstractComponent):
         """
         super().setup_signals()
 
-        self.qcp_thread = SimulateQuantumComputerThread()
+        self.qcp_thread = SimulateAlgorithmThread()
         self.qcp_thread.simulation_result_signal.connect(
             self._simulation_results)
 

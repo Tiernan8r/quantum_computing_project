@@ -18,7 +18,7 @@ from PySide6 import QtCore
 from qcp.matrices import Matrix
 
 
-class SimulateQuantumComputerThread(QtCore.QThread):
+class SimulateAlgorithmThread(QtCore.QThread):
     """
     QThread object to handle the running of the Quantum Computer
     Simulation, input/output is passed back to the main thread by pipes.

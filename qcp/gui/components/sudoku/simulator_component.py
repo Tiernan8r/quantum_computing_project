@@ -14,7 +14,7 @@
 import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import (AbstractComponent, GraphComponent,
-                                SimulateQuantumComputerThread)
+                                SimulateAlgorithmThread)
 from qcp.gui.components.sudoku import SudokuButtonComponent, SudokuResultsTable
 from qcp.gui.components.sudoku.constants import (PROBABILITY_DISPLAY,
                                                  PROBABILITY_LABEL,
@@ -63,7 +63,7 @@ class SudokuSimulatorComponent(AbstractComponent):
         self.probability_label.hide()
         self.result_table.hide()
 
-        self.qcp_thread = SimulateQuantumComputerThread()
+        self.qcp_thread = SimulateAlgorithmThread()
         self.qcp_thread.simulation_result_signal.connect(
             self._simulation_result)
 

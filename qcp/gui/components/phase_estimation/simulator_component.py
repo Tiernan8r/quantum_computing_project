@@ -13,7 +13,7 @@
 # limitations under the License.
 import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
-from qcp.gui.components import AbstractComponent, GraphComponent, SimulateQuantumComputerThread
+from qcp.gui.components import AbstractComponent, GraphComponent, SimulateAlgorithmThread
 from qcp.gui.components.phase_estimation import PhaseButtonComponent
 from qcp.matrices import Matrix
 
@@ -54,7 +54,7 @@ class PhaseSimulatorComponent(AbstractComponent):
         """
         super().setup_signals()
 
-        self.qcp_thread = SimulateQuantumComputerThread()
+        self.qcp_thread = SimulateAlgorithmThread()
         self.qcp_thread.simulation_result_signal.connect(
             self._simulation_results)
 
