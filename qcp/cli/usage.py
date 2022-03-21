@@ -18,7 +18,7 @@ import sys
 
 from qcp.cli.constants import (ALGORITHM_LONG, ALGORITHM_SHORT,
                                DEFAULT_ALGORITHM, DEFAULT_PHASE,
-                               DEFAULT_TARGET, DEFAULT_UNITARY, HELP_LONG,
+                               DEFAULT_TARGET, DEFAULT_UNITARY, GUI_LONG, GUI_SHORT, HELP_LONG,
                                HELP_SHORT, PHASE_LONG, PHASE_SHORT,
                                TARGET_LONG, TARGET_SHORT, UNITARY_LONG,
                                UNITARY_SHORT)
@@ -33,6 +33,7 @@ FLAGS:
                         s   = Toy Sudoku solver
                     Defaults to '{DEFAULT_ALGORITHM}' if unset
     {HELP_SHORT}/{HELP_LONG}       Display this prompt
+    {GUI_SHORT}/{GUI_LONG}      Display the GUI.
 
 The CLI options vary by choice of algorithm:
 

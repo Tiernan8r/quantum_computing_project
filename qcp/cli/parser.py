@@ -22,9 +22,10 @@ from typing import Dict, List, Tuple
 import qcp.cli.interpret as i
 import qcp.cli.usage as u
 from qcp.cli.constants import (ALGORITHM_LONG, DEFAULT_ALGORITHM,
-                               DEFAULT_TARGET, FLAG_MAPPING, HELP_LONG,
+                               DEFAULT_TARGET, FLAG_MAPPING, GUI_LONG, HELP_LONG,
                                TARGET_LONG)
 from qcp.cli.options import AlgorithmOption
+import qcp.ui.main as ui
 
 
 def parse_input(args: List[str]) -> Tuple[Dict[str, str], List[str]]:
@@ -88,6 +89,9 @@ def read_cli(args: List[str]):
 
     if HELP_LONG in flags:
         u.usage()
+
+    if GUI_LONG in flags:
+        ui.initialise_ui()
 
     if ALGORITHM_LONG not in flags:
         flags[ALGORITHM_LONG] = DEFAULT_ALGORITHM
