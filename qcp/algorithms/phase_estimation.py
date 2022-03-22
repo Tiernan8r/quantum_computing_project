@@ -192,4 +192,8 @@ class PhaseEstimation(GeneralAlgorithm):
 
         p = reg.measure(result)
 
-        return p / 2**self.size
+        norm = 1/2**self.size
+        for i in range(len(p)):
+            p[i] *= norm
+
+        return p
