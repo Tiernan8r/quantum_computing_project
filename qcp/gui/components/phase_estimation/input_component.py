@@ -124,7 +124,10 @@ class PhaseInputComponent(AbstractComponent):
         return DefaultMatrix(entries)
 
     def parse_unitary_table_input(self) -> Matrix:
-        return self._parse_table_input(self.unitary_table)
+        unitary_matrix = self._parse_table_input(self.unitary_table)
+
+        if not unitary_matrix.unitary:
+            raise ValueError("input matrix is not unitary!")
 
     def parse_eigenvector_table_input(self) -> Matrix:
         return self._parse_table_input(self.eigenvector_table)

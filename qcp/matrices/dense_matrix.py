@@ -12,9 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from __future__ import annotations
-from qcp.matrices import Matrix
-from qcp.matrices.types import MATRIX, VECTOR, SCALARS, SCALARS_T
+
+import cmath
 from typing import Union
+
+from qcp.matrices import Matrix
+from qcp.matrices.types import MATRIX, SCALARS, SCALARS_T, VECTOR
 
 
 class DenseMatrix(Matrix):
@@ -104,6 +107,26 @@ class DenseMatrix(Matrix):
             int: The number of columns.
         """
         return len(self._state)
+
+    
+    @property
+    def unitary(self) -> bool:
+        """
+        Check if matrix is Unitary (can be shifted to gates.py)
+
+        :param Matrix: input: n x n matrix
+        returns:
+            bool: Whether the matrix is unitary
+        """
+        test = self.adjoint()*self
+        identity = identity(test.num_rows)
+        for i in range(self.num_rows):
+            for j in range(self.num_columns):
+                if cmath.isclose(test[i][j], identity[i][j]):
+                    continue
+                else:
+                    return False
+        return True
 
     def __getitem__(self, i: int) -> VECTOR:
         """

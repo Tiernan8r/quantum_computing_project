@@ -9,25 +9,6 @@ from qcp.algorithms.abstract_algorithm import GeneralAlgorithm
 from qcp.matrices import DefaultMatrix, Matrix
 
 
-def is_unitary(input: Matrix) -> bool:
-    """
-    Check if matrix is Unitary (can be shifted to gates.py)
-
-    :param Matrix: input: n x n matrix
-    returns:
-        bool: Whether the matrix is unitary
-    """
-    test = input.adjoint()*input
-    identity = DefaultMatrix.identity(test.num_rows)
-    for i in range(input.num_rows):
-        for j in range(input.num_columns):
-            if cmath.isclose(test[i][j], identity[i][j]):
-                continue
-            else:
-                return False
-    return True
-
-
 def optimum_qubit_size(precision: int, error: float) -> int:
     """
     Return the number of qubit required for targeted number of decimal
@@ -123,7 +104,7 @@ class PhaseEstimation(GeneralAlgorithm):
         PE.run()
         print(PE.measure())
         """
-        assert is_unitary(unitary), "Matrix must be unitary!"
+        assert unitary.unitary, "Matrix must be unitary!"
         self.unitary = unitary
 
         self.auxiliary = eigenvector
