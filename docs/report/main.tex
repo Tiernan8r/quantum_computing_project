@@ -62,13 +62,12 @@
 \vspace*{0.1\textheight}
 
 \begin{center}
-        \huge{\bfseries Quantum Computing Project}\\
+        \huge{\bfseries Quantum Computing Project Group 5}\\
 \end{center}
 
 \bigskip
 
 \begin{center}
-        \large{\textbf{Group 5:}}\\
         \large{Jabeth Musumba}\\
         \large{Yi Sheng Ng}\\
         \large{Finn John Onori}\\
@@ -124,7 +123,7 @@ The qubit can be thought of as the "quantum" counterpart to the classical bit.
 \vspace{5mm}
 
 \noindent
-A bit is expressed in binary numbers of 0 and 1. In the most simple case of a classical bit, a bit can only be in the state of 0 or 1. However as for the quantum analogue, a qubit is expressed in a superposition of both the binary state of 0 and 1.
+A bit is expressed in binary numbers of 0 and 1. In the most simple case of a classical bit, a bit can only be in the state of 0 or 1. However as for the quantum analogue, a qubit can be expressed in a superposition of both the binary state of 0 and 1.
 \vspace{5mm}
 
 \noindent
@@ -427,7 +426,7 @@ X\ket{0} = \ket{1} , \ \ X\ket{1} = \ket{0}
 \vspace{5mm}
 
 \noindent
-The Pauli X Gate essentially swaps the qubits around. This effect of this gate is also known as bit flip. The gate is a single qubit rotation around the x-axis by $\pi$
+The Pauli X Gate acts very similar to a classical NOT gate. This effect of this gate is also known as bit flip. The gate is a single qubit rotation around the x-axis by $\pi$
 \vspace{5mm}
 
 
@@ -1218,6 +1217,9 @@ Due to the constraints of currently available quantum computers, Grover's Algori
 Suppose you have a unitary operator $U$ and its eigenvector $\ket{u}$ with eigenvalue $e^{2\pi i \phi}$, with $\phi$ unknown. By performing phase estimation, we can estimate $\phi$ (exact if the decimal expansion of $\phi$ is finite), up to required precision $n$. Phase estimation is needed for the algorithm of order-finding and it's extension, Shor's factoring algorithm. The figure below illustrate this process.
 
 \vspace{5mm}
+\begin{figure}
+    \centering
+    
 
 \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
@@ -1252,9 +1254,9 @@ Suppose you have a unitary operator $U$ and its eigenvector $\ket{u}$ with eigen
 
 
 \end{tikzpicture}
-\begin{center}
-    Phase Estimation (abbreviated as QPE).
-\end{center}  
+
+\caption{Phase Estimation (abbreviated as QPE).}
+\end{figure}
 
 \subsection{Quantum Fourier Transform}
 To implement the phase estimation algorithm, the key ingredient is the quantum Fourier transform. Quantum Fourier transform is analogous to the classical discrete Fourier transform, where the basis of a vector is changed into another basis that is useful for computation or analysis. The effect of quantum Fourier transform on an arbitrary state vector can be summarised as below \cite{nielsen_quantum_2010}:
@@ -1688,14 +1690,16 @@ m = 3 + \bigg[log_2\bigg(2+\frac{1}{0.6}\bigg)\bigg]=4.5 \rightarrow m=5
 
 \subsection{Git}
 
+\pagebreak
+
 \section{Coding with Python}
-The first step of the project was for the group to choose which language to implement the system with. Options included C, C++, Java, Haskell, but the final decision was to use Python. This was our language of choice for several reasons: Most of our team has experience with the language, the language is object-oriented which means matrices and, as will be shown later, Grover’s Algorithm could be created as an object from a class (This made matrix multiplication easier and improved the modularity/readability of the code), It’s more general-purpose compared to languages such as Haskell or Java (Haskell being a purely functional language, and Java being purely an object oriented language, Python combines necessary features of both), and it uses high-level syntax in comparison to languages like C and C++ making it more appropriate for a high-level task such as this which involves matrix multiplication and high level operations. Once the language was decided the next step was to implement some basic quantum operations.
+The first step of the project was for the group to choose which language to implement the system with. Options included C, C++, Java, and Haskell, but the final decision was to use Python. This was our language of choice for several reasons: Most of our team has experience with the language making it easier to write the code, the language is object-oriented which means Grover’s Algorithm could be created as an object from a class which reduced the amount of repeated code when several versions of Grover's Algorithm were  implemented, It’s more general-purpose compared to languages such as Haskell or Java (Haskell being a purely functional language, and Java being purely an object oriented language, Python combines necessary features of both), and it uses high-level syntax in comparison to languages like C and C++ making it more appropriate for a high-level task such as this which involves matrix multiplication. Once the language was decided the next step was to implement some basic quantum operations.
 
 \subsection{Tensor Products}
-When mathematically representing a quantum computer, qubits are written as column vectors while gates are written as square matrices. To combine a series of gates or qubits their tensor product is taken, therefore a function that takes the tensor product of two matrices in Python is needed to implement Grover's Algorithm. This was done in the \textit{tensor\_product.py} file which contains the function \textit{tensor\_product(A: Matrix, B: Matrix)}. This function takes two objects of the class DefaultMatrix (A and B) as inputs, and outputs their tensor product as a DefaultMatrix object. The tensor product was calculated by creating a new empty matrix (C) with a number of columns that is equal to the number of columns that A has multiplied by the number of columns that B has, and with a number of rows that is equal to the number of rows that A has multiplied by the number of rows that B has. This empty matrix is then iterated over itself in a 2D loop with the values in A and B being multiplied together and added to the Matrix C accordingly, this function was used throughout the rest of the project in multiple other functions and made it possible to construct the circuit for Grover's Algorithm. While some of the team work on this function, other members worked on implementing the first quantum gates.
+When mathematically representing a quantum computer, qubits are written as column vectors while gates are written as square matrices. To combine a series of gates or qubits their tensor product is taken, therefore a function that takes the tensor product of two matrices in Python is needed to implement Grover's Algorithm. This was done in the \textit{tensor\_product.py} file which contains the function \textit{tensor\_product(A: Matrix, B: Matrix)}. This function takes two objects of the user defined class DefaultMatrix (A and B) as inputs, and outputs their tensor product as a DefaultMatrix object. This was calculated by creating a new empty matrix (C) with a number of columns that is equal to the number of columns that A has multiplied by the number of columns that B has, and with a number of rows that is equal to the number of rows that A has multiplied by the number of rows that B has. This empty matrix is then iterated over itself in a 2D loop with the values in A and B being multiplied together and added to the Matrix C accordingly. This function was used throughout the rest of the project in almost every file and made it possible to construct the circuit for Grover's Algorithm. While some of the team work on this function, other members worked on implementing the first quantum gates.
 
 \subsection{Matrices}
-Almost all the necessary single qubit gates can be represented as constant matrix, the gate is then applied by multiplying the corresponding matrix by the input qubit. Therefore, rather than creating literal functions for all the necessary gates (IDENTITY, TWO\_HADAMARD, PAULI\_X, PAULI\_Y) these matrices were instead stored in a new file called \textit{constants.py} where the gate can be applied to a qubit by importing the file and multiplying the qubit by the appropriate variable, this reduces the number of lines of code needed. Qubits corresponding to 0 and 1 were also stored in this file (ZERO\_VECTOR, ONE\_VECTOR) to reduce the amount of repeated code. 
+Almost all the necessary single qubit gates can be represented as constant square matrix, the gate is then applied by multiplying the corresponding matrix by the input qubit. Therefore, rather than creating literal functions for all the necessary gates (IDENTITY, TWO\_HADAMARD, PAULI\_X, PAULI\_Y) these matrices were instead stored in a new file called \textit{constants.py} where the gate can be applied to a qubit by importing the file and multiplying the qubit by the appropriate variable, this reduces the amount of repeated code and improves readability. Qubits corresponding to 0 and 1 were also stored in this file (ZERO\_VECTOR, ONE\_VECTOR) to further reduce repeated code and were used throughout testing. 
 
 \begin{file}[constants.py]
 \begin{lstlisting}[language=Python]
@@ -1716,9 +1720,9 @@ PAULI_Z = DefaultMatrix([[1, 0], [0, -1]])
 \end{lstlisting}
 \end{file}
 
-The only single qubit gate that did not have a matrix stored in the \textit{constants.py} file was the phase shift gate, since its matrix depends on a rotation angle. To account for this a function called \textit{phase\_shift(phi: complex)} was implemented in a new file called \textit{gates.py}, which takes a complex number as an input and outputs a DefaultMatrix representing the phase shift gate of the inputted angle. With the simple single qubit gates implemented, larger gates can now be constructed from the smaller gates in the \textit{gates.py} file.
+The only single qubit gate that did not have a matrix stored in the \textit{constants.py} file was the phase shift gate, since its matrix is not constant and depends on the rotation angle. To account for this a function called \textit{phase\_shift(phi: complex)} was implemented in a new file called \textit{gates.py}, which takes a complex number as an input and outputs a DefaultMatrix representing the phase shift gate of the inputted angle. With the single qubit gates implemented, larger gates can now be constructed from the smaller gates in the remainder of the \textit{gates.py} file.
 
-\begin{file}[phase\_shift(phi: complex) -> Matrix:]
+\begin{file}[def phase\_shift(phi: complex) -> Matrix:]
 \begin{lstlisting}[language=Python]
 return DefaultMatrix([[1, 0], 
 	[0, cmath.exp(1j * phi)]])
@@ -1728,137 +1732,163 @@ return DefaultMatrix([[1, 0],
 
 \subsection{Gates}
 
-One of the first large gate functions in the \textit{gates.py} file was called \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} which chains multiple single qubit gates together on specified target input qubits by calculating the tensor product of an arbitrary number of matrices. The function takes in the following variables as inputs: size (represents the number of qubits being chained together), targets (which qubits to have the gate applied to), gate (which single qubit gate needs to be applied), and phi (only for phase gates as it represents the amount of rotation necessary). With those inputs the function \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} then computes the values of a large matrix by taking the specified gate and multiplying it by itself in a loop over the input size, if the loop index is not currently one of the target qubits it multiplies by an appropriately sized identity matrix instead. This corresponds to having a certain sequence of gates chained together with an arbitrary number of qubits, which will become important when Hadamard gates need to be chained together to construct the superposition required when searching for an index in Grover’s Algorithm. The other gates that were implemented in this file were the control\_x/z/phase gates, these functions worked by first introducing various assertions, and then creating a matrix with rows and columns of size 2**qubits. The matrix diagonals at first take on the form of an identity matrix while the last four items in the matrix are changed to correspond with the type of gate needed in the function, this was then returned as a DefaultMatrix. To reduce the amount of repeated code a function called \textit{\_generic\_control(size: int, controls: List[int],target: int, cval: SCALARS)} was introduced which was called in the \textit{ control\_z(size: int, controls: List[int], target: int) } and \textit{control\_phase(size: int, controls: List[int], target: int, phi: complex)} functions. This design choice was made to improve efficiency as a large series of gates could be constructed from only a few functions which dramatically reduces the amount of code needed. This also allowed the tasks both current and ahead to become much easier since problem was broken up into smaller pieces. With all the necessary quantum gates in place it was now possible to begin implementing Grover’s Algorithm.
+One of the first large gate functions implemented in the \textit{gates.py} file was called \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} which chains multiple single qubit gates together on specified target input qubits by calculating the tensor product of an arbitrary number of matrices. The function takes the following variables as inputs: size (represents the number of qubits being chained together), targets (which qubits the gate applies to), gate (which single qubit gate needs to be applied), and phi (only for phase gates as it represents the amount of rotation). With those inputs the function \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} computes the values of a large matrix by taking the tensor product of the specified gate as a running product in a loop over the number of qubits (size), if the loop index is not currently one of the target qubits it multiplies by an appropriately sized identity matrix instead.
 
-
-\section{Implementation}
-
-Proin lobortis efficitur dictum. Pellentesque vitae pharetra eros, quis dignissim magna. Sed tellus leo, semper non vestibulum vel, tincidunt eu mi. Aenean pretium ut velit sed facilisis. Ut placerat urna facilisis dolor suscipit vehicula. Ut ut auctor nunc. Nulla non massa eros. Proin rhoncus arcu odio, eu lobortis metus sollicitudin eu. Duis maximus ex dui, id bibendum diam dignissim id. Aliquam quis lorem lorem. Phasellus sagittis aliquet dolor, vulputate cursus dolor convallis vel. Suspendisse eu tellus feugiat, bibendum lectus quis, fermentum nunc. Nunc euismod condimentum magna nec bibendum. Curabitur elementum nibh eu sem cursus, eu aliquam leo rutrum. Sed bibendum augue sit amet pharetra ullamcorper. Aenean congue sit amet tortor vitae feugiat.
-
-In congue risus leo, in gravida enim viverra id. Donec eros mauris, bibendum vel dui at, tempor commodo augue. In vel lobortis lacus. Nam ornare ullamcorper mauris vel molestie. Maecenas vehicula ornare turpis, vitae fringilla orci consectetur vel. Nam pulvinar justo nec neque egestas tristique. Donec ac dolor at libero congue varius sed vitae lectus. Donec et tristique nulla, sit amet scelerisque orci. Maecenas a vestibulum lectus, vitae gravida nulla. Proin eget volutpat orci. Morbi eu aliquet turpis. Vivamus molestie urna quis tempor tristique. Proin hendrerit sem nec tempor sollicitudin.
-
-% File contents
-\begin{file}[hello.py]
+\begin{file}[def multi\_gate(...)-> Matrix:]
 \begin{lstlisting}[language=Python]
-#! /usr/bin/python
+if gate is Gate.H:
+    g = c.TWO_HADAMARD
+elif gate is Gate.X:
+    g = c.PAULI_X
+elif gate is Gate.Z:
+    g = c.PAULI_Z
+elif gate is Gate.P:
+    g = phase_shift(phi)
+else:
+    return DefaultMatrix.identity(2 ** size)
 
-import sys
-sys.stdout.write("Hello World!\n")
+m: Matrix = DefaultMatrix([[1]])
+
+for i in range(size):
+    if i in targets:
+        m = tp.tensor_product(g, m)
+    else:
+        m = tp.tensor_product(c.IDENTITY, m)
+return m
+
 \end{lstlisting}
 \end{file}
 
-Fusce eleifend porttitor arcu, id accumsan elit pharetra eget. Mauris luctus velit sit amet est sodales rhoncus. Donec cursus suscipit justo, sed tristique ipsum fermentum nec. Ut tortor ex, ullamcorper varius congue in, efficitur a tellus. Vivamus ut rutrum nisi. Phasellus sit amet enim efficitur, aliquam nulla id, lacinia mauris. Quisque viverra libero ac magna maximus efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum mollis eros in tellus fermentum, vitae tristique justo finibus. Sed quis vehicula nibh. Etiam nulla justo, pellentesque id sapien at, semper aliquam arcu. Integer at commodo arcu. Quisque dapibus ut lacus eget vulputate.
 
-% Command-line "screenshot"
-\begin{commandline}
-	\begin{verbatim}
-		$ chmod +x hello.py
-		$ ./hello.py
+The resultant matrix corresponds to having a certain sequence of gates chained together, this will become important when Hadamard gates need to be in this configuration during Grover's Algorithm to construct the superposition required when searching for an index. The other gates that were implemented in this file were the control\_x/z/phase gates, these were also introduced as functions and worked by first introducing various assertions, and then creating a matrix with rows and columns of size 2**qubits. The matrix diagonals at first take on the form of an identity matrix, then the function modifies this matrix by swapping the rows that correspond to the target qubits inputted. The function \textit{\_generic\_control(size: int, controls: List[int],target: int, cval: SCALARS)} was introduced which was called in the \textit{ control\_z(size: int, controls: List[int], target: int) } and \textit{control\_phase(size: int, controls: List[int], target: int, phi: complex)} functions. This design choice was made to further reduce the amount of repeated code. With all the necessary quantum gates in place it was now possible to begin implementing Grover’s Algorithm.
 
-		Hello World!
-	\end{verbatim}
-\end{commandline}
+\pagebreak
 
-Vestibulum sodales orci a nisi interdum tristique. In dictum vehicula dui, eget bibendum purus elementum eu. Pellentesque lobortis mattis mauris, non feugiat dolor vulputate a. Cras porttitor dapibus lacus at pulvinar. Praesent eu nunc et libero porttitor malesuada tempus quis massa. Aenean cursus ipsum a velit ultricies sagittis. Sed non leo ullamcorper, suscipit massa ut, pulvinar erat. Aliquam erat volutpat. Nulla non lacus vitae mi placerat tincidunt et ac diam. Aliquam tincidunt augue sem, ut vestibulum est volutpat eget. Suspendisse potenti. Integer condimentum, risus nec maximus elementum, lacus purus porta arcu, at ultrices diam nisl eget urna. Curabitur sollicitudin diam quis sollicitudin varius. Ut porta erat ornare laoreet euismod. In tincidunt purus dui, nec egestas dui convallis non. In vestibulum ipsum in dictum scelerisque.
+\section{Implementation}
 
-% Warning text, with a custom title
-\begin{warn}[Notice:]
-  In congue risus leo, in gravida enim viverra id. Donec eros mauris, bibendum vel dui at, tempor commodo augue. In vel lobortis lacus. Nam ornare ullamcorperhttps://www.overleaf.com/project/623871a9b6b8ed889b783c4d mauris vel molestie. Maecenas vehicula ornare turpis, vitae fringilla orci consectetur vel. Nam pulvinar justo nec neque egestas tristique. Donec ac dolor at libero congue varius sed vitae lectus. Donec et tristique nulla, sit amet scelerisque orci. Maecenas a vestibulum lectus, vitae gravida nulla. Proin eget volutpat orci. Morbi eu aliquet turpis. Vivamus molestie urna quis tempor tristique. Proin hendrerit sem nec tempor sollicitudin.
-\end{warn}
+When implementing Grover's Algorithm in Python it was decided to create a file named \textit{grovers\_algorithm.py} this file contains one helper function called \textit{ pull\_set\_bits(n: int )}, which displays the indexes of the number 1 in the base 2 form of the value, and a Class called \textit{Grovers}. Python was chosen partly because it is an object-oriented language, this allowed all the gates specific to Grover’s Algorithm to be stored as methods in the class while the state of the input qubits could be stored as attributes. This improves the code as it allowed variations of Grover's Algorithm to be created as objects without repeating lines. 
 
-%----------------------------------------------------------------------------------------
+\begin{file}[def \_\_init\_\_(self, size: int, target\_state: int):]
+\begin{lstlisting}[language=Python]
+assert size > 1, 
+assert target_state < (2 ** size),
+
+self.size = size
+self.target = target_state
+self.state = self.initial_state()
+
+self.oracle = self.single_target_oracle()
+self.diffuser = self.diffusion()
+self.max_reflections = self.size - 1
+self.circuit = self.construct_circuit()
+\end{lstlisting}
+\end{file}
+
+Above the contents of the class's initialisation method is displayed which takes in two inputs: size (which is the number of qubits that is required), and target\_state (which is the input the user is searching for in the algorithm) all other attributes are defined through methods in the class and are described as follows.
+
+\subsection{Initial State}
+
+\begin{file}[def initial\_state(self) -> Matrix:]
+\begin{lstlisting}[language=Python]
+entries: MATRIX = [[0] for _ in range(2**self.size)]
+entries[0][0] = 1
+return DefaultMatrix(entries)
+\end{lstlisting}
+\end{file}
+
+This method is simply to initialise the beginning state of the system as zero as a DefaultMatrix. The method first creates a column vector representing the value zero as qubit with the size of the column vector being equal to the inputted size. If for example Grover's Algorithm were set to work with three qubits (done by setting the size attribute to three), it would create a column vector of size eight with the first item being the number one and the rest being the number zero which represents the number zero in qubit form. List comprehension makes the code compact, However the value 1 needs to be manually set, the column vector is then returned as a DefaultMatrix. 
+
+\subsection{Single Target Oracle}
+
+\begin{file}[def single\_target\_oracle(self):]
+\begin{lstlisting}[language=Python]
+not_placement = (2 ** self.size) - 1 - self.target
+t = pull_set_bits(not_placement)
+
+cz = g.control_z(self.size, 
+	[i for i in range(0, self.size - 1)],
+	self.size - 1)
+	
+selector = g.multi_gate(self.size, t, g.Gate.X)
+oracle = selector * cz
+oracle *= selector
+return oracle
+
+\end{lstlisting}
+\end{file}
+
+Single target oracle is a method that creates a matrix representing an oracle gate for a given target and number of qubits. It starts by using \textit{pull\_set\_bits(n: int)} to essentially convert the target into binary form by providing all the indexes of the number 1 in the base 2 version of the target. Which it then uses as a set of input targets in a series of Pauli-X gates chained together using the \textit{multi\_gate(...)} function. Because the oracle is made of the Control-Z and Pauli-X gates in sequence, multiplying the matrix representations of those gates together is enough to create the single target oracle gate.
+
+\subsection{Diffusion}
+
+\begin{file}[def diffusion(self):]
+\begin{lstlisting}[language=Python]
+h = g.multi_gate(self.size, 
+	[i for i in range(0, self.size)], 
+	g.Gate.H)
+			
+cz = g.control_z(self.size, 
+	[i for i in range(0, self.size - 1)], 
+	self.size - 1)
+			
+x = g.multi_gate(self.size, 
+	[i for i in range(0, self.size)], 
+	g.Gate.X)
+			
+diff = h * (x * (cz * (x * h)))
+return diff
+
+\end{lstlisting}
+\end{file}
+
+
+Diffusion is a method that creates a matrix that represents the diffusion operation in Grover's Algorithm. to create the diffusion operator a series a Hadamard gates are first created and placed on either side of the gate once again using the multi-gate function. Then the Control-Z and Pauli-X gates are placed either side. The resulting matrix is then returned for use in the execute method which combines the created gates together.
 
 
 
+
+\subsection{Construction and Running}
+
+Once all the special quantum gates pertaining to Grover's Algorithm are created, the next step is to simply combine them into a single large circuit by multiplying their matrices together. This is done in the \textit{construct\_circuit()} method shown below.
+
+\begin{file}[def construct\_circuit(self) -> Matrix:]
+\begin{lstlisting}[language=Python]
+circuit = g.multi_gate(self.size, 
+	[i for i in range(0, self.size)],
+	g.Gate.H)
+
+while self.max_reflections > 0:
+	circuit = self.oracle * circuit
+	circuit = self.diffuser * circuit
+	self.max_reflections -= 1
+	
+return circuit
+
+\end{lstlisting}
+\end{file}
+
+First the method uses the \textit{multi\_gate(...)} function to chain together a large set of Hadamard gates to create the superposition required. In Grover's Algorithm the oracle and diffusion operator are repeat a number of times that is proportional to the number of qubits being used in the circuit. This is achieved through a running total where the oracle and diffusion operators are multiplied by a running matrix of the circuit while the attribute \textit{max\_reflections} is decreased by 1, this continues until  \textit{max\_reflections} equals zero at which point the matrix representing the full Grover's Algorithm circuit is returned. If a column vector representing a qubit is multiplied by this matrix, the calculation would be representative of Grover's Algorithm. The only other methods in the class are the \textit{measure(self)} and \textit{run(self)} methods. The \textit{run(self)} method simply multiplies the current state of the qubits (which has already been initialised), by the Matrix created in the \textit{construct\_circuit(self)} method. \textit{measure(self)} simply collapses the superposition of the quantum output into a single value which,because of the manipulation of Grover's Algorithm, is almost certainly the target value that the algorithm was designed to search for. The \textit{measure(self)} method works by first measuring the probabilities of all the possible output states using the register.measure() function and then outputting the most probable answer from that array with it's associated probability.In conclusion, by creating a Grover's Class we can generate specific oracles and diffusion gates depending on the target value and number of qubits. This Class lead to a simulation of Grover's algorithm, by creating all the gates in separate methods it lead to clean and efficient code that which can then be re-purposed for other searching operations such as finding solutions to Sudoku puzzles. The final step is testing which is explained in detail in the next chapter.
+
+\pagebreak
 
 \section{Testing and Debugging}
 
+While some team members were constructing code, others were assigned to designing tests for functions as they were created. This allowed the team to work more efficiently as bugs were spotted earlier which lead to fewer bugs in the late stages of the task. When designing tests the assert command was used which made the tests compatible with the Tox utility. Tox is an automated testing tool that can be applied when running a python file, when a file is run using tox it automatically runs all the functions in the file and therefore applies all the tests. Tox then reports how many tests the program passed and how much of the code the tests covered. This tool became invaluable as it allowed the team to measure the robustness of the code and quality of the designed tests. To further aide Tox a separated folder of files specifically for tests was created, this allowed for modularity in the code as the tests files could then be easily removed once the final program was implemented, it also allowed for the use of the tox command in the terminal to allow for analysis of the tests that showed how much of the code the tests reached.
+
+
+\subsection{Testing Simple functions}
+
+ The first tests that were implemented were to test the tensor product with the function \textit{test\_tensor\_product()}. This worked by implementing an array containing a series of matrices of different sizes and contents, with the intention to catch corner cases. Then the tensor product was calculated all these matrices by placing inputting them into the \textit{numpy.kron()} function in a separate file. The answers for these were then placed inside arrays stored in the functions and were compared to the calculated values from our \textit{tensor\_product()} function. Almost all the tests were passed except for the tests with non-square matrices, these bugs where fixed once spotted and the tox command in the terminal let us know that we covered near 100\% of the tensor product code.Similar tests were then constructed for the single qubit gates in the file \textit{test\_gates.py}. Single qubit gates such as the Hadamard were easy to construct tests for simply comparing the 0 and 1 qubit outputs to the hand calculated super-positions. Assertion statements were used to make the test functions compatible with tox in the terminal. We tested code to a satisfactory level and then moved on to the next piece of the project to help catch mistakes and kill bugs before they appear allowing the team to work more efficiently. Helper functions file was introduced to assist with further tests, however the only function that is present in this file was compare matrices which tests if two matrices are roughly equal and uses an assert to be compatible with the tox command in the terminal.  This helper function was used throughout the test files most notably in the \textit{test\_grovers\_algorithm.py} file. 
+\subsection{Testing Grover's Algorithm}
+
+All the individual methods of the \textit{Grovers} class as well as the \textit{pull\_set\_bits()} helper function were tested in the \textit{test\_grovers\_algorithm.py} file. Most of the test functions work the same as with the simple functions were a set of expected values are stored in an array whereupon the calculated values from the function was compared and asserted to be compatible with the Tox utility. To aide in the testing for Grover's Algorithm a new file in the tests folder was created called  \textit{test\_helpers.py} which contained the function \textit{compare\_matrices(A: Matrix, B: Matrix, e=1E-9)}. The purpose of this function was to avoid rounding errors when computing multiplications of matrices since this function contained an assertion for the two matrices in the \textit{is\_close()} function, this avoids repeated code and rounding errors which can make tests fail even when the function works as intended.
 
 
 \section{Issues and Challenges}
 
+\section{Conclusion} % Numbered section
 
-
-
-
-
-% Math equation/formula
-\begin{equation}
-	I = \int_{a}^{b} f(x) \; \text{d}x.
-\end{equation}
-
-Aliquam arcu turpis, ultrices sed luctus ac, vehicula id metus. Morbi eu feugiat velit, et tempus augue. Proin ac mattis tortor. Donec tincidunt, ante rhoncus luctus semper, arcu lorem lobortis justo, nec convallis ante quam quis lectus. Aenean tincidunt sodales massa, et hendrerit tellus mattis ac. Sed non pretium nibh. Donec cursus maximus luctus. Vivamus lobortis eros et massa porta porttitor.
-
-\begin{info} % Information block
-	This is an interesting piece of information, to which the reader should pay special attention. Fusce varius orci ac magna dapibus porttitor. In tempor leo a neque bibendum sollicitudin. Nulla pretium fermentum nisi, eget sodales magna facilisis eu. Praesent aliquet nulla ut bibendum lacinia. Donec vel mauris vulputate, commodo ligula ut, egestas orci. Suspendisse commodo odio sed hendrerit lobortis. Donec finibus eros erat, vel ornare enim mattis et.
-\end{info}
-
-%----------------------------------------------------------------------------------------
-%	PROBLEM 1
-%----------------------------------------------------------------------------------------
-
-\section{Problem title} % Numbered section
-
-In hac habitasse platea dictumst. Curabitur mattis elit sit amet justo luctus vestibulum. In hac habitasse platea dictumst. Pellentesque lobortis justo enim, a condimentum massa tempor eu. Ut quis nulla a quam pretium eleifend nec eu nisl. Nam cursus porttitor eros, sed luctus ligula convallis quis. Nam convallis, ligula in auctor euismod, ligula mauris fringilla tellus, et egestas mauris odio eget diam. Praesent sodales in ipsum eu dictum.
-
-%------------------------------------------------
-
-\subsection{Theoretical viewpoint}
-
-Maecenas consectetur metus at tellus finibus condimentum. Proin arcu lectus, ultrices non tincidunt et, tincidunt ut quam. Integer luctus posuere est, non maximus ante dignissim quis. Nunc a cursus erat. Curabitur suscipit nibh in tincidunt sagittis. Nam malesuada vestibulum quam id gravida. Proin ut dapibus velit. Vestibulum eget quam quis ipsum semper convallis. Duis consectetur nibh ac diam dignissim, id condimentum enim dictum. Nam aliquet ligula eu magna pellentesque, nec sagittis leo lobortis. Aenean tincidunt dignissim egestas. Morbi efficitur risus ante, id tincidunt odio pulvinar vitae.
-
-Curabitur tempus hendrerit nulla. Donec faucibus lobortis nibh pharetra sagittis. Sed magna sem, posuere eget sem vitae, finibus consequat libero. Cras aliquet sagittis erat ut semper. Aenean vel enim ipsum. Fusce ut felis at eros sagittis bibendum mollis lobortis libero. Donec laoreet nisl vel risus lacinia elementum non nec lacus. Nullam luctus, nulla volutpat ultricies ultrices, quam massa placerat augue, ut fringilla urna lectus nec nibh. Vestibulum efficitur condimentum orci a semper. Pellentesque ut metus pretium lacus maximus semper. Sed tellus augue, consectetur rhoncus eleifend vel, imperdiet nec turpis. Nulla ligula ante, malesuada quis orci a, ultricies blandit elit.
-
-% Numbered question, with subquestions in an enumerate environment
-\begin{question}
-	Quisque ullamcorper placerat ipsum. Cras nibh. Morbi vel justo vitae lacus tincidunt ultrices. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-
-	% Subquestions numbered with letters
-	\begin{enumerate}[(a)]
-		\item Do this.
-		\item Do that.
-		\item Do something else.
-	\end{enumerate}
-\end{question}
-	
-%------------------------------------------------
-
-\subsection{Algorithmic issues}
-
-In malesuada ullamcorper urna, sed dapibus diam sollicitudin non. Donec elit odio, accumsan ac nisl a, tempor imperdiet eros. Donec porta tortor eu risus consequat, a pharetra tortor tristique. Morbi sit amet laoreet erat. Morbi et luctus diam, quis porta ipsum. Quisque libero dolor, suscipit id facilisis eget, sodales volutpat dolor. Nullam vulputate interdum aliquam. Mauris id convallis erat, ut vehicula neque. Sed auctor nibh et elit fringilla, nec ultricies dui sollicitudin. Vestibulum vestibulum luctus metus venenatis facilisis. Suspendisse iaculis augue at vehicula ornare. Sed vel eros ut velit fermentum porttitor sed sed massa. Fusce venenatis, metus a rutrum sagittis, enim ex maximus velit, id semper nisi velit eu purus.
-
-\begin{center}
-	\begin{minipage}{0.5\linewidth} % Adjust the minipage width to accomodate for the length of algorithm lines
-		\begin{algorithm}[H]
-			\KwIn{$(a, b)$, two floating-point numbers}  % Algorithm inputs
-			\KwResult{$(c, d)$, such that $a+b = c + d$} % Algorithm outputs/results
-			\medskip
-			\If{$\vert b\vert > \vert a\vert$}{
-				exchange $a$ and $b$ \;
-			}
-			$c \leftarrow a + b$ \;
-			$z \leftarrow c - a$ \;
-			$d \leftarrow b - z$ \;
-			{\bf return} $(c,d)$ \;
-			\caption{\texttt{FastTwoSum}} % Algorithm name
-			\label{alg:fastTwoSum}   % optional label to refer to
-		\end{algorithm}
-	\end{minipage}
-\end{center}
-
-Fusce varius orci ac magna dapibus porttitor. In tempor leo a neque bibendum sollicitudin. Nulla pretium fermentum nisi, eget sodales magna facilisis eu. Praesent aliquet nulla ut bibendum lacinia. Donec vel mauris vulputate, commodo ligula ut, egestas orci. Suspendisse commodo odio sed hendrerit lobortis. Donec finibus eros erat, vel ornare enim mattis et.
-
-% Numbered question, with an optional title
-\begin{question}[\itshape (with optional title)]
-	In congue risus leo, in gravida enim viverra id. Donec eros mauris, bibendum vel dui at, tempor commodo augue. In vel lobortis lacus. Nam ornare ullamcorper mauris vel molestie. Maecenas vehicula ornare turpis, vitae fringilla orci consectetur vel. Nam pulvinar justo nec neque egestas tristique. Donec ac dolor at libero congue varius sed vitae lectus. Donec et tristique nulla, sit amet scelerisque orci. Maecenas a vestibulum lectus, vitae gravida nulla. Proin eget volutpat orci. Morbi eu aliquet turpis. Vivamus molestie urna quis tempor tristique. Proin hendrerit sem nec tempor sollicitudin.
-\end{question}
-
-Mauris interdum porttitor fringilla. Proin tincidunt sodales leo at ornare. Donec tempus magna non mauris gravida luctus. Cras vitae arcu vitae mauris eleifend scelerisque. Nam sem sapien, vulputate nec felis eu, blandit convallis risus. Pellentesque sollicitudin venenatis tincidunt. In et ipsum libero. Nullam tempor ligula a massa convallis pellentesque.
-
-%----------------------------------------------------------------------------------------
-%	PROBLEM 2
-%----------------------------------------------------------------------------------------
-
+\pagebreak
 \section{References and Bibliography}
 \printbibliography[heading=none]
 
