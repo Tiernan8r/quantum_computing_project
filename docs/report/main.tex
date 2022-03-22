@@ -23,7 +23,8 @@
 \usepackage{mathtools}
 \usepackage{physics}
 \usepackage{amsmath}
-\usepackage[scale=1,bmargin=6cm,footnotesep=6cm]{geometry} %footnote spacing
+\usepackage{setspace}
+\usepackage[scale=1,bmargin=1.5cm,footnotesep=1.5cm]{geometry} %footnote spacing
 \usepackage{float}
 \usepackage{subcaption} %allows us to nest figures
 
@@ -49,7 +50,7 @@
 %----------------------------------------------------------------------------------------
 
 \begin{document}
-
+\onehalfspacing
 \parindent=0pt          %  Switch off indent of paragraphs
 
 %----------------------------------------------------------------------------------------
@@ -61,16 +62,15 @@
 \vspace*{0.1\textheight}
 
 \begin{center}
-        \huge{\bfseries Quantum Computing Project}\\
+        \huge{\bfseries Quantum Computing Project Group 5}\\
 \end{center}
 
 \bigskip
 
 \begin{center}
-        \large{\textbf{Group 5:}}\\
-        \large{Jasbeth Musumba}\\
+        \large{Jabeth Musumba}\\
         \large{Yi Sheng Ng}\\
-        \large{Finn Onori}\\
+        \large{Finn John Onori}\\
         \large{Tiernan Stapleton}\\
         \large{Riddhi Yadav}\\
         \large{Han Yoong}\\
@@ -123,15 +123,16 @@ The qubit can be thought of as the "quantum" counterpart to the classical bit.
 \vspace{5mm}
 
 \noindent
-A bit is expressed in binary numbers of 0 and 1. In the most simple case of a classical bit, a bit can only be in the state of 0 or 1. However as for the quantum analogue, a qubit is expressed in a superposition of both the binary state of 0 and 1.
+A bit is expressed in binary numbers of 0 and 1. In the most simple case of a classical bit, a bit can only be in the state of 0 or 1. However as for the quantum analogue, a qubit can be expressed in a superposition of both the binary state of 0 and 1.
 \vspace{5mm}
 
 \noindent
 This superposition of state of a qubit $\ket{\psi}$ can be written as:
 \vspace{5mm}
 
-\noindent
-\qquad $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$
+\begin{equation}
+     \ket{\psi} = \alpha\ket{0} + \beta\ket{1}
+\end{equation}
 \vspace{5mm}
 
 \noindent
@@ -176,13 +177,15 @@ The quantum state of $\ket{0}$ and $\ket{1}$ are known as the computational basi
 These qubit states can be expressed in column matrices as:
 \vspace{5mm}
 
-\qquad $\ket{0} = \begin{pmatrix}1 \\ 0 \end{pmatrix}$ \ and \ $\ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$
+\begin{equation}
+\ket{0} = \begin{pmatrix}1 \\ 0 \end{pmatrix} \ \ \text{and} \ \ \ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}
+\end{equation}
 
 \vspace{5mm}
 
 \noindent
 The state of a quantum system can be represented as the spin, energy, angular momentum and magnetic moment of an elementary particle. However for the sake of brevity the state $\ket{0}$ and $\ket{1}$ will denote spin up and spin down of the electron in this report.
-\pagebreak
+\vspace{10mm}
 
 \subsection{Quantum Register}
 \vspace{5mm}
@@ -206,27 +209,34 @@ Each qubit has an index in this register, starting at index 0 and counting up by
 \vspace{5mm}
 
 \noindent
-Tensor product is used as a function which combines elements of two or more vector space to yield an additional vector space. 
+Tensor product is used as a function which combines elements of two or more vector spaces to yield an additional vector space. 
 \vspace{5mm}
 
 \noindent
-Tensor products are distributive and associative and shown here is the tensor product of two qubit in the Hilbert space (complex vector space)\cite{noauthor_lecture_nodate}:
+Tensor products are distributive and associative and shown here is the tensor product of two qubits in the Hilbert space (complex vector space)\cite{noauthor_lecture_nodate}:
 \vspace{5mm}
 
 
-\qquad $\alpha\ket{x} \bigotimes \beta\ket{y} = \alpha\beta\ket{xy}$
+\begin{equation}
+\alpha\ket{x} \bigotimes \beta\ket{y} = \alpha\beta\ket{xy}
+\end{equation}
 \vspace{5mm}
 
 
-\qquad $\ket{x} \bigotimes (\ket{y} + \ket{z}) = \ket{x}\bigotimes \ket{y} + \ket{x}\bigotimes\ket{z}$
+\begin{equation}\ket{x} \bigotimes (\ket{y} + \ket{z}) = \ket{x}\bigotimes \ket{y} + \ket{x}\bigotimes\ket{z}
+\end{equation}
 \vspace{5mm}
 
 
-\qquad $(\ket{x} + \ket{y}) \bigotimes \ket{z} = \ket{x}\bigotimes \ket{z} + \ket{y}\bigotimes\ket{z}$
+\begin{equation}
+(\ket{x} + \ket{y}) \bigotimes \ket{z} = \ket{x}\bigotimes \ket{z} + \ket{y}\bigotimes\ket{z}
+\end{equation}
 \vspace{5mm}
 
 
-\qquad $(\ket{x} \bigotimes \ket{y}) \bigotimes \ket{z} = \ket{x} \bigotimes (\ket{y} \bigotimes\ket{z}) = \ket{x} \bigotimes \ket{y} \bigotimes\ket{z}$
+\begin{equation}
+(\ket{x} \bigotimes \ket{y}) \bigotimes \ket{z} = \ket{x} \bigotimes (\ket{y} \bigotimes\ket{z}) = \ket{x} \bigotimes \ket{y} \bigotimes\ket{z}
+\end{equation}
 \vspace{10mm}
 
 The basis for the tensor product space is given by the product of single qubit basis states.
@@ -247,14 +257,10 @@ The basis for the tensor product space is given by the product of single qubit b
 \qquad $\ket{1}_2 \bigotimes \ket{1}_1 \bigotimes \ket{1}_0 = \ket{111} = \ket{7}$
 \vspace{5mm}
 
-Little endian is used to represent the qubit from right to left starting with the subscript 0.
+Little endian notation is used to represent the qubit from right to left starting with the subscript 0.
 
 For ease of interpretation, the binary to decimal conversion is written on the right hand side. 
-\pagebreak
-
-
-
-
+\vspace{10mm}
 
 \subsection{Linear Algebra}
 \vspace{5mm}
@@ -269,7 +275,9 @@ A generic quantum state $\ket{\psi}$ can be described as a linear combination of
 \vspace{5mm}
 
 
-\qquad $\ket{\psi} = \alpha_0\ket{0} + ... + \alpha_j\ket{j} = \sum\limits_{j = 0}^{j} \alpha_j\ket{j}$ , \ for $\alpha_j \in \mathbb{C}$
+\begin{equation}
+\ket{\psi} = \alpha_0\ket{0} + ... + \alpha_j\ket{j} = \sum\limits_{j = 0}^{j} \alpha_j\ket{j} , \ \text{for} \alpha_j \in \mathbb{C}
+\end{equation}
 \vspace{5mm}
 
 \noindent
@@ -281,7 +289,9 @@ The action of quantum operators on a state is linear. For a quantum operator $U$
 \vspace{5mm}
 
 \noindent
-\qquad $U(\alpha\ket{x} + \beta\ket{y}) = \alpha U\ket{x} + \beta U\ket{x}$ , \ for $\alpha, \beta \in \mathbb{C}$
+\begin{equation}
+U(\alpha\ket{x} + \beta\ket{y}) = \alpha U\ket{x} + \beta U\ket{x} , \ \text{for} \alpha, \beta \in \mathbb{C}
+\end{equation}
 \vspace{5mm}
 
 \noindent
@@ -289,7 +299,9 @@ The action of a quantum linear operator on a basis state determines the type of 
 \vspace{5mm}
 
 \noindent
-\qquad $U \sum\limits_j \alpha_j \ket{j} = \sum\limits_j \alpha_j U\ket{j}$
+\begin{equation}
+U \sum\limits_j \alpha_j \ket{j} = \sum\limits_j \alpha_j U\ket{j}
+\end{equation}
 \vspace{10mm}
 
 \subsection{Matrix Operation}
@@ -299,36 +311,46 @@ The action of a quantum linear operator on a basis state determines the type of 
 Linear operators $U$ acting on some basis states can be written in matrix form \cite{noauthor_lecture_nodate}:
 \vspace{5mm}
 
-\qquad $U_{kj} = \bra{k}U\ket{j}$ \ , for some basis state $\ket{j}$ and $\ket{k}$
+\begin{equation}
+U_{kj} = \bra{k}U\ket{j} \ , \text{for some basis state} \ket{j} \text{and} \ket{k} 
+\end{equation}
 \vspace{5mm}
 
 \noindent
 By using the Completeness Relation of quantum mechanics:
 \vspace{5mm}
 
-\qquad $U\ket{j} = \underbrace{\sum\limits_k\ket{k}\bra{k}}_{ = 1} U\ket{j} = \sum\limits_k \ket{k} U_{kj}$
+\begin{equation}
+U\ket{j} = \underbrace{\sum\limits_k\ket{k}\bra{k}}_{ = 1} U\ket{j} = \sum\limits_k \ket{k} U_{kj}    
+\end{equation}
 \vspace{5mm}
 
 \noindent
 Multiple linear operators applied on a basis state can be written as:
 \vspace{5mm}
 
-\qquad $UV\ket{k} = U\sum\limits_k \ket{k}V_{kj} = \sum\limits_l\ket{l} \sum\limits_k U_{lk} V_{kj} = \sum\limits_l(UV)_{lj}$
+\begin{equation}
+UV\ket{k} = U\sum\limits_k \ket{k}V_{kj} = \sum\limits_l\ket{l} \sum\limits_k U_{lk} V_{kj} = \sum\limits_l(UV)_{lj}
+\end{equation}
 \vspace{5mm}
 
 \noindent
 The linear operator $U$ acting on the coefficient $\alpha$ of the vector state $\ket{\psi}$ can be expressed:
 \vspace{5mm}
 
-\qquad $\alpha' = U\alpha$
+\begin{equation}
+\alpha' = U\alpha
+\end{equation}
 \vspace{5mm}
 
 \noindent
 And on the state:
 \vspace{5mm}
 
-\qquad $\ket{\psi'} = U\ket{\psi}$
-\pagebreak
+\begin{equation}
+ket{\psi'} = U\ket{\psi}
+\end{equation}
+\vspace{5mm}
 
 \noindent
 Additionally, all quantum operators (quantum gates) are unitary with the exception of measurement and reset operators. 
@@ -342,14 +364,18 @@ A quantum operator $U$ has its conjugate transpose (adjoint) which can be expres
 The unitary operator has the following property\cite{noauthor_unitary_2022}:
 \vspace{5mm}
 
-\qquad $UU^{\dagger} = UU^{-1} = 1$
+\begin{equation}
+UU^{\dagger} = UU^{-1} = 1    
+\end{equation}
 \vspace{5mm}
 
 \noindent
 Another consequence of unitarity is that it preserves the inner product between two arbitrary states $\braket{\phi}{\psi}$. For example apply the unitary operator $U$ to two states $\ket{\phi}$ and $\ket{\psi}$:
 \vspace{5mm}
 
-\qquad $ \bra{\phi} U^{\dagger} U\ket{\psi} = \braket{\phi}{\psi}$
+\begin{equation}
+\bra{\phi} U^{\dagger} U\ket{\psi} = \braket{\phi}{\psi}
+\end{equation}
 \vspace{5mm}
 
 \noindent
@@ -367,7 +393,7 @@ Quantum gates are unitary quantum operators and are described as unitary matrice
 The following are some of the common types of quantum gates\cite{voorhoede_pauli-x_nodate} which will be used in constructing the Grover's circuit.
 \vspace{5mm}
 
-\textbf{Hadamard Gate}: \qquad $H = \frac{1}{\sqrt{2}}= \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$
+\textbf{Hadamard Gate}: \qquad $H = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$
 \vspace{5mm}
 
 \noindent
@@ -375,15 +401,18 @@ The Hadamard gate creates a superposition states when acted on a state:
 \vspace{5mm}
 
 
-\qquad $H\ket{0} = \frac{1}{\sqrt{2}} (\ket{0} + \ket{1}), \ \ H\ket{1} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) $
+\begin{equation}
+H\ket{0} = \frac{1}{\sqrt{2}} (\ket{0} + \ket{1}), \ \ H\ket{1} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})   
+\end{equation}
 \vspace{5mm}
 
 \noindent
 This can then be generalised as:
 \vspace{5mm}
 
-
-\qquad $ H\ket{j} = \frac{-1^j\ket{j} + \ket{1 - j}}{\sqrt{2}} $
+\begin{equation}
+H\ket{j} = \frac{-1^j\ket{j} + \ket{1 - j}}{\sqrt{2}} 
+\end{equation}
 \vspace{5mm}
 
 
@@ -391,11 +420,13 @@ This can then be generalised as:
 \vspace{5mm}
 
 
-\qquad $X\ket{0} = \ket{1} , \ \ X\ket{1} = \ket{0}$
+\begin{equation}
+X\ket{0} = \ket{1} , \ \ X\ket{1} = \ket{0}
+\end{equation}
 \vspace{5mm}
 
 \noindent
-The Pauli X Gate essentially swaps the qubits around. This effect of this gate is also known as bit flip. The gate is a single qubit rotation around the x-axis by $\pi$
+The Pauli X Gate acts very similar to a classical NOT gate. This effect of this gate is also known as bit flip. The gate is a single qubit rotation around the x-axis by $\pi$
 \vspace{5mm}
 
 
@@ -403,19 +434,23 @@ The Pauli X Gate essentially swaps the qubits around. This effect of this gate i
 \vspace{5mm}
 
 
-\qquad $Y\ket{0} = i\ket{1} , \ \ Y\ket{1} = -i\ket{0}$
+\begin{equation}
+Y\ket{0} = i\ket{1} , \ \ Y\ket{1} = -i\ket{0}
+\end{equation}
 \vspace{5mm}
 
 \noindent
 The Pauli Y Gate rotates a single qubit in the y (complex)-axis by $\pi$.
-\pagebreak
+\vspace{5mm}
 
 
 \textbf{Pauli Z Gate}: \qquad $Z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$
 \vspace{5mm}
 
 
-\qquad $Z\ket{0} = \ket{0} , \ \ Z\ket{1} = -\ket{1}$
+\begin{equation}
+Z\ket{0} = \ket{0} , \ \ Z\ket{1} = -\ket{1}  
+\end{equation}
 \vspace{5mm}
 
 \noindent
@@ -442,13 +477,14 @@ The CZ Gate is a two qubit gate which takes the first qubit as the control qubit
 
 \noindent
 It leaves the control qubit unchanged and performs the Pauli Z Gate to the target qubit if and only if when the control qubit is $\ket{1}$ and leaves the target qubit unchanged when the control qubit is $\ket{0}$.
-\vspace{5mm}
+\pagebreak
 
 \textbf{Phase Shift Gates}: \qquad $ P(\varphi) = \begin{pmatrix} 1 & 0 \\ 0 & e^{i\varphi} \end{pmatrix}$ 
 \vspace{5mm}
 
-\qquad $P(\varphi)\ket{0} = \ket{0}$ \ and \ $P(\varphi)\ket{1} = e^{i\varphi}\ket{1}$
-\vspace{5mm}
+\begin{equation}
+P(\varphi)\ket{0} = \ket{0} \ \text{and} \ P(\varphi)\ket{1} = e^{i\varphi}\ket{1} 
+\end{equation}
 
 \noindent
 The phase shift gate modifies the phase of the quantum state and is equivalent to tracing a horizontal circle on the Bloch Sphere (see Figure \ref{fig:bloch_sphere}) by $\varphi$ radians\cite{noauthor_quantum_nodate}. 
@@ -460,10 +496,8 @@ The phase shift gate modifies the phase of the quantum state and is equivalent t
 
 
 \section{Grover's Algorithm}
-\vspace{5mm}
-
 \subsection{Introduction}
-\vspace{5mm}
+
 The Grover's Algorithm is a quantum search algorithm which increases quadratically the speed of unstructured search\cite{noauthor_grovers_nodate}. It uses  amplitude amplification to search an unstructured set of $N$ elements/items. 
 
 \subsection{Unstructured Search}
@@ -538,7 +572,7 @@ The Grover's Algorithm is a quantum search algorithm which increases quadratical
 
 \vspace{10mm}
 \noindent
-An unstructured search through a list of items using Grover's Algorithm can be illustrated in Figure \ref{fig:grover_step_1a}. In this instance, $\omega$ the red block, represents the item which we want to find and $N$ represents the number of items in the list. 
+An unstructured search through a list of items using Grover's Algorithm can be illustrated in Figure1. In this instance, $\omega$ the red block, represents the item which we want to find and $N$ represents the number of items in the list. 
 \vspace{5mm}
 
 \noindent
@@ -568,40 +602,55 @@ There will be only one value of $x$ which satisfies $f(x)=1$ and this index corr
 So $f$ can be accessed with a unitary operator $U_{\omega}$ of  an oracle which satisfies:
 \vspace{5mm}
 
-$\hspace{30mm} \begin{cases}
+\begin{equation}
+\begin{cases}
       U_{\omega}\ket{x} = -\ket{x}  & \text{for} \ x = \omega, \ f(x) =1 \\
        U_{\omega}\ket{x} = \ket{x}  & \text{for} \ x \neq \omega, \ f(x) = 0 \\
-\end{cases}$
+\end{cases}  
+\end{equation}
+
 \vspace{5mm}
 
-The oracle function of a two qubit system is defined as\cite{hui_qc_2019}:
+The oracle function of a two qubit system is defined as\cite{j_quantum_2020}:
 \vspace{5mm}
 
-\qquad $\ket{x} \bigotimes\ \ket{q} \rightarrow{O_f} \ket{x} \bigotimes \ket{q \bigoplus f(x)}$ \footnote{$\bigotimes$ denotes tensor product and $\bigoplus$ denotes denotes addition modulo 2}
+\begin{equation}
+\ket{x} \bigotimes \ket{q} \rightarrow{O_f} \ket{x} \bigotimes \ket{q \bigoplus f(x)} \footnote{$\bigotimes$ denotes tensor product and $\bigoplus$ denotes denotes addition modulo 2}  
+\end{equation}
+
 \vspace{5mm}
 
-\qquad $\ket{q} = \frac{\ket{0} - \ket{1}}{\sqrt{2}}$
+\begin{equation}
+\ket{q} = \frac{\ket{0} - \ket{1}}{\sqrt{2}}
+\end{equation}
 \vspace{5mm}
 
 Substitute $\ket{q}$ into the oracle function $O_f$:
 \vspace{5mm}
 
-\qquad \qquad $ O\ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}} \rightarrow \ket{x} \frac{\ket{f(x) \bigoplus 0} - \ket{f(x) \bigoplus 1}}{\sqrt{2}}$
+\begin{equation}
+ O\ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}} \rightarrow \ket{x} \frac{\ket{f(x) \bigoplus 0} - \ket{f(x) \bigoplus 1}}{\sqrt{2}}    
+\end{equation}
 \vspace{5mm}
 
-\qquad if $ f(x) =1 \rightarrow \ket{x}\frac{\ket{f(x) \bigoplus0} - \ket{f(x) \bigoplus1}}{\sqrt{2}}$
+\begin{equation}
+\text{if} \ f(x) =1 \rightarrow \ket{x}\frac{\ket{f(x) \bigoplus0} - \ket{f(x) \bigoplus1}}{\sqrt{2}}   
+\end{equation}
 \vspace{5mm}
 
-\qquad if $f(x) =1 \rightarrow \ket{x}\frac{\ket{1 \bigoplus 0} - \ket{1 \bigoplus 1}}{\sqrt{2}} = -\ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}$
+\begin{equation}
+\text{if} \ f(x) =1 \rightarrow \ket{x}\frac{\ket{1 \bigoplus 0} - \ket{1 \bigoplus 1}}{\sqrt{2}} = -\ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}    
+\end{equation}
 \vspace{5mm}
 
-\noindent
-\qquad if $f(x) =0 \rightarrow \ket{x}\frac{\ket{0 \bigoplus 0} - \ket{0 \bigoplus 1}}{\sqrt{2}} = \ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}$
+\begin{equation}
+\text{if} \ f(x) =0 \rightarrow \ket{x}\frac{\ket{0 \bigoplus 0} - \ket{0 \bigoplus 1}}{\sqrt{2}} = \ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}    
+\end{equation}
 \vspace{5mm}
 
 \noindent
 When $f(x) = 1 $, the amplitude $\ket{x}$ changed to negative and remains unchanged when $f(x) = 0$.
-\pagebreak
+\vspace{5mm}
 
 \noindent
 The oracle takes the form of a diagonal matrix $U_{\omega}$
@@ -627,7 +676,9 @@ For example, in a three qubit state, we want to look for the number 6 which corr
 Hence the oracle can be described as:
 \vspace{5mm}
 
-\qquad $U_\omega\ket{x} = (-1)^{f(x)} \ket{x}$
+\begin{equation}
+U_\omega\ket{x} = (-1)^{f(x)} \ket{x}    
+\end{equation}
 \vspace{5mm}
 
 This is essentially a reflection on the state $\ket{x}$.
@@ -643,7 +694,12 @@ This is essentially a reflection on the state $\ket{x}$.
 The sequence of the Grover's Algorithm starts out with a uniform superposition state $\ket{s}$\cite{noauthor_grovers_nodate}:
 \vspace{5mm}
 
-\qquad $ \ket{s}= H^{\bigotimes n} \ket{0}^n = \frac{1}{\sqrt{2^n}}\sum\limits_{x \in \{0,1\}^n}\ket{x} $ , \qquad for $N = 2^n$ , where $n$ is the number of qubits.
+\begin{equation}
+\ket{s}= H^{\bigotimes n} \ket{0}^n = \frac{1}{\sqrt{2^n}}\sum\limits_{x \in \{0,1\}^n}\ket{x}
+\end{equation}
+\vspace{5mm}
+
+\qquad For $N = 2^n$ , where $n$ is the number of qubits.
 \vspace{5mm}
 
 
@@ -718,15 +774,23 @@ The sequence of the Grover's Algorithm starts out with a uniform superposition s
   \end{subfigure}
   \caption{\label{fig:grover_step_1} Grover's Algorithm Step 1}
 \end{figure}
+\vspace{5mm}
 
 Figure \ref{fig:grover_step_1a} shows a two dimensional plane spanned by $\ket{\omega}$ and $\ket{s'}$. In this representation, it can be written:
 \vspace{5mm}
 
-\qquad $\ket{s} = \sin\theta\ket{\omega} + \cos\theta\ket{s'}$
+\begin{equation}
+\ket{s} = \sin\theta\ket{\omega} + \cos\theta\ket{s'}   
+\end{equation}
 \vspace{5mm}
 
-\qquad $\sin\theta = \frac{1}{\sqrt{2^n}}$ , \ where the amplitude of $\ket{s}$ is as shown in Figure \ref{fig:grover_step_1b}.
+\begin{equation}
+\sin\theta = \frac{1}{\sqrt{2^n}}    
+\end{equation}
 \vspace{5mm}
+
+Where the amplitude of $\ket{s}$ is as shown in Figure \ref{fig:grover_step_1b}.
+\pagebreak
 
 \textbf{Step 2:}
 \vspace{5mm}
@@ -815,16 +879,20 @@ Next apply the reflection oracle $U_\omega$ to the state $\ket{s}$.
   \end{subfigure}
   \caption{\label{fig:grover_step_2} Grover's Algorithm Step 2}
 \end{figure}
-
-\pagebreak
+\vspace{5mm}
 
 The reflection oracle $U_\omega$ can be expressed as:
 \vspace{5mm}
 
-\qquad $U_\omega = 1 - 2\ket{\omega}\bra{\omega}$
+\begin{equation}
+U_\omega = 1 - 2\ket{\omega}\bra{\omega}    
+\end{equation}
+
 \vspace{5mm}
 
-\qquad $U_\omega \ket{s} = -\sin\theta\ket{\omega} +  \cos\theta\ket{\omega} $ 
+\begin{equation}
+U_\omega \ket{s} = -\sin\theta\ket{\omega} +  \cos\theta\ket{\omega}    
+\end{equation} 
 \vspace{5mm}
 
 \noindent
@@ -833,7 +901,7 @@ $U_{{\omega }}$ is a reflection at the hyperplane orthogonal to $\ket{\omega}$  
 
 \noindent
 Referring to Figure \ref{fig:grover_step_2a}, $\ket{s}$ is reflected about $\ket{s'}$. The reflection operation on $\ket{s}$ in the negative amplitude causes the overall positive average amplitude to decrease slightly as indicated by Figure \ref{fig:grover_step_2b}. 
-\vspace{5mm}
+\pagebreak
 
 \textbf{Step 3:}
 \vspace{5mm}
@@ -1051,7 +1119,9 @@ As indicated in Figure \ref{fig:grover_step_3a}, a diffusion operator $U_s$ is a
 The diffusion operator is expressed as:
 \vspace{5mm}
 
-\qquad $U_s  = 2 \ket{s}\bra{s} - 1$
+\begin{equation}
+U_s  = 2 \ket{s}\bra{s} - 1    
+\end{equation}
 \vspace{5mm}
 
 \noindent
@@ -1084,8 +1154,12 @@ By observation, the number of times $T$ is required to apply the Grover's Algori
 \vspace{5mm}
 
 \noindent
-\qquad $\theta_T = (2T + 1)\theta$, \ where \ $\theta_T \approx \frac{\pi}{2}$ \ , $T$ is chosen to the nearest integer. 
-\vspace{5mm}
+\begin{equation}
+\theta_T = (2T + 1)\theta
+\end{equation}
+
+Where $\theta_T \approx \frac{\pi}{2}$ and $T$ is chosen to the nearest integer. 
+\pagebreak
 
 \noindent
 For an unstructured search through a sufficiently large list, $\theta$ will be small. Using the small angle approximation, $\sin\theta \approx \theta$. 
@@ -1100,12 +1174,16 @@ Hence:
 \vspace{5mm}
 
 \noindent
-\qquad $T \approx \frac{\pi}{4\theta} \approx \frac{\pi}{4}\sqrt{2^n}$ \ , note that $N = 2^n$ has been used interchangeably in this literature.
+\begin{equation}
+T \approx \frac{\pi}{4\theta} \approx \frac{\pi}{4}\sqrt{2^n}    
+\end{equation}
+
+Note that $N = 2^n$ has been used interchangeably in this literature.
 \vspace{5mm}
 
 \noindent
 Consequently, it is shown that $T$ is directly proportional to the order $O(\sqrt{N})$.
-\pagebreak
+\vspace{5mm}
 
 \noindent
 In terms of the amplitude of the state $\ket{s}$, it is observed to grow linearly with the number of application of $\sim T\sqrt{N}$. Therefore the amplitude and the probability are both amplified in Grover's Algorithm.
@@ -1134,92 +1212,476 @@ One of the few drawbacks of the Grover's Algorithm is that it is probabilistic. 
 Due to the constraints of currently available quantum computers, Grover's Algorithm is yet to yield any  meaningful quadratic speed up compared to classical algorithms\cite{noauthor_grovers_2022}.   
 \pagebreak
 
-\section{Other Quantum Algorithms Explored}
+\section{Phase Estimation}
+\subsection{Introduction}
+Suppose you have a unitary operator $U$ and its eigenvector $\ket{u}$ with eigenvalue $e^{2\pi i \phi}$, with $\phi$ unknown. By performing phase estimation, we can estimate $\phi$ (exact if the decimal expansion of $\phi$ is finite), up to required precision $n$. Phase estimation is needed for the algorithm of order-finding and it's extension, Shor's factoring algorithm. The figure below illustrate this process.
+
 \vspace{5mm}
+\begin{figure}
+    \centering
+    
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+\path (0,195); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp5239908419271088] 
+\draw   (249,94) -- (340.33,94) -- (340.33,154) -- (249,154) -- cycle ;
+%Shape: Rectangle [id:dp798673162776731] 
+\draw   (94.33,91) -- (203.33,91) -- (203.33,165) -- (94.33,165) -- cycle ;
+%Straight Lines [id:da0439097804330606] 
+\draw    (211,124) -- (241.33,124) ;
+\draw [shift={(243.33,124)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da053999006588390186] 
+\draw    (351,123) -- (377.33,123) ;
+\draw [shift={(379.33,123)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Rectangle [id:dp5103744878863842] 
+\draw   (389,104) -- (450.33,104) -- (450.33,144) -- (389,144) -- cycle ;
+%Shape: Rectangle [id:dp6849328641759378] 
+\draw   (74.33,46) -- (468.33,46) -- (468.33,196) -- (74.33,196) -- cycle ;
+
+% Text Node
+\draw (270,112) node [anchor=north west][inner sep=0.75pt]  [font=\LARGE] [align=left] {QPE};
+% Text Node
+\draw (127,98) node [anchor=north west][inner sep=0.75pt]   [align=left][font=\LARGE] {$\displaystyle U\ ( \phi )$};
+% Text Node
+\draw (112,63) node [anchor=north west][inner sep=1pt]   [align=left]{$\displaystyle U\ket{u} =e^{2\pi i\phi }$};
+% Text Node
+\draw (136,134) node [anchor=north west][inner sep=0.75pt] [font=\LARGE]  [align=left] {$\displaystyle \ket{u}$};
+% Text Node
+\draw (413,113) node [anchor=north west][inner sep=0.75pt][font=\LARGE]   [align=left] {$\displaystyle \phi $};
+
+
+\end{tikzpicture}
+
+\caption{Phase Estimation (abbreviated as QPE).}
+\end{figure}
 
 \subsection{Quantum Fourier Transform}
-\vspace{5mm}
+To implement the phase estimation algorithm, the key ingredient is the quantum Fourier transform. Quantum Fourier transform is analogous to the classical discrete Fourier transform, where the basis of a vector is changed into another basis that is useful for computation or analysis. The effect of quantum Fourier transform on an arbitrary state vector can be summarised as below \cite{nielsen_quantum_2010}:
+\begin{equation}
+    \ket{v} = \frac{1}{\sqrt{N}} \sum_{i=0}^{N-1}{x_i \ket{i}} \xRightarrow{QFT} \ket{\Tilde{v}} = \frac{1}{\sqrt{N}}\sum_{j=0}^{N-1} y_j \ket{j}
+\end{equation} 
 
 \noindent
-The quantum Fourier transform is a linear transformation of vector amplitudes of a quantum state of a qubit. It is the quantum equivalent of Discrete Fourier Transform, which is an important tool used in signal processing. 
-\vspace{5mm}
-
-\noindent
-The quantum Fourier transform can be implemented into a circuit simply by using Hadamard and controlled phase shift gate. The QFT short hand for quantum Fourier transform is a unitary transformation. 
-\vspace{5mm}
-
-\noindent
-The action of QFT on a quantum state\cite{noauthor_quantum_nodate-1} $\ket{X} = \sum\limits_{j=0}^{N-1} x_j\ket{j}$ maps it to a quantum state $\ket{Y} = \sum\limits_{k=0}^{N-1} y_k\ket{k}$ according to:
-\vspace{5mm}
-
-
-\qquad $y_k = \frac{1}{\sqrt{2}}\sum\limits_{j=0}^{N-1}x_je^{2i\pi\frac{jk}{N}}$ \ , \ recalling that $N = 2^n$
-\vspace{5mm}
-
-\noindent
-Note that only the amplitudes of the state were affected by this transformation.
-\vspace{5mm}
-
-\noindent
-This can be expressed as the mapping of the quantum state $\ket{j} \rightarrow \ket{k}$ such that:
-\vspace{5mm}
-
-
-\qquad $\ket{j}= \frac{1}{\sqrt{2}}\sum\limits_{k=0}^{N-1}e^{2i\pi\frac{jk}{N}}\ket{k}$ 
-\vspace{5mm}
-
-\noindent
-The QFT can be expressed as a unitary quantum operator as:
-\vspace{5mm}
-
-\qquad $U_{QFT} =  \frac{1}{\sqrt{2}}\sum\limits_{j=0}^{N-1}\sum\limits_{k=0}^{N-1}e^{2i\pi\frac{jk}{N}}\ket{k}\bra{j}$ 
-\vspace{5mm}
-
-\noindent
-Similar to Fourier transform which decomposes functions depending on space or time into functions depending on spatial frequency or temporal frequency, QFT maps the computational basis states between the $\hat{\textbf{z}}$-basis states to the $\hat{\textbf{x}}$-basis states.
+Note that only the amplitudes of the eigenstates are affected by this transformation. Similar to Fourier transform which decomposes functions depending on space or time into functions depending on spatial frequency or temporal frequency, QFT maps the computational basis states between the $\hat{\textbf{z}}$-basis states to the $\hat{\textbf{x}}$-basis states.
 \vspace{5mm}
 
 \noindent
 The $\hat{\textbf{x}}$-basis states are defined as:
 \vspace{5mm}
+\begin{equation}
+\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \ \text{and} \ \ket{-} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})   
+\end{equation}
 
-\qquad $\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})$ \ and \ $\ket{-} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})$
 \vspace{5mm}
 
 \noindent
-For multi-qubit states in the computational basis have corresponding states in the Fourier basis. The QFT is the function that transforms between these bases:
+For multi-qubit states in the computational basis have corresponding states in the Fourier basis. The QFT is the function that transforms between these bases\cite{noauthor_quantum_nodate-1}:
 \vspace{5mm}
 
-\qquad $\ket{\text{State in computational basis}} \rightarrow{\text{QFT}} \ket{\text{State in Fourier basis}} $
+\begin{equation}
+\ket{\text{State in computational basis}} \rightarrow{\text{QFT}} \ket{\text{State in Fourier basis}}  
+\end{equation}
 \vspace{5mm}
 
 \qquad $\text{QFT}\ket{x} = \ket{\tilde{x}}$
-\pagebreak
-
-The QFT can be generalised and extended to multiple qubits and states\cite{noauthor_quantum_nodate-1}:
 \vspace{5mm}
 
-\qquad $\text{QFT}_N\ket{x} = \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}e^{2i\pi\frac{xy}{2^n}}\ket{y}$ \ , \ for $N = 2^n$
+For a $n$ qubit states, the QFT has the effect of \cite{nielsen_quantum_2010}:
+\vspace{5mm}
+\begin{equation}
+\text{QFT}_N\ket{x} = \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}e^{2i\pi\frac{xy}{2^n}}\ket{y} \ , \ \text{for} \ N = 2^n    
+\end{equation}
+
 \vspace{5mm}
 
-\qquad \qquad $ =  \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}e^{2i\pi x(\sum_{k=1}^{n}\frac{y_k}{2^k})}\ket{y...y_n}$ , \ rewriting $y$ in binary fraction $y= y_1 ... y_n, \frac{y}{2^n} = \sum\limits_{k=1}^{n}\frac{y_k}{2^k}$
+\begin{equation}
+=  \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}e^{2i\pi x(\sum_{k=1}^{n}\frac{y_k}{2^k})}\ket{y...y_n} 
+\end{equation}
 \vspace{5mm}
 
-\qquad \qquad $= \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}\prod\limits_{k=1}^{n}e^{2i\pi x\frac{y_k}{2^k}}\ket{y...y_n}$
+Rewriting $y$ in binary fraction $y= y_1 ... y_n, \frac{y}{2^n} = \sum\limits_{k=1}^{n}\frac{y_k}{2^k}$   
+\vspace{5mm}
+
+\begin{equation}
+= \frac{1}{\sqrt{N}} \sum\limits_{y=0}^{N-1}\prod\limits_{k=1}^{n}e^{2i\pi x\frac{y_k}{2^k}}\ket{y...y_n}    
+\end{equation}
 \vspace{5mm}
 
 \noindent
 After expanding the exponential of a sum to a product of exponentials.
 \vspace{5mm}
 
-\qquad \qquad $ = \frac{1}{\sqrt{N}}\bigotimes\limits_{k=1}^{n}(\ket{0} + e^{\frac{2i\pi x}{2^k}}\ket{1})$
+\begin{equation}
+= \frac{1}{\sqrt{N}}\bigotimes\limits_{k=1}^{n}(\ket{0} + e^{\frac{2i\pi x}{2^k}}\ket{1})  
+\end{equation}
 \vspace{5mm}
 
 \noindent
 After rearranging the sum and products, and expanding $\sum\limits_{y=0}^{N-1} = \sum\limits_{y_1=0}^{1}\sum\limits_{y_2=0}^{1}...\sum\limits_{y_0=0}^{1} $
 \vspace{5mm}
 
-\qquad \qquad $ = \frac{1}{\sqrt{N}}(\ket{0} + e^{\frac{2i\pi x}{2}}\ket{1}) \bigotimes (\ket{0} + e^{\frac{2i\pi x}{2^2}}\ket{1}) \bigotimes ... \bigotimes(\ket{0} + e^{\frac{2i\pi x}{2^{n-1}}}\ket{1}) \bigotimes (\ket{0} + e^{\frac{2i\pi x}{2^n}}\ket{1})$
+\begin{equation}
+= \frac{1}{\sqrt{N}}(\ket{0} + e^{\frac{2i\pi x}{2}}\ket{1}) \bigotimes (\ket{0} + e^{\frac{2i\pi x}{2^2}}\ket{1}) \bigotimes ... \bigotimes(\ket{0} + e^{\frac{2i\pi x}{2^{n-1}}}\ket{1}) \bigotimes (\ket{0} + e^{\frac{2i\pi x}{2^n}}\ket{1})    
+\end{equation}
+\pagebreak
+
+The circuit to implement QFT for a n-qubit state is shown below
+\vspace{5mm}
+
+\noindent
+
+
+\begin{figure}[h]
+    \centering
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-0.93,xscale=0.93]
+\path (0,205); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da7550574313481198] 
+\draw    (442,212) -- (651,212) ;
+%Straight Lines [id:da6398571931609234] 
+\draw    (46,212) -- (210.17,212) -- (416,212) ;
+%Straight Lines [id:da8727674531656819] 
+\draw    (46.35,170.5) -- (210.51,170.5) -- (236,170) ;
+%Straight Lines [id:da8871926231699048] 
+\draw    (48,91) -- (650,91) ;
+%Straight Lines [id:da28106686876999853] 
+\draw    (47,51) -- (650,50) ;
+%Shape: Rectangle [id:dp9740729644202252] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (114.97,75) -- (146,75) -- (146,106) -- (114.97,106) -- cycle ;
+
+%Shape: Rectangle [id:dp426089737124529] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (193,157) -- (224.03,157) -- (224.03,188) -- (193,188) -- cycle ;
+
+%Shape: Rectangle [id:dp8514934588123941] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (326,195) -- (357.03,195) -- (357.03,226) -- (326,226) -- cycle ;
+
+%Shape: Rectangle [id:dp314360945613794] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (156,74) -- (196,74) -- (196,105) -- (156,105) -- cycle ;
+
+%Straight Lines [id:da39077578043373473] 
+\draw    (171.5,75) -- (171.5,51) ;
+%Shape: Circle [id:dp441535044324351] 
+\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (170,51) .. controls (170,51.83) and (170.67,52.5) .. (171.5,52.5) .. controls (172.33,52.5) and (173,51.83) .. (173,51) .. controls (173,50.17) and (172.33,49.5) .. (171.5,49.5) .. controls (170.67,49.5) and (170,50.17) .. (170,51) -- cycle ;
+
+%Shape: Rectangle [id:dp5897080780221526] 
+\draw  [fill={rgb, 255:red, 252; green, 255; blue, 255 }  ,fill opacity=1 ] (70.37,34) -- (106,34) -- (106,65) -- (70.37,65) -- cycle ;
+
+%Shape: Rectangle [id:dp30473357310759497] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (366,195) -- (409,195) -- (409,226) -- (366,226) -- cycle ;
+
+%Straight Lines [id:da3855769866550789] 
+\draw    (268,170) -- (279.33,170) -- (651,169) ;
+%Shape: Rectangle [id:dp9695497040119231] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (276,155) -- (320,155) -- (320,186) -- (276,186) -- cycle ;
+%Straight Lines [id:da42876538848964485] 
+\draw    (297,155.5) -- (296.5,91) ;
+%Shape: Circle [id:dp5965904538619509] 
+\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (295,91) .. controls (295,91.83) and (295.67,92.5) .. (296.5,92.5) .. controls (297.33,92.5) and (298,91.83) .. (298,91) .. controls (298,90.17) and (297.33,89.5) .. (296.5,89.5) .. controls (295.67,89.5) and (295,90.17) .. (295,91) -- cycle ;
+
+%Straight Lines [id:da8537072100283741] 
+\draw    (387,195) -- (387,170.06) ;
+%Shape: Ellipse [id:dp044376374855228495] 
+\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (386,170.06) .. controls (386,170.92) and (386.45,171.62) .. (387,171.62) .. controls (387.55,171.62) and (388,170.92) .. (388,170.06) .. controls (388,169.2) and (387.55,168.5) .. (387,168.5) .. controls (386.45,168.5) and (386,169.2) .. (386,170.06) -- cycle ;
+%Shape: Rectangle [id:dp1253251355263153] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (448,194) -- (492,194) -- (492,225) -- (448,225) -- cycle ;
+%Shape: Rectangle [id:dp5170244213525657] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (502,194) -- (546,194) -- (546,225) -- (502,225) -- cycle ;
+%Straight Lines [id:da6842415574484656] 
+\draw    (468,194) -- (467.5,91.5) ;
+%Shape: Circle [id:dp7507766602263973] 
+\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (466,91.5) .. controls (466,92.33) and (466.67,93) .. (467.5,93) .. controls (468.33,93) and (469,92.33) .. (469,91.5) .. controls (469,90.67) and (468.33,90) .. (467.5,90) .. controls (466.67,90) and (466,90.67) .. (466,91.5) -- cycle ;
+%Straight Lines [id:da48965934705174585] 
+\draw    (523,194) -- (522.5,91.5) ;
+%Shape: Circle [id:dp6048474775771464] 
+\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (521,91.5) .. controls (521,92.33) and (521.67,93) .. (522.5,93) .. controls (523.33,93) and (524,92.33) .. (524,91.5) .. controls (524,90.67) and (523.33,90) .. (522.5,90) .. controls (521.67,90) and (521,90.67) .. (521,91.5) -- cycle ;
+%Straight Lines [id:da015312271871600447] 
+\draw    (566,51) -- (567,212) ;
+%Straight Lines [id:da5584559248399006] 
+\draw    (593,91) -- (593,168) ;
+%Straight Lines [id:da9780974093157568] 
+\draw    (561,45) -- (571,55) ;
+%Straight Lines [id:da38915226135752146] 
+\draw    (571,45) -- (561,55) ;
+
+%Straight Lines [id:da6675236283011767] 
+\draw    (562,207) -- (572,217) ;
+%Straight Lines [id:da6834744460286415] 
+\draw    (572,207) -- (562,217) ;
+
+%Straight Lines [id:da07839335868474284] 
+\draw    (588,165) -- (598,175) ;
+%Straight Lines [id:da88112867187513] 
+\draw    (598,165) -- (588,175) ;
+
+%Straight Lines [id:da04164548314578809] 
+\draw    (588,86) -- (598,96) ;
+%Straight Lines [id:da5017829132129701] 
+\draw    (598,86) -- (588,96) ;
+
+
+% Text Node
+\draw (81.82,40.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+% Text Node
+\draw (123.97,81.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+% Text Node
+\draw (202,163.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+% Text Node
+\draw (335,201.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+% Text Node
+\draw (166.8,81) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{2}$};
+% Text Node
+\draw (97,127) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \vdots $};
+% Text Node
+\draw (169,127) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \vdots $};
+% Text Node
+\draw (378.36,202) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{2}$};
+% Text Node
+\draw (240,167) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
+% Text Node
+\draw (281.4,167) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n-2}$};
+% Text Node
+\draw (419,210) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
+% Text Node
+\draw (454,202) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n-2}$};
+% Text Node
+\draw (514,200) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n}$};
+% Text Node
+\draw (610,125) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
+% Text Node
+\draw (-1,41) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{1}}$};
+% Text Node
+\draw (-1,81) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{2}}$};
+% Text Node
+\draw (-1,160) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{n-1}}$};
+% Text Node
+\draw (-1,201) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{n}}$};
+% Text Node
+\draw (3,5) node [anchor=north west][inner sep=0.75pt]   [align=left] {Input: $\displaystyle \ket{x_{n} x_{n-1} \cdots x_{2} x_{1}} =\ket{x_{n}} \otimes \ket{x_{n-1}} \otimes \cdots \otimes \ket{x_{2}} \otimes \ket{x_{1}}$};
+
+\end{tikzpicture}
+\caption{The QFT Circuit}
+\end{figure}
+\vspace{5mm}
+
+where $H$ is the Hadamard gate, \(R_n = 
+\begin{bmatrix}
+    1 & 0 \\
+    0 & e^{2\pi i/2^k}
+\end{bmatrix} \)
+, and the \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=0.5,xscale=0.5]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da5239484844882938] 
+\draw    (85,16) -- (85,47) ;
+%Straight Lines [id:da8400020556735358] 
+\draw    (80,40) -- (90,50) ;
+%Straight Lines [id:da24481923694858] 
+\draw    (90,40) -- (80,50) ;
+
+%Straight Lines [id:da0676093949143659] 
+\draw    (80,10) -- (90,20) ;
+%Straight Lines [id:da9539947353268269] 
+\draw    (90,10) -- (80,20) ;
+\end{tikzpicture} is a swap gate, which swaps the qubit i with the n-i qubit. However, the phase estimation algorithm requires the inverse QFT, which is easy to construct by flipping the circuit horizontally, and conjugate the phases in the $R_k$ gate.
+\pagebreak
+\subsection{The Algorithm}
+The phase estimation procedure uses two registers, with the first register containing $m$ qubits (all in the state $\ket{0}$) and the second register is in the state $\ket{u}$, and contains as many qubits as required for $\ket{u}$. The number of qubits $m$ for first register is dependent on the precision of the phase required, which will be discussed in the next section. The algorithm can be summarized below:\\
+i. Hadamard gates are applied to all qubits in first register.\\
+ii. Control-U gates raised to successive powers of two is applied consecutively to the second register, with the controls covering the first qubit to the last qubit in the first register.\\
+iii. The inverse QFT operation is then applied on the first register to obtain a number, which needs further to be further divided by $2^m$ to recover the estimation of the phase.\\
+The circuit below sums up the whole procedure.
+\vspace{5mm}
+
+
+    
+\begin{figure}[h]
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-0.95,xscale=0.95]
+%uncomment if require: \path (0,255); %set diagram left start at 0, and has height of 255
+
+%Straight Lines [id:da9194835056551176] 
+\draw    (120.56,38.44) -- (304.21,38.44) ;
+%Straight Lines [id:da6985548639030699] 
+\draw    (120.56,74.27) -- (304.21,74.27) ;
+%Straight Lines [id:da7116263330867054] 
+\draw    (120.56,110.11) -- (304.21,110.11) ;
+%Straight Lines [id:da8626589126730531] 
+\draw    (120.56,163.86) -- (304.21,163.86) ;
+%Straight Lines [id:da19695588367886063] 
+\draw    (120.56,208.65) -- (304.21,208.65) ;
+%Straight Lines [id:da10938435456147] 
+\draw    (120.56,217.61) -- (304.21,217.61) ;
+%Straight Lines [id:da4912942246519334] 
+\draw    (120.56,226.57) -- (304.21,226.57) ;
+%Straight Lines [id:da12940095959327003] 
+\draw    (120.56,235.53) -- (304.21,235.53) ;
+%Shape: Rectangle [id:dp15884195779468213] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (132.04,25) -- (158.54,25) -- (158.54,51.88) -- (132.04,51.88) -- cycle ;
+
+%Shape: Rectangle [id:dp23256435967097955] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (132.93,62.63) -- (159.42,62.63) -- (159.42,89.5) -- (132.93,89.5) -- cycle ;
+
+%Shape: Rectangle [id:dp37562370103024234] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (132.93,99.36) -- (159.42,99.36) -- (159.42,126.23) -- (132.93,126.23) -- cycle ;
+
+%Shape: Rectangle [id:dp03136015448302287] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (132.93,149.53) -- (159.42,149.53) -- (159.42,176.4) -- (132.93,176.4) -- cycle ;
+
+%Shape: Rectangle [id:dp03155077547529872] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (169.1,204.17) -- (200.01,204.17) -- (200.01,240.01) -- (169.1,240.01) -- cycle ;
+
+%Shape: Rectangle [id:dp9729186752169825] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (209.72,205.07) -- (240.63,205.07) -- (240.63,240.9) -- (209.72,240.9) -- cycle ;
+%Shape: Rectangle [id:dp19964985396092239] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (251.23,205.97) -- (282.14,205.97) -- (282.14,241.8) -- (251.23,241.8) -- cycle ;
+%Straight Lines [id:da7109063051521263] 
+\draw    (351.93,38.44) -- (541.76,38.44) ;
+%Straight Lines [id:da1930170699837772] 
+\draw    (351.93,74.27) -- (541.76,74.27) ;
+%Straight Lines [id:da7712890300467412] 
+\draw    (351.93,110.11) -- (541.76,110.11) ;
+%Straight Lines [id:da00469730483476738] 
+\draw    (351.93,163.86) -- (541.76,163.86) ;
+%Straight Lines [id:da9060427595505647] 
+\draw    (351.93,208.65) -- (541.76,208.65) ;
+%Straight Lines [id:da24660499214292575] 
+\draw    (351.93,217.61) -- (541.76,217.61) ;
+%Straight Lines [id:da8073093108188725] 
+\draw    (351.93,226.57) -- (541.76,226.57) ;
+%Straight Lines [id:da9156311780855882] 
+\draw    (351.93,235.53) -- (541.76,235.53) ;
+%Shape: Rectangle [id:dp5274524103344703] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (362.5,203.28) -- (406.65,203.28) -- (406.65,239.11) -- (362.5,239.11) -- cycle ;
+%Straight Lines [id:da03444841972411539] 
+\draw    (185,39.15) -- (184.14,205.07) ;
+%Straight Lines [id:da009404546254211943] 
+\draw    (226.5,74.09) -- (225.65,205.07) ;
+%Straight Lines [id:da374044199582911] 
+\draw    (268.01,110.82) -- (267.15,205.97) ;
+%Straight Lines [id:da6555871247561469] 
+\draw    (384.57,163.68) -- (384.6,203.28) ;
+%Shape: Ellipse [id:dp31242914795993315] 
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (183.26,37.98) .. controls (183.26,36.75) and (184.24,35.75) .. (185.45,35.75) .. controls (186.67,35.75) and (187.65,36.75) .. (187.65,37.98) .. controls (187.65,39.2) and (186.67,40.2) .. (185.45,40.2) .. controls (184.24,40.2) and (183.26,39.2) .. (183.26,37.98) -- cycle ;
+%Shape: Ellipse [id:dp8473767958403672] 
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (224.77,73.81) .. controls (224.77,72.58) and (225.75,71.59) .. (226.96,71.59) .. controls (228.17,71.59) and (229.15,72.58) .. (229.15,73.81) .. controls (229.15,75.04) and (228.17,76.03) .. (226.96,76.03) .. controls (225.75,76.03) and (224.77,75.04) .. (224.77,73.81) -- cycle ;
+%Shape: Ellipse [id:dp8148369515275169] 
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (266.27,108.75) .. controls (266.27,107.52) and (267.25,106.52) .. (268.46,106.52) .. controls (269.67,106.52) and (270.66,107.52) .. (270.66,108.75) .. controls (270.66,109.98) and (269.67,110.97) .. (268.46,110.97) .. controls (267.25,110.97) and (266.27,109.98) .. (266.27,108.75) -- cycle ;
+%Shape: Ellipse [id:dp35408407729589786] 
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (381.95,164.29) .. controls (381.95,163.06) and (382.94,162.07) .. (384.15,162.07) .. controls (385.36,162.07) and (386.34,163.06) .. (386.34,164.29) .. controls (386.34,165.52) and (385.36,166.52) .. (384.15,166.52) .. controls (382.94,166.52) and (381.95,165.52) .. (381.95,164.29) -- cycle ;
+%Shape: Rectangle [id:dp08709255028482066] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (427.87,27.69) -- (517.92,27.69) -- (517.92,178.01) -- (427.87,178.01) -- cycle ;
+%Shape: Rectangle [id:dp5816935501240186] 
+\draw   (547.09,25.72) -- (577.08,25.72) -- (577.08,50.35) -- (547.09,50.35) -- cycle ;
+%Shape: Arc [id:dp9020959249791546] 
+\draw  [draw opacity=0] (550.64,41.69) .. controls (551.36,37.36) and (556.49,34.36) .. (562.41,34.91) .. controls (567.93,35.44) and (572.26,38.89) .. (572.77,42.92) -- (561.69,43.23) -- cycle ; \draw   (550.64,41.69) .. controls (551.36,37.36) and (556.49,34.36) .. (562.41,34.91) .. controls (567.93,35.44) and (572.26,38.89) .. (572.77,42.92) ;  
+%Straight Lines [id:da9091015813949274] 
+\draw    (560.97,45.47) -- (565.77,29.87) ;
+\draw [shift={(566.36,27.96)}, rotate = 107.1] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (4.37,-1.32) .. controls (2.78,-0.56) and (1.32,-0.12) .. (0,0) .. controls (1.32,0.12) and (2.78,0.56) .. (4.37,1.32)   ;
+
+%Shape: Rectangle [id:dp715253231601205] 
+\draw   (547.09,61.55) -- (577.08,61.55) -- (577.08,86.19) -- (547.09,86.19) -- cycle ;
+%Shape: Arc [id:dp37902783293727893] 
+\draw  [draw opacity=0] (550.64,77.53) .. controls (551.36,73.19) and (556.49,70.19) .. (562.41,70.75) .. controls (567.93,71.27) and (572.26,74.72) .. (572.77,78.76) -- (561.69,79.06) -- cycle ; \draw   (550.64,77.53) .. controls (551.36,73.19) and (556.49,70.19) .. (562.41,70.75) .. controls (567.93,71.27) and (572.26,74.72) .. (572.77,78.76) ;  
+%Straight Lines [id:da6659199046761912] 
+\draw    (560.97,81.3) -- (565.77,65.7) ;
+\draw [shift={(566.36,63.79)}, rotate = 107.1] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (4.37,-1.32) .. controls (2.78,-0.56) and (1.32,-0.12) .. (0,0) .. controls (1.32,0.12) and (2.78,0.56) .. (4.37,1.32)   ;
+
+%Shape: Rectangle [id:dp5396491521682578] 
+\draw   (547.09,98.28) -- (577.08,98.28) -- (577.08,122.92) -- (547.09,122.92) -- cycle ;
+%Shape: Arc [id:dp19388376844570432] 
+\draw  [draw opacity=0] (550.64,114.26) .. controls (551.36,109.92) and (556.49,106.92) .. (562.41,107.48) .. controls (567.93,108) and (572.26,111.45) .. (572.77,115.49) -- (561.69,115.79) -- cycle ; \draw   (550.64,114.26) .. controls (551.36,109.92) and (556.49,106.92) .. (562.41,107.48) .. controls (567.93,108) and (572.26,111.45) .. (572.77,115.49) ;  
+%Straight Lines [id:da8381741578506972] 
+\draw    (560.97,118.03) -- (565.77,102.43) ;
+\draw [shift={(566.36,100.52)}, rotate = 107.1] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (4.37,-1.32) .. controls (2.78,-0.56) and (1.32,-0.12) .. (0,0) .. controls (1.32,0.12) and (2.78,0.56) .. (4.37,1.32)   ;
+
+%Shape: Rectangle [id:dp04173030496706942] 
+\draw   (547.97,150.24) -- (577.97,150.24) -- (577.97,174.88) -- (547.97,174.88) -- cycle ;
+%Shape: Arc [id:dp5223668572095267] 
+\draw  [draw opacity=0] (551.52,166.22) .. controls (552.24,161.88) and (557.38,158.88) .. (563.29,159.44) .. controls (568.82,159.96) and (573.14,163.41) .. (573.65,167.45) -- (562.57,167.76) -- cycle ; \draw   (551.52,166.22) .. controls (552.24,161.88) and (557.38,158.88) .. (563.29,159.44) .. controls (568.82,159.96) and (573.14,163.41) .. (573.65,167.45) ;  
+%Straight Lines [id:da3372443183558913] 
+\draw    (561.86,169.99) -- (566.66,154.39) ;
+\draw [shift={(567.25,152.48)}, rotate = 107.1] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (4.37,-1.32) .. controls (2.78,-0.56) and (1.32,-0.12) .. (0,0) .. controls (1.32,0.12) and (2.78,0.56) .. (4.37,1.32)   ;
+
+%Shape: Brace [id:dp8116415853490204] 
+\draw   (92.27,38.55) .. controls (87.6,38.55) and (85.27,40.88) .. (85.27,45.55) -- (85.27,91.88) .. controls (85.27,98.55) and (82.94,101.88) .. (78.27,101.88) .. controls (82.94,101.88) and (85.27,105.21) .. (85.27,111.88)(85.27,108.88) -- (85.27,158.21) .. controls (85.27,162.88) and (87.6,165.21) .. (92.27,165.21) ;
+%Shape: Brace [id:dp33774914340487494] 
+\draw   (585.97,165.8) .. controls (590.64,165.8) and (592.97,163.47) .. (592.97,158.8) -- (592.97,112.8) .. controls (592.97,106.13) and (595.3,102.8) .. (599.97,102.8) .. controls (595.3,102.8) and (592.97,99.47) .. (592.97,92.8)(592.97,95.8) -- (592.97,46.8) .. controls (592.97,42.13) and (590.64,39.8) .. (585.97,39.8) ;
+
+% Text Node
+\draw (93.49,30.39) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{0}$};
+% Text Node
+\draw (93.49,66.22) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{0}$};
+% Text Node
+\draw (93.49,101.16) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{0}$};
+% Text Node
+\draw (91.73,154.91) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{0}$};
+% Text Node
+\draw (92.55,214.04) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{u}$};
+% Text Node
+\draw (137.35,29.49) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+% Text Node
+\draw (138.23,67.12) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+% Text Node
+\draw (138.23,103.85) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+% Text Node
+\draw (138.23,154.02) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+% Text Node
+\draw (169.09,210.09) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle U{^{2}}^{0}$};
+% Text Node
+\draw (361.54,209.2) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle U{^{2}}^{m-1}$};
+% Text Node
+\draw (209.71,210.99) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle U{^{2}}^{1}$};
+% Text Node
+\draw (251.21,211.88) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle U{^{2}}^{2}$};
+% Text Node
+\draw (543.8,213.14) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{u}$};
+% Text Node
+\draw (453.68,92.99) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle QFT^{\dagger }$};
+% Text Node
+\draw (361.59,131.62) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \vdots $};
+% Text Node
+\draw (286.53,131.62) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \vdots $};
+% Text Node
+\draw (314.91,33.07) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \cdots $};
+% Text Node
+\draw (314.91,71.6) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \cdots $};
+% Text Node
+\draw (314.91,106.53) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \cdots $};
+% Text Node
+\draw (313.14,214.04) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \cdots $};
+% Text Node
+\draw (1,90) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {First register\\ \ \ $m$ qubits};
+% Text Node
+\draw (13,203) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {Second \\register};
+% Text Node
+\draw (611,91) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{\varphi }$};
+% Text Node
+\draw (594,124) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] { $\displaystyle \phi \ =\ \frac{\varphi }{2^{m}}$};
+\end{tikzpicture}
+\caption{The Phase Estimation Circuit}
+\end{figure}
+\vspace{10mm} 
+
+\noindent 
+How do we choose $m$ for the first register? Suppose the phase $\phi$ has $t$ decimal places, and we wish to estimate only until $n$ decimal places, with success probability $1-\varepsilon$, we need to choose $m$ such that \cite{nielsen_quantum_2010}
+\vspace{5mm}
+
+\begin{equation}
+m=n+\bigg[log_2\bigg(2+\frac{1}{2\varepsilon}\bigg)\bigg]    
+\end{equation}
+
+For example, $\phi = \frac{1}{3} = 0.3333...$ and we wish to estimate it to 3 decimal places with probability 0.70. Thus, $n=3$ and $\varepsilon = 0.3$, which gives 
+\vspace{5mm}
+
+\begin{equation}
+m = 3 + \bigg[log_2\bigg(2+\frac{1}{0.6}\bigg)\bigg]=4.5 \rightarrow m=5    
+\end{equation} since $m$ is an integer.
 
 
 \section{Methodology}
@@ -1228,141 +1690,205 @@ After rearranging the sum and products, and expanding $\sum\limits_{y=0}^{N-1} =
 
 \subsection{Git}
 
-\section{Coding with Python}
+\pagebreak
 
+\section{Coding with Python}
+The first step of the project was for the group to choose which language to implement the system with. Options included C, C++, Java, and Haskell, but the final decision was to use Python. This was our language of choice for several reasons: Most of our team has experience with the language making it easier to write the code, the language is object-oriented which means Grover’s Algorithm could be created as an object from a class which reduced the amount of repeated code when several versions of Grover's Algorithm were  implemented, It’s more general-purpose compared to languages such as Haskell or Java (Haskell being a purely functional language, and Java being purely an object oriented language, Python combines necessary features of both), and it uses high-level syntax in comparison to languages like C and C++ making it more appropriate for a high-level task such as this which involves matrix multiplication. Once the language was decided the next step was to implement some basic quantum operations.
+
+\subsection{Tensor Products}
+When mathematically representing a quantum computer, qubits are written as column vectors while gates are written as square matrices. To combine a series of gates or qubits their tensor product is taken, therefore a function that takes the tensor product of two matrices in Python is needed to implement Grover's Algorithm. This was done in the \textit{tensor\_product.py} file which contains the function \textit{tensor\_product(A: Matrix, B: Matrix)}. This function takes two objects of the user defined class DefaultMatrix (A and B) as inputs, and outputs their tensor product as a DefaultMatrix object. This was calculated by creating a new empty matrix (C) with a number of columns that is equal to the number of columns that A has multiplied by the number of columns that B has, and with a number of rows that is equal to the number of rows that A has multiplied by the number of rows that B has. This empty matrix is then iterated over itself in a 2D loop with the values in A and B being multiplied together and added to the Matrix C accordingly. This function was used throughout the rest of the project in almost every file and made it possible to construct the circuit for Grover's Algorithm. While some of the team work on this function, other members worked on implementing the first quantum gates.
 
 \subsection{Matrices}
-\subsection{Gates}
-\subsection{Tensor Products}
+Almost all the necessary single qubit gates can be represented as constant square matrix, the gate is then applied by multiplying the corresponding matrix by the input qubit. Therefore, rather than creating literal functions for all the necessary gates (IDENTITY, TWO\_HADAMARD, PAULI\_X, PAULI\_Y) these matrices were instead stored in a new file called \textit{constants.py} where the gate can be applied to a qubit by importing the file and multiplying the qubit by the appropriate variable, this reduces the amount of repeated code and improves readability. Qubits corresponding to 0 and 1 were also stored in this file (ZERO\_VECTOR, ONE\_VECTOR) to further reduce repeated code and were used throughout testing. 
 
-\section{Implementation}
-
-Proin lobortis efficitur dictum. Pellentesque vitae pharetra eros, quis dignissim magna. Sed tellus leo, semper non vestibulum vel, tincidunt eu mi. Aenean pretium ut velit sed facilisis. Ut placerat urna facilisis dolor suscipit vehicula. Ut ut auctor nunc. Nulla non massa eros. Proin rhoncus arcu odio, eu lobortis metus sollicitudin eu. Duis maximus ex dui, id bibendum diam dignissim id. Aliquam quis lorem lorem. Phasellus sagittis aliquet dolor, vulputate cursus dolor convallis vel. Suspendisse eu tellus feugiat, bibendum lectus quis, fermentum nunc. Nunc euismod condimentum magna nec bibendum. Curabitur elementum nibh eu sem cursus, eu aliquam leo rutrum. Sed bibendum augue sit amet pharetra ullamcorper. Aenean congue sit amet tortor vitae feugiat.
-
-In congue risus leo, in gravida enim viverra id. Donec eros mauris, bibendum vel dui at, tempor commodo augue. In vel lobortis lacus. Nam ornare ullamcorper mauris vel molestie. Maecenas vehicula ornare turpis, vitae fringilla orci consectetur vel. Nam pulvinar justo nec neque egestas tristique. Donec ac dolor at libero congue varius sed vitae lectus. Donec et tristique nulla, sit amet scelerisque orci. Maecenas a vestibulum lectus, vitae gravida nulla. Proin eget volutpat orci. Morbi eu aliquet turpis. Vivamus molestie urna quis tempor tristique. Proin hendrerit sem nec tempor sollicitudin.
-
-% File contents
-\begin{file}[hello.py]
+\begin{file}[constants.py]
 \begin{lstlisting}[language=Python]
-#! /usr/bin/python
+#: The 2x2 Identity Matrix
+IDENTITY = DefaultMatrix([[1, 0], [0, 1]])
+#: The 2x2 Hadamard Gate
+TWO_HADAMARD = (1/math.sqrt(2)) * \
+	DefaultMatrix([[1, 1], [1, -1]])
+#: A Column Vector representing the |0> state
+ZERO_VECTOR = DefaultMatrix([[1], [0]])
+#: A Column Vector representing the |1> state
+ONE_VECTOR = DefaultMatrix([[0], [1]])
+#: The 2x2 Pauli-X Gate
+PAULI_X = DefaultMatrix([[0, 1], [1, 0]])
+#: The 2x2 Pauli-Z Gate
+PAULI_Z = DefaultMatrix([[1, 0], [0, -1]])
 
-import sys
-sys.stdout.write("Hello World!\n")
 \end{lstlisting}
 \end{file}
 
-Fusce eleifend porttitor arcu, id accumsan elit pharetra eget. Mauris luctus velit sit amet est sodales rhoncus. Donec cursus suscipit justo, sed tristique ipsum fermentum nec. Ut tortor ex, ullamcorper varius congue in, efficitur a tellus. Vivamus ut rutrum nisi. Phasellus sit amet enim efficitur, aliquam nulla id, lacinia mauris. Quisque viverra libero ac magna maximus efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum mollis eros in tellus fermentum, vitae tristique justo finibus. Sed quis vehicula nibh. Etiam nulla justo, pellentesque id sapien at, semper aliquam arcu. Integer at commodo arcu. Quisque dapibus ut lacus eget vulputate.
+The only single qubit gate that did not have a matrix stored in the \textit{constants.py} file was the phase shift gate, since its matrix is not constant and depends on the rotation angle. To account for this a function called \textit{phase\_shift(phi: complex)} was implemented in a new file called \textit{gates.py}, which takes a complex number as an input and outputs a DefaultMatrix representing the phase shift gate of the inputted angle. With the single qubit gates implemented, larger gates can now be constructed from the smaller gates in the remainder of the \textit{gates.py} file.
 
-% Command-line "screenshot"
-\begin{commandline}
-	\begin{verbatim}
-		$ chmod +x hello.py
-		$ ./hello.py
-
-		Hello World!
-	\end{verbatim}
-\end{commandline}
-
-Vestibulum sodales orci a nisi interdum tristique. In dictum vehicula dui, eget bibendum purus elementum eu. Pellentesque lobortis mattis mauris, non feugiat dolor vulputate a. Cras porttitor dapibus lacus at pulvinar. Praesent eu nunc et libero porttitor malesuada tempus quis massa. Aenean cursus ipsum a velit ultricies sagittis. Sed non leo ullamcorper, suscipit massa ut, pulvinar erat. Aliquam erat volutpat. Nulla non lacus vitae mi placerat tincidunt et ac diam. Aliquam tincidunt augue sem, ut vestibulum est volutpat eget. Suspendisse potenti. Integer condimentum, risus nec maximus elementum, lacus purus porta arcu, at ultrices diam nisl eget urna. Curabitur sollicitudin diam quis sollicitudin varius. Ut porta erat ornare laoreet euismod. In tincidunt purus dui, nec egestas dui convallis non. In vestibulum ipsum in dictum scelerisque.
-
-% Warning text, with a custom title
-\begin{warn}[Notice:]
-  In congue risus leo, in gravida enim viverra id. Donec eros mauris, bibendum vel dui at, tempor commodo augue. In vel lobortis lacus. Nam ornare ullamcorper mauris vel molestie. Maecenas vehicula ornare turpis, vitae fringilla orci consectetur vel. Nam pulvinar justo nec neque egestas tristique. Donec ac dolor at libero congue varius sed vitae lectus. Donec et tristique nulla, sit amet scelerisque orci. Maecenas a vestibulum lectus, vitae gravida nulla. Proin eget volutpat orci. Morbi eu aliquet turpis. Vivamus molestie urna quis tempor tristique. Proin hendrerit sem nec tempor sollicitudin.
-\end{warn}
-
-%----------------------------------------------------------------------------------------
+\begin{file}[def phase\_shift(phi: complex) -> Matrix:]
+\begin{lstlisting}[language=Python]
+return DefaultMatrix([[1, 0], 
+	[0, cmath.exp(1j * phi)]])
+\end{lstlisting}
+\end{file}
 
 
+\subsection{Gates}
 
+One of the first large gate functions implemented in the \textit{gates.py} file was called \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} which chains multiple single qubit gates together on specified target input qubits by calculating the tensor product of an arbitrary number of matrices. The function takes the following variables as inputs: size (represents the number of qubits being chained together), targets (which qubits the gate applies to), gate (which single qubit gate needs to be applied), and phi (only for phase gates as it represents the amount of rotation). With those inputs the function \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} computes the values of a large matrix by taking the tensor product of the specified gate as a running product in a loop over the number of qubits (size), if the loop index is not currently one of the target qubits it multiplies by an appropriately sized identity matrix instead.
+
+\begin{file}[def multi\_gate(...)-> Matrix:]
+\begin{lstlisting}[language=Python]
+if gate is Gate.H:
+    g = c.TWO_HADAMARD
+elif gate is Gate.X:
+    g = c.PAULI_X
+elif gate is Gate.Z:
+    g = c.PAULI_Z
+elif gate is Gate.P:
+    g = phase_shift(phi)
+else:
+    return DefaultMatrix.identity(2 ** size)
+
+m: Matrix = DefaultMatrix([[1]])
+
+for i in range(size):
+    if i in targets:
+        m = tp.tensor_product(g, m)
+    else:
+        m = tp.tensor_product(c.IDENTITY, m)
+return m
+
+\end{lstlisting}
+\end{file}
+
+
+The resultant matrix corresponds to having a certain sequence of gates chained together, this will become important when Hadamard gates need to be in this configuration during Grover's Algorithm to construct the superposition required when searching for an index. The other gates that were implemented in this file were the control\_x/z/phase gates, these were also introduced as functions and worked by first introducing various assertions, and then creating a matrix with rows and columns of size 2**qubits. The matrix diagonals at first take on the form of an identity matrix, then the function modifies this matrix by swapping the rows that correspond to the target qubits inputted. The function \textit{\_generic\_control(size: int, controls: List[int],target: int, cval: SCALARS)} was introduced which was called in the \textit{ control\_z(size: int, controls: List[int], target: int) } and \textit{control\_phase(size: int, controls: List[int], target: int, phi: complex)} functions. This design choice was made to further reduce the amount of repeated code. With all the necessary quantum gates in place it was now possible to begin implementing Grover’s Algorithm.
+
+\pagebreak
+
+\section{Implementation}
+
+When implementing Grover's Algorithm in Python it was decided to create a file named \textit{grovers\_algorithm.py} this file contains one helper function called \textit{ pull\_set\_bits(n: int )}, which displays the indexes of the number 1 in the base 2 form of the value, and a Class called \textit{Grovers}. Python was chosen partly because it is an object-oriented language, this allowed all the gates specific to Grover’s Algorithm to be stored as methods in the class while the state of the input qubits could be stored as attributes. This improves the code as it allowed variations of Grover's Algorithm to be created as objects without repeating lines. 
+
+\begin{file}[def \_\_init\_\_(self, size: int, target\_state: int):]
+\begin{lstlisting}[language=Python]
+assert size > 1, 
+assert target_state < (2 ** size),
+
+self.size = size
+self.target = target_state
+self.state = self.initial_state()
+
+self.oracle = self.single_target_oracle()
+self.diffuser = self.diffusion()
+self.max_reflections = self.size - 1
+self.circuit = self.construct_circuit()
+\end{lstlisting}
+\end{file}
+
+Above the contents of the class's initialisation method is displayed which takes in two inputs: size (which is the number of qubits that is required), and target\_state (which is the input the user is searching for in the algorithm) all other attributes are defined through methods in the class and are described as follows.
+
+\subsection{Initial State}
+
+\begin{file}[def initial\_state(self) -> Matrix:]
+\begin{lstlisting}[language=Python]
+entries: MATRIX = [[0] for _ in range(2**self.size)]
+entries[0][0] = 1
+return DefaultMatrix(entries)
+\end{lstlisting}
+\end{file}
+
+This method is simply to initialise the beginning state of the system as zero as a DefaultMatrix. The method first creates a column vector representing the value zero as qubit with the size of the column vector being equal to the inputted size. If for example Grover's Algorithm were set to work with three qubits (done by setting the size attribute to three), it would create a column vector of size eight with the first item being the number one and the rest being the number zero which represents the number zero in qubit form. List comprehension makes the code compact, However the value 1 needs to be manually set, the column vector is then returned as a DefaultMatrix. 
+
+\subsection{Single Target Oracle}
+
+\begin{file}[def single\_target\_oracle(self):]
+\begin{lstlisting}[language=Python]
+not_placement = (2 ** self.size) - 1 - self.target
+t = pull_set_bits(not_placement)
+
+cz = g.control_z(self.size, 
+	[i for i in range(0, self.size - 1)],
+	self.size - 1)
+	
+selector = g.multi_gate(self.size, t, g.Gate.X)
+oracle = selector * cz
+oracle *= selector
+return oracle
+
+\end{lstlisting}
+\end{file}
+
+Single target oracle is a method that creates a matrix representing an oracle gate for a given target and number of qubits. It starts by using \textit{pull\_set\_bits(n: int)} to essentially convert the target into binary form by providing all the indexes of the number 1 in the base 2 version of the target. Which it then uses as a set of input targets in a series of Pauli-X gates chained together using the \textit{multi\_gate(...)} function. Because the oracle is made of the Control-Z and Pauli-X gates in sequence, multiplying the matrix representations of those gates together is enough to create the single target oracle gate.
+
+\subsection{Diffusion}
+
+\begin{file}[def diffusion(self):]
+\begin{lstlisting}[language=Python]
+h = g.multi_gate(self.size, 
+	[i for i in range(0, self.size)], 
+	g.Gate.H)
+			
+cz = g.control_z(self.size, 
+	[i for i in range(0, self.size - 1)], 
+	self.size - 1)
+			
+x = g.multi_gate(self.size, 
+	[i for i in range(0, self.size)], 
+	g.Gate.X)
+			
+diff = h * (x * (cz * (x * h)))
+return diff
+
+\end{lstlisting}
+\end{file}
+
+
+Diffusion is a method that creates a matrix that represents the diffusion operation in Grover's Algorithm. to create the diffusion operator a series a Hadamard gates are first created and placed on either side of the gate once again using the multi-gate function. Then the Control-Z and Pauli-X gates are placed either side. The resulting matrix is then returned for use in the execute method which combines the created gates together.
+
+
+
+
+\subsection{Construction and Running}
+
+Once all the special quantum gates pertaining to Grover's Algorithm are created, the next step is to simply combine them into a single large circuit by multiplying their matrices together. This is done in the \textit{construct\_circuit()} method shown below.
+
+\begin{file}[def construct\_circuit(self) -> Matrix:]
+\begin{lstlisting}[language=Python]
+circuit = g.multi_gate(self.size, 
+	[i for i in range(0, self.size)],
+	g.Gate.H)
+
+while self.max_reflections > 0:
+	circuit = self.oracle * circuit
+	circuit = self.diffuser * circuit
+	self.max_reflections -= 1
+	
+return circuit
+
+\end{lstlisting}
+\end{file}
+
+First the method uses the \textit{multi\_gate(...)} function to chain together a large set of Hadamard gates to create the superposition required. In Grover's Algorithm the oracle and diffusion operator are repeat a number of times that is proportional to the number of qubits being used in the circuit. This is achieved through a running total where the oracle and diffusion operators are multiplied by a running matrix of the circuit while the attribute \textit{max\_reflections} is decreased by 1, this continues until  \textit{max\_reflections} equals zero at which point the matrix representing the full Grover's Algorithm circuit is returned. If a column vector representing a qubit is multiplied by this matrix, the calculation would be representative of Grover's Algorithm. The only other methods in the class are the \textit{measure(self)} and \textit{run(self)} methods. The \textit{run(self)} method simply multiplies the current state of the qubits (which has already been initialised), by the Matrix created in the \textit{construct\_circuit(self)} method. \textit{measure(self)} simply collapses the superposition of the quantum output into a single value which,because of the manipulation of Grover's Algorithm, is almost certainly the target value that the algorithm was designed to search for. The \textit{measure(self)} method works by first measuring the probabilities of all the possible output states using the register.measure() function and then outputting the most probable answer from that array with it's associated probability.In conclusion, by creating a Grover's Class we can generate specific oracles and diffusion gates depending on the target value and number of qubits. This Class lead to a simulation of Grover's algorithm, by creating all the gates in separate methods it lead to clean and efficient code that which can then be re-purposed for other searching operations such as finding solutions to Sudoku puzzles. The final step is testing which is explained in detail in the next chapter.
+
+\pagebreak
 
 \section{Testing and Debugging}
 
+While some team members were constructing code, others were assigned to designing tests for functions as they were created. This allowed the team to work more efficiently as bugs were spotted earlier which lead to fewer bugs in the late stages of the task. When designing tests the assert command was used which made the tests compatible with the Tox utility. Tox is an automated testing tool that can be applied when running a python file, when a file is run using tox it automatically runs all the functions in the file and therefore applies all the tests. Tox then reports how many tests the program passed and how much of the code the tests covered. This tool became invaluable as it allowed the team to measure the robustness of the code and quality of the designed tests. To further aide Tox a separated folder of files specifically for tests was created, this allowed for modularity in the code as the tests files could then be easily removed once the final program was implemented, it also allowed for the use of the tox command in the terminal to allow for analysis of the tests that showed how much of the code the tests reached.
+
+
+\subsection{Testing Simple functions}
+
+ The first tests that were implemented were to test the tensor product with the function \textit{test\_tensor\_product()}. This worked by implementing an array containing a series of matrices of different sizes and contents, with the intention to catch corner cases. Then the tensor product was calculated all these matrices by placing inputting them into the \textit{numpy.kron()} function in a separate file. The answers for these were then placed inside arrays stored in the functions and were compared to the calculated values from our \textit{tensor\_product()} function. Almost all the tests were passed except for the tests with non-square matrices, these bugs where fixed once spotted and the tox command in the terminal let us know that we covered near 100\% of the tensor product code.Similar tests were then constructed for the single qubit gates in the file \textit{test\_gates.py}. Single qubit gates such as the Hadamard were easy to construct tests for simply comparing the 0 and 1 qubit outputs to the hand calculated super-positions. Assertion statements were used to make the test functions compatible with tox in the terminal. We tested code to a satisfactory level and then moved on to the next piece of the project to help catch mistakes and kill bugs before they appear allowing the team to work more efficiently. Helper functions file was introduced to assist with further tests, however the only function that is present in this file was compare matrices which tests if two matrices are roughly equal and uses an assert to be compatible with the tox command in the terminal.  This helper function was used throughout the test files most notably in the \textit{test\_grovers\_algorithm.py} file. 
+\subsection{Testing Grover's Algorithm}
+
+All the individual methods of the \textit{Grovers} class as well as the \textit{pull\_set\_bits()} helper function were tested in the \textit{test\_grovers\_algorithm.py} file. Most of the test functions work the same as with the simple functions were a set of expected values are stored in an array whereupon the calculated values from the function was compared and asserted to be compatible with the Tox utility. To aide in the testing for Grover's Algorithm a new file in the tests folder was created called  \textit{test\_helpers.py} which contained the function \textit{compare\_matrices(A: Matrix, B: Matrix, e=1E-9)}. The purpose of this function was to avoid rounding errors when computing multiplications of matrices since this function contained an assertion for the two matrices in the \textit{is\_close()} function, this avoids repeated code and rounding errors which can make tests fail even when the function works as intended.
 
 
 \section{Issues and Challenges}
 
+\section{Conclusion} % Numbered section
 
-
-
-
-
-% Math equation/formula
-\begin{equation}
-	I = \int_{a}^{b} f(x) \; \text{d}x.
-\end{equation}
-
-Aliquam arcu turpis, ultrices sed luctus ac, vehicula id metus. Morbi eu feugiat velit, et tempus augue. Proin ac mattis tortor. Donec tincidunt, ante rhoncus luctus semper, arcu lorem lobortis justo, nec convallis ante quam quis lectus. Aenean tincidunt sodales massa, et hendrerit tellus mattis ac. Sed non pretium nibh. Donec cursus maximus luctus. Vivamus lobortis eros et massa porta porttitor.
-
-\begin{info} % Information block
-	This is an interesting piece of information, to which the reader should pay special attention. Fusce varius orci ac magna dapibus porttitor. In tempor leo a neque bibendum sollicitudin. Nulla pretium fermentum nisi, eget sodales magna facilisis eu. Praesent aliquet nulla ut bibendum lacinia. Donec vel mauris vulputate, commodo ligula ut, egestas orci. Suspendisse commodo odio sed hendrerit lobortis. Donec finibus eros erat, vel ornare enim mattis et.
-\end{info}
-
-%----------------------------------------------------------------------------------------
-%	PROBLEM 1
-%----------------------------------------------------------------------------------------
-
-\section{Problem title} % Numbered section
-
-In hac habitasse platea dictumst. Curabitur mattis elit sit amet justo luctus vestibulum. In hac habitasse platea dictumst. Pellentesque lobortis justo enim, a condimentum massa tempor eu. Ut quis nulla a quam pretium eleifend nec eu nisl. Nam cursus porttitor eros, sed luctus ligula convallis quis. Nam convallis, ligula in auctor euismod, ligula mauris fringilla tellus, et egestas mauris odio eget diam. Praesent sodales in ipsum eu dictum.
-
-%------------------------------------------------
-
-\subsection{Theoretical viewpoint}
-
-Maecenas consectetur metus at tellus finibus condimentum. Proin arcu lectus, ultrices non tincidunt et, tincidunt ut quam. Integer luctus posuere est, non maximus ante dignissim quis. Nunc a cursus erat. Curabitur suscipit nibh in tincidunt sagittis. Nam malesuada vestibulum quam id gravida. Proin ut dapibus velit. Vestibulum eget quam quis ipsum semper convallis. Duis consectetur nibh ac diam dignissim, id condimentum enim dictum. Nam aliquet ligula eu magna pellentesque, nec sagittis leo lobortis. Aenean tincidunt dignissim egestas. Morbi efficitur risus ante, id tincidunt odio pulvinar vitae.
-
-Curabitur tempus hendrerit nulla. Donec faucibus lobortis nibh pharetra sagittis. Sed magna sem, posuere eget sem vitae, finibus consequat libero. Cras aliquet sagittis erat ut semper. Aenean vel enim ipsum. Fusce ut felis at eros sagittis bibendum mollis lobortis libero. Donec laoreet nisl vel risus lacinia elementum non nec lacus. Nullam luctus, nulla volutpat ultricies ultrices, quam massa placerat augue, ut fringilla urna lectus nec nibh. Vestibulum efficitur condimentum orci a semper. Pellentesque ut metus pretium lacus maximus semper. Sed tellus augue, consectetur rhoncus eleifend vel, imperdiet nec turpis. Nulla ligula ante, malesuada quis orci a, ultricies blandit elit.
-
-% Numbered question, with subquestions in an enumerate environment
-\begin{question}
-	Quisque ullamcorper placerat ipsum. Cras nibh. Morbi vel justo vitae lacus tincidunt ultrices. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-
-	% Subquestions numbered with letters
-	\begin{enumerate}[(a)]
-		\item Do this.
-		\item Do that.
-		\item Do something else.
-	\end{enumerate}
-\end{question}
-	
-%------------------------------------------------
-
-\subsection{Algorithmic issues}
-
-In malesuada ullamcorper urna, sed dapibus diam sollicitudin non. Donec elit odio, accumsan ac nisl a, tempor imperdiet eros. Donec porta tortor eu risus consequat, a pharetra tortor tristique. Morbi sit amet laoreet erat. Morbi et luctus diam, quis porta ipsum. Quisque libero dolor, suscipit id facilisis eget, sodales volutpat dolor. Nullam vulputate interdum aliquam. Mauris id convallis erat, ut vehicula neque. Sed auctor nibh et elit fringilla, nec ultricies dui sollicitudin. Vestibulum vestibulum luctus metus venenatis facilisis. Suspendisse iaculis augue at vehicula ornare. Sed vel eros ut velit fermentum porttitor sed sed massa. Fusce venenatis, metus a rutrum sagittis, enim ex maximus velit, id semper nisi velit eu purus.
-
-\begin{center}
-	\begin{minipage}{0.5\linewidth} % Adjust the minipage width to accomodate for the length of algorithm lines
-		\begin{algorithm}[H]
-			\KwIn{$(a, b)$, two floating-point numbers}  % Algorithm inputs
-			\KwResult{$(c, d)$, such that $a+b = c + d$} % Algorithm outputs/results
-			\medskip
-			\If{$\vert b\vert > \vert a\vert$}{
-				exchange $a$ and $b$ \;
-			}
-			$c \leftarrow a + b$ \;
-			$z \leftarrow c - a$ \;
-			$d \leftarrow b - z$ \;
-			{\bf return} $(c,d)$ \;
-			\caption{\texttt{FastTwoSum}} % Algorithm name
-			\label{alg:fastTwoSum}   % optional label to refer to
-		\end{algorithm}
-	\end{minipage}
-\end{center}
-
-Fusce varius orci ac magna dapibus porttitor. In tempor leo a neque bibendum sollicitudin. Nulla pretium fermentum nisi, eget sodales magna facilisis eu. Praesent aliquet nulla ut bibendum lacinia. Donec vel mauris vulputate, commodo ligula ut, egestas orci. Suspendisse commodo odio sed hendrerit lobortis. Donec finibus eros erat, vel ornare enim mattis et.
-
-% Numbered question, with an optional title
-\begin{question}[\itshape (with optional title)]
-	In congue risus leo, in gravida enim viverra id. Donec eros mauris, bibendum vel dui at, tempor commodo augue. In vel lobortis lacus. Nam ornare ullamcorper mauris vel molestie. Maecenas vehicula ornare turpis, vitae fringilla orci consectetur vel. Nam pulvinar justo nec neque egestas tristique. Donec ac dolor at libero congue varius sed vitae lectus. Donec et tristique nulla, sit amet scelerisque orci. Maecenas a vestibulum lectus, vitae gravida nulla. Proin eget volutpat orci. Morbi eu aliquet turpis. Vivamus molestie urna quis tempor tristique. Proin hendrerit sem nec tempor sollicitudin.
-\end{question}
-
-Mauris interdum porttitor fringilla. Proin tincidunt sodales leo at ornare. Donec tempus magna non mauris gravida luctus. Cras vitae arcu vitae mauris eleifend scelerisque. Nam sem sapien, vulputate nec felis eu, blandit convallis risus. Pellentesque sollicitudin venenatis tincidunt. In et ipsum libero. Nullam tempor ligula a massa convallis pellentesque.
-
-%----------------------------------------------------------------------------------------
-%	PROBLEM 2
-%----------------------------------------------------------------------------------------
-
+\pagebreak
 \section{References and Bibliography}
 \printbibliography[heading=none]
 

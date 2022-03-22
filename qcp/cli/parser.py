@@ -22,8 +22,8 @@ from typing import Dict, List, Tuple
 import qcp.cli.interpret as i
 import qcp.cli.usage as u
 from qcp.cli.constants import (ALGORITHM_LONG, DEFAULT_ALGORITHM,
-                               DEFAULT_TARGET, FLAG_MAPPING, HELP_LONG,
-                               TARGET_LONG)
+                               DEFAULT_TARGET, FLAG_MAPPING, GUI_LONG,
+                               HELP_LONG, TARGET_LONG)
 from qcp.cli.options import AlgorithmOption
 
 
@@ -86,12 +86,29 @@ def read_cli(args: List[str]):
     """
     flags, vals = parse_input(args)
 
-    if HELP_LONG in flags or len(vals) == 0:
+    if HELP_LONG in flags:
         u.usage()
 
-    alg_opt_str = DEFAULT_ALGORITHM
-    if ALGORITHM_LONG in flags:
-        alg_opt_str = flags[ALGORITHM_LONG]
+    if GUI_LONG in flags:
+        try:
+            # Need to put import here, as not all terminal connections support
+            # a UI (e.g: an ssh connection...)
+            import qcp.gui.main as gui
+            gui.initialise_ui()
+        except ImportError as ie:
+            print("Could not start up GUI:", file=sys.stderr)
+            print(ie)
+            exit(1)
+
+    if ALGORITHM_LONG not in flags:
+        flags[ALGORITHM_LONG] = DEFAULT_ALGORITHM
+
+    alg_opt_str = flags[ALGORITHM_LONG]
+
+    # Show the help message on no args provided, but only if sudoku algorithm
+    # not chosen
+    if len(vals) == 0 and flags[ALGORITHM_LONG] != "s":
+        u.usage()
 
     if alg_opt_str not in AlgorithmOption.list():
         print(

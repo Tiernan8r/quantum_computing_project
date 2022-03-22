@@ -1,4 +1,5 @@
 import random
+from typing import List, Tuple
 
 import qcp.gates as g
 import qcp.register as reg
@@ -116,19 +117,19 @@ class Sudoku(GeneralAlgorithm):
 
         return observed[0], probability
 
-    def measure_solution(self):
+    def measure_solution(self) -> Tuple[List[str], float]:
         """
         Randomly measures 1 of 16 possible options that the 4 input variables
         can be with the probability of measuring a certain option determined by
         the probabilities associated with each state
         :return:
-            Tuple[[str], float]: The input solution observed and the
+            Tuple[List[str], float]: The input solution observed and the
             probability of observing that solution
         """
         prob = reg.measure(self.state)
-        sol_probs = [0] * 16
+        sol_probs = [0 for _ in range(16)]
         for i in range(len(prob)):
-            sol_probs[i % 16] += prob[i]
+            sol_probs[i % 16] += prob[i]  # type: ignore
 
         observed = random.choices(
             [i for i in range(len(sol_probs))], sol_probs, k=1)  # type: ignore

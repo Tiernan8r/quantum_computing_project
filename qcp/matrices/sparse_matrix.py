@@ -139,7 +139,11 @@ class SparseMatrix(Matrix):
             self._entries = state
 
             if not given_height:
-                self._row = max(state.keys()) + 1  # indexes from 0...
+                # max() errors on calls with empty lists
+                if len(state.keys()) == 0:
+                    self._row = 1
+                else:
+                    self._row = max(state.keys()) + 1  # indexes from 0...
 
             if not given_width:
                 self._col = 0
