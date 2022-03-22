@@ -122,26 +122,9 @@ class Grovers(GeneralAlgorithm):
         return circuit
 
     def measure_probabilities(self):
-        p = reg.measure(self.state)
+        p = self.probabilities()
         n_bits = int(math.log2(2**self.size))
 
         for i in range(2**self.size):
             binary = bin(i)[2:].zfill(n_bits)
             print(f"|{binary}> : {p[i]:.4g}")
-
-    def measure(self) -> Tuple[int, float]:
-        """
-        'measures' self.state by selecting a state weighted by its
-        (amplitude ** 2)
-
-        returns:
-            Tuple[int, float]: The state observed and the probability of
-            measuring said state
-        """
-        p = reg.measure(self.state)
-        # list of weighted probabilities with the index representing the state
-
-        observed = random.choices(
-            [i for i in range(len(p))], p, k=1)  # type: ignore
-        probability = p[observed[0]]
-        return observed[0], probability

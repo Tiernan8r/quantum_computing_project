@@ -1,6 +1,6 @@
-import cmath
 import math
 import random
+from typing import List
 
 import qcp.gates as g
 import qcp.register as reg
@@ -165,14 +165,22 @@ class PhaseEstimation(GeneralAlgorithm):
         return third * second * first
 
     def measure_probabilities(self):
-        p = self._amplitude()
+        p = self.probabilities()
         n_bits = int(math.log2(2**self.size))
 
         for i in range(2**self.size):
             binary = bin(i)[2:].zfill(n_bits)
             print(f"|{binary}> : {p[i]:.4g}")
 
-    def _amplitude(self):
+    def probabilities(self) -> List[float]:
+        """
+        Returns the amplitudes of the measured state, representing the
+        probabilities to be in each state.
+
+        returns:
+            List[float]: A list of states, where each element is the
+                probability to be in that state.
+        """
         n = 2 ** self.size
 
         result = DefaultMatrix.zeros(n)
@@ -184,18 +192,4 @@ class PhaseEstimation(GeneralAlgorithm):
 
         p = reg.measure(result)
 
-        return p
-
-    def measure(self):
-        """
-        'measures' self.state by selecting a state weighted by its
-        (amplitude ** 2)
-        :return: the state observed and the probability of measuring
-                said state
-        """
-
-        p = self._amplitude()
-        observed = random.choices([i for i in range(len(p))], p, k=1)
-        probability = p[observed[0]]
-
-        return int(observed[0]/2**self.size), probability
+        return p / 2**self.size
