@@ -18,6 +18,8 @@ Entrypoint for the Simulator
 import multiprocessing
 import os
 import sys
+import random
+import time
 
 # Required to guarantee that the 'qcp' module is accessible when
 # this file is run directly.
@@ -35,6 +37,9 @@ def main():
     The entrypoint for the CLI, parses the cli options and passes the read
     options to the function to run the computation.
     """
+    # Set the seed so we get different random results each run
+    random.seed(time.time())
+
     # Ignore the first entry in sys.argv as it is just the program name
     alg_opt, parsed_tuple = cli.read_cli(sys.argv[1:])
 

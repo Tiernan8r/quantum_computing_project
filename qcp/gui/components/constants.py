@@ -56,3 +56,12 @@ LAYOUT_COMBO_MAPPING = {v: k for k, v in COMBO_BOX_LAYOUT_MAPPING.items()}
 PROGRESS_BAR = "progress_bar"
 #: The tick rate in ms of the progress bar
 PROGRESS_BAR_TICK_RATE = 100  # in milliseconds
+
+OUTPUT_VALUE_TEXT_LABEL = "label_measured_state"
+OUTPUT_VALUE_LABEL = "label_state_value"
+OUTPUT_VALUE_FORMAT = "|{}⟩"
+OUTPUT_STATE_PROBABILITY_TEXT_LABEL = "label_measured_probability"
+OUTPUT_STATE_PROBABILITY = "state_probability"
+
+MEASURED_PHASE_LABEL = "label_measured_phase"
+MEASURED_PHASE_LABEL_VALUE = "label_measured_phase_value"

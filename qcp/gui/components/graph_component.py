@@ -11,8 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import List
+
 import matplotlib
-import qcp.register as reg
 from matplotlib.backends.backend_qt5agg import \
     FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import \
@@ -21,7 +22,6 @@ from matplotlib.figure import Figure
 from PySide6 import QtWidgets
 from qcp.gui.components import AbstractComponent
 from qcp.gui.components.constants import GRAPH_WIDGET_NAME
-from qcp.matrices import Matrix
 
 matplotlib.use('Qt5Agg')
 
@@ -102,7 +102,7 @@ class GraphComponent(AbstractComponent):
         if self.graph_widget.isHidden():
             self.graph_widget.show()
 
-    def display(self, qregister: Matrix = None):
+    def display(self, probabilities: List[float] = None):
         """
         Calculate the probability distributions for the given quantum
         register to be in each qbit state, and plot the probabilities
@@ -117,11 +117,11 @@ class GraphComponent(AbstractComponent):
         title = "Measured Quantum States:"
         xlabel, ylabel = "states", "probabilities"
 
-        if qregister is None:
+        if probabilities is None:
             return
 
-        x = [f"|{i}>" for i in range(qregister.num_rows)]
-        y = reg.measure(qregister)
+        x = [f"|{i}>" for i in range(len(probabilities))]
+        y = probabilities
 
         self._plot(x, y, title=title,
                    xlabel=xlabel, ylabel=ylabel)

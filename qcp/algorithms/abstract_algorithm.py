@@ -16,8 +16,10 @@ Constructs the quantum register, circuits of composite gates, and runs the
 simulation of Grover's Algorithm
 """
 import abc
-from typing import Tuple
+import random
+from typing import List, Tuple
 
+import qcp.register as reg
 from qcp.matrices import SPARSE, DefaultMatrix, Matrix
 
 
@@ -72,7 +74,26 @@ class GeneralAlgorithm(abc.ABC):
             Tuple[int, float]: The state observed and the probability of
             measuring said state
         """
-        pass
+        p = self.probabilities()
+        # list of weighted probabilities with the index representing the state
+
+        observed = random.choices(
+            [i for i in range(len(p))], p, k=1)  # type: ignore
+        probability = p[observed[0]]
+
+        return int(observed[0]), probability
+
+    def probabilities(self) -> List[float]:
+        """
+        Returns the amplitudes of the measured state, representing the
+        probabilities to be in each state.
+
+        returns:
+            List[float]: A list of states, where each element is the
+                probability to be in that state.
+        """
+        if self.state is not None:
+            return reg.measure(self.state)
 
     def measure_probabilities(self):
         """

@@ -17,12 +17,19 @@ from qcp.matrices import DefaultMatrix
 
 #: The 2x2 Identity Matrix
 IDENTITY = DefaultMatrix([[1, 0], [0, 1]])
+#: Normalisation factor used in the hadamard gate, and in the plus/minus
+#:  state vectors
+factor = (1 / math.sqrt(2))
 #: The 2x2 Hadamard Gate
-TWO_HADAMARD = (1/math.sqrt(2)) * DefaultMatrix([[1, 1], [1, -1]])
+TWO_HADAMARD = factor * DefaultMatrix([[1, 1], [1, -1]])
 #: A Column Vector representing the |0> state
 ZERO_VECTOR = DefaultMatrix([[1], [0]])
 #: A Column Vector representing the |1> state
 ONE_VECTOR = DefaultMatrix([[0], [1]])
+#: A Column Vector representing the |+> state
+PLUS_VECTOR = factor * DefaultMatrix([[1], [1]])
+#: A Column Vector representing the |-> state
+MINUS_VECTOR = factor * DefaultMatrix([[1], [-1]])
 #: The 2x2 Pauli-X Gate
 PAULI_X = DefaultMatrix([[0, 1], [1, 0]])
 #: The 2x2 Pauli-Z Gate
