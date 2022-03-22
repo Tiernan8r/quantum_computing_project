@@ -94,9 +94,9 @@ class GroverSimulatorComponent(SimulatorComponent):
         self.nqbits = self.tuple_input[1]
 
         # TODO: Don't know if this reasoning makes sense...
-        number_entries = math.log2(self.nqbits)
-        classical_average = math.ceil(number_entries / 2)
-        quantum_average = math.ceil(math.sqrt(number_entries))
+
+        classical_average = math.ceil(2**self.nqbits / 2)
+        quantum_average = math.floor((math.pi/4)*(math.sqrt(2**self.nqbits)))
 
         self.lcd_classical.display(classical_average)
         self.lcd_grover.display(quantum_average)
