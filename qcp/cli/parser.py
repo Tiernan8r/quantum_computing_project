@@ -21,7 +21,6 @@ from typing import Dict, List, Tuple
 
 import qcp.cli.interpret as i
 import qcp.cli.usage as u
-import qcp.gui.main as gui
 from qcp.cli.constants import (ALGORITHM_LONG, DEFAULT_ALGORITHM,
                                DEFAULT_TARGET, FLAG_MAPPING, GUI_LONG,
                                HELP_LONG, TARGET_LONG)
@@ -91,7 +90,15 @@ def read_cli(args: List[str]):
         u.usage()
 
     if GUI_LONG in flags:
-        gui.initialise_ui()
+        try:
+            # Need to put import here, as not all terminal connections support
+            # a UI (e.g: an ssh connection...)
+            import qcp.gui.main as gui
+            gui.initialise_ui()
+        except ImportError as ie:
+            print("Could not start up GUI:", file=sys.stderr)
+            print(ie)
+            exit(1)
 
     if ALGORITHM_LONG not in flags:
         flags[ALGORITHM_LONG] = DEFAULT_ALGORITHM

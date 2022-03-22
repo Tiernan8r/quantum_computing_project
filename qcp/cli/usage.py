@@ -33,7 +33,7 @@ FLAGS:
                         s   = Toy Sudoku solver
                     Defaults to '{DEFAULT_ALGORITHM}' if unset
     {HELP_SHORT}/{HELP_LONG}       Display this prompt
-    {GUI_SHORT}/{GUI_LONG}      Display the GUI.
+    {GUI_SHORT}/{GUI_LONG}      Display the GUI (if supported).
 
 The CLI options vary by choice of algorithm:
 
