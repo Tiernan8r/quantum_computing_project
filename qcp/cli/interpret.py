@@ -17,7 +17,7 @@ Convert the given CLI arguments and flags into usable input for the algorithms
 import sys
 from typing import Dict, List, Tuple
 
-from qcp.cli.constants import (DEFAULT_PHASE, DEFAULT_TARGET, DEFAULT_UNITARY,
+from qcp.cli.constants import (DEFAULT_EIGENVECTOR_IDX, DEFAULT_PHASE, DEFAULT_TARGET, DEFAULT_UNITARY, EIGENVECTOR_LONG,
                                PHASE_LONG, TARGET_LONG, UNITARY_LONG)
 from qcp.cli.options import AlgorithmOption
 from qcp.algorithms.phase_estimation_unitary_matrices import UnitaryMatrices
@@ -178,7 +178,29 @@ def determine_phase_estimation(args: List[str], flags: Dict[str, str]
         unitary_matrix = UnitaryMatrices(unitary_str)
 
     # Determining the Eigenvector to use
-    eigenvec = DefaultMatrix([[0], [1]])
+    DEFAULT_EIGENVECTOR_NAME = unitary_matrix.basis_names()[
+        DEFAULT_EIGENVECTOR_IDX]
+    if EIGENVECTOR_LONG not in flags:
+        flags[EIGENVECTOR_LONG] = DEFAULT_EIGENVECTOR_NAME
+
+    eigenvector_str = flags[EIGENVECTOR_LONG]
+    bases = unitary_matrix.basis_names()
+    # Get just the inner value of the bra-ket notation, since bash terminals
+    # don't let you type '>' easily
+    # so |0> becomes just 0
+    available_eigenvectors = [b[1] for b in bases]
+
+    if eigenvector_str not in available_eigenvectors:
+        print(
+            f"'{eigenvector_str}' is not a valid eigenvector choice, "
+            f"the choices for the '{unitary_matrix.value}'"
+            f" are: {available_eigenvectors}",
+            file=sys.stderr)
+        exit(1)
+
+    eigenvec_idx = available_eigenvectors.index(eigenvector_str)
+
+    eigenvec = unitary_matrix.basis()[eigenvec_idx]
 
     return nqbits, unitary_matrix.get(phase), eigenvec
 
