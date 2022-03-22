@@ -14,6 +14,7 @@
 import time
 from typing import List
 
+import qcp.algorithms as alg
 from PySide6 import QtWidgets
 from qcp.gui.components import ProgressBarComponent
 from qcp.gui.components.phase_estimation.constants import (
@@ -116,8 +117,14 @@ class PhaseButtonComponent(ProgressBarComponent):
 
         self.tick_progress_bar()
 
-        self.main_window.pe_simulator.run_simulation(
-            nqbits, unitary_matrix, eigenvector)
+        input_tuple = (
+            alg.PhaseEstimation,
+            nqbits,
+            unitary_matrix,
+            eigenvector
+        )
+
+        self.main_window.pe_simulator.run_simulation(input_tuple)
 
     def _generic_input_error(self, label: QtWidgets.QLabel, ve: ValueError):
         label.show()

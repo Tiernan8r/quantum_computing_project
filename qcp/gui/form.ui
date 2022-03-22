@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>478</width>
-    <height>754</height>
+    <height>834</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,6 +21,28 @@
   </property>
   <widget class="QWidget" name="central_widget">
    <layout class="QGridLayout" name="gridLayout_2">
+    <item row="1" column="0">
+     <widget class="QComboBox" name="algorithm_options">
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>Grover's Algorithm</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Phase Estimation</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Sudoku</string>
+       </property>
+      </item>
+     </widget>
+    </item>
     <item row="0" column="0">
      <widget class="QLabel" name="title">
       <property name="text">
@@ -28,6 +50,19 @@
       </property>
       <property name="textFormat">
        <enum>Qt::RichText</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="0">
+     <widget class="QProgressBar" name="progress_bar">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -804,51 +839,117 @@
        </layout>
       </item>
       <item>
-       <widget class="QWidget" name="graph" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="output_window">
+        <item>
+         <widget class="QWidget" name="graph" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_21">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QFormLayout" name="output_display">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_measured_state">
+            <property name="text">
+             <string>Measured State:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_measured_probability">
+            <property name="text">
+             <string>Measured Probability:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QProgressBar" name="state_probability">
+            <property name="value">
+             <number>24</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="0">
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="4" column="0">
+           <spacer name="verticalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_state_value">
+            <property name="text">
+             <string>|0⟩</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_12">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
      </layout>
-    </item>
-    <item row="10" column="0">
-     <widget class="QProgressBar" name="progress_bar">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="value">
-       <number>0</number>
-      </property>
-      <property name="textVisible">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QComboBox" name="algorithm_options">
-      <property name="frame">
-       <bool>true</bool>
-      </property>
-      <item>
-       <property name="text">
-        <string>Grover's Algorithm</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Phase Estimation</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Sudoku</string>
-       </property>
-      </item>
-     </widget>
     </item>
    </layout>
   </widget>

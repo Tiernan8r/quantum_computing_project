@@ -13,13 +13,13 @@
 # limitations under the License.
 import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
-from qcp.gui.components import (AbstractComponent, GraphComponent,
-                                SimulateAlgorithmThread)
+from qcp.gui.components import (GraphComponent, SimulateAlgorithmThread,
+                                SimulatorComponent)
 from qcp.gui.components.phase_estimation import PhaseButtonComponent
 from qcp.matrices import Matrix
 
 
-class PhaseSimulatorComponent(AbstractComponent):
+class PhaseSimulatorComponent(SimulatorComponent):
     """
     UI Component that handles the background task of running the Quantum
     Computer Simulator code on a separate QThread.
@@ -42,8 +42,7 @@ class PhaseSimulatorComponent(AbstractComponent):
         :param **kwargs: dictionary parameters to pass to QtCore.QObject
         """
         self.button_component = button_component
-        self.graph_component = graph_component
-        super().__init__(main_window, *args, **kwargs)
+        super().__init__(main_window, graph_component, *args, **kwargs)
 
     def setup_signals(self):
         """
@@ -55,34 +54,9 @@ class PhaseSimulatorComponent(AbstractComponent):
         """
         super().setup_signals()
 
-        self.qcp_thread = SimulateAlgorithmThread()
-        self.qcp_thread.simulation_result_signal.connect(
-            self._simulation_results)
-
         # Hide the cancel button if the calculation finishes
         self.qcp_thread.finished.connect(
             self.button_component.cancel_button.hide)
-
-        self.qcp_thread.finished.connect(self.simulation_finished)
-
-    def run_simulation(self, nqbits: int,
-                       unitary: Matrix,
-                       eigenvector: Matrix):
-        """
-        Pass the input parameters to the QThread, and start up the
-        simulation
-        """
-        # Code to initialise the qcp simulation on the qthread
-        # Pass the number of qbits and target bit over to the thread
-        self.nqbits = nqbits
-        input_tuple = (
-            alg.PhaseEstimation,
-            nqbits,
-            unitary,
-            eigenvector
-        )
-
-        self.qcp_thread.simulation_input_signal.emit(input_tuple)
 
     @QtCore.Slot(tuple)
     def _simulation_results(self, results_tuple):
@@ -90,8 +64,7 @@ class PhaseSimulatorComponent(AbstractComponent):
         Signal catcher to read in the simulation results from the
         QThread that it is calculated in.
         """
-        qregister = results_tuple[1]
-        self.graph_component.display(qregister)
+        super()._simulation_results(results_tuple)
 
         self.button_component.pb_thread.exiting = True
 
