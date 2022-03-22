@@ -19,7 +19,8 @@ from typing import Dict, List, Tuple
 
 from qcp.cli.constants import (DEFAULT_PHASE, DEFAULT_TARGET, DEFAULT_UNITARY,
                                PHASE_LONG, TARGET_LONG, UNITARY_LONG)
-from qcp.cli.options import AlgorithmOption, UnitaryMatrices
+from qcp.cli.options import AlgorithmOption
+from qcp.algorithms.phase_estimation_unitary_matrices import UnitaryMatrices
 from qcp.matrices import DefaultMatrix, Matrix
 
 
