@@ -51,10 +51,10 @@
 <li class="toctree-l2"><a class="reference internal" href="qcp.cli.html#module-qcp.cli.constants">qcp.cli.constants module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qcp.cli.html#module-qcp.cli.interpret">qcp.cli.interpret module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qcp.cli.html#module-qcp.cli.options">qcp.cli.options module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qcp.cli.html#qcp-cli-parser-module">qcp.cli.parser module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qcp.cli.html#qcp-cli-progress-bar-module">qcp.cli.progress_bar module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qcp.cli.html#module-qcp.cli.parser">qcp.cli.parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qcp.cli.html#module-qcp.cli.progress_bar">qcp.cli.progress_bar module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qcp.cli.html#module-qcp.cli.usage">qcp.cli.usage module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qcp.cli.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qcp.cli.html#module-qcp.cli">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="qcp.gui.html">qcp.gui package</a><ul>
@@ -349,8 +349,70 @@ applied to, indexing from 0.</p></li>
 </dd></dl>
 
 </section>
-<section id="qcp-main-module">
-<h2>qcp.main module<a class="headerlink" href="#qcp-main-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-qcp.main">
+<span id="qcp-main-module"></span><h2>qcp.main module<a class="headerlink" href="#module-qcp.main" title="Permalink to this headline">¶</a></h2>
+<p>Entrypoint for the Simulator</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.main.compute">
+<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">constructor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alg_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/main.html#compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the Quantum Algorithm simulation and print the observed state to
+stdout with the probability of observing that state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>constructor</strong> – The constructor the algorithm objects, varies per
+choice of algorithm</p></li>
+<li><p><strong>alg_name</strong> (<em>str</em>) – The name of the algorithm being run</p></li>
+<li><p><strong>args</strong> – All args that need to be passed in to the Algorithm
+constructor</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.main.main">
+<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/main.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entrypoint for the CLI, parses the cli options and passes the read
+options to the function to run the computation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.main.print_solution">
+<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">print_solution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="qcp.algorithms.html#qcp.algorithms.abstract_algorithm.GeneralAlgorithm" title="qcp.algorithms.abstract_algorithm.GeneralAlgorithm"><span class="pre">qcp.algorithms.abstract_algorithm.GeneralAlgorithm</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qcp/main.html#print_solution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.print_solution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output the result of the algorithm to the terminal, handling the
+special outputs required for PhaseEstimation and Sudoku</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alg</strong> (<a class="reference internal" href="qcp.algorithms.html#qcp.algorithms.abstract_algorithm.GeneralAlgorithm" title="qcp.algorithms.abstract_algorithm.GeneralAlgorithm"><em>GeneralAlgorithm</em></a>) – The algorithm object used to run the
+simulation.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – The measured state</p></li>
+<li><p><strong>p</strong> (<em>float</em>) – The probability of measuring that state.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qcp.main.threaded_progress_bar">
+<span class="sig-prename descclassname"><span class="pre">qcp.main.</span></span><span class="sig-name descname"><span class="pre">threaded_progress_bar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">multiprocessing.context.Process</span></span></span><a class="reference internal" href="_modules/qcp/main.html#threaded_progress_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qcp.main.threaded_progress_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the progress bar ticker in a separate process so that
+we can sleep the process without hanging the main computation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The reference to the process running</dt><dd><p>the progress bar</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>multiprocessing.Process</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-qcp.register">
 <span id="qcp-register-module"></span><h2>qcp.register module<a class="headerlink" href="#module-qcp.register" title="Permalink to this headline">¶</a></h2>
