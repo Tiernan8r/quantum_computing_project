@@ -11,9 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import List
+
+import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import GraphComponent, SimulatorComponent
 from qcp.gui.components.phase_estimation import PhaseButtonComponent
+from qcp.gui.components.constants import (
+    MEASURED_PHASE_LABEL, MEASURED_PHASE_LABEL_VALUE)
 
 
 class PhaseSimulatorComponent(SimulatorComponent):
@@ -55,6 +60,17 @@ class PhaseSimulatorComponent(SimulatorComponent):
         self.qcp_thread.finished.connect(
             self.button_component.cancel_button.hide)
 
+    def _find_widgets(self):
+        super()._find_widgets()
+
+        labels: List[QtWidgets.QLabel] = \
+            self.main_window.ui_component.findChildren(QtWidgets.QLabel)
+        for lab in labels:
+            if lab.objectName() == MEASURED_PHASE_LABEL:
+                self.measured_phase_label = lab
+            elif lab.objectName() == MEASURED_PHASE_LABEL_VALUE:
+                self.measured_phase_label_value = lab
+
     @QtCore.Slot(tuple)
     def _simulation_results(self, results_tuple):
         """
@@ -62,6 +78,13 @@ class PhaseSimulatorComponent(SimulatorComponent):
         QThread that it is calculated in.
         """
         super()._simulation_results(results_tuple)
+
+        self.algorithm: alg.PhaseEstimation = results_tuple[0]
+
+        phase = self.algorithm.measure_phase()
+        self.measured_phase_label.show()
+        self.measured_phase_label_value.show()
+        self.measured_phase_label_value.setText(str(phase))
 
         self.button_component.pb_thread.exiting = True
 

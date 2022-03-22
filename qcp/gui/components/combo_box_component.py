@@ -18,7 +18,7 @@ from qcp.gui.components import AbstractComponent
 from qcp.gui.components.constants import (ALGORITHM_LAYOUTS,
                                           COMBO_BOX_LAYOUT_MAPPING,
                                           COMBO_BOX_NAME,
-                                          LABEL_TEXT_FORMAT, LABEL_TITLE)
+                                          LABEL_TEXT_FORMAT, LABEL_TITLE, MEASURED_PHASE_LABEL, MEASURED_PHASE_LABEL_VALUE)
 
 
 class ComboBoxComponent(AbstractComponent):
@@ -50,6 +50,9 @@ class ComboBoxComponent(AbstractComponent):
         self.combo_box.currentTextChanged.connect(self.update_window_title)
         self.combo_box.currentTextChanged.connect(self.update_ui)
 
+        self.measured_phase_label.hide()
+        self.measured_phase_label_value.hide()
+
         # Initially trigger a UI redraw so that only one layout is shown
         self.update_ui(self.combo_box.currentText())
 
@@ -66,6 +69,10 @@ class ComboBoxComponent(AbstractComponent):
         for lab in labels:
             if lab.objectName() == LABEL_TITLE:
                 self.label_title: QtWidgets.QLabel = lab
+            elif lab.objectName() == MEASURED_PHASE_LABEL:
+                self.measured_phase_label = lab
+            elif lab.objectName() == MEASURED_PHASE_LABEL_VALUE:
+                self.measured_phase_label_value = lab
 
         # Dict mapping the containers for each algorithm to it's
         # name
@@ -79,6 +86,8 @@ class ComboBoxComponent(AbstractComponent):
     @QtCore.Slot(str)
     def update_label(self, label: str):
         self.label_title.setText(LABEL_TEXT_FORMAT.format(label))
+        self.measured_phase_label.hide()
+        self.measured_phase_label_value.hide()
 
     @QtCore.Slot(str)
     def update_window_title(self, label: str):

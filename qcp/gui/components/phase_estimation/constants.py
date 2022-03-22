@@ -52,3 +52,6 @@ BUTTON_CANCEL = "cancel_button_pe"
 
 UNITARY_ERROR_LABEL = "unitary_error_label"
 EIGENVECTOR_ERROR_LABEL = "eigenvector_error_label"
+
+MEASURED_PHASE_LABEL = "label_measured_phase"
+MEASURED_PHASE_LABEL_VALUE = "label_measured_phase_value"

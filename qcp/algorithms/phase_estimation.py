@@ -1,5 +1,5 @@
 import math
-from typing import List
+from typing import List, Tuple
 
 import qcp.gates as g
 import qcp.register as reg
@@ -189,10 +189,15 @@ class PhaseEstimation(GeneralAlgorithm):
             trial = tp.tensor_product(self.auxiliary, tp_mat)
             result[i] = (trial.transpose()*self.state)[0]
 
-        p = reg.measure(result)
+        return reg.measure(result)
 
-        norm = 1/2**self.size
-        for i in range(len(p)):
-            p[i] *= norm
+    def measure_phase(self) -> float:
+        """
+        Measure the calculated phase corresponding to the state measured
 
-        return p
+        returns:
+            float: The calculated phase
+        """
+        state, _ = self.measure()
+
+        return state / (2**self.size)

@@ -62,3 +62,6 @@ OUTPUT_VALUE_LABEL = "label_state_value"
 OUTPUT_VALUE_FORMAT = "|{}⟩"
 OUTPUT_STATE_PROBABILITY_TEXT_LABEL = "label_measured_probability"
 OUTPUT_STATE_PROBABILITY = "state_probability"
+
+MEASURED_PHASE_LABEL = "label_measured_phase"
+MEASURED_PHASE_LABEL_VALUE = "label_measured_phase_value"
