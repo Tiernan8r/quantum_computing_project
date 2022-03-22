@@ -164,7 +164,7 @@ def determine_phase_estimation(args: List[str], flags: Dict[str, str]
             f"No unitary matrix type provided, defaulting to '{unitary_str}'",
             file=sys.stderr)
     else:
-        unitary_str = flags[UNITARY_LONG].upper()
+        unitary_str = flags[UNITARY_LONG].lower()
 
         if unitary_str not in UnitaryMatrices.list():
             err_str = "Unitary matrix option '{0}' is not a valid option!"

@@ -19,8 +19,30 @@ File where all constants related to UI functionality are defined.
 INPUT_NQBITS_NAME = "input_nqbits_pe"
 #: The widget name for the input target text box
 INPUT_UNITARY_NAME = "table_input_unitary_pe"
+#: Widget for the unitary matrix combo box
+UNITARY_MATRIX_COMBO_BOX = "unitary_matrix_combo_box"
+#: Spinbox widget for phi1
+PHI_ONE_SPIN_BOX = "phi_1_spin_box"
+#: Phi one label
+PHI_ONE_LABEL = "label_phi_1"
+#: Phi two spin box
+PHI_TWO_SPIN_BOX = "phi_2_spinbox"
+#: Phi two label
+PHI_TWO_LABEL = "label_phi_2"
+#: Eigenvector combo box
+EIGENVECTOR_COMBO_BOX = "eigenvector_combo_box"
+
 #: The widget name for the input target text box
 INPUT_EIGENVECTOR_NAME = "table_input_eigenvector_pe"
+
+#: Precision spin box
+PRECISION_SPIN_BOX = "precision_spin_box"
+#: Success rate spin box
+SUCCESS_RATE_SPIN_BOX = "success_rate_spin_box"
+#: Number of qbits label
+NQBITS_LABEL = "label_nqbits_display"
+#: Button to determine optimum nqbits
+DETERMINE_NQBITS_BUTTON = "button_determine_nqbits"
 
 #: The widget name for the button to initialise the search
 BUTTON_START = "estimate_phase_button_pe"

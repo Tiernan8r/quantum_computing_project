@@ -105,8 +105,9 @@ class SimulatorComponent(AbstractComponent):
         self.results = result_tuple[1:]
 
         # Update the graph
-        self.qregister = self.results[0]
-        self.graph_component.display(self.qregister)
+        self.probabilities = self.results[0]
+        self.qregister = self.results[1]
+        self.graph_component.display(self.probabilities)
 
     def simulation_finished(self):
         """

@@ -18,10 +18,11 @@ import qcp.algorithms as alg
 from PySide6 import QtWidgets
 from qcp.gui.components import ProgressBarComponent
 from qcp.gui.components.phase_estimation.constants import (
-    BUTTON_CANCEL, BUTTON_START, EIGENVECTOR_ERROR_LABEL, UNITARY_ERROR_LABEL)
+    BUTTON_CANCEL, BUTTON_START, DETERMINE_NQBITS_BUTTON, EIGENVECTOR_ERROR_LABEL, NQBITS_LABEL, UNITARY_ERROR_LABEL)
 from qcp.gui.components.phase_estimation.input_component import \
     PhaseInputComponent
 from qcp.gui.constants import THREAD_PAUSE
+import qcp.algorithms.phase_estimation as pe
 
 
 class PhaseButtonComponent(ProgressBarComponent):
@@ -64,6 +65,7 @@ class PhaseButtonComponent(ProgressBarComponent):
 
         self.start_button.clicked.connect(self.initiate_simulation)
         self.cancel_button.clicked.connect(self.cancel_simulation)
+        self.determine_nqbits_button.clicked.connect(self.determine_nqbits)
 
     def _find_widgets(self):
         super()._find_widgets()
@@ -76,6 +78,8 @@ class PhaseButtonComponent(ProgressBarComponent):
                 self.start_button = b
             if b.objectName() == BUTTON_CANCEL:
                 self.cancel_button = b
+            if b.objectName() == DETERMINE_NQBITS_BUTTON:
+                self.determine_nqbits_button = b
 
         labels = self.main_window.ui_component.findChildren(
             QtWidgets.QLabel)
@@ -84,6 +88,18 @@ class PhaseButtonComponent(ProgressBarComponent):
                 self.unitary_error_label: QtWidgets.QLabel = lab
             elif lab.objectName() == EIGENVECTOR_ERROR_LABEL:
                 self.eigenvector_error_label: QtWidgets.QLabel = lab
+            elif lab.objectName() == NQBITS_LABEL:
+                self.nqbits_label: QtWidgets.QLabel = lab
+
+    def determine_nqbits(self):
+        precision = self.input_component.parse_nqbits_precision()
+        success_rate = self.input_component.parse_nqbits_success_rate()
+
+        nqbits = pe.optimum_qubit_size(precision, success_rate)
+
+        self.nqbits_label.setText(str(nqbits))
+
+        self.input_component.nqbit_input.setValue(nqbits)
 
     def initiate_simulation(self):
         """

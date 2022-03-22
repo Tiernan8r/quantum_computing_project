@@ -16,6 +16,7 @@ Defines the enum that encodes the predefined Unitary matrices
 """
 import cmath
 import enum
+from typing import Tuple
 
 import qcp.constants as c
 from qcp.matrices import DefaultMatrix, Matrix
@@ -27,8 +28,8 @@ class UnitaryMatrices(enum.Enum):
     Estimation algorithm
     """
     # TODO: Populate properly
-    HADAMARD = "H"
-    PHASE_SHIFT = "P"
+    HADAMARD = "hadamard"
+    PHASE_SHIFT = "phase_shift"
 
     @classmethod
     def list(cls):
@@ -58,3 +59,33 @@ class UnitaryMatrices(enum.Enum):
             return DefaultMatrix([[phi1, 0], [0, phi2]])
 
         return None
+
+    def basis_names(self) -> Tuple[str, str]:
+        """
+        Return the basis names used for the Unitary matrix choice
+
+        returns:
+            Tuple[str, str]: A two entry tuple of the 2 qbit
+                basis names.
+        """
+        if self is UnitaryMatrices.HADAMARD:
+            return "|+>", "|->"
+        elif self is UnitaryMatrices.PHASE_SHIFT:
+            return "|0>", "|1>"
+        else:
+            return ()
+
+    def basis(self) -> Tuple[Matrix, Matrix]:
+        """
+        Return the basis used for the Unitary matrix choice
+
+        returns:
+            Tuple[Matrix, Matrix]: A two entry tuple of the 2 qbit
+                basis.
+        """
+        if self is UnitaryMatrices.HADAMARD:
+            return c.PLUS_VECTOR, c.MINUS_VECTOR
+        elif self is UnitaryMatrices.PHASE_SHIFT:
+            return c.ZERO_VECTOR, c.ONE_VECTOR
+        else:
+            return ()

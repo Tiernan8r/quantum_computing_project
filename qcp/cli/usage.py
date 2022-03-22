@@ -55,8 +55,8 @@ PHASE ESTIMATION:
                         defaults to {DEFAULT_PHASE}.
         {UNITARY_SHORT}/{UNITARY_LONG}    The choice of unitary gate to simulate with, can be
                         one of the following:
-                            * H = Hadamard Gate
-                            * P = Phase Shift Gate (requires the {PHASE_SHORT} flag)
+                            * hadamard = Hadamard Gate
+                            * phase_shift = Phase Shift Gate (requires the {PHASE_SHORT} flag)
                         Defaults to '{DEFAULT_UNITARY}' if unset
 SUDOKU:
     USAGE:
