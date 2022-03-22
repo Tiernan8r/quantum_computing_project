@@ -11,17 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import cmath
 from typing import List
 
+import qcp.algorithms.phase_estimation_unitary_matrices as um_ops
 from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import AbstractComponent
 from qcp.gui.components.phase_estimation.constants import (
     EIGENVECTOR_COMBO_BOX, INPUT_EIGENVECTOR_NAME, INPUT_UNITARY_NAME,
     UNITARY_MATRIX_COMBO_BOX)
-from qcp.matrices import DefaultMatrix, Matrix
-from qcp.matrices.types import SPARSE
-import qcp.algorithms.phase_estimation_unitary_matrices as um_ops
 
 
 class PhaseComboBoxComponent(AbstractComponent):

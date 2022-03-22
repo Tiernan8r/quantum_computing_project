@@ -1,5 +1,4 @@
 import math
-import random
 from typing import List
 
 import qcp.gates as g

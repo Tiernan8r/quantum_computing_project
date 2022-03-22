@@ -108,7 +108,6 @@ class DenseMatrix(Matrix):
         """
         return len(self._state)
 
-    
     @property
     def unitary(self) -> bool:
         """

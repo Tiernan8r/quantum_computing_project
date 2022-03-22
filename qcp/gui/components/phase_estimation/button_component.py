@@ -15,14 +15,15 @@ import time
 from typing import List
 
 import qcp.algorithms as alg
+import qcp.algorithms.phase_estimation as pe
 from PySide6 import QtWidgets
 from qcp.gui.components import ProgressBarComponent
 from qcp.gui.components.phase_estimation.constants import (
-    BUTTON_CANCEL, BUTTON_START, DETERMINE_NQBITS_BUTTON, EIGENVECTOR_ERROR_LABEL, NQBITS_LABEL, UNITARY_ERROR_LABEL)
+    BUTTON_CANCEL, BUTTON_START, DETERMINE_NQBITS_BUTTON,
+    EIGENVECTOR_ERROR_LABEL, NQBITS_LABEL, UNITARY_ERROR_LABEL)
 from qcp.gui.components.phase_estimation.input_component import \
     PhaseInputComponent
 from qcp.gui.constants import THREAD_PAUSE
-import qcp.algorithms.phase_estimation as pe
 
 
 class PhaseButtonComponent(ProgressBarComponent):

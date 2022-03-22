@@ -19,8 +19,8 @@ from PySide6 import QtCore, QtWidgets
 from qcp.gui.components.phase_estimation.combo_box_component import \
     PhaseComboBoxComponent
 from qcp.gui.components.phase_estimation.constants import (
-    INPUT_NQBITS_NAME, PHI_ONE_LABEL, PHI_ONE_SPIN_BOX, PHI_TWO_LABEL, PHI_TWO_SPIN_BOX, PRECISION_SPIN_BOX,
-    SUCCESS_RATE_SPIN_BOX)
+    INPUT_NQBITS_NAME, PHI_ONE_LABEL, PHI_ONE_SPIN_BOX, PHI_TWO_LABEL,
+    PHI_TWO_SPIN_BOX, PRECISION_SPIN_BOX, SUCCESS_RATE_SPIN_BOX)
 from qcp.matrices import DefaultMatrix, Matrix
 from qcp.matrices.types import SPARSE
 
@@ -117,7 +117,7 @@ class PhaseInputComponent(PhaseComboBoxComponent):
     def display_unitary(self, choice: str):
         unitary_choice = um_opt.UnitaryMatrices(choice)
 
-        phi1, phi2 = 0, 0
+        phi1, phi2 = 0.0, 0.0
         if unitary_choice is um_opt.UnitaryMatrices.PHASE_SHIFT:
             phi1 = self.parse_phi_one()
             phi2 = self.parse_phi_two()

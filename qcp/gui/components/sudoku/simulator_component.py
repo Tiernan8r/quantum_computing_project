@@ -11,10 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
-from qcp.gui.components import (GraphComponent, SimulateAlgorithmThread,
-                                SimulatorComponent)
+from qcp.gui.components import GraphComponent, SimulatorComponent
 from qcp.gui.components.sudoku import SudokuButtonComponent, SudokuResultsTable
 from qcp.gui.components.sudoku.constants import (PROBABILITY_DISPLAY,
                                                  PROBABILITY_LABEL,

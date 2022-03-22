@@ -18,7 +18,8 @@ import sys
 
 from qcp.cli.constants import (ALGORITHM_LONG, ALGORITHM_SHORT,
                                DEFAULT_ALGORITHM, DEFAULT_PHASE,
-                               DEFAULT_TARGET, DEFAULT_UNITARY, EIGENVECTOR_LONG, EIGENVECTOR_SHORT, GUI_LONG,
+                               DEFAULT_TARGET, DEFAULT_UNITARY,
+                               EIGENVECTOR_LONG, EIGENVECTOR_SHORT, GUI_LONG,
                                GUI_SHORT, HELP_LONG, HELP_SHORT, PHASE_LONG,
                                PHASE_SHORT, TARGET_LONG, TARGET_SHORT,
                                UNITARY_LONG, UNITARY_SHORT)

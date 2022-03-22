@@ -13,10 +13,8 @@
 # limitations under the License.
 import math
 
-import qcp.algorithms as alg
 from PySide6 import QtCore, QtWidgets
-from qcp.gui.components import (GraphComponent, SimulateAlgorithmThread,
-                                SimulatorComponent)
+from qcp.gui.components import GraphComponent, SimulatorComponent
 from qcp.gui.components.grovers import GroverButtonComponent
 from qcp.gui.components.grovers.constants import LCD_CLASSICAL, LCD_GROVER
 

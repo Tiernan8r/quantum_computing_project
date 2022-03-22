@@ -17,11 +17,13 @@ Convert the given CLI arguments and flags into usable input for the algorithms
 import sys
 from typing import Dict, List, Tuple
 
-from qcp.cli.constants import (DEFAULT_EIGENVECTOR_IDX, DEFAULT_PHASE, DEFAULT_TARGET, DEFAULT_UNITARY, EIGENVECTOR_LONG,
-                               PHASE_LONG, TARGET_LONG, UNITARY_LONG)
-from qcp.cli.options import AlgorithmOption
 from qcp.algorithms.phase_estimation_unitary_matrices import UnitaryMatrices
-from qcp.matrices import DefaultMatrix, Matrix
+from qcp.cli.constants import (DEFAULT_EIGENVECTOR_IDX, DEFAULT_PHASE,
+                               DEFAULT_TARGET, DEFAULT_UNITARY,
+                               EIGENVECTOR_LONG, PHASE_LONG, TARGET_LONG,
+                               UNITARY_LONG)
+from qcp.cli.options import AlgorithmOption
+from qcp.matrices import Matrix
 
 
 def interpret_arguments(opt: AlgorithmOption,

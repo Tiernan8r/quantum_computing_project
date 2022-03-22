@@ -15,12 +15,10 @@
 Constructs the quantum register, circuits of composite gates, and runs the
 simulation of Grover's Algorithm
 """
-import random
 import math
-from typing import List, Tuple
+from typing import List
 
 import qcp.gates as g
-import qcp.register as reg
 from qcp.algorithms import GeneralAlgorithm
 from qcp.matrices import Matrix
 
