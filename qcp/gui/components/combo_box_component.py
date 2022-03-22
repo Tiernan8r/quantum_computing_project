@@ -17,8 +17,9 @@ from PySide6 import QtCore, QtWidgets
 from qcp.gui.components import AbstractComponent
 from qcp.gui.components.constants import (ALGORITHM_LAYOUTS,
                                           COMBO_BOX_LAYOUT_MAPPING,
-                                          COMBO_BOX_NAME,
-                                          LABEL_TEXT_FORMAT, LABEL_TITLE, MEASURED_PHASE_LABEL, MEASURED_PHASE_LABEL_VALUE)
+                                          COMBO_BOX_NAME, LABEL_TEXT_FORMAT,
+                                          LABEL_TITLE, MEASURED_PHASE_LABEL,
+                                          MEASURED_PHASE_LABEL_VALUE)
 
 
 class ComboBoxComponent(AbstractComponent):
