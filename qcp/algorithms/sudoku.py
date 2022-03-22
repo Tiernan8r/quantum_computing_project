@@ -36,9 +36,11 @@ class Sudoku(GeneralAlgorithm):
 
         :return: Matrix: representing the oracle gate
         """
+        had = g.multi_gate(9, [8], g.Gate.H)
+        z = g.multi_gate(9, [8], g.Gate.Z)
         cond = self.sudoku_conditions()
         cnot = g.control_x(9, [4, 5, 6, 7], 8)
-        oracle = cond * cnot * cond
+        oracle = cond * cnot * cond * z * had
         return oracle
 
     def sudoku_conditions(self):
