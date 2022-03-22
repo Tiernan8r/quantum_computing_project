@@ -101,24 +101,6 @@ class Sudoku(GeneralAlgorithm):
 
         return circuit
 
-    def measure(self):
-        """
-        Randomly 'measures' self.state by selecting a state (out of 2**9)
-        weighted by its (amplitude ** 2)
-
-        returns:
-            Tuple[int, float]: The state observed and the probability of
-            measuring said state
-        """
-        p = reg.measure(self.state)
-        # list of weighted probabilities with the index representing the state
-
-        observed = random.choices(
-            [i for i in range(len(p))], p, k=1)  # type: ignore
-        probability = p[observed[0]]
-
-        return observed[0], probability
-
     def measure_solution(self) -> Tuple[List[str], float]:
         """
         Randomly measures 1 of 16 possible options that the 4 input variables

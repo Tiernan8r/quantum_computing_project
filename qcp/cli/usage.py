@@ -18,7 +18,8 @@ import sys
 
 from qcp.cli.constants import (ALGORITHM_LONG, ALGORITHM_SHORT,
                                DEFAULT_ALGORITHM, DEFAULT_PHASE,
-                               DEFAULT_TARGET, DEFAULT_UNITARY, GUI_LONG,
+                               DEFAULT_TARGET, DEFAULT_UNITARY,
+                               EIGENVECTOR_LONG, EIGENVECTOR_SHORT, GUI_LONG,
                                GUI_SHORT, HELP_LONG, HELP_SHORT, PHASE_LONG,
                                PHASE_SHORT, TARGET_LONG, TARGET_SHORT,
                                UNITARY_LONG, UNITARY_SHORT)
@@ -55,9 +56,18 @@ PHASE ESTIMATION:
                         defaults to {DEFAULT_PHASE}.
         {UNITARY_SHORT}/{UNITARY_LONG}    The choice of unitary gate to simulate with, can be
                         one of the following:
-                            * H = Hadamard Gate
-                            * P = Phase Shift Gate (requires the {PHASE_SHORT} flag)
+                            * hadamard = Hadamard Gate
+                            * phase_shift = Phase Shift Gate (requires the {PHASE_SHORT} flag)
                         Defaults to '{DEFAULT_UNITARY}' if unset
+        {EIGENVECTOR_SHORT}/{EIGENVECTOR_LONG}      The choice of eigenvector to use in the simulation.
+                        IF using the HADAMARD gate, can be one of:
+                            * +
+                            * -
+                            Default is +
+                        If using the PHASE SHIFT gate, can be one of:
+                            * 0
+                            * 1
+                            Default is 0
 SUDOKU:
     USAGE:
     {sys.argv[0]} {ALGORITHM_LONG} s

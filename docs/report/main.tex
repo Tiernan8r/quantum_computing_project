@@ -108,7 +108,12 @@ The programming language used in our project is Python. We use Git to plan, mana
 
 \noindent
 The aim of this project is to demonstrate the basic working principle of Grover's Algorithm in the shape of a simple GUI with input and output feature.
+\vspace{5mm}
+
+\noindent
+In addition to the primary objective of this project, we have managed to successfully code and implement the Phase Estimation Algorithm and demonstrate the application of the Grover's Algorithm in solving simple Sudoku problems.
 \pagebreak
+
 
 \tableofcontents % Unnumbered section
 \pagebreak
@@ -199,7 +204,7 @@ The vector state of the quantum register $\mathcal{H}$ with $n$ qubits can be ex
 \vspace{5mm}
 
 
-\qquad $\mathcal{H} = \mathbb{C}^{2\bigotimes N} = \mathbb{C}^2 \bigotimes\mathbb{C}^2 ....\bigotimes\mathbb{C}^2 = \mathbb{C}^{2^N} $ , \  where the qubits are in 2-dimensional complex spaces $\mathbb{C}$.
+\qquad $\mathcal{H} = \mathbb{C}^{2\otimes N} = \mathbb{C}^2 \otimes\mathbb{C}^2 ....\otimes\mathbb{C}^2 = \mathbb{C}^{2^N} $ , \  where the qubits are in 2-dimensional complex spaces $\mathbb{C}$.
 \vspace{5mm}
 
 \noindent
@@ -213,48 +218,51 @@ Tensor product is used as a function which combines elements of two or more vect
 \vspace{5mm}
 
 \noindent
-Tensor products are distributive and associative and shown here is the tensor product of two qubits in the Hilbert space (complex vector space)\cite{noauthor_lecture_nodate}:
+Tensor products are distributive and associative and shown here are the tensor products of two qubits $\ket{x}$ and $\ket{y}$, for $\alpha , \beta \in \mathbb{C}$, which obey such properties in the Hilbert space (complex vector space)\cite{noauthor_lecture_nodate}:
 \vspace{5mm}
 
 
 \begin{equation}
-\alpha\ket{x} \bigotimes \beta\ket{y} = \alpha\beta\ket{xy}
+\alpha\ket{x} \otimes \beta\ket{y} = \alpha\beta\ket{xy}
 \end{equation}
 \vspace{5mm}
 
 
-\begin{equation}\ket{x} \bigotimes (\ket{y} + \ket{z}) = \ket{x}\bigotimes \ket{y} + \ket{x}\bigotimes\ket{z}
-\end{equation}
-\vspace{5mm}
-
-
-\begin{equation}
-(\ket{x} + \ket{y}) \bigotimes \ket{z} = \ket{x}\bigotimes \ket{z} + \ket{y}\bigotimes\ket{z}
+\begin{equation}\ket{x} \otimes (\ket{y} + \ket{z}) = \ket{x}\otimes \ket{y} + \ket{x}\otimes\ket{z}
 \end{equation}
 \vspace{5mm}
 
 
 \begin{equation}
-(\ket{x} \bigotimes \ket{y}) \bigotimes \ket{z} = \ket{x} \bigotimes (\ket{y} \bigotimes\ket{z}) = \ket{x} \bigotimes \ket{y} \bigotimes\ket{z}
+(\ket{x} + \ket{y}) \otimes \ket{z} = \ket{x}\otimes \ket{z} + \ket{y}\otimes\ket{z}
+\end{equation}
+\vspace{5mm}
+
+
+\begin{equation}
+(\ket{x} \otimes \ket{y}) \otimes \ket{z} = \ket{x} \otimes (\ket{y} \otimes\ket{z}) = \ket{x} \otimes \ket{y} \otimes\ket{z}
 \end{equation}
 \vspace{10mm}
 
 The basis for the tensor product space is given by the product of single qubit basis states.
 \vspace{5mm}
 
-\qquad $\ket{0}_2 \bigotimes \ket{0}_1 \bigotimes \ket{0}_0 = \ket{000} = \ket{0}$
+\begin{center}
+$\ket{0}_2 \otimes \ket{0}_1 \otimes \ket{0}_0 = \ket{000} = \ket{0}$
 \vspace{5mm}
 
-\qquad $\ket{0}_2 \bigotimes \ket{0}_1 \bigotimes \ket{1}_0 = \ket{001} = \ket{1}$
+$\ket{0}_2 \otimes \ket{0}_1 \otimes \ket{1}_0 = \ket{001} = \ket{1}$
 \vspace{5mm}
 
-\qquad \qquad \qquad . \qquad \qquad .
+$\cdots \cdots $
 
-\qquad \qquad \qquad . \qquad \qquad .
+$\cdots \cdots$
 
-\qquad \qquad \qquad . \qquad \qquad .
+$\cdots \cdots$
+\vspace{5mm}
 
-\qquad $\ket{1}_2 \bigotimes \ket{1}_1 \bigotimes \ket{1}_0 = \ket{111} = \ket{7}$
+$\ket{1}_2 \otimes \ket{1}_1 \otimes \ket{1}_0 = \ket{111} = \ket{7}$
+\end{center}
 \vspace{5mm}
 
 Little endian notation is used to represent the qubit from right to left starting with the subscript 0.
@@ -276,7 +284,7 @@ A generic quantum state $\ket{\psi}$ can be described as a linear combination of
 
 
 \begin{equation}
-\ket{\psi} = \alpha_0\ket{0} + ... + \alpha_j\ket{j} = \sum\limits_{j = 0}^{j} \alpha_j\ket{j} , \ \text{for} \alpha_j \in \mathbb{C}
+\ket{\psi} = \alpha_0\ket{0} + ... + \alpha_j\ket{j} = \sum\limits_{j = 0}^{j} \alpha_j\ket{j} , \ \text{for} \ \alpha_j \in \mathbb{C}
 \end{equation}
 \vspace{5mm}
 
@@ -290,7 +298,7 @@ The action of quantum operators on a state is linear. For a quantum operator $U$
 
 \noindent
 \begin{equation}
-U(\alpha\ket{x} + \beta\ket{y}) = \alpha U\ket{x} + \beta U\ket{x} , \ \text{for} \alpha, \beta \in \mathbb{C}
+U(\alpha\ket{x} + \beta\ket{y}) = \alpha U\ket{x} + \beta U\ket{x} , \ \text{for} \ \alpha, \beta \in \mathbb{C}
 \end{equation}
 \vspace{5mm}
 
@@ -348,7 +356,7 @@ And on the state:
 \vspace{5mm}
 
 \begin{equation}
-ket{\psi'} = U\ket{\psi}
+\ket{\psi'} = U\ket{\psi}
 \end{equation}
 \vspace{5mm}
 
@@ -426,7 +434,7 @@ X\ket{0} = \ket{1} , \ \ X\ket{1} = \ket{0}
 \vspace{5mm}
 
 \noindent
-The Pauli X Gate acts very similar to a classical NOT gate. This effect of this gate is also known as bit flip. The gate is a single qubit rotation around the x-axis by $\pi$
+The Pauli X Gate acts very similar to a classical NOT gate. This effect of this gate is also known as bit flip. The gate is a single qubit rotation around the x-axis by $\pi$.
 \vspace{5mm}
 
 
@@ -488,12 +496,8 @@ P(\varphi)\ket{0} = \ket{0} \ \text{and} \ P(\varphi)\ket{1} = e^{i\varphi}\ket{
 
 \noindent
 The phase shift gate modifies the phase of the quantum state and is equivalent to tracing a horizontal circle on the Bloch Sphere (see Figure \ref{fig:bloch_sphere}) by $\varphi$ radians\cite{noauthor_quantum_nodate}. 
+
 \pagebreak
-
-
-
-
-
 
 \section{Grover's Algorithm}
 \subsection{Introduction}
@@ -584,14 +588,14 @@ With Grover's Algorithm, only $O(\sqrt{N})$ steps are required to find $\omega$.
 For an $N$ item search problem with $M$ number of solutions, the required number of times of searches will be $O(\sqrt{\frac{N}{M}})$\cite{nielsen_quantum_2010}.
 \pagebreak
 
-\subsection{The Oracle}
+\subsection{The Oracle} \label{The Oracle}
 \vspace{5mm}
 
 Let's suppose the function $f$ of $N$ integer such that $f:\{0,1, 2,...., N-1\} \rightarrow{\{0,1\}}$. 
 \vspace{5mm}
 
 \noindent
-The integers in the domain corresponds to the indices of the list and $f(x) =1$ if and only if $x$ corresponds to the item which is searched conversely $f(x) =0$ for $x$ not corresponding the item searched. 
+The integers in the domain corresponds to the indices of the list and $f(x) =1$ if and only if $x$ corresponds to the item which is to be searched. Conversely, $f(x) =0$ for $x$ not corresponding to the item to be searched. 
 \vspace{5mm}
 
 \noindent
@@ -615,7 +619,7 @@ The oracle function of a two qubit system is defined as\cite{j_quantum_2020}:
 \vspace{5mm}
 
 \begin{equation}
-\ket{x} \bigotimes \ket{q} \rightarrow{O_f} \ket{x} \bigotimes \ket{q \bigoplus f(x)} \footnote{$\bigotimes$ denotes tensor product and $\bigoplus$ denotes denotes addition modulo 2}  
+\ket{x} \otimes \ket{q} \rightarrow{O_f} \ket{x} \otimes \ket{q \oplus f(x)} \footnote{$\otimes$ denotes tensor product and $\oplus$ denotes denotes addition modulo 2}  
 \end{equation}
 
 \vspace{5mm}
@@ -629,22 +633,22 @@ Substitute $\ket{q}$ into the oracle function $O_f$:
 \vspace{5mm}
 
 \begin{equation}
- O\ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}} \rightarrow \ket{x} \frac{\ket{f(x) \bigoplus 0} - \ket{f(x) \bigoplus 1}}{\sqrt{2}}    
+ O\ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}} \rightarrow \ket{x} \frac{\ket{f(x) \oplus 0} - \ket{f(x) \oplus 1}}{\sqrt{2}}    
 \end{equation}
 \vspace{5mm}
 
 \begin{equation}
-\text{if} \ f(x) =1 \rightarrow \ket{x}\frac{\ket{f(x) \bigoplus0} - \ket{f(x) \bigoplus1}}{\sqrt{2}}   
+\text{if} \ f(x) =1 \rightarrow \ket{x}\frac{\ket{f(x) \oplus0} - \ket{f(x) \oplus1}}{\sqrt{2}}   
 \end{equation}
 \vspace{5mm}
 
 \begin{equation}
-\text{if} \ f(x) =1 \rightarrow \ket{x}\frac{\ket{1 \bigoplus 0} - \ket{1 \bigoplus 1}}{\sqrt{2}} = -\ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}    
+\text{if} \ f(x) =1 \rightarrow \ket{x}\frac{\ket{1 \oplus 0} - \ket{1 \oplus 1}}{\sqrt{2}} = -\ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}    
 \end{equation}
 \vspace{5mm}
 
 \begin{equation}
-\text{if} \ f(x) =0 \rightarrow \ket{x}\frac{\ket{0 \bigoplus 0} - \ket{0 \bigoplus 1}}{\sqrt{2}} = \ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}    
+\text{if} \ f(x) =0 \rightarrow \ket{x}\frac{\ket{0 \oplus 0} - \ket{0 \oplus 1}}{\sqrt{2}} = \ket{x}\frac{\ket{0} - \ket{1}}{\sqrt{2}}    
 \end{equation}
 \vspace{5mm}
 
@@ -695,7 +699,7 @@ The sequence of the Grover's Algorithm starts out with a uniform superposition s
 \vspace{5mm}
 
 \begin{equation}
-\ket{s}= H^{\bigotimes n} \ket{0}^n = \frac{1}{\sqrt{2^n}}\sum\limits_{x \in \{0,1\}^n}\ket{x}
+\ket{s}= H^{\otimes n} \ket{0}^n = \frac{1}{\sqrt{2^n}}\sum\limits_{x \in \{0,1\}^n}\ket{x}
 \end{equation}
 \vspace{5mm}
 
@@ -1209,15 +1213,18 @@ One of the few drawbacks of the Grover's Algorithm is that it is probabilistic. 
 \vspace{5mm}
 
 \noindent
-Due to the constraints of currently available quantum computers, Grover's Algorithm is yet to yield any  meaningful quadratic speed up compared to classical algorithms\cite{noauthor_grovers_2022}.   
+Due to the constraints of currently available quantum computers, Grover's Algorithm is yet to yield any  meaningful quadratic speed up compared to classical algorithms\cite{noauthor_grovers_2022}.
+
 \pagebreak
 
 \section{Phase Estimation}
+\vspace{5mm}
+
 \subsection{Introduction}
 Suppose you have a unitary operator $U$ and its eigenvector $\ket{u}$ with eigenvalue $e^{2\pi i \phi}$, with $\phi$ unknown. By performing phase estimation, we can estimate $\phi$ (exact if the decimal expansion of $\phi$ is finite), up to required precision $n$. Phase estimation is needed for the algorithm of order-finding and it's extension, Shor's factoring algorithm. The figure below illustrate this process.
 
 \vspace{5mm}
-\begin{figure}
+\begin{figure}[h]
     \centering
     
 
@@ -1259,6 +1266,8 @@ Suppose you have a unitary operator $U$ and its eigenvector $\ket{u}$ with eigen
 \end{figure}
 
 \subsection{Quantum Fourier Transform}
+\vspace{5mm}
+
 To implement the phase estimation algorithm, the key ingredient is the quantum Fourier transform. Quantum Fourier transform is analogous to the classical discrete Fourier transform, where the basis of a vector is changed into another basis that is useful for computation or analysis. The effect of quantum Fourier transform on an arbitrary state vector can be summarised as below \cite{nielsen_quantum_2010}:
 \begin{equation}
     \ket{v} = \frac{1}{\sqrt{N}} \sum_{i=0}^{N-1}{x_i \ket{i}} \xRightarrow{QFT} \ket{\Tilde{v}} = \frac{1}{\sqrt{N}}\sum_{j=0}^{N-1} y_j \ket{j}
@@ -1271,11 +1280,12 @@ Note that only the amplitudes of the eigenstates are affected by this transforma
 \noindent
 The $\hat{\textbf{x}}$-basis states are defined as:
 \vspace{5mm}
+
 \begin{equation}
 \ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \ \text{and} \ \ket{-} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})   
 \end{equation}
 
-\vspace{5mm}
+\pagebreak
 
 \noindent
 For multi-qubit states in the computational basis have corresponding states in the Fourier basis. The QFT is the function that transforms between these bases\cite{noauthor_quantum_nodate-1}:
@@ -1302,7 +1312,7 @@ For a $n$ qubit states, the QFT has the effect of \cite{nielsen_quantum_2010}:
 \end{equation}
 \vspace{5mm}
 
-Rewriting $y$ in binary fraction $y= y_1 ... y_n, \frac{y}{2^n} = \sum\limits_{k=1}^{n}\frac{y_k}{2^k}$   
+Rewriting $y$ in binary fraction $y= y_1 ... y_n, \ \frac{y}{2^n} = \sum\limits_{k=1}^{n}\frac{y_k}{2^k}$   
 \vspace{5mm}
 
 \begin{equation}
@@ -1324,7 +1334,7 @@ After rearranging the sum and products, and expanding $\sum\limits_{y=0}^{N-1} =
 \vspace{5mm}
 
 \begin{equation}
-= \frac{1}{\sqrt{N}}(\ket{0} + e^{\frac{2i\pi x}{2}}\ket{1}) \bigotimes (\ket{0} + e^{\frac{2i\pi x}{2^2}}\ket{1}) \bigotimes ... \bigotimes(\ket{0} + e^{\frac{2i\pi x}{2^{n-1}}}\ket{1}) \bigotimes (\ket{0} + e^{\frac{2i\pi x}{2^n}}\ket{1})    
+= \frac{1}{\sqrt{N}}(\ket{0} + e^{\frac{2i\pi x}{2}}\ket{1}) \otimes (\ket{0} + e^{\frac{2i\pi x}{2^2}}\ket{1}) \otimes ... \otimes(\ket{0} + e^{\frac{2i\pi x}{2^{n-1}}}\ket{1}) \otimes (\ket{0} + e^{\frac{2i\pi x}{2^n}}\ket{1})    
 \end{equation}
 \pagebreak
 
@@ -1683,17 +1693,21 @@ For example, $\phi = \frac{1}{3} = 0.3333...$ and we wish to estimate it to 3 de
 m = 3 + \bigg[log_2\bigg(2+\frac{1}{0.6}\bigg)\bigg]=4.5 \rightarrow m=5    
 \end{equation} since $m$ is an integer.
 
+\pagebreak
 
 \section{Methodology}
 
+The team was made of six people, therefore our first task was organising when to regularly meet to discuss progress on the project. In person meetings were seen as superior by group members, therefore  it was decided that every Friday at 2pm in JCMB 2901 was going to be the weekly meeting area and time, the room was booked as such for several weeks in advance to ensure in person meetings could continue cyclically.
+
 \subsection{Workflow and Organization}
+Our workflow was structured around this weekly meeting: Each week we had to show the group what we contributed to the project after which the group split into sub-teams which were each assigned a specific task: Some were to design a new function while others designed tests for the function to catch bugs, these were reported to the development team as discovered, other team members studied the functions and began laying down background information in the report. Between group wide meetings the sub-teams would organise among themselves to meet in person or virtually to complete the work they were assigned, making sure that all progress was committed to GitHub for the rest of the group to monitor, this included the report in a separate \textit{docs} folder. This progress was then explained in the next weekly Friday meeting in a small public speech to the group. When an in person meeting couldn't be arranged a virtual meeting was organised instead as close as possible to the original planned time, this was to ensure that there were minimal compromises during the meeting with progress being still reported and tasks still being assigned. This loop of meeting, assigning tasks, and working in sub-teams continued until the project completed. By breaking up the large task into smaller more obtainable weekly tasks, we completed the project in a more efficient manner that minimised stress on the group, these meetings boosted morale and increased productivity as they put the work of all other group members on display, which is why it was our chosen method of organisation.
 
 \subsection{Git}
 
 \pagebreak
 
 \section{Coding with Python}
-The first step of the project was for the group to choose which language to implement the system with. Options included C, C++, Java, and Haskell, but the final decision was to use Python. This was our language of choice for several reasons: Most of our team has experience with the language making it easier to write the code, the language is object-oriented which means Grover’s Algorithm could be created as an object from a class which reduced the amount of repeated code when several versions of Grover's Algorithm were  implemented, It’s more general-purpose compared to languages such as Haskell or Java (Haskell being a purely functional language, and Java being purely an object oriented language, Python combines necessary features of both), and it uses high-level syntax in comparison to languages like C and C++ making it more appropriate for a high-level task such as this which involves matrix multiplication. Once the language was decided the next step was to implement some basic quantum operations.
+The first step of the project was for the group to choose which language to implement the system with. Options included C, C++, Java, and Haskell, but the final decision was to use Python. This was our language of choice for several reasons: Most of our team has experience with the language making it easier to write the code, the language is object-oriented which means Grover’s Algorithm could be created as an object from a class which reduced the amount of repeated code when several versions of Grover's Algorithm were  implemented. It’s more general-purpose compared to languages such as Haskell or Java (Haskell being a purely functional language, and Java being purely an object oriented language, Python combines necessary features of both), and it uses high-level syntax in comparison to languages like C and C++ making it more appropriate for a high-level task such as this which involves matrix multiplication. Once the language was decided the next step was to implement some basic quantum operations.
 
 \subsection{Tensor Products}
 When mathematically representing a quantum computer, qubits are written as column vectors while gates are written as square matrices. To combine a series of gates or qubits their tensor product is taken, therefore a function that takes the tensor product of two matrices in Python is needed to implement Grover's Algorithm. This was done in the \textit{tensor\_product.py} file which contains the function \textit{tensor\_product(A: Matrix, B: Matrix)}. This function takes two objects of the user defined class DefaultMatrix (A and B) as inputs, and outputs their tensor product as a DefaultMatrix object. This was calculated by creating a new empty matrix (C) with a number of columns that is equal to the number of columns that A has multiplied by the number of columns that B has, and with a number of rows that is equal to the number of rows that A has multiplied by the number of rows that B has. This empty matrix is then iterated over itself in a 2D loop with the values in A and B being multiplied together and added to the Matrix C accordingly. This function was used throughout the rest of the project in almost every file and made it possible to construct the circuit for Grover's Algorithm. While some of the team work on this function, other members worked on implementing the first quantum gates.
@@ -1784,7 +1798,7 @@ self.circuit = self.construct_circuit()
 \end{lstlisting}
 \end{file}
 
-Above the contents of the class's initialisation method is displayed which takes in two inputs: size (which is the number of qubits that is required), and target\_state (which is the input the user is searching for in the algorithm) all other attributes are defined through methods in the class and are described as follows.
+Above the contents of the class's initialisation method is displayed which takes in two inputs: size (which is the number of qubits that is required), and target\_state (which is the specific number/ element out of 2 \textsuperscript{size} options that the user wants the algorithm to search for). This initialisation method also explicitly defines the order of the number of calls/ steps that the algorithm makes with the variable self.max\_reflections. All of the other attributes are defined through methods in the class and are described as follows.
 
 \subsection{Initial State}
 
@@ -1796,9 +1810,7 @@ return DefaultMatrix(entries)
 \end{lstlisting}
 \end{file}
 
-This method is simply to initialise the beginning state of the system as zero as a DefaultMatrix. The method first creates a column vector representing the value zero as qubit with the size of the column vector being equal to the inputted size. If for example Grover's Algorithm were set to work with three qubits (done by setting the size attribute to three), it would create a column vector of size eight with the first item being the number one and the rest being the number zero which represents the number zero in qubit form. List comprehension makes the code compact, However the value 1 needs to be manually set, the column vector is then returned as a DefaultMatrix. 
-
-\subsection{Single Target Oracle}
+This method is simply to initialise the beginning state of the system as $\ket{0}$ as a DefaultMatrix. The method first creates a column vector representing the value zero as qubit with the size of the column vector being equal to the inputted size. If for example Grover's Algorithm were set to work with three qubits (done by setting the size attribute to three), it would create a column vector of size eight with the first item being the number one and the rest being the number zero which represents the $\ket{0}$ in qubit form. List comprehension makes the code both more compact and efficient, the only thing we need to do after creating a vector of zeros is set the 0th element to the value 1 and return the column vector as a DefaultMatrix
 
 \begin{file}[def single\_target\_oracle(self):]
 \begin{lstlisting}[language=Python]
@@ -1817,7 +1829,7 @@ return oracle
 \end{lstlisting}
 \end{file}
 
-Single target oracle is a method that creates a matrix representing an oracle gate for a given target and number of qubits. It starts by using \textit{pull\_set\_bits(n: int)} to essentially convert the target into binary form by providing all the indexes of the number 1 in the base 2 version of the target. Which it then uses as a set of input targets in a series of Pauli-X gates chained together using the \textit{multi\_gate(...)} function. Because the oracle is made of the Control-Z and Pauli-X gates in sequence, multiplying the matrix representations of those gates together is enough to create the single target oracle gate.
+As mentioned in \ref{The Oracle}, the oracle gate 'selects' the chosen target state by flipping its phase. single\_target\_oracle() is the method that returns the matrix representation of the oracle gate for the given target and number of qubits in the Grover's Algorithm instance. It starts by using \textit{pull\_set\_bits(n: int)} which, for a given number n, returns a list of integers. The integers returned are related to the indexes of each '1' in the binary string representation of n. For example; for n=5, pull\_set\_bits(n: int) will return the list \textit{[0, 2]} as 5 in binary representation is \textit{'101'}. Which it then uses as a set of input targets in a series of Pauli-X gates chained together using the \textit{multi\_gate(...)} function. Because the oracle is made of the Control-Z and Pauli-X gates in sequence, multiplying the matrix representations of those gates together is enough to create the single target oracle gate.
 
 \subsection{Diffusion}
 
@@ -1844,9 +1856,6 @@ return diff
 
 Diffusion is a method that creates a matrix that represents the diffusion operation in Grover's Algorithm. to create the diffusion operator a series a Hadamard gates are first created and placed on either side of the gate once again using the multi-gate function. Then the Control-Z and Pauli-X gates are placed either side. The resulting matrix is then returned for use in the execute method which combines the created gates together.
 
-
-
-
 \subsection{Construction and Running}
 
 Once all the special quantum gates pertaining to Grover's Algorithm are created, the next step is to simply combine them into a single large circuit by multiplying their matrices together. This is done in the \textit{construct\_circuit()} method shown below.
@@ -1869,6 +1878,10 @@ return circuit
 
 First the method uses the \textit{multi\_gate(...)} function to chain together a large set of Hadamard gates to create the superposition required. In Grover's Algorithm the oracle and diffusion operator are repeat a number of times that is proportional to the number of qubits being used in the circuit. This is achieved through a running total where the oracle and diffusion operators are multiplied by a running matrix of the circuit while the attribute \textit{max\_reflections} is decreased by 1, this continues until  \textit{max\_reflections} equals zero at which point the matrix representing the full Grover's Algorithm circuit is returned. If a column vector representing a qubit is multiplied by this matrix, the calculation would be representative of Grover's Algorithm. The only other methods in the class are the \textit{measure(self)} and \textit{run(self)} methods. The \textit{run(self)} method simply multiplies the current state of the qubits (which has already been initialised), by the Matrix created in the \textit{construct\_circuit(self)} method. \textit{measure(self)} simply collapses the superposition of the quantum output into a single value which,because of the manipulation of Grover's Algorithm, is almost certainly the target value that the algorithm was designed to search for. The \textit{measure(self)} method works by first measuring the probabilities of all the possible output states using the register.measure() function and then outputting the most probable answer from that array with it's associated probability.In conclusion, by creating a Grover's Class we can generate specific oracles and diffusion gates depending on the target value and number of qubits. This Class lead to a simulation of Grover's algorithm, by creating all the gates in separate methods it lead to clean and efficient code that which can then be re-purposed for other searching operations such as finding solutions to Sudoku puzzles. The final step is testing which is explained in detail in the next chapter.
 
+\subsection{Abstract and Grover's Algorithm}
+\subsection{Phase Estimation}
+\subsection{Sudoku}
+
 \pagebreak
 
 \section{Testing and Debugging}
@@ -1883,9 +1896,57 @@ While some team members were constructing code, others were assigned to designin
 
 All the individual methods of the \textit{Grovers} class as well as the \textit{pull\_set\_bits()} helper function were tested in the \textit{test\_grovers\_algorithm.py} file. Most of the test functions work the same as with the simple functions were a set of expected values are stored in an array whereupon the calculated values from the function was compared and asserted to be compatible with the Tox utility. To aide in the testing for Grover's Algorithm a new file in the tests folder was created called  \textit{test\_helpers.py} which contained the function \textit{compare\_matrices(A: Matrix, B: Matrix, e=1E-9)}. The purpose of this function was to avoid rounding errors when computing multiplications of matrices since this function contained an assertion for the two matrices in the \textit{is\_close()} function, this avoids repeated code and rounding errors which can make tests fail even when the function works as intended.
 
-
+\pagebreak
 \section{Issues and Challenges}
+\vspace{5mm}
 
+\pagebreak
+\section{State of the Art: Quantum Computers}
+\vspace{5mm}
+
+\noindent
+The idea of combining quantum mechanics and information theory appeared in the 1970s, but received little attention until 1981, when physicist Richard Feynman gave a presentation arguing that computation based on classical logic could not process calculations representing quantum phenomena in a tractable manner. %https://www.ncbi.nlm.nih.gov/books/NBK538701/
+“Nature isn’t classical, dammit, and if you want to make a simulation of nature, you’d better make it
+quantum mechanical”, the physicist Richard Feynman famously quipped. “And by golly it’s a
+wonderful problem, because it doesn’t look so easy.” %https://link.springer.com/content/pdf/10.1007/s11432-020-2881-9.pdf#page27
+Later in 1994, quantum computing received even more attention when mathematicial Peter Shor developed a quantum algorithm. The algorithm could find the prime factors of large numbers in a time efficient manner, which was far better than the efficiency of the current state-of-the-art of classical algorithms. 
+\vspace{5mm}
+
+\noindent
+The press, in the process of popularising quantum computation, often misleads the general public by mediating that the speed gained by quantum computing is by trying every possible  answer to a problem in parallel. In fact, a quantum computer works by considering entanglement between qubits and the probabilities associated with the superpositions to carry out a series of operations, the quantum algorithm, which then enhances certain probabilities and supresses other, leading to the required answer. A measurement is made at the end of the computation, and the algorithm should enhance the probability of measuring the correct answer. This use of entanglement and probabilities sets the quantum computer apart from classical computers. 
+% picture
+
+\vspace{5mm}
+
+\noindent
+"Quantum Computing" is just a blanket term describing all computations that work based on the quantum phenomena. There are multiple types of frameworks, like a measurement-based computation framework, in which highly entangled qubits serve as the starting point. Single qubit measurements are performed, leaving the target single qubit in a definitive state. Further measurements are carried out on other qubits based on the previous results, until the answer is reached. In this project, we are concerned with Logical or gate-based quantum computing framework. In this framework, qubits are prepared in initial states, which then are subject to a series of gate operations. Through these gates, the qubits are put into superposition, entangled and then subjected to measurement, which then yields a result. 
+%https://www.ncbi.nlm.nih.gov/books/NBK538701/
+\vspace{5mm}
+
+\noindent
+Quantum computers can be implemented using a variety of quantum systems, such as trapped ions, superconducting qubits, photons, and silicon. Over last couple of decades, numerous advances have been attempted to try and build large scale quantum computers. Superconducting qubits, in particular, have emerged as a major possibility for such large scale quantum prcessor architecture.
+
+\noindent
+\subsection{Superconducting Quantum Computers}
+\noindent
+Yasunobu Nakamura, in 1999, produced the first simple qubit for superconducting computing. As a result, superconducting quantum computing has advanced significantly in recent years, with the number of qubits rapidly increasing and the quality of qubits rapidly improving. The major milestone, known as quantum supremacy, represents a significant achievement in paving the way towards quantum computing, was first exhibited using the superconducting quantum systems in 2019. Due to this rapid development in the sector of superconducting quantum computers, the worldwide race towards the quantum computer is in full swing.%https://link.springer.com/content/pdf/10.1007/s11432-020-2881-9.pdf
+Many companies like Honeywell, IBM, Google, and Intel are competing for having dominance in the quantum computers region. Up and coming players like IonQ and Rigetti have also stepped into the field to advance the technology. While the field is still evolving, there have been some major advancements by these companies in the fields like pharmaceutical and chemical industries, risk in the finance industry, and aid in cybersecurity across a multitude of industries, suing the power of quantum computation.   %https://www.forbes.com/sites/danielnewman/2022/01/10/quantum-computing-expanded-in-2021-setting-up-a-big-2022/?sh=64386df4581b 
+All of these initiatives have resulted in a bright future for superconducting quantum computing. %https://link.springer.com/content/pdf/10.1007/s11432-020-2881-9.pdf
+\subsection{Quantum Supremacy}
+The goal of quantum supremacy is to show that a programmable quantum device can solve a problem that classical computers cannot solve. in 2019, Google officially made the announcement of the achievement of this milestone.  
+%https://link.springer.com/content/pdf/10.1007/s11432-020-2881-9.pdf#page27
+
+%picture
+%https://www.nature.com/articles/d41586-019-03213-z
+
+\subsection{IBM: 127 qubit eagle processor}
+IBM, on November 16, 2021, announced its new 127-qubit 'Eagle' processor at the IBM Quantum Summit 2021, the annual event held by IBM to showcase their milestones in quantum hardware, software, and the growth of the quantum ecosystem. 'Eagle' is IBM's first quantum processor developed and deployed to contain more than 100 operational and connected qubits. It is preceded by IBM's 65-qubit 'Hummingbird' processor released in 2020 and the 27-qubit 'Falcon' processo released in 2019.
+
+\noindent
+The new techniques used within Eagle apply control wiring on multiple physical levels within the processor, keeping the qubits on a single layer, which enables a significant increase in qubits.
+
+%https://newsroom.ibm.com/2021-11-16-IBM-Unveils-Breakthrough-127-Qubit-Quantum-Processor
+\pagebreak
 \section{Conclusion} % Numbered section
 
 \pagebreak

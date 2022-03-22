@@ -185,13 +185,39 @@ The phase estimation is the most complicated GUI element.
 
 As with Grover's Algorithm, the first input is the number of qbits to simulate.
 
-The next two input elements allow the user to draw in matrices to use for the unitary matrix and the eigenvector. These matrix sizes are determined by the number of qbits.
+The phase estimation then requires input of two matrices, a *unitary matrix*, and an *eigenvector*.
 
-The unitary matrix gets automatically populated as an identity matrix, but this can be manually changed by the user, where any `integer`/`float`/`complex` is an acceptable parameter.
+To help with this input, the GUI has helper elements to select some defaults.
 
-The eigenvector input operates the same way, except that is is automaticaly populated as a column vector with the first entry `= 1`.
+For the *Unitary Matrix*, a dropdown element is present that allows the user to select two pre-defined
+matrices, the `HADAMARD` gate, or the `PHASE_SHIFT` gate.
 
+When the drop down list is changed, the table showing the matrix is updated with it's values.
+
+For the `PHASE SHIFT` gate, two new GUI elements also appear, that allows the user to set the
+phases in the two diagonal elements:
+
+![Phase Estimation Overview 2](https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_overview_phase_estimation_2.png)
+
+Once the user has selected a unitary matrix, they can then follow similar steps to select an eigenvector:
+
+The dropdown list for the eigenvectors changes per choice of unitary matrix:
+
+For the `HADAMARD` gate, the two choices are the bases `|+>` & `|->`.
+For the `PHASE SHIFT` gate, the two choices are the bases `|0>` & `|1>`.
+
+Of course, the user can always input custom matrices manually, and the GUI will perform checks on the
+validity of the matrices before beginning the simulation,
+
+Any `integer`/`float`/`complex` is an acceptable parameter.
 If there are any issues with the inputs of the two matrices once the simulation is set to start, the simulation will quit and a useful error message will appear beside the matrix at fault with a message pin-pointing the entry at fault.
+
+At the bottom of the UI element, there are two extra fields:
+*Precision* & *Success Rate*, these determine the number of decimal points we want to estimate the phase to (the "precision"), and the acceptable rate that the results could be inaccurate ("success rate")
+
+If the user wishes to get a more acceptable answer, they can input their parameters, and click the determine button,
+in which case the UI will calculate the number of qbits to use to get this accuracy, and auto-set the number of
+qbits field.
 
 ### Sudoku
 

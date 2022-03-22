@@ -19,7 +19,9 @@ DEFAULT_ALGORITHM = "g"
 #: The default phase to use in the unitary matrix, if required
 DEFAULT_PHASE = 0.25
 #: The default unitary matrix type to use.
-DEFAULT_UNITARY = "H"
+DEFAULT_UNITARY = "hadamard"
+#: The index of the default eigenvector to use:
+DEFAULT_EIGENVECTOR_IDX = 0
 
 # CLI flag values:
 
@@ -47,6 +49,10 @@ UNITARY_LONG = "--unitary"
 PHASE_SHORT = "-p"
 #: The long flag for the phase value
 PHASE_LONG = "--phase"
+#: The short flag for the eigenvector choice
+EIGENVECTOR_SHORT = "-e"
+#: The long flag for the eigenvector choice
+EIGENVECTOR_LONG = "--eigen"
 
 #: All the flags accepted by the CLI, mapping their short name to
 #: the more verbose one
@@ -56,5 +62,6 @@ FLAG_MAPPING = {
     ALGORITHM_SHORT: ALGORITHM_LONG,
     TARGET_SHORT: TARGET_LONG,
     UNITARY_SHORT: UNITARY_LONG,
-    PHASE_SHORT: PHASE_LONG
+    PHASE_SHORT: PHASE_LONG,
+    EIGENVECTOR_SHORT: EIGENVECTOR_LONG
 }

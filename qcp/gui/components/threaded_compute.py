@@ -52,6 +52,8 @@ class SimulateAlgorithmThread(QtCore.QThread):
         except AssertionError as ae:
             print(ae)
 
-        results = (algorithm, qregister)
+        probabilities = algorithm.probabilities()
+
+        results = (algorithm, probabilities, qregister)
         self.simulation_result_signal.emit(results)
         self.quit()

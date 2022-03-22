@@ -22,5 +22,7 @@ from qcp.gui.components.combo_box_component import \
 from qcp.gui.components.graph_component import GraphComponent  # noqa: F401
 from qcp.gui.components.progress_bar_component import \
     ProgressBarComponent  # noqa: F401
+from qcp.gui.components.simulator_component import \
+    SimulatorComponent  # noqa: F401
 from qcp.gui.components.threaded_compute import \
     SimulateAlgorithmThread  # noqa: F401
