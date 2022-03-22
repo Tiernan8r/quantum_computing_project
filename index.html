@@ -213,10 +213,27 @@ easier.</p>
 <a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_overview_phase_estimation.png"><img alt="Phase Estimation Overview" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_overview_phase_estimation.png" /></a>
 <p>The phase estimation is the most complicated GUI element.</p>
 <p>As with Grover’s Algorithm, the first input is the number of qbits to simulate.</p>
-<p>The next two input elements allow the user to draw in matrices to use for the unitary matrix and the eigenvector. These matrix sizes are determined by the number of qbits.</p>
-<p>The unitary matrix gets automatically populated as an identity matrix, but this can be manually changed by the user, where any <code class="docutils literal notranslate"><span class="pre">integer</span></code>/<code class="docutils literal notranslate"><span class="pre">float</span></code>/<code class="docutils literal notranslate"><span class="pre">complex</span></code> is an acceptable parameter.</p>
-<p>The eigenvector input operates the same way, except that is is automaticaly populated as a column vector with the first entry <code class="docutils literal notranslate"><span class="pre">=</span> <span class="pre">1</span></code>.</p>
-<p>If there are any issues with the inputs of the two matrices once the simulation is set to start, the simulation will quit and a useful error message will appear beside the matrix at fault with a message pin-pointing the entry at fault.</p>
+<p>The phase estimation then requires input of two matrices, a <em>unitary matrix</em>, and an <em>eigenvector</em>.</p>
+<p>To help with this input, the GUI has helper elements to select some defaults.</p>
+<p>For the <em>Unitary Matrix</em>, a dropdown element is present that allows the user to select two pre-defined
+matrices, the <code class="docutils literal notranslate"><span class="pre">HADAMARD</span></code> gate, or the <code class="docutils literal notranslate"><span class="pre">PHASE_SHIFT</span></code> gate.</p>
+<p>When the drop down list is changed, the table showing the matrix is updated with it’s values.</p>
+<p>For the <code class="docutils literal notranslate"><span class="pre">PHASE</span> <span class="pre">SHIFT</span></code> gate, two new GUI elements also appear, that allows the user to set the
+phases in the two diagonal elements:</p>
+<a class="reference external image-reference" href="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_overview_phase_estimation_2.png"><img alt="Phase Estimation Overview 2" src="https://github.com/Tiernan8r/quantum_computing_project/blob/master/docs/images/gui_overview_phase_estimation_2.png" /></a>
+<p>Once the user has selected a unitary matrix, they can then follow similar steps to select an eigenvector:</p>
+<p>The dropdown list for the eigenvectors changes per choice of unitary matrix:</p>
+<p>For the <code class="docutils literal notranslate"><span class="pre">HADAMARD</span></code> gate, the two choices are the bases <code class="docutils literal notranslate"><span class="pre">|+&gt;</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">|-&gt;</span></code>.
+For the <code class="docutils literal notranslate"><span class="pre">PHASE</span> <span class="pre">SHIFT</span></code> gate, the two choices are the bases <code class="docutils literal notranslate"><span class="pre">|0&gt;</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">|1&gt;</span></code>.</p>
+<p>Of course, the user can always input custom matrices manually, and the GUI will perform checks on the
+validity of the matrices before beginning the simulation,</p>
+<p>Any <code class="docutils literal notranslate"><span class="pre">integer</span></code>/<code class="docutils literal notranslate"><span class="pre">float</span></code>/<code class="docutils literal notranslate"><span class="pre">complex</span></code> is an acceptable parameter.
+If there are any issues with the inputs of the two matrices once the simulation is set to start, the simulation will quit and a useful error message will appear beside the matrix at fault with a message pin-pointing the entry at fault.</p>
+<p>At the bottom of the UI element, there are two extra fields:
+<em>Precision</em> &amp; <em>Success Rate</em>, these determine the number of decimal points we want to estimate the phase to (the “precision”), and the acceptable rate that the results could be inaccurate (“success rate”)</p>
+<p>If the user wishes to get a more acceptable answer, they can input their parameters, and click the determine button,
+in which case the UI will calculate the number of qbits to use to get this accuracy, and auto-set the number of
+qbits field.</p>
 </section>
 <section id="sudoku">
 <h3>Sudoku<a class="headerlink" href="#sudoku" title="Permalink to this headline">¶</a></h3>

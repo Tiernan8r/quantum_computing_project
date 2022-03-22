@@ -31,34 +31,14 @@
           <div class="body" role="main">
             
   <h1>Source code for qcp.algorithms.phase_estimation</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">cmath</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">random</span>
+<span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">qcp.gates</span> <span class="k">as</span> <span class="nn">g</span>
 <span class="kn">import</span> <span class="nn">qcp.register</span> <span class="k">as</span> <span class="nn">reg</span>
 <span class="kn">import</span> <span class="nn">qcp.tensor_product</span> <span class="k">as</span> <span class="nn">tp</span>
 <span class="kn">from</span> <span class="nn">qcp.algorithms.abstract_algorithm</span> <span class="kn">import</span> <span class="n">GeneralAlgorithm</span>
 <span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">DefaultMatrix</span><span class="p">,</span> <span class="n">Matrix</span>
-
-
-<div class="viewcode-block" id="is_unitary"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.is_unitary">[docs]</a><span class="k">def</span> <span class="nf">is_unitary</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Check if matrix is Unitary (can be shifted to gates.py)</span>
-
-<span class="sd">    :param Matrix: input: n x n matrix</span>
-<span class="sd">    returns:</span>
-<span class="sd">        bool: Whether the matrix is unitary</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">test</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">adjoint</span><span class="p">()</span><span class="o">*</span><span class="nb">input</span>
-    <span class="n">identity</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">num_rows</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">num_rows</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">num_columns</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">cmath</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">identity</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]):</span>
-                <span class="k">continue</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">return</span> <span class="kc">True</span></div>
 
 
 <div class="viewcode-block" id="optimum_qubit_size"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.optimum_qubit_size">[docs]</a><span class="k">def</span> <span class="nf">optimum_qubit_size</span><span class="p">(</span><span class="n">precision</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -156,7 +136,7 @@
 <span class="sd">        PE.run()</span>
 <span class="sd">        print(PE.measure())</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="n">is_unitary</span><span class="p">(</span><span class="n">unitary</span><span class="p">),</span> <span class="s2">&quot;Matrix must be unitary!&quot;</span>
+        <span class="k">assert</span> <span class="n">unitary</span><span class="o">.</span><span class="n">unitary</span><span class="p">,</span> <span class="s2">&quot;Matrix must be unitary!&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unitary</span> <span class="o">=</span> <span class="n">unitary</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">auxiliary</span> <span class="o">=</span> <span class="n">eigenvector</span>
@@ -217,14 +197,22 @@
         <span class="k">return</span> <span class="n">third</span> <span class="o">*</span> <span class="n">second</span> <span class="o">*</span> <span class="n">first</span></div>
 
 <div class="viewcode-block" id="PhaseEstimation.measure_probabilities"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.measure_probabilities">[docs]</a>    <span class="k">def</span> <span class="nf">measure_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_amplitude</span><span class="p">()</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span><span class="p">()</span>
         <span class="n">n_bits</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
             <span class="n">binary</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">i</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">n_bits</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;|</span><span class="si">{</span><span class="n">binary</span><span class="si">}</span><span class="s2">&gt; : </span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PhaseEstimation._amplitude"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation._amplitude">[docs]</a>    <span class="k">def</span> <span class="nf">_amplitude</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PhaseEstimation.probabilities"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.probabilities">[docs]</a>    <span class="k">def</span> <span class="nf">probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the amplitudes of the measured state, representing the</span>
+<span class="sd">        probabilities to be in each state.</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            List[float]: A list of states, where each element is the</span>
+<span class="sd">                probability to be in that state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
 
         <span class="n">result</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
@@ -234,23 +222,18 @@
             <span class="n">trial</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">tensor_product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auxiliary</span><span class="p">,</span> <span class="n">tp_mat</span><span class="p">)</span>
             <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">trial</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="n">p</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">reg</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
-        <span class="k">return</span> <span class="n">p</span></div>
-
-<div class="viewcode-block" id="PhaseEstimation.measure"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.measure">[docs]</a>    <span class="k">def</span> <span class="nf">measure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PhaseEstimation.measure_phase"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.phase_estimation.PhaseEstimation.measure_phase">[docs]</a>    <span class="k">def</span> <span class="nf">measure_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &#39;measures&#39; self.state by selecting a state weighted by its</span>
-<span class="sd">        (amplitude ** 2)</span>
-<span class="sd">        :return: the state observed and the probability of measuring</span>
-<span class="sd">                said state</span>
+<span class="sd">        Measure the calculated phase corresponding to the state measured</span>
+
+<span class="sd">        returns:</span>
+<span class="sd">            float: The calculated phase</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
 
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_amplitude</span><span class="p">()</span>
-        <span class="n">observed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))],</span> <span class="n">p</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">probability</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
-
-        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">probability</span></div></div>
+        <span class="k">return</span> <span class="n">state</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

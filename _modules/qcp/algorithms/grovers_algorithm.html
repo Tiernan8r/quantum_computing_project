@@ -48,12 +48,10 @@
 <span class="sd">Constructs the quantum register, circuits of composite gates, and runs the</span>
 <span class="sd">simulation of Grover&#39;s Algorithm</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">qcp.gates</span> <span class="k">as</span> <span class="nn">g</span>
-<span class="kn">import</span> <span class="nn">qcp.register</span> <span class="k">as</span> <span class="nn">reg</span>
 <span class="kn">from</span> <span class="nn">qcp.algorithms</span> <span class="kn">import</span> <span class="n">GeneralAlgorithm</span>
 <span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">Matrix</span>
 
@@ -155,29 +153,12 @@
         <span class="k">return</span> <span class="n">circuit</span></div>
 
 <div class="viewcode-block" id="Grovers.measure_probabilities"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.grovers_algorithm.Grovers.measure_probabilities">[docs]</a>    <span class="k">def</span> <span class="nf">measure_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span><span class="p">()</span>
         <span class="n">n_bits</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
             <span class="n">binary</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">i</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">n_bits</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;|</span><span class="si">{</span><span class="n">binary</span><span class="si">}</span><span class="s2">&gt; : </span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Grovers.measure"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.grovers_algorithm.Grovers.measure">[docs]</a>    <span class="k">def</span> <span class="nf">measure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &#39;measures&#39; self.state by selecting a state weighted by its</span>
-<span class="sd">        (amplitude ** 2)</span>
-
-<span class="sd">        returns:</span>
-<span class="sd">            Tuple[int, float]: The state observed and the probability of</span>
-<span class="sd">            measuring said state</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
-        <span class="c1"># list of weighted probabilities with the index representing the state</span>
-
-        <span class="n">observed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))],</span> <span class="n">p</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-        <span class="n">probability</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
-        <span class="k">return</span> <span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">probability</span></div></div>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;|</span><span class="si">{</span><span class="n">binary</span><span class="si">}</span><span class="s2">&gt; : </span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

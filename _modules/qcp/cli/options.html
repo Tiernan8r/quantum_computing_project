@@ -47,13 +47,10 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Defines the enums that encode the CLI option values</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">cmath</span>
 <span class="kn">import</span> <span class="nn">enum</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
-<span class="kn">import</span> <span class="nn">qcp.constants</span> <span class="k">as</span> <span class="nn">c</span>
 <span class="kn">from</span> <span class="nn">qcp.algorithms</span> <span class="kn">import</span> <span class="n">Grovers</span><span class="p">,</span> <span class="n">PhaseEstimation</span><span class="p">,</span> <span class="n">Sudoku</span>
-<span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">DefaultMatrix</span><span class="p">,</span> <span class="n">Matrix</span>
 
 
 <div class="viewcode-block" id="AlgorithmOption"><a class="viewcode-back" href="../../../qcp.cli.html#qcp.cli.options.AlgorithmOption">[docs]</a><span class="k">class</span> <span class="nc">AlgorithmOption</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
@@ -103,43 +100,6 @@
 
         <span class="k">elif</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">AlgorithmOption</span><span class="o">.</span><span class="n">Sudoku</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;Sudoku&quot;</span></div></div>
-
-
-<div class="viewcode-block" id="UnitaryMatrices"><a class="viewcode-back" href="../../../qcp.cli.html#qcp.cli.options.UnitaryMatrices">[docs]</a><span class="k">class</span> <span class="nc">UnitaryMatrices</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Enum of all the available unitary matrices to use in the Phase</span>
-<span class="sd">    Estimation algorithm</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># TODO: Populate properly</span>
-    <span class="n">HADAMARD</span> <span class="o">=</span> <span class="s2">&quot;H&quot;</span>
-    <span class="n">PHASE_SHIFT</span> <span class="o">=</span> <span class="s2">&quot;P&quot;</span>
-
-<div class="viewcode-block" id="UnitaryMatrices.list"><a class="viewcode-back" href="../../../qcp.cli.html#qcp.cli.options.UnitaryMatrices.list">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return all the enum options&#39; values</span>
-
-<span class="sd">        returns:</span>
-<span class="sd">            List[str]: All the strings the enums correspond to</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">um</span><span class="p">:</span> <span class="n">um</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">cls</span><span class="p">))</span>  <span class="c1"># type: ignore</span></div>
-
-<div class="viewcode-block" id="UnitaryMatrices.get"><a class="viewcode-back" href="../../../qcp.cli.html#qcp.cli.options.UnitaryMatrices.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the actual Unitary Matrix the enum corresponds to</span>
-
-<span class="sd">        :param float val: Optional value required when creating certain</span>
-<span class="sd">            matrix types</span>
-
-<span class="sd">        returns:</span>
-<span class="sd">            Matrix: The Unitary Matrix</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">UnitaryMatrices</span><span class="o">.</span><span class="n">HADAMARD</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">TWO_HADAMARD</span>
-        <span class="k">elif</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">UnitaryMatrices</span><span class="o">.</span><span class="n">PHASE_SHIFT</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">DefaultMatrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmath</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span><span class="n">j</span><span class="o">*</span><span class="n">cmath</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">val</span><span class="p">)]])</span>
-
-        <span class="k">return</span> <span class="kc">None</span></div></div>
 </pre></div>
 
           </div>

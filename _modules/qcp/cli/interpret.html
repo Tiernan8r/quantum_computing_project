@@ -50,10 +50,13 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 
-<span class="kn">from</span> <span class="nn">qcp.cli.constants</span> <span class="kn">import</span> <span class="p">(</span><span class="n">DEFAULT_PHASE</span><span class="p">,</span> <span class="n">DEFAULT_TARGET</span><span class="p">,</span> <span class="n">DEFAULT_UNITARY</span><span class="p">,</span>
-                               <span class="n">PHASE_LONG</span><span class="p">,</span> <span class="n">TARGET_LONG</span><span class="p">,</span> <span class="n">UNITARY_LONG</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">qcp.cli.options</span> <span class="kn">import</span> <span class="n">AlgorithmOption</span><span class="p">,</span> <span class="n">UnitaryMatrices</span>
-<span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">DefaultMatrix</span><span class="p">,</span> <span class="n">Matrix</span>
+<span class="kn">from</span> <span class="nn">qcp.algorithms.phase_estimation_unitary_matrices</span> <span class="kn">import</span> <span class="n">UnitaryMatrices</span>
+<span class="kn">from</span> <span class="nn">qcp.cli.constants</span> <span class="kn">import</span> <span class="p">(</span><span class="n">DEFAULT_EIGENVECTOR_IDX</span><span class="p">,</span> <span class="n">DEFAULT_PHASE</span><span class="p">,</span>
+                               <span class="n">DEFAULT_TARGET</span><span class="p">,</span> <span class="n">DEFAULT_UNITARY</span><span class="p">,</span>
+                               <span class="n">EIGENVECTOR_LONG</span><span class="p">,</span> <span class="n">PHASE_LONG</span><span class="p">,</span> <span class="n">TARGET_LONG</span><span class="p">,</span>
+                               <span class="n">UNITARY_LONG</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">qcp.cli.options</span> <span class="kn">import</span> <span class="n">AlgorithmOption</span>
+<span class="kn">from</span> <span class="nn">qcp.matrices</span> <span class="kn">import</span> <span class="n">Matrix</span>
 
 
 <div class="viewcode-block" id="interpret_arguments"><a class="viewcode-back" href="../../../qcp.cli.html#qcp.cli.interpret.interpret_arguments">[docs]</a><span class="k">def</span> <span class="nf">interpret_arguments</span><span class="p">(</span><span class="n">opt</span><span class="p">:</span> <span class="n">AlgorithmOption</span><span class="p">,</span>
@@ -196,7 +199,7 @@
             <span class="sa">f</span><span class="s2">&quot;No unitary matrix type provided, defaulting to &#39;</span><span class="si">{</span><span class="n">unitary_str</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">,</span>
             <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">unitary_str</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[</span><span class="n">UNITARY_LONG</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="n">unitary_str</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[</span><span class="n">UNITARY_LONG</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">unitary_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">UnitaryMatrices</span><span class="o">.</span><span class="n">list</span><span class="p">():</span>
             <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Unitary matrix option &#39;</span><span class="si">{0}</span><span class="s2">&#39; is not a valid option!&quot;</span>
@@ -210,7 +213,29 @@
         <span class="n">unitary_matrix</span> <span class="o">=</span> <span class="n">UnitaryMatrices</span><span class="p">(</span><span class="n">unitary_str</span><span class="p">)</span>
 
     <span class="c1"># Determining the Eigenvector to use</span>
-    <span class="n">eigenvec</span> <span class="o">=</span> <span class="n">DefaultMatrix</span><span class="p">([[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">DEFAULT_EIGENVECTOR_NAME</span> <span class="o">=</span> <span class="n">unitary_matrix</span><span class="o">.</span><span class="n">basis_names</span><span class="p">()[</span>
+        <span class="n">DEFAULT_EIGENVECTOR_IDX</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">EIGENVECTOR_LONG</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
+        <span class="n">flags</span><span class="p">[</span><span class="n">EIGENVECTOR_LONG</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_EIGENVECTOR_NAME</span>
+
+    <span class="n">eigenvector_str</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[</span><span class="n">EIGENVECTOR_LONG</span><span class="p">]</span>
+    <span class="n">bases</span> <span class="o">=</span> <span class="n">unitary_matrix</span><span class="o">.</span><span class="n">basis_names</span><span class="p">()</span>
+    <span class="c1"># Get just the inner value of the bra-ket notation, since bash terminals</span>
+    <span class="c1"># don&#39;t let you type &#39;&gt;&#39; easily</span>
+    <span class="c1"># so |0&gt; becomes just 0</span>
+    <span class="n">available_eigenvectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">bases</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">eigenvector_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_eigenvectors</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">eigenvector_str</span><span class="si">}</span><span class="s2">&#39; is not a valid eigenvector choice, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;the choices for the &#39;</span><span class="si">{</span><span class="n">unitary_matrix</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot; are: </span><span class="si">{</span><span class="n">available_eigenvectors</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">eigenvec_idx</span> <span class="o">=</span> <span class="n">available_eigenvectors</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">eigenvector_str</span><span class="p">)</span>
+
+    <span class="n">eigenvec</span> <span class="o">=</span> <span class="n">unitary_matrix</span><span class="o">.</span><span class="n">basis</span><span class="p">()[</span><span class="n">eigenvec_idx</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">nqbits</span><span class="p">,</span> <span class="n">unitary_matrix</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">phase</span><span class="p">),</span> <span class="n">eigenvec</span></div>
 

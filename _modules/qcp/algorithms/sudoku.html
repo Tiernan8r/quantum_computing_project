@@ -132,24 +132,6 @@
 
         <span class="k">return</span> <span class="n">circuit</span></div>
 
-<div class="viewcode-block" id="Sudoku.measure"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.measure">[docs]</a>    <span class="k">def</span> <span class="nf">measure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Randomly &#39;measures&#39; self.state by selecting a state (out of 2**9)</span>
-<span class="sd">        weighted by its (amplitude ** 2)</span>
-
-<span class="sd">        returns:</span>
-<span class="sd">            Tuple[int, float]: The state observed and the probability of</span>
-<span class="sd">            measuring said state</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
-        <span class="c1"># list of weighted probabilities with the index representing the state</span>
-
-        <span class="n">observed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))],</span> <span class="n">p</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-        <span class="n">probability</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
-
-        <span class="k">return</span> <span class="n">observed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">probability</span></div>
-
 <div class="viewcode-block" id="Sudoku.measure_solution"><a class="viewcode-back" href="../../../qcp.algorithms.html#qcp.algorithms.sudoku.Sudoku.measure_solution">[docs]</a>    <span class="k">def</span> <span class="nf">measure_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">float</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Randomly measures 1 of 16 possible options that the 4 input variables</span>

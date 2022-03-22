@@ -51,6 +51,8 @@
 <span class="kn">import</span> <span class="nn">multiprocessing</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
 <span class="c1"># Required to guarantee that the &#39;qcp&#39; module is accessible when</span>
 <span class="c1"># this file is run directly.</span>
@@ -68,6 +70,9 @@
 <span class="sd">    The entrypoint for the CLI, parses the cli options and passes the read</span>
 <span class="sd">    options to the function to run the computation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Set the seed so we get different random results each run</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+
     <span class="c1"># Ignore the first entry in sys.argv as it is just the program name</span>
     <span class="n">alg_opt</span><span class="p">,</span> <span class="n">parsed_tuple</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">read_cli</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 
