@@ -62,7 +62,7 @@ class Grovers(GeneralAlgorithm):
         self.target = target_state
 
         # can only reflect size-1 times to get maximum probability
-        self.max_reflections = size - 1
+        self.max_reflections = math.floor((math.pi/4)*(math.sqrt(2**size)))
 
         super().__init__(size)
 
