@@ -237,10 +237,10 @@ class SparseMatrix(Matrix):
             bool: Whether the matrix is unitary
         """
         test = self.adjoint()*self
-        identity = identity(test.num_rows)
+        id = SparseMatrix.identity(test.num_rows)
         for i in range(self.num_rows):
             for j in range(self.num_columns):
-                if cmath.isclose(test[i][j], identity[i][j]):
+                if cmath.isclose(test[i][j], id[i][j]):
                     continue
                 else:
                     return False
