@@ -14,13 +14,10 @@
 """
 Defines the enums that encode the CLI option values
 """
-import cmath
 import enum
 from typing import List
 
-import qcp.constants as c
 from qcp.algorithms import Grovers, PhaseEstimation, Sudoku
-from qcp.matrices import DefaultMatrix, Matrix
 
 
 class AlgorithmOption(enum.Enum):
@@ -70,40 +67,3 @@ class AlgorithmOption(enum.Enum):
 
         elif self is AlgorithmOption.Sudoku:
             return "Sudoku"
-
-
-class UnitaryMatrices(enum.Enum):
-    """
-    Enum of all the available unitary matrices to use in the Phase
-    Estimation algorithm
-    """
-    # TODO: Populate properly
-    HADAMARD = "H"
-    PHASE_SHIFT = "P"
-
-    @classmethod
-    def list(cls):
-        """
-        Return all the enum options' values
-
-        returns:
-            List[str]: All the strings the enums correspond to
-        """
-        return list(map(lambda um: um.value, cls))  # type: ignore
-
-    def get(self, val: float = 0.0) -> Matrix:
-        """
-        Get the actual Unitary Matrix the enum corresponds to
-
-        :param float val: Optional value required when creating certain
-            matrix types
-
-        returns:
-            Matrix: The Unitary Matrix
-        """
-        if self is UnitaryMatrices.HADAMARD:
-            return c.TWO_HADAMARD
-        elif self is UnitaryMatrices.PHASE_SHIFT:
-            return DefaultMatrix([[1, 0], [0, cmath.exp(2j*cmath.pi*val)]])
-
-        return None

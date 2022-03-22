@@ -12,9 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from __future__ import annotations
+
 from abc import ABC
 from typing import Union
-from qcp.matrices.types import SCALARS, VECTOR, MATRIX
+
+from qcp.matrices.types import MATRIX, SCALARS, VECTOR
 
 
 class Matrix(ABC):
@@ -70,6 +72,17 @@ class Matrix(ABC):
             bool: Whether the matrix row/column dimensions match.
         """
         return self.num_columns == self.num_rows
+
+    @property
+    def unitary(self) -> bool:
+        """
+        Check if matrix is Unitary (can be shifted to gates.py)
+
+        :param Matrix: input: n x n matrix
+        returns:
+            bool: Whether the matrix is unitary
+        """
+        pass
 
     def __getitem__(self, i: int) -> VECTOR:
         """

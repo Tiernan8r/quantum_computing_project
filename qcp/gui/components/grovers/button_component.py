@@ -14,6 +14,7 @@
 import time
 from typing import List
 
+import qcp.algorithms as alg
 from PySide6 import QtWidgets
 from qcp.gui.components import ProgressBarComponent
 from qcp.gui.components.grovers.constants import CANCEL_BUTTON, SEARCH_BUTTON
@@ -87,7 +88,13 @@ class GroverButtonComponent(ProgressBarComponent):
 
         self.tick_progress_bar()
 
-        self.main_window.grov_simulator.run_simulation(nqbits, target)
+        input_tuple = (
+            alg.Grovers,
+            nqbits,
+            target
+        )
+
+        self.main_window.grov_simulator.run_simulation(input_tuple)
 
     def cancel_search(self):
         """

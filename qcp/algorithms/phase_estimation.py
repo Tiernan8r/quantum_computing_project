@@ -1,31 +1,11 @@
-import cmath
 import math
-import random
+from typing import List
 
 import qcp.gates as g
 import qcp.register as reg
 import qcp.tensor_product as tp
 from qcp.algorithms.abstract_algorithm import GeneralAlgorithm
 from qcp.matrices import DefaultMatrix, Matrix
-
-
-def is_unitary(input: Matrix) -> bool:
-    """
-    Check if matrix is Unitary (can be shifted to gates.py)
-
-    :param Matrix: input: n x n matrix
-    returns:
-        bool: Whether the matrix is unitary
-    """
-    test = input.adjoint()*input
-    identity = DefaultMatrix.identity(test.num_rows)
-    for i in range(input.num_rows):
-        for j in range(input.num_columns):
-            if cmath.isclose(test[i][j], identity[i][j]):
-                continue
-            else:
-                return False
-    return True
 
 
 def optimum_qubit_size(precision: int, error: float) -> int:
@@ -123,7 +103,7 @@ class PhaseEstimation(GeneralAlgorithm):
         PE.run()
         print(PE.measure())
         """
-        assert is_unitary(unitary), "Matrix must be unitary!"
+        assert unitary.unitary, "Matrix must be unitary!"
         self.unitary = unitary
 
         self.auxiliary = eigenvector
@@ -184,14 +164,22 @@ class PhaseEstimation(GeneralAlgorithm):
         return third * second * first
 
     def measure_probabilities(self):
-        p = self._amplitude()
+        p = self.probabilities()
         n_bits = int(math.log2(2**self.size))
 
         for i in range(2**self.size):
             binary = bin(i)[2:].zfill(n_bits)
             print(f"|{binary}> : {p[i]:.4g}")
 
-    def _amplitude(self):
+    def probabilities(self) -> List[float]:
+        """
+        Returns the amplitudes of the measured state, representing the
+        probabilities to be in each state.
+
+        returns:
+            List[float]: A list of states, where each element is the
+                probability to be in that state.
+        """
         n = 2 ** self.size
 
         result = DefaultMatrix.zeros(n)
@@ -201,20 +189,15 @@ class PhaseEstimation(GeneralAlgorithm):
             trial = tp.tensor_product(self.auxiliary, tp_mat)
             result[i] = (trial.transpose()*self.state)[0]
 
-        p = reg.measure(result)
+        return reg.measure(result)
 
-        return p
-
-    def measure(self):
+    def measure_phase(self) -> float:
         """
-        'measures' self.state by selecting a state weighted by its
-        (amplitude ** 2)
-        :return: the state observed and the probability of measuring
-                said state
+        Measure the calculated phase corresponding to the state measured
+
+        returns:
+            float: The calculated phase
         """
+        state, _ = self.measure()
 
-        p = self._amplitude()
-        observed = random.choices([i for i in range(len(p))], p, k=1)
-        probability = p[observed[0]]
-
-        return int(observed[0]/2**self.size), probability
+        return state / (2**self.size)

@@ -14,6 +14,7 @@
 import time
 from typing import List
 
+import qcp.algorithms as alg
 from PySide6 import QtWidgets
 from qcp.gui.components import ProgressBarComponent
 from qcp.gui.components.sudoku.constants import CANCEL_BUTTON, SEARCH_BUTTON
@@ -78,7 +79,10 @@ class SudokuButtonComponent(ProgressBarComponent):
 
         self.tick_progress_bar()
 
-        self.main_window.sudoku_simulator.run_simulation()
+        input_tuple = (
+            alg.Sudoku,
+        )
+        self.main_window.sudoku_simulator.run_simulation(input_tuple)
 
     def cancel_simulation(self):
         """
