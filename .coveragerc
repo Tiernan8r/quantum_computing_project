@@ -11,11 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from qcp import main
-import pytest
 
-
-def test_main():
-    with pytest.raises(SystemExit) as se:
-        main.main()
-    assert se.match("0")
+# .coveragerc to control pytest-cov
+[run]
+branch = True
+omit =
+    # omit the qcp/gui dir
+    ./qcp/gui/*
+source =
+    ./qcp
