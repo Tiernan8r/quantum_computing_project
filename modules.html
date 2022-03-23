@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>qcp &#8212; Quantum Computing Project 0.0.3 documentation</title>
+    <title>qcp &#8212; Quantum Computing Project 1.1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -42,6 +42,7 @@
 <li class="toctree-l4"><a class="reference internal" href="qcp.algorithms.html#module-qcp.algorithms.abstract_algorithm">qcp.algorithms.abstract_algorithm module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="qcp.algorithms.html#module-qcp.algorithms.grovers_algorithm">qcp.algorithms.grovers_algorithm module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="qcp.algorithms.html#module-qcp.algorithms.phase_estimation">qcp.algorithms.phase_estimation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="qcp.algorithms.html#module-qcp.algorithms.phase_estimation_unitary_matrices">qcp.algorithms.phase_estimation_unitary_matrices module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="qcp.algorithms.html#module-qcp.algorithms.sudoku">qcp.algorithms.sudoku module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="qcp.algorithms.html#module-qcp.algorithms">Module contents</a></li>
 </ul>
@@ -58,7 +59,52 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="qcp.gui.html">qcp.gui package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="qcp.gui.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="qcp.gui.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="qcp.gui.components.html">qcp.gui.components package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="qcp.gui.components.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="qcp.gui.components.grovers.html">qcp.gui.components.grovers package</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.grovers.html#submodules">Submodules</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.grovers.html#qcp-gui-components-grovers-button-component-module">qcp.gui.components.grovers.button_component module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.grovers.html#qcp-gui-components-grovers-constants-module">qcp.gui.components.grovers.constants module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.grovers.html#qcp-gui-components-grovers-input-component-module">qcp.gui.components.grovers.input_component module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.grovers.html#qcp-gui-components-grovers-simulator-component-module">qcp.gui.components.grovers.simulator_component module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.grovers.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="qcp.gui.components.phase_estimation.html">qcp.gui.components.phase_estimation package</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.phase_estimation.html#submodules">Submodules</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.phase_estimation.html#qcp-gui-components-phase-estimation-button-component-module">qcp.gui.components.phase_estimation.button_component module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.phase_estimation.html#qcp-gui-components-phase-estimation-combo-box-component-module">qcp.gui.components.phase_estimation.combo_box_component module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.phase_estimation.html#qcp-gui-components-phase-estimation-constants-module">qcp.gui.components.phase_estimation.constants module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.phase_estimation.html#qcp-gui-components-phase-estimation-input-component-module">qcp.gui.components.phase_estimation.input_component module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.phase_estimation.html#qcp-gui-components-phase-estimation-simulator-component-module">qcp.gui.components.phase_estimation.simulator_component module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.phase_estimation.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="qcp.gui.components.sudoku.html">qcp.gui.components.sudoku package</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.sudoku.html#submodules">Submodules</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.sudoku.html#qcp-gui-components-sudoku-button-component-module">qcp.gui.components.sudoku.button_component module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.sudoku.html#qcp-gui-components-sudoku-constants-module">qcp.gui.components.sudoku.constants module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.sudoku.html#qcp-gui-components-sudoku-simulator-component-module">qcp.gui.components.sudoku.simulator_component module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.sudoku.html#qcp-gui-components-sudoku-solutions-table-module">qcp.gui.components.sudoku.solutions_table module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="qcp.gui.components.sudoku.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="qcp.gui.components.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qcp.gui.components.html#qcp-gui-components-abstract-component-module">qcp.gui.components.abstract_component module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qcp.gui.components.html#qcp-gui-components-combo-box-component-module">qcp.gui.components.combo_box_component module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qcp.gui.components.html#qcp-gui-components-constants-module">qcp.gui.components.constants module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qcp.gui.components.html#qcp-gui-components-graph-component-module">qcp.gui.components.graph_component module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qcp.gui.components.html#qcp-gui-components-progress-bar-component-module">qcp.gui.components.progress_bar_component module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qcp.gui.components.html#qcp-gui-components-simulator-component-module">qcp.gui.components.simulator_component module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qcp.gui.components.html#qcp-gui-components-threaded-compute-module">qcp.gui.components.threaded_compute module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qcp.gui.components.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="qcp.gui.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="qcp.gui.html#module-qcp.gui.constants">qcp.gui.constants module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="qcp.gui.html#qcp-gui-main-module">qcp.gui.main module</a></li>
