@@ -293,7 +293,7 @@ Due to the probabilistic nature of quantum mechanics, the state must be normalis
 \vspace{5mm}
 
 \noindent
-The action of quantum operators on a state is linear. For a quantum operator $U$ acting on some state $\{\ket{x}$ and $\ket{y}$ can be expressed as:
+The action of quantum operators on a state is linear. For a quantum operator $U$ acting on some state $\ket{x}$ and $\ket{y}$ can be expressed as:
 \vspace{5mm}
 
 \noindent
@@ -689,7 +689,7 @@ This is essentially a reflection on the state $\ket{x}$.
 
 \pagebreak
 
-\subsection{How The Algorithm Works}
+\subsection{How The Algorithm Works} \label{How the Algorithm Works}
 \vspace{5mm}
 
 \textbf{Step 1:}
@@ -1007,11 +1007,10 @@ As indicated in Figure \ref{fig:grover_step_3a}, a diffusion operator $U_s$ is a
 
 
 \begin{figure}
-  \begin{center}
+\begin{center}
       
     \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
-
-    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
     %uncomment if require: \path (0,392); %set diagram left start at 0, and has height of 392
 
     %Shape: Rectangle [id:dp8937257723636158] 
@@ -1110,8 +1109,8 @@ As indicated in Figure \ref{fig:grover_step_3a}, a diffusion operator $U_s$ is a
     % Text Node
     \draw (313,213) node [anchor=north west][inner sep=0.75pt]   [align=left] {Repeat $\displaystyle \approx \ \frac{\pi }{4}\sqrt{N}$ times};
 
-    \end{tikzpicture}
-  \end{center}
+\end{tikzpicture}
+\end{center}
 
   \caption{\label{fig:grover_circuit} Quantum circuit representation of Grover's Algorithm.}
 \end{figure}
@@ -1214,6 +1213,54 @@ One of the few drawbacks of the Grover's Algorithm is that it is probabilistic. 
 
 \noindent
 Due to the constraints of currently available quantum computers, Grover's Algorithm is yet to yield any  meaningful quadratic speed up compared to classical algorithms\cite{noauthor_grovers_2022}.
+
+\pagebreak
+\section{Using Grover's Algorithm to solve Sudoku}
+
+A quantum search algorithm that can search unstructured data sets in a significantly shorter time span than classical computational methods would be extremely useful and could be applied in a variety of ways. In this section we're going to demonstrate a very simple usage of Grover's Algorithm by showcasing how it could be implemented to solve a 2x2 Binary Sudoku Board. 
+
+\setlength{\arrayrulewidth}{0.5mm}
+\setlength{\tabcolsep}{18pt}
+\renewcommand{\arraystretch}{1.5}
+\begin{figure}[h]
+\begin{center}
+    
+
+\begin{tabular}{ |c|c|c| } 
+\hline
+V0 & V1  \\ 
+\hline
+V2 & V3 \\ 
+\hline
+\end{tabular}
+\end{center}
+\caption{2x2 Sudoku Board with variables V0,..,V3 \in \{0, 1\}}
+\label{fig:Sudoku Board}
+\end{figure}
+
+\subsection{Making the Oracle}
+
+
+For this Sudoku board there are three main rules to be aware of:
+\begin{itemize}
+    \item Each box can only be filled with a single number, either 0 or 1
+    \item No column can contain two of the same number
+    \item No row can contain two of the same number
+\end{itemize}
+
+Given that we are only dealing with a maximum of two number options (0 and 1) we can represent each variable VX (where X $\in \{0, 1, 2, 3\}$) as a singular qubit which gives us 4 input qubits, this satisfies our first rule. 
+Rules 2 and 3 state that no adjacent variables can be equal to each other, the way this is done is using an XOR gate over two qubits which represent adjacent variables. For example, V0 (XOR) V1 returns $\ket{0}$ when V0 = V1 but returns $\ket{1}$ when $V0 \neq V1$. With 4 sets of comparisons to make, there is going to be a set of 4 XOR gates with the outputs for each XOR gate being stored in a separate qubit (which we'll refer to as condition qubits). This means that in total we have 8 qubits but to fully complete the Oracle gate we're going to need 1 more. After each comparison is stored in the 4 condition qubits we need to check that every condition qubit is in the state $\ket{1}$ (which is akin to saying every rule in the Sudoku board is obeyed); to do this a customised Control-Not gate is applied across each condition qubit (where the condition qubits are the control and the target/ return value is stored in the final 9th qubit which we'll refer to as the output qubit). \\
+The final step in creating the Oracle gate is resetting every value in the 4 condition qubits by reapplying every XOR gate.  
+
+As shown in \ref
+\begin{equation}
+\begin{cases}
+      U_{\omega}\ket{x} = -\ket{x}  & \text{for} \ x = \omega, \ f(x) =1 \\
+       U_{\omega}\ket{x} = \ket{x}  & \text{for} \ x \neq \omega, \ f(x) = 0 \\
+\end{cases}  
+\end{equation}
+
+
 
 \pagebreak
 
@@ -1346,135 +1393,143 @@ The circuit to implement QFT for a n-qubit state is shown below
 
 \begin{figure}[h]
     \centering
+
+
 \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
 
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-0.93,xscale=0.93]
-\path (0,205); %set diagram left start at 0, and has height of 300
+%Straight Lines [id:da3967690953518057] 
+\draw    (380,179) -- (659.75,179) ;
+%Straight Lines [id:da9878029252695806] 
+\draw    (469.83,168.25) -- (469.69,139.19) -- (469.69,59.8) ;
+%Straight Lines [id:da8582177199826221] 
+\draw    (416.83,168) -- (416.83,99.2) ;
+%Straight Lines [id:da3196026977221085] 
+\draw    (196.83,220) -- (660.75,220) ;
+%Straight Lines [id:da07684763739566802] 
+\draw    (50.88,221.33) -- (170.83,220) ;
+%Shape: Rectangle [id:dp7166077461715553] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (80.83,203) -- (111.86,203) -- (111.86,234) -- (80.83,234) -- cycle ;
 
-%Straight Lines [id:da7550574313481198] 
-\draw    (442,212) -- (651,212) ;
-%Straight Lines [id:da6398571931609234] 
-\draw    (46,212) -- (210.17,212) -- (416,212) ;
-%Straight Lines [id:da8727674531656819] 
-\draw    (46.35,170.5) -- (210.51,170.5) -- (236,170) ;
-%Straight Lines [id:da8871926231699048] 
-\draw    (48,91) -- (650,91) ;
-%Straight Lines [id:da28106686876999853] 
-\draw    (47,51) -- (650,50) ;
-%Shape: Rectangle [id:dp9740729644202252] 
-\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (114.97,75) -- (146,75) -- (146,106) -- (114.97,106) -- cycle ;
+%Shape: Rectangle [id:dp758880806339667] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (120.83,203) -- (163.83,203) -- (163.83,234) -- (120.83,234) -- cycle ;
 
-%Shape: Rectangle [id:dp426089737124529] 
-\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (193,157) -- (224.03,157) -- (224.03,188) -- (193,188) -- cycle ;
+%Straight Lines [id:da9072316210568465] 
+\draw    (141.83,203) -- (141.83,178.06) ;
+%Shape: Rectangle [id:dp887638468970721] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (202.83,202) -- (246.83,202) -- (246.83,233) -- (202.83,233) -- cycle ;
+%Straight Lines [id:da4039836031001398] 
+\draw    (222.83,202) -- (222.33,99.5) ;
+%Shape: Ellipse [id:dp5470892460263189] 
+\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (222,99.06) .. controls (222,99.92) and (222.45,100.62) .. (223,100.62) .. controls (223.55,100.62) and (224,99.92) .. (224,99.06) .. controls (224,98.2) and (223.55,97.5) .. (223,97.5) .. controls (222.45,97.5) and (222,98.2) .. (222,99.06) -- cycle ;
 
-%Shape: Rectangle [id:dp8514934588123941] 
-\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (326,195) -- (357.03,195) -- (357.03,226) -- (326,226) -- cycle ;
+%Shape: Rectangle [id:dp7396779533097696] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (256.83,202) -- (300.83,202) -- (300.83,233) -- (256.83,233) -- cycle ;
+%Straight Lines [id:da9953579128910641] 
+\draw    (277.83,202) -- (277.83,58.33) ;
+%Straight Lines [id:da304584348508544] 
+\draw    (53.18,178.5) -- (217.35,178.5) -- (345.75,178.5) ;
+%Straight Lines [id:da19441753788178195] 
+\draw    (54.95,99.06) -- (222,99.06) -- (656.95,99.06) ;
+%Straight Lines [id:da5686077293635534] 
+\draw    (53.83,59) -- (656.83,58) ;
+%Shape: Ellipse [id:dp6678818886024199] 
+\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (141,179.06) .. controls (141,179.92) and (141.45,180.62) .. (142,180.62) .. controls (142.55,180.62) and (143,179.92) .. (143,179.06) .. controls (143,178.2) and (142.55,177.5) .. (142,177.5) .. controls (141.45,177.5) and (141,178.2) .. (141,179.06) -- cycle ;
+%Shape: Ellipse [id:dp7348740438597149] 
+\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (278,59.06) .. controls (278,59.92) and (278.45,60.62) .. (279,60.62) .. controls (279.55,60.62) and (280,59.92) .. (280,59.06) .. controls (280,58.2) and (279.55,57.5) .. (279,57.5) .. controls (278.45,57.5) and (278,58.2) .. (278,59.06) -- cycle ;
+%Shape: Rectangle [id:dp6251794280116343] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (307,163) -- (338.03,163) -- (338.03,194) -- (307,194) -- cycle ;
 
-%Shape: Rectangle [id:dp314360945613794] 
-\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (156,74) -- (196,74) -- (196,105) -- (156,105) -- cycle ;
+%Straight Lines [id:da48501832285910107] 
+\draw    (617,59) -- (618,220) ;
+%Straight Lines [id:da3619533645667148] 
+\draw    (612,53) -- (622,63) ;
+%Straight Lines [id:da1136318355264534] 
+\draw    (622,53) -- (612,63) ;
 
-%Straight Lines [id:da39077578043373473] 
-\draw    (171.5,75) -- (171.5,51) ;
-%Shape: Circle [id:dp441535044324351] 
-\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (170,51) .. controls (170,51.83) and (170.67,52.5) .. (171.5,52.5) .. controls (172.33,52.5) and (173,51.83) .. (173,51) .. controls (173,50.17) and (172.33,49.5) .. (171.5,49.5) .. controls (170.67,49.5) and (170,50.17) .. (170,51) -- cycle ;
-
-%Shape: Rectangle [id:dp5897080780221526] 
-\draw  [fill={rgb, 255:red, 252; green, 255; blue, 255 }  ,fill opacity=1 ] (70.37,34) -- (106,34) -- (106,65) -- (70.37,65) -- cycle ;
-
-%Shape: Rectangle [id:dp30473357310759497] 
-\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (366,195) -- (409,195) -- (409,226) -- (366,226) -- cycle ;
-
-%Straight Lines [id:da3855769866550789] 
-\draw    (268,170) -- (279.33,170) -- (651,169) ;
-%Shape: Rectangle [id:dp9695497040119231] 
-\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (276,155) -- (320,155) -- (320,186) -- (276,186) -- cycle ;
-%Straight Lines [id:da42876538848964485] 
-\draw    (297,155.5) -- (296.5,91) ;
-%Shape: Circle [id:dp5965904538619509] 
-\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (295,91) .. controls (295,91.83) and (295.67,92.5) .. (296.5,92.5) .. controls (297.33,92.5) and (298,91.83) .. (298,91) .. controls (298,90.17) and (297.33,89.5) .. (296.5,89.5) .. controls (295.67,89.5) and (295,90.17) .. (295,91) -- cycle ;
-
-%Straight Lines [id:da8537072100283741] 
-\draw    (387,195) -- (387,170.06) ;
-%Shape: Ellipse [id:dp044376374855228495] 
-\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (386,170.06) .. controls (386,170.92) and (386.45,171.62) .. (387,171.62) .. controls (387.55,171.62) and (388,170.92) .. (388,170.06) .. controls (388,169.2) and (387.55,168.5) .. (387,168.5) .. controls (386.45,168.5) and (386,169.2) .. (386,170.06) -- cycle ;
-%Shape: Rectangle [id:dp1253251355263153] 
-\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (448,194) -- (492,194) -- (492,225) -- (448,225) -- cycle ;
-%Shape: Rectangle [id:dp5170244213525657] 
-\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (502,194) -- (546,194) -- (546,225) -- (502,225) -- cycle ;
-%Straight Lines [id:da6842415574484656] 
-\draw    (468,194) -- (467.5,91.5) ;
-%Shape: Circle [id:dp7507766602263973] 
-\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (466,91.5) .. controls (466,92.33) and (466.67,93) .. (467.5,93) .. controls (468.33,93) and (469,92.33) .. (469,91.5) .. controls (469,90.67) and (468.33,90) .. (467.5,90) .. controls (466.67,90) and (466,90.67) .. (466,91.5) -- cycle ;
-%Straight Lines [id:da48965934705174585] 
-\draw    (523,194) -- (522.5,91.5) ;
-%Shape: Circle [id:dp6048474775771464] 
-\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (521,91.5) .. controls (521,92.33) and (521.67,93) .. (522.5,93) .. controls (523.33,93) and (524,92.33) .. (524,91.5) .. controls (524,90.67) and (523.33,90) .. (522.5,90) .. controls (521.67,90) and (521,90.67) .. (521,91.5) -- cycle ;
-%Straight Lines [id:da015312271871600447] 
-\draw    (566,51) -- (567,212) ;
-%Straight Lines [id:da5584559248399006] 
-\draw    (593,91) -- (593,168) ;
-%Straight Lines [id:da9780974093157568] 
-\draw    (561,45) -- (571,55) ;
-%Straight Lines [id:da38915226135752146] 
-\draw    (571,45) -- (561,55) ;
-
-%Straight Lines [id:da6675236283011767] 
-\draw    (562,207) -- (572,217) ;
-%Straight Lines [id:da6834744460286415] 
-\draw    (572,207) -- (562,217) ;
-
-%Straight Lines [id:da07839335868474284] 
-\draw    (588,165) -- (598,175) ;
-%Straight Lines [id:da88112867187513] 
-\draw    (598,165) -- (588,175) ;
-
-%Straight Lines [id:da04164548314578809] 
-\draw    (588,86) -- (598,96) ;
-%Straight Lines [id:da5017829132129701] 
-\draw    (598,86) -- (588,96) ;
+%Straight Lines [id:da8858890162256563] 
+\draw    (613,215) -- (623,225) ;
+%Straight Lines [id:da6829327205842372] 
+\draw    (623,215) -- (613,225) ;
 
 
+%Straight Lines [id:da8840707107750161] 
+\draw    (644,100) -- (644,177) ;
+%Straight Lines [id:da454844448542837] 
+\draw    (639,174) -- (649,184) ;
+%Straight Lines [id:da7602550013601753] 
+\draw    (649,174) -- (639,184) ;
+
+%Straight Lines [id:da9458589943076327] 
+\draw    (639,95) -- (649,105) ;
+%Straight Lines [id:da01796925917370651] 
+\draw    (649,95) -- (639,105) ;
+
+
+%Shape: Rectangle [id:dp4590967975075022] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (449.83,164.25) -- (493.83,164.25) -- (493.83,196) -- (449.83,196) -- cycle ;
+%Shape: Ellipse [id:dp4611610254403936] 
+\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (470,59.8) .. controls (470,60.68) and (470.45,61.39) .. (471,61.39) .. controls (471.55,61.39) and (472,60.68) .. (472,59.8) .. controls (472,58.91) and (471.55,58.2) .. (471,58.2) .. controls (470.45,58.2) and (470,58.91) .. (470,59.8) -- cycle ;
+%Shape: Rectangle [id:dp47171557119826113] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (396.83,165) -- (440.83,165) -- (440.83,196) -- (396.83,196) -- cycle ;
+%Shape: Ellipse [id:dp39067266570391845] 
+\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (416.83,98.64) .. controls (416.83,99.5) and (417.28,100.2) .. (417.83,100.2) .. controls (418.39,100.2) and (418.83,99.5) .. (418.83,98.64) .. controls (418.83,97.78) and (418.39,97.08) .. (417.83,97.08) .. controls (417.28,97.08) and (416.83,97.78) .. (416.83,98.64) -- cycle ;
+%Shape: Rectangle [id:dp7816137489930797] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (491.97,85) -- (523,85) -- (523,116) -- (491.97,116) -- cycle ;
+
+%Shape: Rectangle [id:dp8241920393207232] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (528,83) -- (568,83) -- (568,114) -- (528,114) -- cycle ;
+
+%Straight Lines [id:da24945250453126844] 
+\draw    (543.5,84) -- (543.5,60) ;
+%Shape: Circle [id:dp18896475231461685] 
+\draw  [fill={rgb, 255:red, 2; green, 2; blue, 2 }  ,fill opacity=1 ] (542,60) .. controls (542,60.83) and (542.67,61.5) .. (543.5,61.5) .. controls (544.33,61.5) and (545,60.83) .. (545,60) .. controls (545,59.17) and (544.33,58.5) .. (543.5,58.5) .. controls (542.67,58.5) and (542,59.17) .. (542,60) -- cycle ;
+
+
+%Shape: Rectangle [id:dp7852662448600767] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (568,44) -- (599.03,44) -- (599.03,75) -- (568,75) -- cycle ;
+
+
 % Text Node
-\draw (81.82,40.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+\draw (1,47) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{1}}$};
 % Text Node
-\draw (123.97,81.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+\draw (1,87) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{2}}$};
 % Text Node
-\draw (202,163.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+\draw (1,166) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{n-1}}$};
 % Text Node
-\draw (335,201.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+\draw (1,207) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{n}}$};
 % Text Node
-\draw (166.8,81) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{2}$};
+\draw (5,11) node [anchor=north west][inner sep=0.75pt]   [align=left] {Input: $\displaystyle \ket{x_{n} x_{n-1} \cdots x_{2} x_{1}} =\ket{x_{n}} \otimes \ket{x_{n-1}} \otimes \cdots \otimes \ket{x_{2}} \otimes \ket{x_{1}}$};
 % Text Node
-\draw (97,127) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \vdots $};
+\draw (170.83,206) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
 % Text Node
-\draw (169,127) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \vdots $};
+\draw (268.83,208) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n}$};
 % Text Node
-\draw (378.36,202) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{2}$};
+\draw (133.19,210) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{2}$};
 % Text Node
-\draw (240,167) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
+\draw (89.83,209.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
 % Text Node
-\draw (281.4,167) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n-2}$};
+\draw (316,169.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
 % Text Node
-\draw (419,210) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
+\draw (208.23,209) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n-1}$};
 % Text Node
-\draw (454,202) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n-2}$};
+\draw (402.23,171) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n-2}$};
 % Text Node
-\draw (514,200) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n}$};
+\draw (348.83,165) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
 % Text Node
-\draw (610,125) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
+\draw (455.23,171.63) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n-1}$};
 % Text Node
-\draw (-1,41) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{1}}$};
+\draw (500.97,91.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
 % Text Node
-\draw (-1,81) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{2}}$};
+\draw (538.8,90) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{2}$};
 % Text Node
-\draw (-1,160) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{n-1}}$};
-% Text Node
-\draw (-1,201) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{x_{n}}$};
-% Text Node
-\draw (3,5) node [anchor=north west][inner sep=0.75pt]   [align=left] {Input: $\displaystyle \ket{x_{n} x_{n-1} \cdots x_{2} x_{1}} =\ket{x_{n}} \otimes \ket{x_{n-1}} \otimes \cdots \otimes \ket{x_{2}} \otimes \ket{x_{1}}$};
+\draw (577,50.7) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle H$};
+
 
 \end{tikzpicture}
+
 \caption{The QFT Circuit}
 \end{figure}
 \vspace{5mm}
@@ -1501,10 +1556,12 @@ where $H$ is the Hadamard gate, \(R_n =
 \end{tikzpicture} is a swap gate, which swaps the qubit i with the n-i qubit. However, the phase estimation algorithm requires the inverse QFT, which is easy to construct by flipping the circuit horizontally, and conjugate the phases in the $R_k$ gate.
 \pagebreak
 \subsection{The Algorithm}
-The phase estimation procedure uses two registers, with the first register containing $m$ qubits (all in the state $\ket{0}$) and the second register is in the state $\ket{u}$, and contains as many qubits as required for $\ket{u}$. The number of qubits $m$ for first register is dependent on the precision of the phase required, which will be discussed in the next section. The algorithm can be summarized below:\\
-i. Hadamard gates are applied to all qubits in first register.\\
-ii. Control-U gates raised to successive powers of two is applied consecutively to the second register, with the controls covering the first qubit to the last qubit in the first register.\\
-iii. The inverse QFT operation is then applied on the first register to obtain a number, which needs further to be further divided by $2^m$ to recover the estimation of the phase.\\
+The phase estimation procedure uses two registers, with the first register containing $m$ qubits (all in the state $\ket{0}$) and the second register is in the state $\ket{u}$, and contains as many qubits as required for $\ket{u}$. The number of qubits $m$ for first register is dependent on the precision of the phase required, which will be discussed in the next section. The algorithm can be summarized below:
+\begin{enumerate}
+    \item Hadamard gates are applied to all qubits in first register.
+    \item Control-U gates raised to successive powers of two is applied consecutively to the second register, with the controls covering the first qubit to the last qubit in the first register.
+    \item The inverse QFT operation is then applied on the first register to obtain a number, which needs further to be further divided by $2^m$ to recover the estimation of the phase.
+\end{enumerate}
 The circuit below sums up the whole procedure.
 \vspace{5mm}
 
@@ -1695,25 +1752,120 @@ m = 3 + \bigg[log_2\bigg(2+\frac{1}{0.6}\bigg)\bigg]=4.5 \rightarrow m=5
 
 \pagebreak
 
-\section{Methodology}
+\section{Organisation \& Methodology}
 
-The team was made of six people, therefore our first task was organising when to regularly meet to discuss progress on the project. In person meetings were seen as superior by group members, therefore  it was decided that every Friday at 2pm in JCMB 2901 was going to be the weekly meeting area and time, the room was booked as such for several weeks in advance to ensure in person meetings could continue cyclically.
+The group comprised 6 members, and organised the workflow and job allocation required to complete the project by following a hybrid \textit{Agile}\cite{noauthor_manifesto_nodate} framework, by structuring ourselves as a "self-organising team", the hallmark of the \textit{Agile} framework.
 
-\subsection{Workflow and Organization}
-Our workflow was structured around this weekly meeting: Each week we had to show the group what we contributed to the project after which the group split into sub-teams which were each assigned a specific task: Some were to design a new function while others designed tests for the function to catch bugs, these were reported to the development team as discovered, other team members studied the functions and began laying down background information in the report. Between group wide meetings the sub-teams would organise among themselves to meet in person or virtually to complete the work they were assigned, making sure that all progress was committed to GitHub for the rest of the group to monitor, this included the report in a separate \textit{docs} folder. This progress was then explained in the next weekly Friday meeting in a small public speech to the group. When an in person meeting couldn't be arranged a virtual meeting was organised instead as close as possible to the original planned time, this was to ensure that there were minimal compromises during the meeting with progress being still reported and tasks still being assigned. This loop of meeting, assigning tasks, and working in sub-teams continued until the project completed. By breaking up the large task into smaller more obtainable weekly tasks, we completed the project in a more efficient manner that minimised stress on the group, these meetings boosted morale and increased productivity as they put the work of all other group members on display, which is why it was our chosen method of organisation.
+This was achieved by splitting the workload into weekly \textit{sprints} and by holding an in person \textit{sprint meeting} every Friday at 2pm in JCMB 2901, which we had booked out for the duration of the project.
 
-\subsection{Git}
+The \textit{sprint meetings} were simply in person meetings where everyone gave the group a breakdown of the work that they completed in the prior week in a round-robin fashion.
+
+Once the entire team was updated on the progress in the prior week, we discussed what needed to be done in the following week, and also kept the overall goals of the project in mind during each meeting.
+
+When the work required for the week was agreed on, we then allocated team members to tasks if a certain team member was most suited to that task, and was willing to take on the workload. For tasks that were not pre-allocated, we allocated the work using a simple online allocation tool.
+
+Generally each sprint, the workload for the week was split into three sections, and the team was allocated in pairs to tackle their assignment for the week.
+
+As examples of weekly tasks, during the initial weeks of the project, groups were assigned to implementing code for the matrix classes, and a separate group for a tensor product implementation. Later on as the code base became more mature, groups were allocated to expanding the test coverage on existing code (see the section \ref{testing} for details).
+
+During each weekly sprint the sub-teams would organise among themselves to meet in person or virtually to complete the work they were assigned, making sure that all progress was committed to GitHub in order to keep the entire team up to speed on code development.
+
+This included the report and code documentation in a separate \textit{docs} folder within the GitHub repository.
+
+When an in person meeting couldn't be arranged a virtual meeting was organised over Zoom instead, as close as possible to the original planned time. This was to ensure that there were minimal compromises in group planning and organisation, with progress being still reported and tasks still being assigned for the next weekly cycle on-time.
+
+This loop of weekly meetings, allocating tasks, and working in sub-teams continued until the project completed. 
+
+By breaking up the large task into smaller more obtainable weekly tasks, we completed the project in a more efficient manner that minimised stress on the group, these meetings boosted morale and increased productivity by putting the work of all other group members on display.
+
+\subsection{\label{git}Git \& Github}
+
+We organised and collaborated on our codebase using the Git\cite{noauthor_git_nodate} Version Control System (VCS) software, which is the standard VCS used in the software development world.
+Our code was hosted on a public Github\cite{noauthor_build_nodate} repository, at \url{https://github.com/Tiernan8r/quantum_computing_project} and is freely available open source code under the Apache 2.0 License\cite{noauthor_apache_nodate}.
+Using a git repository hosted on Github had many advantages. The \textit{master} branch on the repository represented the state of the codebase for all group members, allowining us to keep the code organised in one place, rather than having different versions of the code on each group members computers.
+The development cycle of branching off from the master branch, implementing the relevant code changes for your weekly task, and then opening a \textit{pull request} (PR) on github to merge the changes into the \textit{master} branch. 
+When a PR was created on github, each team-member would be automatically notified by email that a group member was requesting changes to the master branch.
+By taking advantage of some of github's powerful collaboration and administration tools, we set requirements on PRs that each change requested had to be approved by another group member before it could be merged to the \textit{master} branch.
+We also took advantage of the \textit{Github Actions} service to automatically run testing, linting and documentation routines on the PRs. 
+This ensured that PRs were not introducing bugs or vulnerabilities into the codebase (see section \ref{testing}), and enforced the \textit{pep8}\cite{noauthor_pep_nodate} pythonic style guide. 
+We used the \textit{Sphinx}\cite{noauthor_overview_nodate} documentation tool to automatically compile our code \textit{docstrings} into documentation hosted on github at \url{https://tiernan8r.github.io/quantum_computing_project/} which allowed us to quickly and painlessly look up code functionality without having to dive into the codebase.
+
+\subsection{\label{testing}Testing and Debugging}
+
+\begin{figure}
+\begin{verbatim}
+---------- coverage: platform linux, python 3.8.10-final-0 -----------
+Name                                                  Stmts   Miss Branch BrPart  Cover
+---------------------------------------------------------------------------------------
+qcp/__init__.py                                           1      0      0      0   100%
+qcp/algorithms/__init__.py                                4      0      0      0   100%
+qcp/algorithms/abstract_algorithm.py                     32      2     10      2    90%
+qcp/algorithms/grovers_algorithm.py                      51      5     20      0    90%
+qcp/algorithms/phase_estimation.py                       86     64     24      0    22%
+qcp/algorithms/phase_estimation_unitary_matrices.py      32     18     16      0    33%
+qcp/algorithms/sudoku.py                                 44     32     10      0    26%
+qcp/cli/__init__.py                                       1      0      0      0   100%
+qcp/cli/constants.py                                     20      0      0      0   100%
+qcp/cli/interpret.py                                     79     44     26      5    38%
+qcp/cli/options.py                                       25     12     16      0    41%
+qcp/cli/parser.py                                        57     13     22      4    78%
+qcp/cli/progress_bar.py                                  13      8      0      0    38%
+qcp/cli/usage.py                                          7      0      0      0   100%
+qcp/constants.py                                         11      0      0      0   100%
+qcp/gates.py                                            120      0     36      0   100%
+qcp/main.py                                              48     30      6      2    37%
+qcp/matrices/__init__.py                                  6      0      0      0   100%
+qcp/matrices/dense_matrix.py                            102     13     52      1    86%
+qcp/matrices/matrix.py                                   49     16      2      0    69%
+qcp/matrices/sparse_matrix.py                           218     30    140     11    84%
+qcp/matrices/types.py                                     6      0      0      0   100%
+qcp/register.py                                          17      1      8      1    92%
+qcp/tensor_product.py                                    44      1     24      1    94%
+---------------------------------------------------------------------------------------
+TOTAL                                                  1073    289    412     27    72%
+Coverage XML written to file coverage/python/coverage.xml
+
+\end{verbatim}
+\caption{\label{tox-coverage} Example output of \textit{tox} coverage, with the \textbf{qcp/gui/} code coverage removed for the sake of brevity}
+\end{figure}
+
+Testing on our codebase was implemented using the \textit{pytest}\cite{noauthor_pytest_nodate} Python testing utility, and the testing was automated using the \textit{tox}\cite{noauthor_welcome_nodate} test automation framework.
+\textit{tox} is an automated testing tool that automatically discovers tests in the codebase and can run the tests in parallel to speed up the develop/test/debug implementation cycle. 
+Using \textit{tox} allowed us to setup test configuration files within the code repository to standardise the testing framework. The \textit{Github Actions} running on the repository would then enforce the testing checks on the codebase using these configuration files. 
+Team members were assigned to writing tests for new functionality in parallel to their creation. 
+This allowed the team to work more efficiently as bugs were spotted earlier and code functionality was verified as it was implemented. 
+The allowed other team members to reliably use the code implemented by other team members, with the knowledge that that code will work as expected. 
+\textit{tox} can then flag failing tests and highlights the line in the test code at fault, along with any relevant error codes and stack-traces, this allows the developer to quickly pin point the section in their code that is at fault if the test coverage is thorough enough. 
+It also reports the overall test coverage on the codebase (Figure \ref{tox-coverage}). 
+Test code was implemented in a separate \textit{tests} folder of the repository, with a module structure mirroring that of the main \textit{qcp} code module, so that it was easy to tell which test files corresponded to which implementation code file.
+
+\medskip
+
+Another tool that was used extensively was the IBM Quantum simulator\cite{noauthor_programming_nodate}, this tool was used as a reference implementation of a quantum computer simulator, against which we could compare our calculated quantum gates and quantum circuits, to verify that our quantum algorithms were working as expected.
+
+\subsubsection{Testing Simple functions}
+
+ The first tests that were implemented were to test the tensor product function, this was done in the file \textit{test\_tensor\_product.py}. These tests worked by implementing an array containing a series of matrices of different sizes and contents with the intention of catching corner cases. Then taking the tensor product all these matrices by inputting them into the \textit{numpy.kron()} function in a separate file. The computed values were then placed inside arrays and were compared to the calculated values from our \textit{tensor\_product()} function. Almost all the tests were passed except for the tests with non-square matrices, these bugs were fixed once spotted and the tox command in the terminal let us know that we covered near 100\% of the tensor product code. Similar tests were then constructed for the single qubit gates in the file \textit{test\_gates.py}. Single qubit gates such as the Hadamard were easy to construct tests for since finding the answers to the inputs $\ket{0}$ and $\ket{1}$ was usually enough to prove that the gate worked. We tested code to what we deemed a satisfactory level and only then moved on to the next piece of the project. A helper functions file was introduced to assist with further tests, however the only function that was present in this file was compare matrices which tests if two matrices are roughly equal and uses an assert to be compatible with Tox since it removed rounding errors when calculating matrices. This helper function was used throughout the test files, most notably in the \textit{test\_grovers\_algorithm.py} file and drastically reduced the amount of repeated code.
+ 
+\subsubsection{Testing Grover's Algorithm}
+
+All the individual methods of the \textit{Grovers} class as well as the \textit{pull\_set\_bits()} helper function were tested in the \textit{test\_grovers\_algorithm.py} file. Most of the test functions work the same as described before with a set of expected values being stored in an array whereupon the calculated values from the function was compared and asserted to be compatible with the Tox utility. The above tests of course are directed at a generic Grover's Algorithm in order to test the variations a new file called \textit{test\_Sudoku.py} was created, which also tested all the methods specific to the Sudoku variation on Grover's Algorithm. Tests for other functions such as \textit{register}, \textit{matrix}, \textit{parser}, \textit{usage}, in separate files were created under the same principle. Of course all of this was being developed in parallel to the actual functions to spot bugs sooner and all tests were reported with the Tox utility.
 
 \pagebreak
 
 \section{Coding with Python}
-The first step of the project was for the group to choose which language to implement the system with. Options included C, C++, Java, and Haskell, but the final decision was to use Python. This was our language of choice for several reasons: Most of our team has experience with the language making it easier to write the code, the language is object-oriented which means Grover’s Algorithm could be created as an object from a class which reduced the amount of repeated code when several versions of Grover's Algorithm were  implemented. It’s more general-purpose compared to languages such as Haskell or Java (Haskell being a purely functional language, and Java being purely an object oriented language, Python combines necessary features of both), and it uses high-level syntax in comparison to languages like C and C++ making it more appropriate for a high-level task such as this which involves matrix multiplication. Once the language was decided the next step was to implement some basic quantum operations.
+The first step of the project was for the group to choose which language to implement the system with. Options included C, C++, Java, and Haskell, but the final decision was to use Python. This was our language of choice for several reasons: Most of our team has experience with the language making it easier to write the code, the language is object-oriented which means Grover’s Algorithm could be created as an object from a class which reduced the amount of repeated code when several versions of Grover's Algorithm were  implemented. It’s more general-purpose compared to languages such as Haskell or Java (Haskell being a purely functional language, and Java being purely an object oriented language, Python combines necessary features of both), and it uses high-level syntax in comparison to languages like C and C++ making it more appropriate for a high-level task such as this which involves matrix multiplication. However, while Python was it language of choice It was also decided that we would minimise the use of import packages such as numpy. With those restrictions in place, the next step was to implement some basic quantum operations.
 
 \subsection{Tensor Products}
+
 When mathematically representing a quantum computer, qubits are written as column vectors while gates are written as square matrices. To combine a series of gates or qubits their tensor product is taken, therefore a function that takes the tensor product of two matrices in Python is needed to implement Grover's Algorithm. This was done in the \textit{tensor\_product.py} file which contains the function \textit{tensor\_product(A: Matrix, B: Matrix)}. This function takes two objects of the user defined class DefaultMatrix (A and B) as inputs, and outputs their tensor product as a DefaultMatrix object. This was calculated by creating a new empty matrix (C) with a number of columns that is equal to the number of columns that A has multiplied by the number of columns that B has, and with a number of rows that is equal to the number of rows that A has multiplied by the number of rows that B has. This empty matrix is then iterated over itself in a 2D loop with the values in A and B being multiplied together and added to the Matrix C accordingly. This function was used throughout the rest of the project in almost every file and made it possible to construct the circuit for Grover's Algorithm. While some of the team work on this function, other members worked on implementing the first quantum gates.
 
 \subsection{Matrices}
-Almost all the necessary single qubit gates can be represented as constant square matrix, the gate is then applied by multiplying the corresponding matrix by the input qubit. Therefore, rather than creating literal functions for all the necessary gates (IDENTITY, TWO\_HADAMARD, PAULI\_X, PAULI\_Y) these matrices were instead stored in a new file called \textit{constants.py} where the gate can be applied to a qubit by importing the file and multiplying the qubit by the appropriate variable, this reduces the amount of repeated code and improves readability. Qubits corresponding to 0 and 1 were also stored in this file (ZERO\_VECTOR, ONE\_VECTOR) to further reduce repeated code and were used throughout testing. 
+The numpy package usually makes matrix multiplication much easier in Python, however since we had decided to restrict ourselves to not use outside packages we had to create a readable way to multiply matrices together. This was done by creating a new class called \textit{DefaultMatrix} which had matrix multiplication embedded as a method. To create the \textit{DefaultMatrix} class a dummy class called \textit{Matrix} was created which contained dummy methods This class was then taken as an input for two new classes which represented two different notations for a Matrix, these being \textit{DenseMatrix} and \textit{SparseMatrix}. Both of these new classes then overwrote the dummy functions given to them to account for their different notations. A Dense matrix contains all its values in an appropriately shaped 2D array, while a sparse matrix only stores the shape of the matrix as while the rest of the values assumed to be zero. The \textit{SparseMatrix} class saves space for large matrices with only a few values such as larger variations of the control gates. These two classes together more than offset their extra lines of code by allowing the program to run with less memory, therefore it was deemed appropriate. 
+
+\subsection{Gates}
+Almost all the necessary single qubit gates can be represented as a constant 2x2 square matrix and then to apply the gate to a single qubit, you multiply the matrix representation of the gate with the vertical phase vector. Rather than creating functions for these gates which would output the same thing every time, we stored all the necessary 2x2 gates (IDENTITY, TWO\_HADAMARD, PAULI\_X, PAULI\_Y) in a file titled \textit{constants.py}. In this file we also stored the state vectors for the single qubit states $\ket{0}$ and $\ket{1}$ as ZERO\_VECTOR and ONE\_VECTOR respectively. 
+The decision to use a constants file with these specific constants allowed us to avoid duplicating code and additional computational complexity as we could create more interesting gates using these constants and the tensor product.
 
 \begin{file}[constants.py]
 \begin{lstlisting}[language=Python]
@@ -1744,9 +1896,8 @@ return DefaultMatrix([[1, 0],
 \end{file}
 
 
-\subsection{Gates}
 
-One of the first large gate functions implemented in the \textit{gates.py} file was called \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} which chains multiple single qubit gates together on specified target input qubits by calculating the tensor product of an arbitrary number of matrices. The function takes the following variables as inputs: size (represents the number of qubits being chained together), targets (which qubits the gate applies to), gate (which single qubit gate needs to be applied), and phi (only for phase gates as it represents the amount of rotation). With those inputs the function \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} computes the values of a large matrix by taking the tensor product of the specified gate as a running product in a loop over the number of qubits (size), if the loop index is not currently one of the target qubits it multiplies by an appropriately sized identity matrix instead.
+One of the first large gate functions implemented in the \textit{gates.py} file was called \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} which chains multiple single qubit gates together on specified target input qubits by calculating the tensor product of an arbitrary number of matrices. The function takes the following variables as inputs: size (represents the number of qubits in the entire circuit), targets (which qubits the gate applies to), gate (which single qubit gate needs to be applied), and phi (only for phase gates as it represents the angle of rotation). With those inputs the function \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} computes the values of a large matrix by taking the tensor product of the specified gate as a running product in a loop over the number of qubits (size), if the loop index is not currently one of the target qubits it multiplies by an appropriately sized identity matrix instead.
 
 \begin{file}[def multi\_gate(...)-> Matrix:]
 \begin{lstlisting}[language=Python]
@@ -1774,16 +1925,22 @@ return m
 \end{file}
 
 
-The resultant matrix corresponds to having a certain sequence of gates chained together, this will become important when Hadamard gates need to be in this configuration during Grover's Algorithm to construct the superposition required when searching for an index. The other gates that were implemented in this file were the control\_x/z/phase gates, these were also introduced as functions and worked by first introducing various assertions, and then creating a matrix with rows and columns of size 2**qubits. The matrix diagonals at first take on the form of an identity matrix, then the function modifies this matrix by swapping the rows that correspond to the target qubits inputted. The function \textit{\_generic\_control(size: int, controls: List[int],target: int, cval: SCALARS)} was introduced which was called in the \textit{ control\_z(size: int, controls: List[int], target: int) } and \textit{control\_phase(size: int, controls: List[int], target: int, phi: complex)} functions. This design choice was made to further reduce the amount of repeated code. With all the necessary quantum gates in place it was now possible to begin implementing Grover’s Algorithm.
+The resultant matrix corresponds to having a a certain single qubit gate acting upon multiple (target) qubits, this will become important because for Grover's Algorithm we will need to use this function to apply Hadamrd gates to every qubit to construct a complete superposition. 
+
+The other gates that were implemented in this file were the control\_x/z/phase gates, these were also introduced as functions and worked by first introducing various assertions, and then creating a matrix with rows and columns of size 2**qubits. The matrix diagonals at first take on the form of an identity matrix, then the function modifies this matrix by swapping the rows that correspond to the target qubits inputted. The function \textit{\_generic\_control(size: int, controls: List[int],target: int, cval: SCALARS)} was introduced which was called in the \textit{ control\_z(size: int, controls: List[int], target: int) } and \textit{control\_phase(size: int, controls: List[int], target: int, phi: complex)} functions. This design choice was made to further reduce the amount of repeated code. With all the necessary quantum gates in place it was now possible to begin implementing Grover’s Algorithm.
 
 \pagebreak
 
 \section{Implementation}
 
 When implementing Grover's Algorithm in Python it was decided to create a file named \textit{grovers\_algorithm.py} this file contains one helper function called \textit{ pull\_set\_bits(n: int )}, which displays the indexes of the number 1 in the base 2 form of the value, and a Class called \textit{Grovers}. Python was chosen partly because it is an object-oriented language, this allowed all the gates specific to Grover’s Algorithm to be stored as methods in the class while the state of the input qubits could be stored as attributes. This improves the code as it allowed variations of Grover's Algorithm to be created as objects without repeating lines. 
+\subsection{Grover's Algorithm} \label{Implement Grovers}
+\subsubsection{Constructor} \label{constructor}
+
 
 \begin{file}[def \_\_init\_\_(self, size: int, target\_state: int):]
-\begin{lstlisting}[language=Python]
+
+\begin{lstlisting}[linewidth=15cm,language=Python]
 assert size > 1, 
 assert target_state < (2 ** size),
 
@@ -1793,14 +1950,15 @@ self.state = self.initial_state()
 
 self.oracle = self.single_target_oracle()
 self.diffuser = self.diffusion()
-self.max_reflections = self.size - 1
+self.max_reflections = math.floor((math.pi/4)*(math.sqrt(2**size)))
 self.circuit = self.construct_circuit()
 \end{lstlisting}
+
 \end{file}
 
 Above the contents of the class's initialisation method is displayed which takes in two inputs: size (which is the number of qubits that is required), and target\_state (which is the specific number/ element out of 2 \textsuperscript{size} options that the user wants the algorithm to search for). This initialisation method also explicitly defines the order of the number of calls/ steps that the algorithm makes with the variable self.max\_reflections. All of the other attributes are defined through methods in the class and are described as follows.
 
-\subsection{Initial State}
+\subsubsection{Initial State} \label{Initial State}
 
 \begin{file}[def initial\_state(self) -> Matrix:]
 \begin{lstlisting}[language=Python]
@@ -1829,9 +1987,11 @@ return oracle
 \end{lstlisting}
 \end{file}
 
-As mentioned in \ref{The Oracle}, the oracle gate 'selects' the chosen target state by flipping its phase. single\_target\_oracle() is the method that returns the matrix representation of the oracle gate for the given target and number of qubits in the Grover's Algorithm instance. It starts by using \textit{pull\_set\_bits(n: int)} which, for a given number n, returns a list of integers. The integers returned are related to the indexes of each '1' in the binary string representation of n. For example; for n=5, pull\_set\_bits(n: int) will return the list \textit{[0, 2]} as 5 in binary representation is \textit{'101'}. Which it then uses as a set of input targets in a series of Pauli-X gates chained together using the \textit{multi\_gate(...)} function. Because the oracle is made of the Control-Z and Pauli-X gates in sequence, multiplying the matrix representations of those gates together is enough to create the single target oracle gate.
+As mentioned in \ref{The Oracle}, the oracle gate 'selects' the chosen target state by flipping its phase and leaving the other states untouched. single\_target\_oracle() is the method that returns the matrix representation of the oracle gate for the given target and number of qubits in the Grover's Algorithm instance. It starts by using \textit{pull\_set\_bits(n: int)} which, for a given number n, returns a list of integers. The integers returned are the indexes (from right to left) of each '1' in the binary string representation of n. For example; for n=6, pull\_set\_bits(n: int) will return the list \textit{[1, 2]} as 5 in binary representation is \textit{'110'}.Here pull\_set\_bits(n: int) is used to determine which qubits will be the target of multiple not gates. After creating a control-z gate which 'controls' every qubit but the last and targets the last, the oracle is made by multiplying the series of not gates by the control-z gate and then by the not gates again.
 
-\subsection{Diffusion}
+
+
+\subsubsection{Diffusion}
 
 \begin{file}[def diffusion(self):]
 \begin{lstlisting}[language=Python]
@@ -1854,11 +2014,11 @@ return diff
 \end{file}
 
 
-Diffusion is a method that creates a matrix that represents the diffusion operation in Grover's Algorithm. to create the diffusion operator a series a Hadamard gates are first created and placed on either side of the gate once again using the multi-gate function. Then the Control-Z and Pauli-X gates are placed either side. The resulting matrix is then returned for use in the execute method which combines the created gates together.
+\textit{diffusion()} is a method that creates the matrix  representation  of the diffusion/ amplitude amplifaction operation in Grover's Algorithm. To create the diffusion operator another Control Z-gate (that takes every qubit but the last as a control and takes the last as a target) is used. Pauli-X gates are then applied on every qubit both before and after the Control-Z gate. Finally, a set of Hadamard gates are applied before the first set of Pauli-X gates and after the second set of Pauli-X gates. The resulting matrix of this multiplication is then returned
+ 
+\subsubsection{Construction and Running}
 
-\subsection{Construction and Running}
-
-Once all the special quantum gates pertaining to Grover's Algorithm are created, the next step is to simply combine them into a single large circuit by multiplying their matrices together. This is done in the \textit{construct\_circuit()} method shown below.
+Now that we've got a method that creates an Oracle and a Diffusion gate the next step is setting up the circuit using the \textit{construct\_circuit()} method shown below.
 
 \begin{file}[def construct\_circuit(self) -> Matrix:]
 \begin{lstlisting}[language=Python]
@@ -1876,44 +2036,201 @@ return circuit
 \end{lstlisting}
 \end{file}
 
-First the method uses the \textit{multi\_gate(...)} function to chain together a large set of Hadamard gates to create the superposition required. In Grover's Algorithm the oracle and diffusion operator are repeat a number of times that is proportional to the number of qubits being used in the circuit. This is achieved through a running total where the oracle and diffusion operators are multiplied by a running matrix of the circuit while the attribute \textit{max\_reflections} is decreased by 1, this continues until  \textit{max\_reflections} equals zero at which point the matrix representing the full Grover's Algorithm circuit is returned. If a column vector representing a qubit is multiplied by this matrix, the calculation would be representative of Grover's Algorithm. The only other methods in the class are the \textit{measure(self)} and \textit{run(self)} methods. The \textit{run(self)} method simply multiplies the current state of the qubits (which has already been initialised), by the Matrix created in the \textit{construct\_circuit(self)} method. \textit{measure(self)} simply collapses the superposition of the quantum output into a single value which,because of the manipulation of Grover's Algorithm, is almost certainly the target value that the algorithm was designed to search for. The \textit{measure(self)} method works by first measuring the probabilities of all the possible output states using the register.measure() function and then outputting the most probable answer from that array with it's associated probability.In conclusion, by creating a Grover's Class we can generate specific oracles and diffusion gates depending on the target value and number of qubits. This Class lead to a simulation of Grover's algorithm, by creating all the gates in separate methods it lead to clean and efficient code that which can then be re-purposed for other searching operations such as finding solutions to Sudoku puzzles. The final step is testing which is explained in detail in the next chapter.
+First the \textit{multi\_gate(...)} function is used to apply a set of Hadamard gates across each qubit to create the superposition of all states required. As mentioned in \ref{constructor}, the total number of 'calls'/ 'steps'/ reflections is proportional to the $\sqrt{N}$ where N = 2\textsuperscript{size}. After the set of Hadamards are created, the Oracle and Diffusion Gate are applied, one after the other \textit{self.max\_reflections} times which would yield the maximum amplitude for our target state as described in \ref{How the Algorithm Works}. The matrix returned by \textit{construct\_circuit()} represents the set of Hadamards followed by the series of Oracle and Diffusion gates.
 
-\subsection{Abstract and Grover's Algorithm}
+ If a column vector representing a qubit (such as \textit{self.state()} as mentioned in \ref{Initial State} ) is multiplied by this matrix, the calculation would be representative of Grover's Algorithm before measurement. The only other methods in the class are the \textit{measure(self)} and \textit{run(self)} methods. The \textit{run(self)} method simply multiplies \textit{self.state()} by the Matrix created in the \textit{construct\_circuit(self)} method and stores the value. \textit{measure(self)} simply collapses the superposition of the output of \textit{run()} into a single value but thanks to the probability state manipulation of Grover's Algorithm, the probability of measuring target value that the algorithm is searching for is incredibly high. The \textit{measure(self)} method simply applies weights to each state based on their respective square amplitudes and then randomly chooses a state according to those weightings. 
+ \\
+ \\
+ In conclusion, by creating a Grover's Class we can generate specific oracles and diffusion gates depending on the target value and number of qubits. This Class lead to a simulation of Grover's algorithm, by creating all the gates in separate methods it lead to clean and efficient code that which can then be re-purposed for other searching operations such as finding solutions to Sudoku puzzles. The final step is testing which is explained in detail in the next chapter.
+
+\subsection{A 2x2 Sudoku Solver}
+
+Implementing the 2x2 Sudoku Solver is very similar to the classical Grover's Algorithm but differs in one major way, how the Oracle is constructed. The Oracle must be able to pick out (or rather, change the phase of) solutions to the 2x2 board whilst leaving the other states alone.
+%picture{https://drive.google.com/file/d/1KjxtnFO9avCPiL1NdrAxmgZvi6Jx-Qkb/view}
+
+To be able to do this, this circuit is going to need a total of 9 qubits. The first 4 will represent one of each element on the 2x2 Sudoku board, the next 4 will represent one of the 4 rules for the board and the last qubit will act like a verifier which will tell us if the rules have been satisfied.
+
+\subsubsection{Defining the Sudoku Rules} \label{sudoku rules}
+
+%picture{https://drive.google.com/file/d/1TeY8IskmDYT1ZgUDRdDvOoTcLCOyZQQM/view}
+
+The first thing we need to do is establish and define the rules for the inputs such that no adjacent numbers on the board are equal to each other. This means that:
+\begin{enumerate}
+    \item $V\textsubscript{0}$ cannot be equal to $V\textsubscript{1}$
+    \item $V\textsubscript{0}$ cannot be equal to $V\textsubscript{2}$
+    \item $V\textsubscript{1}$ cannot be equal to $V\textsubscript{3}$ and, 
+    \item $V\textsubscript{2}$ cannot be equal to $V\textsubscript{3}$
+\end{enumerate}
+
+This is implemented as follows:
+
+\begin{file}[def sudoku\_conditions(self) -> Matrix:]
+\begin{lstlisting}[language=Python]
+cond1 = g.control_x(9, [1], 4) * 
+            g.control_x(9, [0], 4)
+cond2 = g.control_x(9, [2], 5) * 
+            g.control_x(9, [0], 5)
+cond3 = g.control_x(9, [3], 6) * 
+            g.control_x(9, [1], 6)
+cond4 = g.control_x(9, [3], 7) * 
+            g.control_x(9, [2], 7)
+
+cond = cond4 * cond3 * cond2 * cond1
+
+return cond
+\end{lstlisting}
+\end{file}
+
+The rules listed 1-4 can be thought of as classical XOR gates acting on the qubits which represent V0-V4 where the result is stored in the condition qubits. Looking at the variable \textit{cond1}, we create an XOR gate by applying two Control-X gates, one with the 0th qubit as the control, the other with the 1st qubit as the control; both results are stored into the 4th qubit, the condition1 qubit. 
+We do this for each condition/rule and multiply all the gates together to get one big matrix which will be returned by this function.
+%picture{https://drive.google.com/file/d/1SuPpfmKGeyGVaUcrmkuytIuYa-eqeehs/view}
+
+\subsubsection{Oracle}
+\begin{file}[def oracle(self) -> Matrix:]
+\begin{lstlisting}[language=Python]
+had = g.multi_gate(9, [8], g.Gate.H)
+z = g.multi_gate(9, [8], g.Gate.Z)
+cond = self.sudoku_conditions()
+cnot = g.control_x(9, [4, 5, 6, 7], 8)
+oracle = cond * cnot * cond
+oracle = cond * cnot * cond * z * had
+return oracle
+\end{lstlisting}
+\end{file}
+
+Now that the rules for the sudoku board have been established we now need to implement the oracle gate. This is done in a few short steps:
+\begin{itemize}
+    \item Firstly, we apply a Hadamard followed by a phase shift gate to the Verifier qubit (the 8th qubit) to get the state $\ket{-} = \ket{0} - \ket{1}$ on the Verifier qubit.
+    \item Next, we determine whether all of the conditions have been met by applying a Control-X gate, where all the condition qubits (4-7) are the controls and the Verifier qubit (8) is the target.
+    \item Lastly, we reset all the values in the condition qubit such that we can use the Oracle again later without having propagating errors and then return the resulting matrix
+\end{itemize}
+%picture{https://drive.google.com/file/d/1b4cMPr_nn8Vf-e8P2Tb2u-77xFeZ-EPi/view}
+
+The rest of the 2x2 Sudoku implementation is essentially the same as the classical Grover's Algorithm we went over in \ref{Implement Grovers}; we implement a series of Hadamard gates across the first 4 input qubits, then we apply the Oracle and Diffusion gates a set number of times and finally we measure our states to, hopefully, get a solution to the Sudoku Board.
+
 \subsection{Phase Estimation}
-\subsection{Sudoku}
+\subsubsection{Constructor}
+
+\begin{file}[def \_\_init\_\_(self, size: int, unitary: Matrix, eigenvector: Matrix):]
+\begin{center}
+\begin{lstlisting}[linewidth=13cm,language=Python]
+assert unitary.unitary, 
+self.unitary = unitary
+
+self.auxiliary = eigenvector
+self.auxsize = int(math.log2(eigenvector.num_rows))
+\end{lstlisting}
+\end{center}
+\end{file}
+The class initialisation defined above sets down the rule for what can be accepted as inputs, namely only unitary gate is accepted. Then, the auxiliary register is initialised to be the input eigenvector. The last line computes the number of qubits required for the auxiliary register.
+
+\subsubsection{Initial State}
+\begin{file}[def initial\_state(self) -> Matrix:]
+\begin{lstlisting}[language=Python]
+init = super().initial_state()
+return tp.tensor_product(self.auxiliary, init)
+\end{lstlisting}
+\end{file}
+
+This method prepares the registers for phase estimation procedure. The first line initialises the main register, using the method already defined by the general algorithm. The method then returns the combined registers, by using tensor product. Note that the auxiliary qubits are more significant (i.e., more left in the binary representation) than the main register.
+\pagebreak
+\subsubsection{The Hadamards}
+\begin{center}
+\begin{file}[def first\_layer(self) -> Matrix:]
+\begin{lstlisting}[linewidth=14cm][language=Python]
+id = g.multi_gate(self.auxsize, [], g.Gate.I)
+return tp.tensor_product(
+    id,g.multi_gate(self.size, [i for i in range(self.size)],
+    g.Gate.H))
+\end{lstlisting}
+\end{file}
+\end{center}
+
+The first part of the phase estimation circuit is the Hadamard operation on the main register, acting on all of the main qubits. The identity matrix for the auxiliary register if first created, then combined with the Hadamard gates for the main register. Note that the auxiliary register is not affected by this operation. 
+
+\subsubsection{Applying Control-U}
+\begin{file}[def second\_layer(self) -> Matrix:]
+\begin{lstlisting}[linewidth=14cm][language=Python]
+totalsize = self.size+self.auxsize
+gate = g.multi_gate(totalsize, [], g.Gate.I)
+rep = 0
+for i in range(0, self.size):
+    for j in range(2**rep):
+        n = self.size-1-i
+        gate = g.control_u(totalsize, n, self.unitary) * gate
+        rep += 1
+        return gate
+\end{lstlisting}
+\end{file}
+The next part is where the control-U gates repeatedly acts on the auxiliary registers, with the controls set to the least significant qubit to the most significant qubit in sequential order. The total size of the combined register is first calculated, which is required to initialise an identity matrix. The loop in the next section then applies the Control-U gate iteratively to the system, with the repetition increasing by a factor of two for each change in the control qubit. The method then returns the combined matrix.
+\pagebreak
+\subsubsection{Inverse QFT}
+The final part of phase estimation procedure is to apply the inverse QFT gate to the main register. This is split into three different code segments.
+\begin{file}[def inverse\_qft\_gate(size: int) -> Matrix:]
+\begin{lstlisting}[linewidth=13cm][language=Python]
+gate = g.multi_gate(size, [], g.Gate.I)
+for i in range(int(size/2)):
+    gate = g.swap(size, i, size-i-1)*gate
+    for i in range(0, size):
+        gate = g.multi_gate(size, [i], g.Gate.H) * \
+        inverse_qft_rotation_gate(size, i)*gate
+return gate
+\end{lstlisting}
+\end{file}
+
+The inverse QFT begins with the swap gates performed on the qubit $i$ and qubit $n-i$, where n is the number of qubits in the main register. Then, the rotation gates for the $n^{th}$ qubit are assembled by calling the \texttt{inverse\_qft\_rotation\_gates} method, detailed below. After that, a Hadamard gate is applied to the same qubits. This is repeated for all of the qubits in the main register.
+
+\begin{file}[def inverse\_qft\_rotation\_gate(size: int, current\_qubit: int) -> Matrix:]
+\begin{lstlisting}[linewidth=14cm][language=Python]
+gate: Matrix = DefaultMatrix.identity(2**size)
+for i in range(0, current_qubit):
+    phi = -2*math.pi/2**(current_qubit+1-i)
+    control = i
+    gate = gate * g.control_phase(size, [control], current_qubit
+    , phi)
+return gate
+\end{lstlisting}
+\end{file}
+Here the rotation gate required for inverse QFT is constructed. Denoting $i$ as the current qubit, we need to apply rotations $R_n R_{n-1}\cdots R_k \cdots R_2$, with the phase being $-\frac{2\pi i}{2^k}$ with $k$ being the subscript of each $R$ and the controls being the $n-k$ qubit.
+
+\pagebreak
+\begin{file}[def third\_layer(self):]
+\begin{lstlisting}[linewidth=14cm][language=Python]
+id = g.multi_gate(self.auxsize, [], g.Gate.I)
+return tp.tensor_product(
+    id,
+    inverse_qft_gate(self.size)
+        )
+\end{lstlisting}
+\end{file}
+This class method simply perform tensor product using identity for auxiliary register and the inverse QFT gate for main register.
+
+\subsubsection{Construction and Running}
+
+\begin{file}[def construct\_circuit(self):]
+\begin{lstlisting}[linewidth=14cm][language=Python]
+first = self.first_layer()
+second = self.second_layer()
+third = self.third_layer()
+
+return third * second * first
+\end{lstlisting}
+\end{file}
+Now that we got everything ready, we can combine the parts and form the total matrix. The function simply returns the product of all three matrix by summoning the functions defined before this. By multiplying this final matrix with the initial states, we obtain the output state of the phase estimation, ready for measurement.
 
 \pagebreak
 
-\section{Testing and Debugging}
-
-While some team members were constructing code, others were assigned to designing tests for functions as they were created. This allowed the team to work more efficiently as bugs were spotted earlier which lead to fewer bugs in the late stages of the task. When designing tests the assert command was used which made the tests compatible with the Tox utility. Tox is an automated testing tool that can be applied when running a python file, when a file is run using tox it automatically runs all the functions in the file and therefore applies all the tests. Tox then reports how many tests the program passed and how much of the code the tests covered. This tool became invaluable as it allowed the team to measure the robustness of the code and quality of the designed tests. To further aide Tox a separated folder of files specifically for tests was created, this allowed for modularity in the code as the tests files could then be easily removed once the final program was implemented, it also allowed for the use of the tox command in the terminal to allow for analysis of the tests that showed how much of the code the tests reached.
-
-
-\subsection{Testing Simple functions}
-
- The first tests that were implemented were to test the tensor product with the function \textit{test\_tensor\_product()}. This worked by implementing an array containing a series of matrices of different sizes and contents, with the intention to catch corner cases. Then the tensor product was calculated all these matrices by placing inputting them into the \textit{numpy.kron()} function in a separate file. The answers for these were then placed inside arrays stored in the functions and were compared to the calculated values from our \textit{tensor\_product()} function. Almost all the tests were passed except for the tests with non-square matrices, these bugs where fixed once spotted and the tox command in the terminal let us know that we covered near 100\% of the tensor product code.Similar tests were then constructed for the single qubit gates in the file \textit{test\_gates.py}. Single qubit gates such as the Hadamard were easy to construct tests for simply comparing the 0 and 1 qubit outputs to the hand calculated super-positions. Assertion statements were used to make the test functions compatible with tox in the terminal. We tested code to a satisfactory level and then moved on to the next piece of the project to help catch mistakes and kill bugs before they appear allowing the team to work more efficiently. Helper functions file was introduced to assist with further tests, however the only function that is present in this file was compare matrices which tests if two matrices are roughly equal and uses an assert to be compatible with the tox command in the terminal.  This helper function was used throughout the test files most notably in the \textit{test\_grovers\_algorithm.py} file. 
-\subsection{Testing Grover's Algorithm}
-
-All the individual methods of the \textit{Grovers} class as well as the \textit{pull\_set\_bits()} helper function were tested in the \textit{test\_grovers\_algorithm.py} file. Most of the test functions work the same as with the simple functions were a set of expected values are stored in an array whereupon the calculated values from the function was compared and asserted to be compatible with the Tox utility. To aide in the testing for Grover's Algorithm a new file in the tests folder was created called  \textit{test\_helpers.py} which contained the function \textit{compare\_matrices(A: Matrix, B: Matrix, e=1E-9)}. The purpose of this function was to avoid rounding errors when computing multiplications of matrices since this function contained an assertion for the two matrices in the \textit{is\_close()} function, this avoids repeated code and rounding errors which can make tests fail even when the function works as intended.
-
-\pagebreak
 \section{Issues and Challenges}
-\vspace{5mm}
 
 \pagebreak
 \section{State of the Art: Quantum Computers}
-\vspace{5mm}
 
 \noindent
 The idea of combining quantum mechanics and information theory appeared in the 1970s, but received little attention until 1981, when physicist Richard Feynman gave a presentation arguing that computation based on classical logic could not process calculations representing quantum phenomena in a tractable manner. %https://www.ncbi.nlm.nih.gov/books/NBK538701/
 “Nature isn’t classical, dammit, and if you want to make a simulation of nature, you’d better make it
 quantum mechanical”, the physicist Richard Feynman famously quipped. “And by golly it’s a
 wonderful problem, because it doesn’t look so easy.” %https://link.springer.com/content/pdf/10.1007/s11432-020-2881-9.pdf#page27
-Later in 1994, quantum computing received even more attention when mathematicial Peter Shor developed a quantum algorithm. The algorithm could find the prime factors of large numbers in a time efficient manner, which was far better than the efficiency of the current state-of-the-art of classical algorithms. 
-\vspace{5mm}
-
-\noindent
-The press, in the process of popularising quantum computation, often misleads the general public by mediating that the speed gained by quantum computing is by trying every possible  answer to a problem in parallel. In fact, a quantum computer works by considering entanglement between qubits and the probabilities associated with the superpositions to carry out a series of operations, the quantum algorithm, which then enhances certain probabilities and supresses other, leading to the required answer. A measurement is made at the end of the computation, and the algorithm should enhance the probability of measuring the correct answer. This use of entanglement and probabilities sets the quantum computer apart from classical computers. 
+Later in 1994, quantum computing received even more attention when mathematicial Peter Shor developed a quantum algorithm. The algorithm could find the prime factors of large numbers in a time efficient manner, which was far better than the efficiency of the current state-of-the-art of classical algorithms. The press, in the process of popularising quantum computation, often misleads the general public by mediating that the speed gained by quantum computing is by trying every possible  answer to a problem in parallel. In fact, a quantum computer works by considering entanglement between qubits and the probabilities associated with the superpositions to carry out a series of operations, the quantum algorithm, which then enhances certain probabilities and supresses other, leading to the required answer. A measurement is made at the end of the computation, and the algorithm should enhance the probability of measuring the correct answer. This use of entanglement and probabilities sets the quantum computer apart from classical computers. 
 % picture
 
 \vspace{5mm}
@@ -1921,9 +2238,6 @@ The press, in the process of popularising quantum computation, often misleads th
 \noindent
 "Quantum Computing" is just a blanket term describing all computations that work based on the quantum phenomena. There are multiple types of frameworks, like a measurement-based computation framework, in which highly entangled qubits serve as the starting point. Single qubit measurements are performed, leaving the target single qubit in a definitive state. Further measurements are carried out on other qubits based on the previous results, until the answer is reached. In this project, we are concerned with Logical or gate-based quantum computing framework. In this framework, qubits are prepared in initial states, which then are subject to a series of gate operations. Through these gates, the qubits are put into superposition, entangled and then subjected to measurement, which then yields a result. 
 %https://www.ncbi.nlm.nih.gov/books/NBK538701/
-\vspace{5mm}
-
-\noindent
 Quantum computers can be implemented using a variety of quantum systems, such as trapped ions, superconducting qubits, photons, and silicon. Over last couple of decades, numerous advances have been attempted to try and build large scale quantum computers. Superconducting qubits, in particular, have emerged as a major possibility for such large scale quantum prcessor architecture.
 
 \noindent
