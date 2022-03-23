@@ -452,6 +452,12 @@
              </item>
              <item row="6" column="2">
               <widget class="QDoubleSpinBox" name="phi_1_spin_box">
+               <property name="decimals">
+                <number>20</number>
+               </property>
+               <property name="maximum">
+                <double>1.000000000000000</double>
+               </property>
                <property name="singleStep">
                 <double>0.100000000000000</double>
                </property>
@@ -502,6 +508,12 @@
              </item>
              <item row="8" column="2">
               <widget class="QDoubleSpinBox" name="phi_2_spinbox">
+               <property name="decimals">
+                <number>20</number>
+               </property>
+               <property name="maximum">
+                <double>1.000000000000000</double>
+               </property>
                <property name="singleStep">
                 <double>0.100000000000000</double>
                </property>
