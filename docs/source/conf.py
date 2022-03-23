@@ -22,7 +22,7 @@ copyright = '2022, Tiernan8r'
 author = 'Tiernan8r, hyoong, JabethM, nys1998, s1960329, RiddhiYaddav'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.3'
+release = '1.1.0'
 
 
 # -- General configuration ---------------------------------------------------
