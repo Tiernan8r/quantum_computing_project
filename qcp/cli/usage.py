@@ -34,7 +34,7 @@ FLAGS:
                         s   = Toy Sudoku solver
                     Defaults to '{DEFAULT_ALGORITHM}' if unset
     {HELP_SHORT}/{HELP_LONG}       Display this prompt
-    {GUI_SHORT}/{GUI_LONG}      Display the GUI (if supported).
+    {GUI_SHORT}/{GUI_LONG}        Display the GUI (if supported).
 
 The CLI options vary by choice of algorithm:
 
@@ -60,7 +60,7 @@ PHASE ESTIMATION:
                             * phase_shift = Phase Shift Gate (requires the {PHASE_SHORT} flag)
                         Defaults to '{DEFAULT_UNITARY}' if unset
         {EIGENVECTOR_SHORT}/{EIGENVECTOR_LONG}      The choice of eigenvector to use in the simulation.
-                        IF using the HADAMARD gate, can be one of:
+                        If using the HADAMARD gate, can be one of:
                             * +
                             * -
                             Default is +
