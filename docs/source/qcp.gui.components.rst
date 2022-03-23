@@ -54,6 +54,14 @@ qcp.gui.components.progress\_bar\_component module
    :undoc-members:
    :show-inheritance:
 
+qcp.gui.components.simulator\_component module
+----------------------------------------------
+
+.. automodule:: qcp.gui.components.simulator_component
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 qcp.gui.components.threaded\_compute module
 -------------------------------------------
 

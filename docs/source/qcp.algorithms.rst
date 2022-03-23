@@ -28,6 +28,14 @@ qcp.algorithms.phase\_estimation module
    :undoc-members:
    :show-inheritance:
 
+qcp.algorithms.phase\_estimation\_unitary\_matrices module
+----------------------------------------------------------
+
+.. automodule:: qcp.algorithms.phase_estimation_unitary_matrices
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 qcp.algorithms.sudoku module
 ----------------------------
 

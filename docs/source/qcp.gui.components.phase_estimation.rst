@@ -12,6 +12,14 @@ qcp.gui.components.phase\_estimation.button\_component module
    :undoc-members:
    :show-inheritance:
 
+qcp.gui.components.phase\_estimation.combo\_box\_component module
+-----------------------------------------------------------------
+
+.. automodule:: qcp.gui.components.phase_estimation.combo_box_component
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 qcp.gui.components.phase\_estimation.constants module
 -----------------------------------------------------
 
