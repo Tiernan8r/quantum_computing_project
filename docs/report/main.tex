@@ -27,6 +27,9 @@
 \usepackage[scale=1,bmargin=1.5cm,footnotesep=1.5cm]{geometry} %footnote spacing
 \usepackage{float}
 \usepackage{subcaption} %allows us to nest figures
+%Using images
+\usepackage{graphicx}
+\graphicspath{{../images/}}
 
 \usepackage{hyperref} %enable hyperlinks 
 \hypersetup{
@@ -1072,7 +1075,7 @@ As indicated in Figure \ref{fig:grover_step_3a}, a diffusion operator $U_s$ is a
     %Shape: Brace [id:dp5786954336630095] 
     \draw   (208.13,205) .. controls (208.15,209.67) and (210.49,211.99) .. (215.16,211.98) -- (357.81,211.53) .. controls (364.48,211.51) and (367.82,213.83) .. (367.83,218.5) .. controls (367.82,213.83) and (371.14,211.49) .. (377.81,211.47)(374.81,211.48) -- (528.16,210.99) .. controls (532.83,210.98) and (535.15,208.64) .. (535.13,203.97) ;
     %Shape: Brace [id:dp3814057437492582] 
-    \draw   (470.13,127) .. controls (470.13,122.33) and (467.8,120) .. (463.13,120) -- (410.13,120) .. controls (403.46,120) and (400.13,117.67) .. (400.13,113) .. controls (400.13,117.67) and (396.8,120) .. (390.13,120)(393.13,120) -- (334.13,120) .. controls (329.46,120) and (327.13,122.33) .. (327.13,127) ;
+\draw   (522,127) .. controls (522,122.33) and (519.67,120) .. (515,120) -- (413.38,120) .. controls (406.71,120) and (403.38,117.67) .. (403.38,113) .. controls (403.38,117.67) and (400.05,120) .. (393.38,120)(396.38,120) -- (286,120) .. controls (281.33,120) and (279,122.33) .. (279,127) ;
     %Shape: Brace [id:dp5248227356988384] 
     \draw   (66.13,152) .. controls (61.46,152) and (59.13,154.33) .. (59.13,159) -- (59.13,162.16) .. controls (59.13,168.83) and (56.8,172.16) .. (52.13,172.16) .. controls (56.8,172.16) and (59.13,175.49) .. (59.13,182.16)(59.13,179.16) -- (59.13,185) .. controls (59.13,189.67) and (61.46,192) .. (66.13,192) ;
     %Straight Lines [id:da6246903517915476] 
@@ -1107,7 +1110,7 @@ As indicated in Figure \ref{fig:grover_step_3a}, a diffusion operator $U_s$ is a
     % Text Node
     \draw (316,95) node [anchor=north west][inner sep=0.75pt]   [align=left] {Grover's Diffusion Operator};
     % Text Node
-    \draw (313,213) node [anchor=north west][inner sep=0.75pt]   [align=left] {Repeat $\displaystyle \approx \ \frac{\pi }{4}\sqrt{N}$ times};
+    \draw (313,220) node [anchor=north west][inner sep=0.75pt]   [align=left] {Repeat  $\displaystyle  = \bigg\lfloor \ \frac{\pi }{4}\sqrt{N} \bigg\rfloor$ times};
 
 \end{tikzpicture}
 \end{center}
@@ -1238,7 +1241,7 @@ V2 & V3 \\
 \label{fig:Sudoku Board}
 \end{figure}
 
-\subsection{Making the Oracle}
+\subsection{Making the Oracle}\label{Making the Oracle 2x2}
 
 
 For this Sudoku board there are three main rules to be aware of:
@@ -1248,18 +1251,82 @@ For this Sudoku board there are three main rules to be aware of:
     \item No row can contain two of the same number
 \end{itemize}
 
-Given that we are only dealing with a maximum of two number options (0 and 1) we can represent each variable VX (where X $\in \{0, 1, 2, 3\}$) as a singular qubit which gives us 4 input qubits, this satisfies our first rule. 
-Rules 2 and 3 state that no adjacent variables can be equal to each other, the way this is done is using an XOR gate over two qubits which represent adjacent variables. For example, V0 (XOR) V1 returns $\ket{0}$ when V0 = V1 but returns $\ket{1}$ when $V0 \neq V1$. With 4 sets of comparisons to make, there is going to be a set of 4 XOR gates with the outputs for each XOR gate being stored in a separate qubit (which we'll refer to as condition qubits). This means that in total we have 8 qubits but to fully complete the Oracle gate we're going to need 1 more. After each comparison is stored in the 4 condition qubits we need to check that every condition qubit is in the state $\ket{1}$ (which is akin to saying every rule in the Sudoku board is obeyed); to do this a customised Control-Not gate is applied across each condition qubit (where the condition qubits are the control and the target/ return value is stored in the final 9th qubit which we'll refer to as the output qubit). \\
-The final step in creating the Oracle gate is resetting every value in the 4 condition qubits by reapplying every XOR gate.  
+Given that we are only dealing with a maximum of two number options (0 and 1) we can represent each variable $V\textsubscript{X}$ (where X $\in \{0, 1, 2, 3\}$) as a singular qubit which gives us 4 input qubits, this satisfies our first rule. 
+Rules 2 and 3 state that no adjacent variables can be equal to each other, the way this is done is using an XOR gate over two qubits which represent adjacent variables. For example, $V\textsubscript{0}$ (XOR) $V\textsubscript{1}$ returns $\ket{0}$ when $V\textsubscript{0}$ = $V\textsubscript{1}$ but returns $\ket{1}$ when $V\textsubscript{0} \neq V\textsubscript{1}$. With 4 sets of comparisons to make, there is going to be a set of 4 XOR gates with the outputs for each XOR gate being stored in a separate qubit (which we'll refer to as condition qubits). This means that in total we have 8 qubits but to fully complete the Oracle gate we're going to need 1 more. After each comparison is stored in the 4 condition qubits we need to check that every condition qubit is in the state $\ket{1}$ (which is akin to saying every rule in the Sudoku board is obeyed); to do this a customised Control-Not gate is applied across each condition qubit (where the condition qubits are the control and the target/ return value is stored in the final 9th qubit which we'll refer to as the output qubit). The final step in creating the Oracle gate is resetting every value in the 4 condition qubits by reapplying every XOR gate.  
+\\ \\
+As shown in \ref{The Oracle}, the Oracle gate acts upon the circuit $\ket{x}$ such that:
 
-As shown in \ref
 \begin{equation}
 \begin{cases}
+      U_{\omega}\ket{x} = \ket{x}  & \text{for} \ x \neq \omega, \ f(x) = 0 \\
       U_{\omega}\ket{x} = -\ket{x}  & \text{for} \ x = \omega, \ f(x) =1 \\
-       U_{\omega}\ket{x} = \ket{x}  & \text{for} \ x \neq \omega, \ f(x) = 0 \\
 \end{cases}  
 \end{equation}
 
+If we represent our circuit $\ket{x}$ as three registers; one being the 4 input qubits $\ket{V\textsubscript{X}}$, another being the 4 condition qubits $\ket{c}$ and the final register being the last output qubit $\ket{out}$ then the Oracle should act on our circuit like so:
+
+\begin{equation}
+\begin{cases}
+      U_{\omega}\ket{V\textsubscript{X}}\ket{c}\ket{out} = \ket{V\textsubscript{X}}\ket{c}\ket{out}  & \text{for} \ V\textsubscript{X} \neq \omega, \ f(V\textsubscript{X}) = 0 \\
+      U_{\omega}\ket{V\textsubscript{X}}\ket{c}\ket{out} = -\ket{V\textsubscript{X}}\ket{c}\ket{out}  & \text{for} \ V\textsubscript{X} = \omega, \ f(V\textsubscript{X}) =1 \\
+       
+\end{cases}  
+\end{equation}
+
+For our problem as described at the start of this section \ref{Making the Oracle 2x2}, the input qubits are only used as controls whilst the condition qubits are reset back to their former values; this means that the only register that is acted upon is $\ket{out}$ by combining the results of every XOR computation. This looks like:
+
+\begin{equation}
+\begin{cases}
+      U_{\omega}\ket{V\textsubscript{X}}\ket{c}\ket{out} = \ket{V\textsubscript{X}}\ket{c}\ket{out \oplus f(V\textsubscript{X})}  & \text{for} \ V\textsubscript{X} \neq \omega, \ f(V\textsubscript{X}) = 0 \\
+      U_{\omega}\ket{V\textsubscript{X}}\ket{c}\ket{out} = -\ket{V\textsubscript{X}}\ket{c}\ket{out \oplus f(V\textsubscript{X})}  & \text{for} \ V\textsubscript{X} = \omega, \ f(V\textsubscript{X}) =1 \\
+    
+\end{cases}  
+\end{equation}
+where $\oplus$ is the combined XOR operator over $\ket{V\textsubscript{X}}$ which is stored in $\ket{c}$.
+\\
+
+From this we can determine that $\ket{out}$ must be equal to the superposition state $\ket{-}$ = $\frac{1}{\sqrt{2}}(\ket{0} - \ket{1})$. 
+\subsubsection{Case 1}
+Looking at the case where f(V\textsubscript{X}) = 0:
+\\
+\begin{equation}
+U_\omega\ket{V\textsubscript{X}\ket{c}\ket{-}} = \ket{V\textsubscript{X}\ket{c}\ket{- \oplus f(V\textsubscript{X})}} = \ket{V\textsubscript{X}}\ket{c} \otimes \frac{1}{\sqrt{2}}(\ket{0} \oplus f(V\textsubscript{X}) - \ket{1 \oplus f(V\textsubscript{X})}) 
+\end{equation}
+
+Remembering the rules for XOR gates, this can be simplified to:
+
+\begin{equation}
+U_\omega\ket{V\textsubscript{X}\ket{c}\ket{-}} = \ket{V\textsubscript{X}}\ket{c} \otimes \frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) \\
+= \ket{V\textsubscript{X}}\ket{c}\ket{-}
+\end{equation}
+
+\\
+\subsubsection{Case 2}
+
+Doing the same thing for the case where f(V\textsubscript{X}) = 1 (such that V\textsubscript{X} = $\omega$):
+
+\begin{equation}
+U_\omega\ket{V\textsubscript{X}\ket{c}\ket{-}} = \ket{V\textsubscript{X}}\ket{c} \otimes \frac{1}{\sqrt{2}}(\ket{0} \oplus f(V\textsubscript{X}) - \ket{1 \oplus f(V\textsubscript{X})})
+\end{equation}
+
+After applying the XOR gate, this simplifies to: 
+
+\begin{equation}
+\ket{V\textsubscript{X}}\ket{c} \otimes \frac{1}{\sqrt{2}}(\ket{0} \oplus f(V\textsubscript{X}) - \ket{1 \oplus f(V\textsubscript{X})}) = \ket{V\textsubscript{X}}\ket{c} \otimes \frac{1}{\sqrt{2}}(\ket{1} - \ket{0})
+\end{equation}
+
+This gives us that:
+
+\begin{equation}
+ U_\omega\ket{V\textsubscript{X}\ket{c}\ket{-}}= \ket{V\textsubscript{X}}\ket{c} \otimes \frac{1}{\sqrt{2}}(\ket{1} - \ket{0}) = - \ket{V\textsubscript{X}}\ket{c}\ket{-}
+\end{equation}
+\\
+\\
+
+So to recap, the Oracle gate is created by setting $\ket{out}$ to $\ket{-}$. Then by using a combination of XOR gates over $\ket{V\textsubscript{X}}$ and storing the values in $\ket{c}$ we can check whether each rule is observed. By using a Controlled-Not gate over $\ket{c}$ and storing the value in $\ket{out}$ the state we can apply a phase shift. Finally, the values in $\ket{c}$ are reset back to $\ket{0000}$ by reapplying all of the XOR gates.
+
+\subsection{The Rest of the Circuit}
+The Diffusion Operator works exactly as stated at the end of \ref{How the Algorithm Works} but instead of operating over every qubit, the Diffusion operator only works over $\ket{V\textsubscript{X}}$ as these are the only qubits that we hope to amplify. With Hadamards placed on the qubits in $\ket{V\textsubscript{X}}$ as shown in \ref{fig:grover_circuit}, we apply the Oracle and Diffusion Operators twice and then measure the states of $\ket{V\textsubscript{X}}$ to, hopefully, get our solution.
 
 
 \pagebreak
@@ -1503,7 +1570,7 @@ The circuit to implement QFT for a n-qubit state is shown below
 % Text Node
 \draw (5,11) node [anchor=north west][inner sep=0.75pt]   [align=left] {Input: $\displaystyle \ket{x_{n} x_{n-1} \cdots x_{2} x_{1}} =\ket{x_{n}} \otimes \ket{x_{n-1}} \otimes \cdots \otimes \ket{x_{2}} \otimes \ket{x_{1}}$};
 % Text Node
-\draw (170.83,206) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
+\draw (173.83,215) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
 % Text Node
 \draw (268.83,208) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n}$};
 % Text Node
@@ -1517,7 +1584,7 @@ The circuit to implement QFT for a n-qubit state is shown below
 % Text Node
 \draw (402.23,171) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n-2}$};
 % Text Node
-\draw (348.83,165) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
+\draw (353.83,175) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \dotsc $};
 % Text Node
 \draw (455.23,171.63) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle R_{n-1}$};
 % Text Node
@@ -1752,7 +1819,7 @@ m = 3 + \bigg[log_2\bigg(2+\frac{1}{0.6}\bigg)\bigg]=4.5 \rightarrow m=5
 
 \pagebreak
 
-\section{Organisation \& Methodology}
+\section{Organisation and Methodology}
 
 The group comprised 6 members, and organised the workflow and job allocation required to complete the project by following a hybrid \textit{Agile}\cite{noauthor_manifesto_nodate} framework, by structuring ourselves as a "self-organising team", the hallmark of the \textit{Agile} framework.
 
@@ -1790,94 +1857,76 @@ We also took advantage of the \textit{Github Actions} service to automatically r
 This ensured that PRs were not introducing bugs or vulnerabilities into the codebase (see section \ref{testing}), and enforced the \textit{pep8}\cite{noauthor_pep_nodate} pythonic style guide. 
 We used the \textit{Sphinx}\cite{noauthor_overview_nodate} documentation tool to automatically compile our code \textit{docstrings} into documentation hosted on github at \url{https://tiernan8r.github.io/quantum_computing_project/} which allowed us to quickly and painlessly look up code functionality without having to dive into the codebase.
 
-\subsection{\label{testing}Testing and Debugging}
-
-\begin{figure}
-\begin{verbatim}
----------- coverage: platform linux, python 3.8.10-final-0 -----------
-Name                                                  Stmts   Miss Branch BrPart  Cover
----------------------------------------------------------------------------------------
-qcp/__init__.py                                           1      0      0      0   100%
-qcp/algorithms/__init__.py                                4      0      0      0   100%
-qcp/algorithms/abstract_algorithm.py                     32      2     10      2    90%
-qcp/algorithms/grovers_algorithm.py                      51      5     20      0    90%
-qcp/algorithms/phase_estimation.py                       86     64     24      0    22%
-qcp/algorithms/phase_estimation_unitary_matrices.py      32     18     16      0    33%
-qcp/algorithms/sudoku.py                                 44     32     10      0    26%
-qcp/cli/__init__.py                                       1      0      0      0   100%
-qcp/cli/constants.py                                     20      0      0      0   100%
-qcp/cli/interpret.py                                     79     44     26      5    38%
-qcp/cli/options.py                                       25     12     16      0    41%
-qcp/cli/parser.py                                        57     13     22      4    78%
-qcp/cli/progress_bar.py                                  13      8      0      0    38%
-qcp/cli/usage.py                                          7      0      0      0   100%
-qcp/constants.py                                         11      0      0      0   100%
-qcp/gates.py                                            120      0     36      0   100%
-qcp/main.py                                              48     30      6      2    37%
-qcp/matrices/__init__.py                                  6      0      0      0   100%
-qcp/matrices/dense_matrix.py                            102     13     52      1    86%
-qcp/matrices/matrix.py                                   49     16      2      0    69%
-qcp/matrices/sparse_matrix.py                           218     30    140     11    84%
-qcp/matrices/types.py                                     6      0      0      0   100%
-qcp/register.py                                          17      1      8      1    92%
-qcp/tensor_product.py                                    44      1     24      1    94%
----------------------------------------------------------------------------------------
-TOTAL                                                  1073    289    412     27    72%
-Coverage XML written to file coverage/python/coverage.xml
-
-\end{verbatim}
-\caption{\label{tox-coverage} Example output of \textit{tox} coverage, with the \textbf{qcp/gui/} code coverage removed for the sake of brevity}
-\end{figure}
-
-Testing on our codebase was implemented using the \textit{pytest}\cite{noauthor_pytest_nodate} Python testing utility, and the testing was automated using the \textit{tox}\cite{noauthor_welcome_nodate} test automation framework.
-\textit{tox} is an automated testing tool that automatically discovers tests in the codebase and can run the tests in parallel to speed up the develop/test/debug implementation cycle. 
-Using \textit{tox} allowed us to setup test configuration files within the code repository to standardise the testing framework. The \textit{Github Actions} running on the repository would then enforce the testing checks on the codebase using these configuration files. 
-Team members were assigned to writing tests for new functionality in parallel to their creation. 
-This allowed the team to work more efficiently as bugs were spotted earlier and code functionality was verified as it was implemented. 
-The allowed other team members to reliably use the code implemented by other team members, with the knowledge that that code will work as expected. 
-\textit{tox} can then flag failing tests and highlights the line in the test code at fault, along with any relevant error codes and stack-traces, this allows the developer to quickly pin point the section in their code that is at fault if the test coverage is thorough enough. 
-It also reports the overall test coverage on the codebase (Figure \ref{tox-coverage}). 
-Test code was implemented in a separate \textit{tests} folder of the repository, with a module structure mirroring that of the main \textit{qcp} code module, so that it was easy to tell which test files corresponded to which implementation code file.
-
-\medskip
-
-Another tool that was used extensively was the IBM Quantum simulator\cite{noauthor_programming_nodate}, this tool was used as a reference implementation of a quantum computer simulator, against which we could compare our calculated quantum gates and quantum circuits, to verify that our quantum algorithms were working as expected.
-
-\subsubsection{Testing Simple functions}
-
- The first tests that were implemented were to test the tensor product function, this was done in the file \textit{test\_tensor\_product.py}. These tests worked by implementing an array containing a series of matrices of different sizes and contents with the intention of catching corner cases. Then taking the tensor product all these matrices by inputting them into the \textit{numpy.kron()} function in a separate file. The computed values were then placed inside arrays and were compared to the calculated values from our \textit{tensor\_product()} function. Almost all the tests were passed except for the tests with non-square matrices, these bugs were fixed once spotted and the tox command in the terminal let us know that we covered near 100\% of the tensor product code. Similar tests were then constructed for the single qubit gates in the file \textit{test\_gates.py}. Single qubit gates such as the Hadamard were easy to construct tests for since finding the answers to the inputs $\ket{0}$ and $\ket{1}$ was usually enough to prove that the gate worked. We tested code to what we deemed a satisfactory level and only then moved on to the next piece of the project. A helper functions file was introduced to assist with further tests, however the only function that was present in this file was compare matrices which tests if two matrices are roughly equal and uses an assert to be compatible with Tox since it removed rounding errors when calculating matrices. This helper function was used throughout the test files, most notably in the \textit{test\_grovers\_algorithm.py} file and drastically reduced the amount of repeated code.
- 
-\subsubsection{Testing Grover's Algorithm}
-
-All the individual methods of the \textit{Grovers} class as well as the \textit{pull\_set\_bits()} helper function were tested in the \textit{test\_grovers\_algorithm.py} file. Most of the test functions work the same as described before with a set of expected values being stored in an array whereupon the calculated values from the function was compared and asserted to be compatible with the Tox utility. The above tests of course are directed at a generic Grover's Algorithm in order to test the variations a new file called \textit{test\_Sudoku.py} was created, which also tested all the methods specific to the Sudoku variation on Grover's Algorithm. Tests for other functions such as \textit{register}, \textit{matrix}, \textit{parser}, \textit{usage}, in separate files were created under the same principle. Of course all of this was being developed in parallel to the actual functions to spot bugs sooner and all tests were reported with the Tox utility.
-
 \pagebreak
 
 \section{Coding with Python}
-The first step of the project was for the group to choose which language to implement the system with. Options included C, C++, Java, and Haskell, but the final decision was to use Python. This was our language of choice for several reasons: Most of our team has experience with the language making it easier to write the code, the language is object-oriented which means Grover’s Algorithm could be created as an object from a class which reduced the amount of repeated code when several versions of Grover's Algorithm were  implemented. It’s more general-purpose compared to languages such as Haskell or Java (Haskell being a purely functional language, and Java being purely an object oriented language, Python combines necessary features of both), and it uses high-level syntax in comparison to languages like C and C++ making it more appropriate for a high-level task such as this which involves matrix multiplication. However, while Python was it language of choice It was also decided that we would minimise the use of import packages such as numpy. With those restrictions in place, the next step was to implement some basic quantum operations.
 
-\subsection{Tensor Products}
+The first step of the project was for the group to choose which language to implement the system with.
+Options included C, C++, C#, or Java, but the final decision was to use Python.
 
-When mathematically representing a quantum computer, qubits are written as column vectors while gates are written as square matrices. To combine a series of gates or qubits their tensor product is taken, therefore a function that takes the tensor product of two matrices in Python is needed to implement Grover's Algorithm. This was done in the \textit{tensor\_product.py} file which contains the function \textit{tensor\_product(A: Matrix, B: Matrix)}. This function takes two objects of the user defined class DefaultMatrix (A and B) as inputs, and outputs their tensor product as a DefaultMatrix object. This was calculated by creating a new empty matrix (C) with a number of columns that is equal to the number of columns that A has multiplied by the number of columns that B has, and with a number of rows that is equal to the number of rows that A has multiplied by the number of rows that B has. This empty matrix is then iterated over itself in a 2D loop with the values in A and B being multiplied together and added to the Matrix C accordingly. This function was used throughout the rest of the project in almost every file and made it possible to construct the circuit for Grover's Algorithm. While some of the team work on this function, other members worked on implementing the first quantum gates.
+\medskip
 
-\subsection{Matrices}
-The numpy package usually makes matrix multiplication much easier in Python, however since we had decided to restrict ourselves to not use outside packages we had to create a readable way to multiply matrices together. This was done by creating a new class called \textit{DefaultMatrix} which had matrix multiplication embedded as a method. To create the \textit{DefaultMatrix} class a dummy class called \textit{Matrix} was created which contained dummy methods This class was then taken as an input for two new classes which represented two different notations for a Matrix, these being \textit{DenseMatrix} and \textit{SparseMatrix}. Both of these new classes then overwrote the dummy functions given to them to account for their different notations. A Dense matrix contains all its values in an appropriately shaped 2D array, while a sparse matrix only stores the shape of the matrix as while the rest of the values assumed to be zero. The \textit{SparseMatrix} class saves space for large matrices with only a few values such as larger variations of the control gates. These two classes together more than offset their extra lines of code by allowing the program to run with less memory, therefore it was deemed appropriate. 
+This was our language of choice for several reasons: Most of our team has experience with the language making it easier to write the code, the language is object-oriented which means matrix and algorithm implementations could be created as an object from a class which reduced the amount of boilerplate and repeated code when several versions of quantum algorithm were implemented.
+It is more general-purpose compared to other languages, such as Haskell or Java for example (Haskell being a purely functional language, and Java being purely an object oriented language, Python combines necessary features of both). The fact that Python is a dynamically typed language also aided in implementation of the project, as it allowed us to use different numerical types such as \textit{integers}, \textit{floats} and \textit{complex numbers} interchangeably in the implementation.
+For these reasons, Python was the language of choice.
+
+\medskip
+
+It is also worth noting, for the pure terminal based implementation of our project, there are no external package dependencies, like numpy, scipy, etc.
+For the Graphical User Interface (GUI), the programme relies on the \textit{matplotlib} plotting library, and the graphical backend \textit{PySide6}\cite{noauthor_qt_nodate}.
+With the programming language decided,the next step was to implement some basic quantum operations.
+
+\subsection{\label{tensor-product}Tensor Products}
+
+When mathematically representing a quantum computer, qubits are written as column vectors, while gates are written as square matrices.
+A tensor product implementation was required for us to be able to combine a set of gates (represented as Matrix objects) to construct the circuits required for our quantum algorithms.
+Therefore a tensor product implementation was a pre-requisite to implement Grover's Algorithm, and later our other quantum algorithms.
+This was done in a function \verb#tensor_product()#, which took as input two \verb#Matrix# interface objects, and returned a new \verb#Matrix# object representing the computed tensor product of the two matrices.
+This was calculated by creating a new empty matrix where the of columns was equal to the number of columns in matrix A multiplied by the number of columns of B, and where the number of rows is equal to the number of rows in A has multiplied by the number of rows in B.
+This empty matrix was then iterated over in a nested loop where each element in A was multiplied against a corresponding element in B and the resultant value assigned in place to the new matrix.
+Initially, the tensor product code calculated the value in the new matrix, using all values in the input matrices \textit{A} and \textit{B}.
+However, once our \verb#SparseMatrix# matrix class was implemented, this could be optimised, by ignoring zero elements in the corresponding matrices.
+
+\medskip
+
+This function was used throughout the rest of the project in almost every file and made it possible to construct the circuit for Grover's Algorithm, and subsequently for the Phase Estimation and Sudoku algorithms.
+
+\subsection{\label{matrix}Matrices}
+
+External packages, like numpy, have pre-defined matrix implementations that could have been used in our project.
+However since we restricted ourselves to have no external package dependencies we had to create custom matrix class implementations.
+This was done by creating a \textit{Matrix} interface class which contained method stubs for general matrix behaviours, like \textit{addition}, \textit{subtraction}, and \textit{multiplication}.
+This interface was then inherited from in two new Matrix classes which represented two different types of Matrix, these being \textit{DenseMatrix} and \textit{SparseMatrix}.
+The \textit{DenseMatrix} implementation was our initial \textit{Matrix} type implementation, where each element in the matrix was stored in memory using a nested list object.
+Later on in the development of our project, a \textit{SparseMatrix} class was implemented which was designed to be more memory efficient than the \textit{DenseMatrix} class.
+This was achieved by only storing in memory matrix elements that were non-zero, assuming any non-indexed elements were exactly zero.
+This optimisation as the codebase matured, allowed the program to run with less memory, and therefore allowed us to simulate a larger number of qubits on the same classical hardware.
 
 \subsection{Gates}
-Almost all the necessary single qubit gates can be represented as a constant 2x2 square matrix and then to apply the gate to a single qubit, you multiply the matrix representation of the gate with the vertical phase vector. Rather than creating functions for these gates which would output the same thing every time, we stored all the necessary 2x2 gates (IDENTITY, TWO\_HADAMARD, PAULI\_X, PAULI\_Y) in a file titled \textit{constants.py}. In this file we also stored the state vectors for the single qubit states $\ket{0}$ and $\ket{1}$ as ZERO\_VECTOR and ONE\_VECTOR respectively. 
-The decision to use a constants file with these specific constants allowed us to avoid duplicating code and additional computational complexity as we could create more interesting gates using these constants and the tensor product.
+
+Almost all the necessary single qubit gates can be represented as a 2x2 constant square matrix.
+To apply the gate to a single qubit, you multiply the matrix representation of the gate with the column vector representing the qubit state.
+Rather than creating functions for these gates which would output the same thing every time, we stored all the necessary \textit{2x2} gates (\verb#IDENTITY#, \verb#TWO_HADAMARD#, \verb#PAULI_X#, \verb#PAULI_Y#) in a file titled \textit{constants.py}.
+In this file we also stored the state vectors for the single qubit states $\ket{0}$ and $\ket{1}$ as \verb#ZERO_VECTOR# and \verb#ONE_VECTOR# respectively. 
+The usage of a constants file allowed us to avoid duplicating code and allowed to create composite gates by multiple applications of these standard gates using the tensor product implementation.
 
 \begin{file}[constants.py]
 \begin{lstlisting}[language=Python]
 #: The 2x2 Identity Matrix
 IDENTITY = DefaultMatrix([[1, 0], [0, 1]])
+#:  state vectors
+factor = (1 / math.sqrt(2))
 #: The 2x2 Hadamard Gate
-TWO_HADAMARD = (1/math.sqrt(2)) * \
-	DefaultMatrix([[1, 1], [1, -1]])
+TWO_HADAMARD = factor * \
+DefaultMatrix([[1, 1], [1, -1]])
 #: A Column Vector representing the |0> state
 ZERO_VECTOR = DefaultMatrix([[1], [0]])
 #: A Column Vector representing the |1> state
 ONE_VECTOR = DefaultMatrix([[0], [1]])
+#: A Column Vector representing the |+> state
+PLUS_VECTOR = factor * DefaultMatrix([[1], [1]])
+#: A Column Vector representing the |-> state
+MINUS_VECTOR = factor * DefaultMatrix([[1], [-1]])
 #: The 2x2 Pauli-X Gate
 PAULI_X = DefaultMatrix([[0, 1], [1, 0]])
 #: The 2x2 Pauli-Z Gate
@@ -1886,16 +1935,16 @@ PAULI_Z = DefaultMatrix([[1, 0], [0, -1]])
 \end{lstlisting}
 \end{file}
 
-The only single qubit gate that did not have a matrix stored in the \textit{constants.py} file was the phase shift gate, since its matrix is not constant and depends on the rotation angle. To account for this a function called \textit{phase\_shift(phi: complex)} was implemented in a new file called \textit{gates.py}, which takes a complex number as an input and outputs a DefaultMatrix representing the phase shift gate of the inputted angle. With the single qubit gates implemented, larger gates can now be constructed from the smaller gates in the remainder of the \textit{gates.py} file.
+The only single qubit gate that did not have a matrix stored in the \textit{constants.py} file was the phase shift gate, since its matrix is not constant and depends on the rotation angle.
+To account for this a function called \verb#phase_shift(phi: complex)# was implemented in a new file called \verb#gates.py#, which takes a complex number as an input and outputs a \verb#Matrix# representing the phase shift gate of the inputted angle. 
+With the single qubit gates implemented, larger gates can now be constructed from the smaller gates within the remainder of the \textit{gates.py} file.
 
 \begin{file}[def phase\_shift(phi: complex) -> Matrix:]
 \begin{lstlisting}[language=Python]
 return DefaultMatrix([[1, 0], 
 	[0, cmath.exp(1j * phi)]])
 \end{lstlisting}
-\end{file}
-
-
+\end{file}\footnote{\textbf{Note:} \verb#DefaultMatrix# is just a python type-alias to our default choice of Matrix class, in this case, \verb#SparseMatrix#}
 
 One of the first large gate functions implemented in the \textit{gates.py} file was called \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} which chains multiple single qubit gates together on specified target input qubits by calculating the tensor product of an arbitrary number of matrices. The function takes the following variables as inputs: size (represents the number of qubits in the entire circuit), targets (which qubits the gate applies to), gate (which single qubit gate needs to be applied), and phi (only for phase gates as it represents the angle of rotation). With those inputs the function \textit{multi\_gate(size: int, targets: List[int], gate: Gate, phi=0j)} computes the values of a large matrix by taking the tensor product of the specified gate as a running product in a loop over the number of qubits (size), if the loop index is not currently one of the target qubits it multiplies by an appropriately sized identity matrix instead.
 
@@ -1924,19 +1973,22 @@ return m
 \end{lstlisting}
 \end{file}
 
-
 The resultant matrix corresponds to having a a certain single qubit gate acting upon multiple (target) qubits, this will become important because for Grover's Algorithm we will need to use this function to apply Hadamrd gates to every qubit to construct a complete superposition. 
 
-The other gates that were implemented in this file were the control\_x/z/phase gates, these were also introduced as functions and worked by first introducing various assertions, and then creating a matrix with rows and columns of size 2**qubits. The matrix diagonals at first take on the form of an identity matrix, then the function modifies this matrix by swapping the rows that correspond to the target qubits inputted. The function \textit{\_generic\_control(size: int, controls: List[int],target: int, cval: SCALARS)} was introduced which was called in the \textit{ control\_z(size: int, controls: List[int], target: int) } and \textit{control\_phase(size: int, controls: List[int], target: int, phi: complex)} functions. This design choice was made to further reduce the amount of repeated code. With all the necessary quantum gates in place it was now possible to begin implementing Grover’s Algorithm.
+The other gates that were implemented in this file were the \textit{control\_x/z/phase} gates, these were also introduced as functions and worked by creating a matrix with rows and columns of size $2\textsuperscript{qubits}$. The matrix diagonals at first take on the form of an identity matrix, then the function modifies this matrix by swapping the rows that correspond to the target qubits inputted.
+The function \textit{\_generic\_control(size: int, controls: List[int],target: int, cval: SCALARS)} was introduced which was called in the \textit{ control\_z(size: int, controls: List[int], target: int) } and \textit{control\_phase(size: int, controls: List[int], target: int, phi: complex)} functions. This design choice was made to further reduce the amount of repeated code. With all the necessary quantum gates in place it was now possible to begin implementing Grover’s Algorithm.
 
 \pagebreak
 
 \section{Implementation}
 
-When implementing Grover's Algorithm in Python it was decided to create a file named \textit{grovers\_algorithm.py} this file contains one helper function called \textit{ pull\_set\_bits(n: int )}, which displays the indexes of the number 1 in the base 2 form of the value, and a Class called \textit{Grovers}. Python was chosen partly because it is an object-oriented language, this allowed all the gates specific to Grover’s Algorithm to be stored as methods in the class while the state of the input qubits could be stored as attributes. This improves the code as it allowed variations of Grover's Algorithm to be created as objects without repeating lines. 
-\subsection{Grover's Algorithm} \label{Implement Grovers}
-\subsubsection{Constructor} \label{constructor}
+As with the \textit{Matrix} implementation documented in Section \ref{matrix}, we decided to implement the diferent quantum algorithms as classes inheritting from a general \textit{Algorithm} interface. All of the algorithm classes were defined within their own files, like the simple single search Grover's algorithm being contained within \textit{grovers\_algorithm.py} or the 2x2 Sudoku problem being contained within \textit{sudoku.py}.
+Within each class are instance methods which define important functions and operators like the Oracle for a given set of qubits and targets. 
+Below, for each problem, we define the important instance methods we used to help implement the solutions.
 
+\subsection{Grover's Algorithm} \label{Implement Grovers}
+
+\subsubsection{Constructor} \label{constructor}
 
 \begin{file}[def \_\_init\_\_(self, size: int, target\_state: int):]
 
@@ -1953,8 +2005,7 @@ self.diffuser = self.diffusion()
 self.max_reflections = math.floor((math.pi/4)*(math.sqrt(2**size)))
 self.circuit = self.construct_circuit()
 \end{lstlisting}
-
-\end{file}
+\end{file}\footnote{\textbf{Note} The code snippets shown here, and in the section to follow, are slightly modified version of our source code, modified to reduce abstraction and aid in readability.}
 
 Above the contents of the class's initialisation method is displayed which takes in two inputs: size (which is the number of qubits that is required), and target\_state (which is the specific number/ element out of 2 \textsuperscript{size} options that the user wants the algorithm to search for). This initialisation method also explicitly defines the order of the number of calls/ steps that the algorithm makes with the variable self.max\_reflections. All of the other attributes are defined through methods in the class and are described as follows.
 
@@ -1988,7 +2039,7 @@ return oracle
 \end{file}
 
 As mentioned in \ref{The Oracle}, the oracle gate 'selects' the chosen target state by flipping its phase and leaving the other states untouched. single\_target\_oracle() is the method that returns the matrix representation of the oracle gate for the given target and number of qubits in the Grover's Algorithm instance. It starts by using \textit{pull\_set\_bits(n: int)} which, for a given number n, returns a list of integers. The integers returned are the indexes (from right to left) of each '1' in the binary string representation of n. For example; for n=6, pull\_set\_bits(n: int) will return the list \textit{[1, 2]} as 5 in binary representation is \textit{'110'}.Here pull\_set\_bits(n: int) is used to determine which qubits will be the target of multiple not gates. After creating a control-z gate which 'controls' every qubit but the last and targets the last, the oracle is made by multiplying the series of not gates by the control-z gate and then by the not gates again.
-
+\pagebreak
 
 
 \subsubsection{Diffusion}
@@ -2045,21 +2096,90 @@ First the \textit{multi\_gate(...)} function is used to apply a set of Hadamard 
 
 \subsection{A 2x2 Sudoku Solver}
 
-Implementing the 2x2 Sudoku Solver is very similar to the classical Grover's Algorithm but differs in one major way, how the Oracle is constructed. The Oracle must be able to pick out (or rather, change the phase of) solutions to the 2x2 board whilst leaving the other states alone.
-%picture{https://drive.google.com/file/d/1KjxtnFO9avCPiL1NdrAxmgZvi6Jx-Qkb/view}
+Implementing the \textit{2x2} Sudoku Solver is very similar to the classical Grover's Algorithm but differs in one major way, how the Oracle is constructed. The Oracle must be able to pick out (or rather, change the phase of) solutions to the \textit{2x2} board whilst leaving the other states alone.
 
-To be able to do this, this circuit is going to need a total of 9 qubits. The first 4 will represent one of each element on the 2x2 Sudoku board, the next 4 will represent one of the 4 rules for the board and the last qubit will act like a verifier which will tell us if the rules have been satisfied.
+
+\begin{figure}[h]
+    \centering
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-0.95,xscale=0.95]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Brace [id:dp6153728275164612] 
+\draw   (158,40) .. controls (153.33,40.13) and (151.07,42.52) .. (151.2,47.19) -- (151.72,66.2) .. controls (151.91,72.86) and (149.67,76.26) .. (145,76.39) .. controls (149.67,76.26) and (152.09,79.52) .. (152.28,86.19)(152.2,83.19) -- (152.81,105.2) .. controls (152.94,109.86) and (155.33,112.13) .. (160,112) ;
+%Shape: Brace [id:dp8574558637937255] 
+\draw   (158,129) .. controls (153.33,129.07) and (151.04,131.44) .. (151.11,136.11) -- (151.35,152.11) .. controls (151.45,158.78) and (149.17,162.14) .. (144.5,162.21) .. controls (149.17,162.14) and (151.55,165.44) .. (151.65,172.11)(151.61,169.11) -- (151.9,188.11) .. controls (151.97,192.78) and (154.33,195.07) .. (159,195) ;
+%Shape: Brace [id:dp4003911472766615] 
+\draw   (158,207) .. controls (154.02,207.14) and (152.1,209.2) .. (152.23,213.18) -- (152.23,213.18) .. controls (152.43,218.87) and (150.54,221.78) .. (146.56,221.91) .. controls (150.54,221.78) and (152.63,224.55) .. (152.82,230.23)(152.73,227.68) -- (152.82,230.23) .. controls (152.96,234.22) and (155.02,236.14) .. (159,236) ;
+%Straight Lines [id:da5442487593963699] 
+\draw    (197,43) -- (287,43) ;
+%Straight Lines [id:da29037512454573644] 
+\draw    (196,63) -- (286,63) ;
+%Straight Lines [id:da5479082959884316] 
+\draw    (197,82) -- (287,82) ;
+%Straight Lines [id:da11508947791683277] 
+\draw    (192,172) -- (282,172) ;
+%Straight Lines [id:da42718074868005385] 
+\draw    (192,133) -- (282,133) ;
+%Straight Lines [id:da8551579185541867] 
+\draw    (192,192) -- (282,192) ;
+%Straight Lines [id:da45397889708542727] 
+\draw    (192,152) -- (282,152) ;
+%Straight Lines [id:da5910100696477991] 
+\draw    (200,222) -- (290,222) ;
+%Straight Lines [id:da03425997175901285] 
+\draw    (196,102) -- (286,102) ;
+
+% Text Node
+\draw (171,32) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{V_{0}}$};
+% Text Node
+\draw (171,122) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{c_{0}}$};
+% Text Node
+\draw (171,72) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{V_{2}}$};
+% Text Node
+\draw (171,52) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{V_{1}}$};
+% Text Node
+\draw (171,92) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{V_{3}}$};
+% Text Node
+\draw (171,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{c_{1}}$};
+% Text Node
+\draw (171,162) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{c_{2}}$};
+% Text Node
+\draw (171,182) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{c_{3}}$};
+% Text Node
+\draw (171,212) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{out}$};
+% Text Node
+\draw (91,63) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle Inputs$};
+% Text Node
+\draw (61,150) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle Conditions$};
+% Text Node
+\draw (80,212) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle Verifier$};
+
+
+\end{tikzpicture}
+
+
+    \caption{Sudoku Circuit Diagram 1}
+    \label{fig:my_label}
+\end{figure}
+
+To be able to do this, this circuit is going to need a total of 9 qubits. The first 4 ($\ket{V\textsubscript{X}}$) will represent one of each element on the \textit{2x2} Sudoku board, the next 4 ($\ket{c}$) will represent one of the 4 rules for the board and the last qubit ($\ket{out}$) will act like a verifier which will tell us if the rules have been satisfied.
+\pagebreak
 
 \subsubsection{Defining the Sudoku Rules} \label{sudoku rules}
 
 %picture{https://drive.google.com/file/d/1TeY8IskmDYT1ZgUDRdDvOoTcLCOyZQQM/view}
 
-The first thing we need to do is establish and define the rules for the inputs such that no adjacent numbers on the board are equal to each other. This means that:
+As mentioned in \ref{Making the Oracle 2x2}, the first thing we need to do is establish and define the rules for the inputs such that no adjacent numbers on the board are equal to each other. This means that:
 \begin{enumerate}
-    \item $V\textsubscript{0}$ cannot be equal to $V\textsubscript{1}$
-    \item $V\textsubscript{0}$ cannot be equal to $V\textsubscript{2}$
-    \item $V\textsubscript{1}$ cannot be equal to $V\textsubscript{3}$ and, 
-    \item $V\textsubscript{2}$ cannot be equal to $V\textsubscript{3}$
+    \item $V\textsubscript{0} \neq V\textsubscript{1}$
+    \item $V\textsubscript{0} \neq V\textsubscript{2}$
+    \item $V\textsubscript{1} \neq V\textsubscript{3}$ and, 
+    \item $V\textsubscript{2} \neq V\textsubscript{3}$
 \end{enumerate}
 
 This is implemented as follows:
@@ -2081,12 +2201,230 @@ return cond
 \end{lstlisting}
 \end{file}
 
-The rules listed 1-4 can be thought of as classical XOR gates acting on the qubits which represent V0-V4 where the result is stored in the condition qubits. Looking at the variable \textit{cond1}, we create an XOR gate by applying two Control-X gates, one with the 0th qubit as the control, the other with the 1st qubit as the control; both results are stored into the 4th qubit, the condition1 qubit. 
+The rules listed 1-4 can be thought of as classical XOR gates acting on the qubits which represent $\ket{V\textsubscript{X}}$ and the result is stored in the condition qubits $\ket{c}$. Looking at the variable \textit{cond1}, we create an XOR gate by applying two Control-X gates, one with the 0th qubit as the control, the other with the 1st qubit as the control; both results are stored into the 4th qubit, the $c\textsubscript{1}$ qubit. 
 We do this for each condition/rule and multiply all the gates together to get one big matrix which will be returned by this function.
-%picture{https://drive.google.com/file/d/1SuPpfmKGeyGVaUcrmkuytIuYa-eqeehs/view}
+\begin{figure}[h]
+    \centering
+    
+\begin{center}
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Brace [id:dp20561472354056276] 
+\draw   (94.51,58.51) .. controls (89.85,58.64) and (87.58,61.04) .. (87.71,65.7) -- (88.09,79.35) .. controls (88.28,86.02) and (86.04,89.41) .. (81.37,89.54) .. controls (86.04,89.41) and (88.46,92.68) .. (88.64,99.34)(88.56,96.34) -- (89.02,112.99) .. controls (89.15,117.65) and (91.55,119.92) .. (96.21,119.79) ;
+%Shape: Brace [id:dp7742338662074237] 
+\draw   (97.51,137.26) .. controls (92.84,137.33) and (90.55,139.7) .. (90.62,144.36) -- (90.79,155.45) .. controls (90.89,162.12) and (88.61,165.49) .. (83.94,165.56) .. controls (88.61,165.49) and (90.99,168.78) .. (91.09,175.45)(91.05,172.45) -- (91.26,186.54) .. controls (91.33,191.21) and (93.7,193.5) .. (98.37,193.43) ;
+%Shape: Brace [id:dp7717937487234783] 
+\draw   (96.51,203.65) .. controls (93.12,203.76) and (91.49,205.51) .. (91.61,208.9) -- (91.61,208.9) .. controls (91.78,213.74) and (90.17,216.22) .. (86.78,216.34) .. controls (90.17,216.22) and (91.94,218.58) .. (92.11,223.42)(92.03,221.24) -- (92.11,223.42) .. controls (92.22,226.81) and (93.98,228.44) .. (97.37,228.33) ;
+%Straight Lines [id:da7300954727834195] 
+\draw    (128.13,63.06) -- (646.51,63.06) ;
+%Straight Lines [id:da4408679081521467] 
+\draw    (126.76,79.09) -- (645.15,79.09) ;
+%Straight Lines [id:da655005386836327] 
+\draw    (128.13,96.26) -- (646.51,96.26) ;
+%Straight Lines [id:da09915301858685255] 
+\draw    (122.41,170.86) -- (648.24,172.33) ;
+%Straight Lines [id:da013610689769587792] 
+\draw    (121.31,139.66) -- (639.69,139.66) ;
+%Straight Lines [id:da6172496695616365] 
+\draw    (122.41,188.88) -- (640.79,188.88) ;
+%Straight Lines [id:da4038233729649441] 
+\draw    (121.31,155.83) -- (639.69,155.83) ;
+%Straight Lines [id:da6326322967955269] 
+\draw    (129.31,213.41) -- (645.22,213.41) ;
+%Straight Lines [id:da7686626921998831] 
+\draw    (127.86,113.28) -- (646.25,113.28) ;
+%Shape: Circle [id:dp7441809312999461] 
+\draw   (207,139.56) .. controls (207,135.27) and (210.48,131.79) .. (214.77,131.79) .. controls (219.06,131.79) and (222.54,135.27) .. (222.54,139.56) .. controls (222.54,143.85) and (219.06,147.33) .. (214.77,147.33) .. controls (210.48,147.33) and (207,143.85) .. (207,139.56) -- cycle ;
+%Straight Lines [id:da8659846293923357] 
+\draw    (207,139.56) -- (222.54,139.56) ;
+%Straight Lines [id:da024312662446195343] 
+\draw    (214.77,62.33) -- (214.77,147.33) ;
+%Shape: Circle [id:dp4630459231419892] 
+\draw   (229,139.56) .. controls (229,135.27) and (232.48,131.79) .. (236.77,131.79) .. controls (241.06,131.79) and (244.54,135.27) .. (244.54,139.56) .. controls (244.54,143.85) and (241.06,147.33) .. (236.77,147.33) .. controls (232.48,147.33) and (229,143.85) .. (229,139.56) -- cycle ;
+%Straight Lines [id:da8360715536385481] 
+\draw    (229,140.56) -- (244.54,140.56) ;
+%Straight Lines [id:da1511835484730215] 
+\draw    (236.77,78.33) -- (236.77,148.33) ;
+%Shape: Circle [id:dp5288352035682198] 
+\draw   (259,155.56) .. controls (259,151.27) and (262.48,147.79) .. (266.77,147.79) .. controls (271.06,147.79) and (274.54,151.27) .. (274.54,155.56) .. controls (274.54,159.85) and (271.06,163.33) .. (266.77,163.33) .. controls (262.48,163.33) and (259,159.85) .. (259,155.56) -- cycle ;
+%Straight Lines [id:da7528094688377307] 
+\draw    (259,155.56) -- (274.54,155.56) ;
+%Straight Lines [id:da9361429999090938] 
+\draw    (266.77,63.33) -- (266.77,163.33) ;
+%Shape: Circle [id:dp33491036565000765] 
+\draw   (279,155.56) .. controls (279,151.27) and (282.48,147.79) .. (286.77,147.79) .. controls (291.06,147.79) and (294.54,151.27) .. (294.54,155.56) .. controls (294.54,159.85) and (291.06,163.33) .. (286.77,163.33) .. controls (282.48,163.33) and (279,159.85) .. (279,155.56) -- cycle ;
+%Straight Lines [id:da26144271190549384] 
+\draw    (279,155.56) -- (294.54,155.56) ;
+%Straight Lines [id:da5874562865115387] 
+\draw    (286.77,97.33) -- (286.77,163.33) ;
+%Shape: Circle [id:dp5636247166959916] 
+\draw   (300,171.56) .. controls (300,167.27) and (303.48,163.79) .. (307.77,163.79) .. controls (312.06,163.79) and (315.54,167.27) .. (315.54,171.56) .. controls (315.54,175.85) and (312.06,179.33) .. (307.77,179.33) .. controls (303.48,179.33) and (300,175.85) .. (300,171.56) -- cycle ;
+%Straight Lines [id:da021789390921582497] 
+\draw    (300,171.56) -- (315.54,171.56) ;
+%Straight Lines [id:da24634333457351998] 
+\draw    (307.77,78.47) -- (307.77,179.33) ;
+%Shape: Ellipse [id:dp9824533507386775] 
+\draw   (318,171.06) .. controls (318,167.04) and (321.48,163.79) .. (325.77,163.79) .. controls (330.06,163.79) and (333.54,167.04) .. (333.54,171.06) .. controls (333.54,175.08) and (330.06,178.33) .. (325.77,178.33) .. controls (321.48,178.33) and (318,175.08) .. (318,171.06) -- cycle ;
+%Straight Lines [id:da825910541988566] 
+\draw    (318,171.06) -- (333.54,171.06) ;
+%Straight Lines [id:da1107058770647007] 
+\draw    (325.77,112.33) -- (325.77,178.33) ;
+%Shape: Circle [id:dp09596694759481861] 
+\draw   (355,187.56) .. controls (355,183.27) and (358.48,179.79) .. (362.77,179.79) .. controls (367.06,179.79) and (370.54,183.27) .. (370.54,187.56) .. controls (370.54,191.85) and (367.06,195.33) .. (362.77,195.33) .. controls (358.48,195.33) and (355,191.85) .. (355,187.56) -- cycle ;
+%Straight Lines [id:da5539250315761879] 
+\draw    (355,188.56) -- (370.54,188.56) ;
+%Straight Lines [id:da7319963193642351] 
+\draw    (362.77,97.47) -- (362.77,195.33) ;
+%Shape: Circle [id:dp661519371279361] 
+\draw   (381,188.56) .. controls (381,184.27) and (384.48,180.79) .. (388.77,180.79) .. controls (393.06,180.79) and (396.54,184.27) .. (396.54,188.56) .. controls (396.54,192.85) and (393.06,196.33) .. (388.77,196.33) .. controls (384.48,196.33) and (381,192.85) .. (381,188.56) -- cycle ;
+%Straight Lines [id:da05304329978786759] 
+\draw    (381,188.56) -- (396.54,188.56) ;
+%Straight Lines [id:da4444917240308277] 
+\draw    (388.77,113.47) -- (388.77,196.33) ;
+%Shape: Circle [id:dp7689393862968612] 
+\draw   (414,213.56) .. controls (414,209.27) and (417.48,205.79) .. (421.77,205.79) .. controls (426.06,205.79) and (429.54,209.27) .. (429.54,213.56) .. controls (429.54,217.85) and (426.06,221.33) .. (421.77,221.33) .. controls (417.48,221.33) and (414,217.85) .. (414,213.56) -- cycle ;
+%Straight Lines [id:da059336099485750804] 
+\draw    (414,213.56) -- (429.54,213.56) ;
+%Straight Lines [id:da36789924920470063] 
+\draw    (421.77,138.47) -- (421.77,221.33) ;
+%Shape: Circle [id:dp1693172014573172] 
+\draw   (438,139.56) .. controls (438,135.27) and (441.48,131.79) .. (445.77,131.79) .. controls (450.06,131.79) and (453.54,135.27) .. (453.54,139.56) .. controls (453.54,143.85) and (450.06,147.33) .. (445.77,147.33) .. controls (441.48,147.33) and (438,143.85) .. (438,139.56) -- cycle ;
+%Straight Lines [id:da572098582586902] 
+\draw    (438,139.56) -- (453.54,139.56) ;
+%Straight Lines [id:da9348802969204693] 
+\draw    (445.77,63.47) -- (445.77,147.33) ;
+%Shape: Circle [id:dp3374297233505197] 
+\draw   (462,140.56) .. controls (462,136.27) and (465.48,132.79) .. (469.77,132.79) .. controls (474.06,132.79) and (477.54,136.27) .. (477.54,140.56) .. controls (477.54,144.85) and (474.06,148.33) .. (469.77,148.33) .. controls (465.48,148.33) and (462,144.85) .. (462,140.56) -- cycle ;
+%Straight Lines [id:da3978023214414772] 
+\draw    (462,140.56) -- (477.54,140.56) ;
+%Straight Lines [id:da5137215515262947] 
+\draw    (469.77,79.47) -- (469.77,148.33) ;
+%Shape: Circle [id:dp28925146103868915] 
+\draw   (488,156.56) .. controls (488,152.27) and (491.48,148.79) .. (495.77,148.79) .. controls (500.06,148.79) and (503.54,152.27) .. (503.54,156.56) .. controls (503.54,160.85) and (500.06,164.33) .. (495.77,164.33) .. controls (491.48,164.33) and (488,160.85) .. (488,156.56) -- cycle ;
+%Straight Lines [id:da32484367017285765] 
+\draw    (488,156.56) -- (503.54,156.56) ;
+%Straight Lines [id:da4011889098051864] 
+\draw    (495.77,64.47) -- (495.77,164.33) ;
+%Shape: Circle [id:dp2836997083710966] 
+\draw   (508,155.56) .. controls (508,151.27) and (511.48,147.79) .. (515.77,147.79) .. controls (520.06,147.79) and (523.54,151.27) .. (523.54,155.56) .. controls (523.54,159.85) and (520.06,163.33) .. (515.77,163.33) .. controls (511.48,163.33) and (508,159.85) .. (508,155.56) -- cycle ;
+%Straight Lines [id:da4474028608676359] 
+\draw    (508,155.56) -- (523.54,155.56) ;
+%Straight Lines [id:da21990490071010638] 
+\draw    (515.77,96.47) -- (515.77,163.33) ;
+%Shape: Circle [id:dp6977615807686228] 
+\draw   (533,171.56) .. controls (533,167.27) and (536.48,163.79) .. (540.77,163.79) .. controls (545.06,163.79) and (548.54,167.27) .. (548.54,171.56) .. controls (548.54,175.85) and (545.06,179.33) .. (540.77,179.33) .. controls (536.48,179.33) and (533,175.85) .. (533,171.56) -- cycle ;
+%Straight Lines [id:da40329106353901456] 
+\draw    (533,171.56) -- (548.54,171.56) ;
+%Straight Lines [id:da5323975523166089] 
+\draw    (540.77,79.47) -- (540.77,179.33) ;
+%Shape: Circle [id:dp5909908367646703] 
+\draw   (559,171.56) .. controls (559,167.27) and (562.48,163.79) .. (566.77,163.79) .. controls (571.06,163.79) and (574.54,167.27) .. (574.54,171.56) .. controls (574.54,175.85) and (571.06,179.33) .. (566.77,179.33) .. controls (562.48,179.33) and (559,175.85) .. (559,171.56) -- cycle ;
+%Straight Lines [id:da8587141386565724] 
+\draw    (559,171.56) -- (574.54,171.56) ;
+%Straight Lines [id:da9917642704603606] 
+\draw    (566.77,113.47) -- (566.77,179.33) ;
+%Shape: Circle [id:dp8381277920907859] 
+\draw   (582,188.56) .. controls (582,184.27) and (585.48,180.79) .. (589.77,180.79) .. controls (594.06,180.79) and (597.54,184.27) .. (597.54,188.56) .. controls (597.54,192.85) and (594.06,196.33) .. (589.77,196.33) .. controls (585.48,196.33) and (582,192.85) .. (582,188.56) -- cycle ;
+%Straight Lines [id:da03031862305325661] 
+\draw    (582,188.56) -- (597.54,188.56) ;
+%Straight Lines [id:da0702663365262608] 
+\draw    (589.77,96.47) -- (589.77,196.33) ;
+%Shape: Circle [id:dp24914976725722182] 
+\draw   (604,188.56) .. controls (604,184.27) and (607.48,180.79) .. (611.77,180.79) .. controls (616.06,180.79) and (619.54,184.27) .. (619.54,188.56) .. controls (619.54,192.85) and (616.06,196.33) .. (611.77,196.33) .. controls (607.48,196.33) and (604,192.85) .. (604,188.56) -- cycle ;
+%Straight Lines [id:da5779211452274127] 
+\draw    (604,188.56) -- (619.54,188.56) ;
+%Straight Lines [id:da9193786715165126] 
+\draw    (611.77,114.47) -- (611.77,196.33) ;
+%Shape: Circle [id:dp6304720191778563] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (218.19,62.33) .. controls (218.19,60.44) and (216.66,58.91) .. (214.77,58.91) .. controls (212.88,58.91) and (211.35,60.44) .. (211.35,62.33) .. controls (211.35,64.22) and (212.88,65.75) .. (214.77,65.75) .. controls (216.66,65.75) and (218.19,64.22) .. (218.19,62.33) -- cycle ;
+%Shape: Circle [id:dp8929190250098362] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (240.19,79.33) .. controls (240.19,77.44) and (238.66,75.91) .. (236.77,75.91) .. controls (234.88,75.91) and (233.35,77.44) .. (233.35,79.33) .. controls (233.35,81.22) and (234.88,82.75) .. (236.77,82.75) .. controls (238.66,82.75) and (240.19,81.22) .. (240.19,79.33) -- cycle ;
+%Shape: Circle [id:dp2920270195756338] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (270.19,63.33) .. controls (270.19,61.44) and (268.66,59.91) .. (266.77,59.91) .. controls (264.88,59.91) and (263.35,61.44) .. (263.35,63.33) .. controls (263.35,65.22) and (264.88,66.75) .. (266.77,66.75) .. controls (268.66,66.75) and (270.19,65.22) .. (270.19,63.33) -- cycle ;
+%Shape: Circle [id:dp6499562942127359] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (290.19,97.33) .. controls (290.19,95.44) and (288.66,93.91) .. (286.77,93.91) .. controls (284.88,93.91) and (283.35,95.44) .. (283.35,97.33) .. controls (283.35,99.22) and (284.88,100.75) .. (286.77,100.75) .. controls (288.66,100.75) and (290.19,99.22) .. (290.19,97.33) -- cycle ;
+%Shape: Circle [id:dp6406575637511018] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (311.19,80.33) .. controls (311.19,78.44) and (309.66,76.91) .. (307.77,76.91) .. controls (305.88,76.91) and (304.35,78.44) .. (304.35,80.33) .. controls (304.35,82.22) and (305.88,83.75) .. (307.77,83.75) .. controls (309.66,83.75) and (311.19,82.22) .. (311.19,80.33) -- cycle ;
+%Shape: Circle [id:dp7285996494543623] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (329.19,112.33) .. controls (329.19,110.44) and (327.66,108.91) .. (325.77,108.91) .. controls (323.88,108.91) and (322.35,110.44) .. (322.35,112.33) .. controls (322.35,114.22) and (323.88,115.75) .. (325.77,115.75) .. controls (327.66,115.75) and (329.19,114.22) .. (329.19,112.33) -- cycle ;
+%Shape: Circle [id:dp5821939599103578] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (366.19,97.47) .. controls (366.19,95.58) and (364.66,94.05) .. (362.77,94.05) .. controls (360.88,94.05) and (359.35,95.58) .. (359.35,97.47) .. controls (359.35,99.36) and (360.88,100.89) .. (362.77,100.89) .. controls (364.66,100.89) and (366.19,99.36) .. (366.19,97.47) -- cycle ;
+%Shape: Circle [id:dp013073544677321136] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (393.19,113.47) .. controls (393.19,111.58) and (391.66,110.05) .. (389.77,110.05) .. controls (387.88,110.05) and (386.35,111.58) .. (386.35,113.47) .. controls (386.35,115.36) and (387.88,116.89) .. (389.77,116.89) .. controls (391.66,116.89) and (393.19,115.36) .. (393.19,113.47) -- cycle ;
+%Shape: Circle [id:dp5856658676000039] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (425.19,139.47) .. controls (425.19,137.58) and (423.66,136.05) .. (421.77,136.05) .. controls (419.88,136.05) and (418.35,137.58) .. (418.35,139.47) .. controls (418.35,141.36) and (419.88,142.89) .. (421.77,142.89) .. controls (423.66,142.89) and (425.19,141.36) .. (425.19,139.47) -- cycle ;
+%Shape: Circle [id:dp8599888390696802] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (425.19,156.47) .. controls (425.19,154.58) and (423.66,153.05) .. (421.77,153.05) .. controls (419.88,153.05) and (418.35,154.58) .. (418.35,156.47) .. controls (418.35,158.36) and (419.88,159.89) .. (421.77,159.89) .. controls (423.66,159.89) and (425.19,158.36) .. (425.19,156.47) -- cycle ;
+%Shape: Circle [id:dp5662559531507205] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (425.19,171.47) .. controls (425.19,169.58) and (423.66,168.05) .. (421.77,168.05) .. controls (419.88,168.05) and (418.35,169.58) .. (418.35,171.47) .. controls (418.35,173.36) and (419.88,174.89) .. (421.77,174.89) .. controls (423.66,174.89) and (425.19,173.36) .. (425.19,171.47) -- cycle ;
+%Shape: Circle [id:dp4978649289043018] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (425.19,188.47) .. controls (425.19,186.58) and (423.66,185.05) .. (421.77,185.05) .. controls (419.88,185.05) and (418.35,186.58) .. (418.35,188.47) .. controls (418.35,190.36) and (419.88,191.89) .. (421.77,191.89) .. controls (423.66,191.89) and (425.19,190.36) .. (425.19,188.47) -- cycle ;
+%Shape: Circle [id:dp31128731995412773] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (449.19,64.47) .. controls (449.19,62.58) and (447.66,61.05) .. (445.77,61.05) .. controls (443.88,61.05) and (442.35,62.58) .. (442.35,64.47) .. controls (442.35,66.36) and (443.88,67.89) .. (445.77,67.89) .. controls (447.66,67.89) and (449.19,66.36) .. (449.19,64.47) -- cycle ;
+%Shape: Circle [id:dp7356858476825425] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (473.19,79.47) .. controls (473.19,77.58) and (471.66,76.05) .. (469.77,76.05) .. controls (467.88,76.05) and (466.35,77.58) .. (466.35,79.47) .. controls (466.35,81.36) and (467.88,82.89) .. (469.77,82.89) .. controls (471.66,82.89) and (473.19,81.36) .. (473.19,79.47) -- cycle ;
+%Shape: Circle [id:dp16150718271163078] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (499.19,63.47) .. controls (499.19,61.58) and (497.66,60.05) .. (495.77,60.05) .. controls (493.88,60.05) and (492.35,61.58) .. (492.35,63.47) .. controls (492.35,65.36) and (493.88,66.89) .. (495.77,66.89) .. controls (497.66,66.89) and (499.19,65.36) .. (499.19,63.47) -- cycle ;
+%Shape: Circle [id:dp18668823047568317] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (519.19,95.47) .. controls (519.19,93.58) and (517.66,92.05) .. (515.77,92.05) .. controls (513.88,92.05) and (512.35,93.58) .. (512.35,95.47) .. controls (512.35,97.36) and (513.88,98.89) .. (515.77,98.89) .. controls (517.66,98.89) and (519.19,97.36) .. (519.19,95.47) -- cycle ;
+%Shape: Circle [id:dp2960756940650524] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (544.19,80.47) .. controls (544.19,78.58) and (542.66,77.05) .. (540.77,77.05) .. controls (538.88,77.05) and (537.35,78.58) .. (537.35,80.47) .. controls (537.35,82.36) and (538.88,83.89) .. (540.77,83.89) .. controls (542.66,83.89) and (544.19,82.36) .. (544.19,80.47) -- cycle ;
+%Shape: Circle [id:dp7654405098838482] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (570.19,113.47) .. controls (570.19,111.58) and (568.66,110.05) .. (566.77,110.05) .. controls (564.88,110.05) and (563.35,111.58) .. (563.35,113.47) .. controls (563.35,115.36) and (564.88,116.89) .. (566.77,116.89) .. controls (568.66,116.89) and (570.19,115.36) .. (570.19,113.47) -- cycle ;
+%Shape: Circle [id:dp3878512491995376] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (593.19,96.47) .. controls (593.19,94.58) and (591.66,93.05) .. (589.77,93.05) .. controls (587.88,93.05) and (586.35,94.58) .. (586.35,96.47) .. controls (586.35,98.36) and (587.88,99.89) .. (589.77,99.89) .. controls (591.66,99.89) and (593.19,98.36) .. (593.19,96.47) -- cycle ;
+%Shape: Circle [id:dp98039518274487] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (615.19,113.47) .. controls (615.19,111.58) and (613.66,110.05) .. (611.77,110.05) .. controls (609.88,110.05) and (608.35,111.58) .. (608.35,113.47) .. controls (608.35,115.36) and (609.88,116.89) .. (611.77,116.89) .. controls (613.66,116.89) and (615.19,115.36) .. (615.19,113.47) -- cycle ;
+%Shape: Rectangle [id:dp29591413416439916] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (149,205) -- (169.52,205) -- (169.52,223.13) -- (149,223.13) -- cycle ;
+
+%Shape: Rectangle [id:dp5477743831103108] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (175,205) -- (195.52,205) -- (195.52,223.13) -- (175,223.13) -- cycle ;
+
+
+% Text Node
+\draw (99.86,52.36) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{V_{0}}$};
+% Text Node
+\draw (100.23,128.96) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{c_{0}}$};
+% Text Node
+\draw (99.86,86.41) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{V_{2}}$};
+% Text Node
+\draw (99.86,69.38) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{V_{1}}$};
+% Text Node
+\draw (99.86,103.43) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{V_{3}}$};
+% Text Node
+\draw (100.23,145.98) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{c_{1}}$};
+% Text Node
+\draw (100.23,163.01) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{c_{2}}$};
+% Text Node
+\draw (100.23,179.03) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{c_{3}}$};
+% Text Node
+\draw (99.63,205.56) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \ket{out}$};
+% Text Node
+\draw (30.94,78.75) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle Inputs$};
+% Text Node
+\draw (3.09,152.79) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle Conditions$};
+% Text Node
+\draw (20.68,205.56) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle Verifier$};
+% Text Node
+\draw (152,207) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (178,207) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {$\displaystyle Z$};
+
+
+\end{tikzpicture}
+\end{center}
+    \caption{Sudoku Circuit Diagram 2}
+    \label{fig:my_label}
+\end{figure}
+\pagebreak
 
 \subsubsection{Oracle}
 \begin{file}[def oracle(self) -> Matrix:]
+\centering
 \begin{lstlisting}[language=Python]
 had = g.multi_gate(9, [8], g.Gate.H)
 z = g.multi_gate(9, [8], g.Gate.Z)
@@ -2100,13 +2438,395 @@ return oracle
 
 Now that the rules for the sudoku board have been established we now need to implement the oracle gate. This is done in a few short steps:
 \begin{itemize}
-    \item Firstly, we apply a Hadamard followed by a phase shift gate to the Verifier qubit (the 8th qubit) to get the state $\ket{-} = \ket{0} - \ket{1}$ on the Verifier qubit.
-    \item Next, we determine whether all of the conditions have been met by applying a Control-X gate, where all the condition qubits (4-7) are the controls and the Verifier qubit (8) is the target.
-    \item Lastly, we reset all the values in the condition qubit such that we can use the Oracle again later without having propagating errors and then return the resulting matrix
+    \item Firstly, we apply a Hadamard followed by a phase shift gate to the Output qubit $\ket{out}$ to get the state $\ket{-} = \ket{0} - \ket{1}$.
+    \item Next, we determine whether all of the conditions have been met by applying a Control-X gate, where all the condition qubits $\ket{c}$ are the controls and the Output qubit $\ket{out}$ is the target.
+    \item Lastly, we reset all the values in the condition qubits such that we can use the Oracle again later without having propagating errors and then return the resulting matrix
 \end{itemize}
-%picture{https://drive.google.com/file/d/1b4cMPr_nn8Vf-e8P2Tb2u-77xFeZ-EPi/view}
+\begin{figure}[h]
+    \centering
+    
 
-The rest of the 2x2 Sudoku implementation is essentially the same as the classical Grover's Algorithm we went over in \ref{Implement Grovers}; we implement a series of Hadamard gates across the first 4 input qubits, then we apply the Oracle and Diffusion gates a set number of times and finally we measure our states to, hopefully, get a solution to the Sudoku Board.
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Brace [id:dp013847914349599089] 
+\draw   (82.42,59.91) .. controls (77.76,60.04) and (75.49,62.43) .. (75.62,67.1) -- (75.85,75.38) .. controls (76.04,82.05) and (73.8,85.44) .. (69.13,85.57) .. controls (73.8,85.44) and (76.22,88.71) .. (76.4,95.38)(76.32,92.38) -- (76.63,103.66) .. controls (76.76,108.33) and (79.16,110.59) .. (83.83,110.46) ;
+%Shape: Brace [id:dp06222432164001401] 
+\draw   (84.9,124.87) .. controls (80.23,124.94) and (77.93,127.31) .. (78,131.98) -- (78.1,138.15) .. controls (78.2,144.82) and (75.92,148.19) .. (71.25,148.26) .. controls (75.92,148.19) and (78.3,151.48) .. (78.4,158.15)(78.36,155.15) -- (78.5,164.32) .. controls (78.57,168.99) and (80.93,171.29) .. (85.6,171.22) ;
+%Shape: Brace [id:dp9402091488444337] 
+\draw   (84.07,179.64) .. controls (81.28,179.74) and (79.93,181.19) .. (80.03,183.98) -- (80.03,183.98) .. controls (80.16,187.97) and (78.83,190.02) .. (76.04,190.11) .. controls (78.83,190.02) and (80.3,191.97) .. (80.44,195.96)(80.38,194.16) -- (80.44,195.96) .. controls (80.53,198.75) and (81.98,200.1) .. (84.78,200) ;
+%Straight Lines [id:da7646287963192218] 
+\draw    (110.22,63.67) -- (638.31,63.67) ;
+%Straight Lines [id:da9764362326688856] 
+\draw    (109.03,76.88) -- (635.23,76.88) ;
+%Straight Lines [id:da6602273673301782] 
+\draw    (111.23,91.05) -- (636.23,91.05) ;
+%Straight Lines [id:da6151916745839932] 
+\draw    (105.65,152.59) -- (644.28,153.81) ;
+%Straight Lines [id:da7820434553041149] 
+\draw    (104.53,126.86) -- (646.3,126.86) ;
+%Straight Lines [id:da11624625723327409] 
+\draw    (105.65,167.46) -- (645.31,167.46) ;
+%Straight Lines [id:da28380413229506485] 
+\draw    (104.53,140.2) -- (645.29,140.2) ;
+%Straight Lines [id:da8936562173253038] 
+\draw    (112.72,187.7) -- (647.31,187.7) ;
+%Straight Lines [id:da5721556237428456] 
+\draw    (109.99,105.09) -- (635.23,105.09) ;
+%Shape: Ellipse [id:dp3486280662507839] 
+\draw   (175.22,126.78) .. controls (175.22,123.24) and (178.09,120.37) .. (181.63,120.37) .. controls (185.17,120.37) and (188.04,123.24) .. (188.04,126.78) .. controls (188.04,130.32) and (185.17,133.19) .. (181.63,133.19) .. controls (178.09,133.19) and (175.22,130.32) .. (175.22,126.78) -- cycle ;
+%Straight Lines [id:da8128272422226077] 
+\draw    (175.22,126.78) -- (188.04,126.78) ;
+%Straight Lines [id:da12449366923163918] 
+\draw    (181.63,63.06) -- (181.63,133.19) ;
+%Shape: Ellipse [id:dp656739879362918] 
+\draw   (193.37,126.78) .. controls (193.37,123.24) and (196.24,120.37) .. (199.78,120.37) .. controls (203.32,120.37) and (206.19,123.24) .. (206.19,126.78) .. controls (206.19,130.32) and (203.32,133.19) .. (199.78,133.19) .. controls (196.24,133.19) and (193.37,130.32) .. (193.37,126.78) -- cycle ;
+%Straight Lines [id:da02585359726941272] 
+\draw    (193.37,127.6) -- (206.19,127.6) ;
+%Straight Lines [id:da40356383190725875] 
+\draw    (199.78,76.26) -- (199.78,134.01) ;
+%Shape: Ellipse [id:dp14487484319959187] 
+\draw   (218.12,139.98) .. controls (218.12,136.44) and (220.99,133.57) .. (224.53,133.57) .. controls (228.07,133.57) and (230.94,136.44) .. (230.94,139.98) .. controls (230.94,143.52) and (228.07,146.39) .. (224.53,146.39) .. controls (220.99,146.39) and (218.12,143.52) .. (218.12,139.98) -- cycle ;
+%Straight Lines [id:da07026616653756856] 
+\draw    (218.12,139.98) -- (230.94,139.98) ;
+%Straight Lines [id:da5318804666225754] 
+\draw    (224.53,63.89) -- (224.53,146.39) ;
+%Shape: Ellipse [id:dp11098259954576473] 
+\draw   (234.62,139.98) .. controls (234.62,136.44) and (237.49,133.57) .. (241.03,133.57) .. controls (244.57,133.57) and (247.44,136.44) .. (247.44,139.98) .. controls (247.44,143.52) and (244.57,146.39) .. (241.03,146.39) .. controls (237.49,146.39) and (234.62,143.52) .. (234.62,139.98) -- cycle ;
+%Straight Lines [id:da16835734217823384] 
+\draw    (234.62,139.98) -- (247.44,139.98) ;
+%Straight Lines [id:da8548612509186462] 
+\draw    (241.03,91.94) -- (241.03,146.39) ;
+%Shape: Ellipse [id:dp8379415456483217] 
+\draw   (251.95,153.18) .. controls (251.95,149.64) and (254.82,146.77) .. (258.36,146.77) .. controls (261.9,146.77) and (264.77,149.64) .. (264.77,153.18) .. controls (264.77,156.72) and (261.9,159.59) .. (258.36,159.59) .. controls (254.82,159.59) and (251.95,156.72) .. (251.95,153.18) -- cycle ;
+%Straight Lines [id:da02996969780252523] 
+\draw    (251.95,153.18) -- (264.77,153.18) ;
+%Straight Lines [id:da023960571294774802] 
+\draw    (258.36,76.37) -- (258.36,159.59) ;
+%Shape: Ellipse [id:dp3250245241116676] 
+\draw   (266.8,152.76) .. controls (266.8,149.45) and (269.67,146.76) .. (273.21,146.76) .. controls (276.75,146.76) and (279.61,149.45) .. (279.61,152.76) .. controls (279.61,156.07) and (276.75,158.76) .. (273.21,158.76) .. controls (269.67,158.76) and (266.8,156.07) .. (266.8,152.76) -- cycle ;
+%Straight Lines [id:da7140531408850586] 
+\draw    (266.8,152.76) -- (279.61,152.76) ;
+%Straight Lines [id:da3904365925322162] 
+\draw    (273.21,104.31) -- (273.21,158.76) ;
+%Shape: Ellipse [id:dp3761518846524661] 
+\draw   (297.32,166.38) .. controls (297.32,162.84) and (300.19,159.97) .. (303.73,159.97) .. controls (307.27,159.97) and (310.14,162.84) .. (310.14,166.38) .. controls (310.14,169.92) and (307.27,172.78) .. (303.73,172.78) .. controls (300.19,172.78) and (297.32,169.92) .. (297.32,166.38) -- cycle ;
+%Straight Lines [id:da5973047741284501] 
+\draw    (297.32,167.2) -- (310.14,167.2) ;
+%Straight Lines [id:da2117892273602684] 
+\draw    (303.73,92.05) -- (303.73,172.78) ;
+%Shape: Ellipse [id:dp957820100674805] 
+\draw   (318.77,167.2) .. controls (318.77,163.66) and (321.64,160.79) .. (325.18,160.79) .. controls (328.72,160.79) and (331.59,163.66) .. (331.59,167.2) .. controls (331.59,170.74) and (328.72,173.61) .. (325.18,173.61) .. controls (321.64,173.61) and (318.77,170.74) .. (318.77,167.2) -- cycle ;
+%Straight Lines [id:da4425080652803781] 
+\draw    (318.77,167.2) -- (331.59,167.2) ;
+%Straight Lines [id:da1983801977236126] 
+\draw    (325.18,105.25) -- (325.18,173.61) ;
+%Shape: Ellipse [id:dp09725133860122126] 
+\draw   (345.99,187.82) .. controls (345.99,184.28) and (348.86,181.41) .. (352.4,181.41) .. controls (355.94,181.41) and (358.81,184.28) .. (358.81,187.82) .. controls (358.81,191.36) and (355.94,194.23) .. (352.4,194.23) .. controls (348.86,194.23) and (345.99,191.36) .. (345.99,187.82) -- cycle ;
+%Straight Lines [id:da6516124666604513] 
+\draw    (345.99,187.82) -- (358.81,187.82) ;
+%Straight Lines [id:da07085879710024123] 
+\draw    (352.4,125.87) -- (352.4,194.23) ;
+%Shape: Ellipse [id:dp9061011462576587] 
+\draw   (365.79,126.78) .. controls (365.79,123.24) and (368.66,120.37) .. (372.2,120.37) .. controls (375.74,120.37) and (378.61,123.24) .. (378.61,126.78) .. controls (378.61,130.32) and (375.74,133.19) .. (372.2,133.19) .. controls (368.66,133.19) and (365.79,130.32) .. (365.79,126.78) -- cycle ;
+%Straight Lines [id:da5218892620450915] 
+\draw    (365.79,126.78) -- (378.61,126.78) ;
+%Straight Lines [id:da8485179819781346] 
+\draw    (372.2,64) -- (372.2,133.19) ;
+%Shape: Ellipse [id:dp8937427664323856] 
+\draw   (385.59,127.6) .. controls (385.59,124.06) and (388.46,121.19) .. (392,121.19) .. controls (395.54,121.19) and (398.41,124.06) .. (398.41,127.6) .. controls (398.41,131.14) and (395.54,134.01) .. (392,134.01) .. controls (388.46,134.01) and (385.59,131.14) .. (385.59,127.6) -- cycle ;
+%Straight Lines [id:da5646398875251861] 
+\draw    (385.59,127.6) -- (398.41,127.6) ;
+%Straight Lines [id:da9894464654135591] 
+\draw    (392,77.2) -- (392,134.01) ;
+%Shape: Ellipse [id:dp3317065505160519] 
+\draw   (407.04,140.8) .. controls (407.04,137.26) and (409.91,134.39) .. (413.45,134.39) .. controls (416.99,134.39) and (419.86,137.26) .. (419.86,140.8) .. controls (419.86,144.34) and (416.99,147.21) .. (413.45,147.21) .. controls (409.91,147.21) and (407.04,144.34) .. (407.04,140.8) -- cycle ;
+%Straight Lines [id:da8305459605619017] 
+\draw    (407.04,140.8) -- (419.86,140.8) ;
+%Straight Lines [id:da4601376008936555] 
+\draw    (413.45,64.82) -- (413.45,147.21) ;
+%Shape: Ellipse [id:dp5530344456324341] 
+\draw   (423.54,139.98) .. controls (423.54,136.44) and (426.41,133.57) .. (429.95,133.57) .. controls (433.49,133.57) and (436.36,136.44) .. (436.36,139.98) .. controls (436.36,143.52) and (433.49,146.39) .. (429.95,146.39) .. controls (426.41,146.39) and (423.54,143.52) .. (423.54,139.98) -- cycle ;
+%Straight Lines [id:da4846933504097186] 
+\draw    (423.54,139.98) -- (436.36,139.98) ;
+%Straight Lines [id:da9383839376948908] 
+\draw    (429.95,91.22) -- (429.95,146.39) ;
+%Shape: Ellipse [id:dp29423484555363655] 
+\draw   (444.17,153.18) .. controls (444.17,149.64) and (447.04,146.77) .. (450.58,146.77) .. controls (454.12,146.77) and (456.99,149.64) .. (456.99,153.18) .. controls (456.99,156.72) and (454.12,159.59) .. (450.58,159.59) .. controls (447.04,159.59) and (444.17,156.72) .. (444.17,153.18) -- cycle ;
+%Straight Lines [id:da9695045069569848] 
+\draw    (444.17,153.18) -- (456.99,153.18) ;
+%Straight Lines [id:da17537553586359222] 
+\draw    (450.58,77.2) -- (450.58,159.59) ;
+%Shape: Ellipse [id:dp2113786799756674] 
+\draw   (465.62,153.18) .. controls (465.62,149.64) and (468.49,146.77) .. (472.03,146.77) .. controls (475.57,146.77) and (478.44,149.64) .. (478.44,153.18) .. controls (478.44,156.72) and (475.57,159.59) .. (472.03,159.59) .. controls (468.49,159.59) and (465.62,156.72) .. (465.62,153.18) -- cycle ;
+%Straight Lines [id:da9149790931362276] 
+\draw    (465.62,153.18) -- (478.44,153.18) ;
+%Straight Lines [id:da14516949329349393] 
+\draw    (472.03,105.25) -- (472.03,159.59) ;
+%Shape: Ellipse [id:dp32599715317737177] 
+\draw   (484.59,167.2) .. controls (484.59,163.66) and (487.46,160.79) .. (491,160.79) .. controls (494.54,160.79) and (497.41,163.66) .. (497.41,167.2) .. controls (497.41,170.74) and (494.54,173.61) .. (491,173.61) .. controls (487.46,173.61) and (484.59,170.74) .. (484.59,167.2) -- cycle ;
+%Straight Lines [id:da4774228494068953] 
+\draw    (484.59,167.2) -- (497.41,167.2) ;
+%Straight Lines [id:da26251559447111483] 
+\draw    (491,91.22) -- (491,173.61) ;
+%Shape: Ellipse [id:dp1083665055660834] 
+\draw   (502.74,167.2) .. controls (502.74,163.66) and (505.61,160.79) .. (509.15,160.79) .. controls (512.69,160.79) and (515.56,163.66) .. (515.56,167.2) .. controls (515.56,170.74) and (512.69,173.61) .. (509.15,173.61) .. controls (505.61,173.61) and (502.74,170.74) .. (502.74,167.2) -- cycle ;
+%Straight Lines [id:da6382805090100101] 
+\draw    (502.74,167.2) -- (515.56,167.2) ;
+%Straight Lines [id:da6165857487421655] 
+\draw    (509.15,106.07) -- (509.15,173.61) ;
+%Shape: Ellipse [id:dp6739299978225679] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (184.45,63.06) .. controls (184.45,61.5) and (183.19,60.24) .. (181.63,60.24) .. controls (180.07,60.24) and (178.81,61.5) .. (178.81,63.06) .. controls (178.81,64.62) and (180.07,65.88) .. (181.63,65.88) .. controls (183.19,65.88) and (184.45,64.62) .. (184.45,63.06) -- cycle ;
+%Shape: Ellipse [id:dp4394691297187123] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (202.6,77.09) .. controls (202.6,75.53) and (201.34,74.27) .. (199.78,74.27) .. controls (198.22,74.27) and (196.96,75.53) .. (196.96,77.09) .. controls (196.96,78.65) and (198.22,79.91) .. (199.78,79.91) .. controls (201.34,79.91) and (202.6,78.65) .. (202.6,77.09) -- cycle ;
+%Shape: Ellipse [id:dp5516406676026484] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (227.35,63.89) .. controls (227.35,62.33) and (226.09,61.07) .. (224.53,61.07) .. controls (222.97,61.07) and (221.71,62.33) .. (221.71,63.89) .. controls (221.71,65.45) and (222.97,66.71) .. (224.53,66.71) .. controls (226.09,66.71) and (227.35,65.45) .. (227.35,63.89) -- cycle ;
+%Shape: Ellipse [id:dp2605844433647464] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (243.85,91.94) .. controls (243.85,90.38) and (242.59,89.11) .. (241.03,89.11) .. controls (239.47,89.11) and (238.21,90.38) .. (238.21,91.94) .. controls (238.21,93.5) and (239.47,94.76) .. (241.03,94.76) .. controls (242.59,94.76) and (243.85,93.5) .. (243.85,91.94) -- cycle ;
+%Shape: Ellipse [id:dp25388330940747794] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (261.18,77.91) .. controls (261.18,76.35) and (259.91,75.09) .. (258.36,75.09) .. controls (256.8,75.09) and (255.53,76.35) .. (255.53,77.91) .. controls (255.53,79.47) and (256.8,80.73) .. (258.36,80.73) .. controls (259.91,80.73) and (261.18,79.47) .. (261.18,77.91) -- cycle ;
+%Shape: Ellipse [id:dp6489052345667694] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (276.03,104.31) .. controls (276.03,102.75) and (274.76,101.49) .. (273.21,101.49) .. controls (271.65,101.49) and (270.38,102.75) .. (270.38,104.31) .. controls (270.38,105.87) and (271.65,107.13) .. (273.21,107.13) .. controls (274.76,107.13) and (276.03,105.87) .. (276.03,104.31) -- cycle ;
+%Shape: Ellipse [id:dp3865651507317409] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (306.55,92.05) .. controls (306.55,90.49) and (305.29,89.22) .. (303.73,89.22) .. controls (302.17,89.22) and (300.91,90.49) .. (300.91,92.05) .. controls (300.91,93.61) and (302.17,94.87) .. (303.73,94.87) .. controls (305.29,94.87) and (306.55,93.61) .. (306.55,92.05) -- cycle ;
+%Shape: Ellipse [id:dp604124589962812] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (328.83,105.25) .. controls (328.83,103.69) and (327.56,102.42) .. (326,102.42) .. controls (324.45,102.42) and (323.18,103.69) .. (323.18,105.25) .. controls (323.18,106.81) and (324.45,108.07) .. (326,108.07) .. controls (327.56,108.07) and (328.83,106.81) .. (328.83,105.25) -- cycle ;
+%Shape: Ellipse [id:dp5065793367054232] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (355.23,126.7) .. controls (355.23,125.14) and (353.96,123.87) .. (352.4,123.87) .. controls (350.84,123.87) and (349.58,125.14) .. (349.58,126.7) .. controls (349.58,128.25) and (350.84,129.52) .. (352.4,129.52) .. controls (353.96,129.52) and (355.23,128.25) .. (355.23,126.7) -- cycle ;
+%Shape: Ellipse [id:dp503261757950958] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (355.23,140.72) .. controls (355.23,139.16) and (353.96,137.9) .. (352.4,137.9) .. controls (350.84,137.9) and (349.58,139.16) .. (349.58,140.72) .. controls (349.58,142.28) and (350.84,143.54) .. (352.4,143.54) .. controls (353.96,143.54) and (355.23,142.28) .. (355.23,140.72) -- cycle ;
+%Shape: Ellipse [id:dp4566859554392102] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (355.23,153.1) .. controls (355.23,151.54) and (353.96,150.27) .. (352.4,150.27) .. controls (350.84,150.27) and (349.58,151.54) .. (349.58,153.1) .. controls (349.58,154.65) and (350.84,155.92) .. (352.4,155.92) .. controls (353.96,155.92) and (355.23,154.65) .. (355.23,153.1) -- cycle ;
+%Shape: Ellipse [id:dp7207718252764668] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (355.23,167.12) .. controls (355.23,165.56) and (353.96,164.3) .. (352.4,164.3) .. controls (350.84,164.3) and (349.58,165.56) .. (349.58,167.12) .. controls (349.58,168.68) and (350.84,169.94) .. (352.4,169.94) .. controls (353.96,169.94) and (355.23,168.68) .. (355.23,167.12) -- cycle ;
+%Shape: Ellipse [id:dp8739074560978557] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (375.02,64.82) .. controls (375.02,63.26) and (373.76,62) .. (372.2,62) .. controls (370.64,62) and (369.38,63.26) .. (369.38,64.82) .. controls (369.38,66.38) and (370.64,67.64) .. (372.2,67.64) .. controls (373.76,67.64) and (375.02,66.38) .. (375.02,64.82) -- cycle ;
+%Shape: Ellipse [id:dp8780387081131955] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (394.82,77.2) .. controls (394.82,75.64) and (393.56,74.37) .. (392,74.37) .. controls (390.44,74.37) and (389.18,75.64) .. (389.18,77.2) .. controls (389.18,78.76) and (390.44,80.02) .. (392,80.02) .. controls (393.56,80.02) and (394.82,78.76) .. (394.82,77.2) -- cycle ;
+%Shape: Ellipse [id:dp9171942275468226] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (416.27,64) .. controls (416.27,62.44) and (415.01,61.18) .. (413.45,61.18) .. controls (411.89,61.18) and (410.63,62.44) .. (410.63,64) .. controls (410.63,65.56) and (411.89,66.82) .. (413.45,66.82) .. controls (415.01,66.82) and (416.27,65.56) .. (416.27,64) -- cycle ;
+%Shape: Ellipse [id:dp9647301421256342] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (432.77,90.4) .. controls (432.77,88.84) and (431.51,87.57) .. (429.95,87.57) .. controls (428.39,87.57) and (427.13,88.84) .. (427.13,90.4) .. controls (427.13,91.96) and (428.39,93.22) .. (429.95,93.22) .. controls (431.51,93.22) and (432.77,91.96) .. (432.77,90.4) -- cycle ;
+%Shape: Ellipse [id:dp9626848596512732] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (453.4,78.02) .. controls (453.4,76.46) and (452.13,75.2) .. (450.58,75.2) .. controls (449.02,75.2) and (447.75,76.46) .. (447.75,78.02) .. controls (447.75,79.58) and (449.02,80.84) .. (450.58,80.84) .. controls (452.13,80.84) and (453.4,79.58) .. (453.4,78.02) -- cycle ;
+%Shape: Ellipse [id:dp2849449256758074] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (474.85,105.25) .. controls (474.85,103.69) and (473.58,102.42) .. (472.03,102.42) .. controls (470.47,102.42) and (469.2,103.69) .. (469.2,105.25) .. controls (469.2,106.81) and (470.47,108.07) .. (472.03,108.07) .. controls (473.58,108.07) and (474.85,106.81) .. (474.85,105.25) -- cycle ;
+%Shape: Ellipse [id:dp66141022361049] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (493.82,91.22) .. controls (493.82,89.66) and (492.56,88.4) .. (491,88.4) .. controls (489.44,88.4) and (488.18,89.66) .. (488.18,91.22) .. controls (488.18,92.78) and (489.44,94.04) .. (491,94.04) .. controls (492.56,94.04) and (493.82,92.78) .. (493.82,91.22) -- cycle ;
+%Shape: Ellipse [id:dp9692964672643174] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (511.97,105.25) .. controls (511.97,103.69) and (510.71,102.42) .. (509.15,102.42) .. controls (507.59,102.42) and (506.33,103.69) .. (506.33,105.25) .. controls (506.33,106.81) and (507.59,108.07) .. (509.15,108.07) .. controls (510.71,108.07) and (511.97,106.81) .. (511.97,105.25) -- cycle ;
+%Shape: Rectangle [id:dp35119074389100113] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (119.62,54.95) -- (133.91,54.95) -- (133.91,67.95) -- (119.62,67.95) -- cycle ;
+
+%Shape: Rectangle [id:dp08294600602683655] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (160.6,180.18) -- (174.88,180.18) -- (174.88,193.19) -- (160.6,193.19) -- cycle ;
+
+%Shape: Rectangle [id:dp08477747087556842] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (119.62,84.02) -- (133.91,84.02) -- (133.91,97.02) -- (119.62,97.02) -- cycle ;
+
+%Shape: Rectangle [id:dp6960138565300749] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (119.62,98.56) -- (133.91,98.56) -- (133.91,111.56) -- (119.62,111.56) -- cycle ;
+
+%Shape: Rectangle [id:dp9914264684484146] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (119.62,69.49) -- (133.91,69.49) -- (133.91,82.49) -- (119.62,82.49) -- cycle ;
+
+%Shape: Rectangle [id:dp3576212805847796] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (519.81,53.98) -- (534.09,53.98) -- (534.09,66.98) -- (519.81,66.98) -- cycle ;
+
+%Shape: Rectangle [id:dp8995940098617183] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (519.81,83.05) -- (534.09,83.05) -- (534.09,96.05) -- (519.81,96.05) -- cycle ;
+
+%Shape: Rectangle [id:dp015097441374553267] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (519.81,97.59) -- (534.09,97.59) -- (534.09,110.59) -- (519.81,110.59) -- cycle ;
+
+%Shape: Rectangle [id:dp6582117864331722] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (519.81,68.52) -- (534.09,68.52) -- (534.09,81.52) -- (519.81,81.52) -- cycle ;
+
+%Shape: Rectangle [id:dp20245415172774384] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (603.14,53.98) -- (617.43,53.98) -- (617.43,66.98) -- (603.14,66.98) -- cycle ;
+
+%Shape: Rectangle [id:dp7581994609520128] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (603.14,83.05) -- (617.43,83.05) -- (617.43,96.05) -- (603.14,96.05) -- cycle ;
+
+%Shape: Rectangle [id:dp6870503841006101] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (603.14,97.59) -- (617.43,97.59) -- (617.43,110.59) -- (603.14,110.59) -- cycle ;
+
+%Shape: Rectangle [id:dp07441181306121347] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (603.14,68.52) -- (617.43,68.52) -- (617.43,81.52) -- (603.14,81.52) -- cycle ;
+
+%Shape: Ellipse [id:dp871168461294678] 
+\draw   (542.73,76.99) .. controls (542.73,73.45) and (545.6,70.58) .. (549.14,70.58) .. controls (552.68,70.58) and (555.55,73.45) .. (555.55,76.99) .. controls (555.55,80.53) and (552.68,83.4) .. (549.14,83.4) .. controls (545.6,83.4) and (542.73,80.53) .. (542.73,76.99) -- cycle ;
+%Straight Lines [id:da7337221119541684] 
+\draw    (542.73,76.99) -- (555.55,76.99) ;
+%Straight Lines [id:da10505658304667209] 
+\draw    (549.14,70.58) -- (549.14,83.4) ;
+
+%Shape: Ellipse [id:dp3387371194788842] 
+\draw   (542.73,63.43) .. controls (542.73,59.89) and (545.6,57.02) .. (549.14,57.02) .. controls (552.68,57.02) and (555.55,59.89) .. (555.55,63.43) .. controls (555.55,66.97) and (552.68,69.84) .. (549.14,69.84) .. controls (545.6,69.84) and (542.73,66.97) .. (542.73,63.43) -- cycle ;
+%Straight Lines [id:da4417769326567027] 
+\draw    (542.73,63.43) -- (555.55,63.43) ;
+%Straight Lines [id:da41504660897657786] 
+\draw    (549.14,57.02) -- (549.14,69.84) ;
+
+%Shape: Ellipse [id:dp18672105954480478] 
+\draw   (542.73,105.09) .. controls (542.73,101.55) and (545.6,98.68) .. (549.14,98.68) .. controls (552.68,98.68) and (555.55,101.55) .. (555.55,105.09) .. controls (555.55,108.63) and (552.68,111.5) .. (549.14,111.5) .. controls (545.6,111.5) and (542.73,108.63) .. (542.73,105.09) -- cycle ;
+%Straight Lines [id:da7413551678066095] 
+\draw    (542.73,105.09) -- (555.55,105.09) ;
+%Straight Lines [id:da906191880803771] 
+\draw    (549.14,98.68) -- (549.14,111.5) ;
+
+%Shape: Ellipse [id:dp5700750947294215] 
+\draw   (542.73,91.53) .. controls (542.73,87.99) and (545.6,85.12) .. (549.14,85.12) .. controls (552.68,85.12) and (555.55,87.99) .. (555.55,91.53) .. controls (555.55,95.07) and (552.68,97.94) .. (549.14,97.94) .. controls (545.6,97.94) and (542.73,95.07) .. (542.73,91.53) -- cycle ;
+%Straight Lines [id:da3937263503449595] 
+\draw    (542.73,91.53) -- (555.55,91.53) ;
+%Straight Lines [id:da5710187438326335] 
+\draw    (549.14,85.12) -- (549.14,97.94) ;
+
+%Shape: Ellipse [id:dp9556238997403559] 
+\draw   (583.43,76.99) .. controls (583.43,73.45) and (586.3,70.58) .. (589.84,70.58) .. controls (593.38,70.58) and (596.25,73.45) .. (596.25,76.99) .. controls (596.25,80.53) and (593.38,83.4) .. (589.84,83.4) .. controls (586.3,83.4) and (583.43,80.53) .. (583.43,76.99) -- cycle ;
+%Straight Lines [id:da25453199663479653] 
+\draw    (583.43,76.99) -- (596.25,76.99) ;
+%Straight Lines [id:da23531979774900758] 
+\draw    (589.84,70.58) -- (589.84,83.4) ;
+
+%Shape: Ellipse [id:dp5609785310870192] 
+\draw   (583.43,63.43) .. controls (583.43,59.89) and (586.3,57.02) .. (589.84,57.02) .. controls (593.38,57.02) and (596.25,59.89) .. (596.25,63.43) .. controls (596.25,66.97) and (593.38,69.84) .. (589.84,69.84) .. controls (586.3,69.84) and (583.43,66.97) .. (583.43,63.43) -- cycle ;
+%Straight Lines [id:da7771207116013599] 
+\draw    (583.43,63.43) -- (596.25,63.43) ;
+%Straight Lines [id:da9757718670318813] 
+\draw    (589.84,57.02) -- (589.84,69.84) ;
+
+%Shape: Ellipse [id:dp6702354710255589] 
+\draw   (583.43,105.09) .. controls (583.43,101.55) and (586.3,98.68) .. (589.84,98.68) .. controls (593.38,98.68) and (596.25,101.55) .. (596.25,105.09) .. controls (596.25,108.63) and (593.38,111.5) .. (589.84,111.5) .. controls (586.3,111.5) and (583.43,108.63) .. (583.43,105.09) -- cycle ;
+%Straight Lines [id:da6600751818058004] 
+\draw    (583.43,105.09) -- (596.25,105.09) ;
+%Straight Lines [id:da33007148982451584] 
+\draw    (589.84,98.68) -- (589.84,111.5) ;
+
+%Shape: Ellipse [id:dp35934689298554834] 
+\draw   (583.43,91.53) .. controls (583.43,87.99) and (586.3,85.12) .. (589.84,85.12) .. controls (593.38,85.12) and (596.25,87.99) .. (596.25,91.53) .. controls (596.25,95.07) and (593.38,97.94) .. (589.84,97.94) .. controls (586.3,97.94) and (583.43,95.07) .. (583.43,91.53) -- cycle ;
+%Straight Lines [id:da6440216042181677] 
+\draw    (583.43,91.53) -- (596.25,91.53) ;
+%Straight Lines [id:da22892031340287966] 
+\draw    (589.84,85.12) -- (589.84,97.94) ;
+
+%Shape: Rectangle [id:dp3061103116730597] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (141.22,179.92) -- (155.5,179.92) -- (155.5,192.92) -- (141.22,192.92) -- cycle ;
+
+%Shape: Rectangle [id:dp8114137706558884] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (561.91,97.85) -- (576.19,97.85) -- (576.19,110.85) -- (561.91,110.85) -- cycle ;
+
+%Straight Lines [id:da29599560813640347] 
+\draw    (569.05,63.16) -- (569.05,97.78) ;
+%Shape: Ellipse [id:dp5399426498019604] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (572.05,64.55) .. controls (572.05,62.99) and (570.79,61.73) .. (569.23,61.73) .. controls (567.67,61.73) and (566.4,62.99) .. (566.4,64.55) .. controls (566.4,66.11) and (567.67,67.37) .. (569.23,67.37) .. controls (570.79,67.37) and (572.05,66.11) .. (572.05,64.55) -- cycle ;
+%Shape: Ellipse [id:dp31941536481676835] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (572.05,77.15) .. controls (572.05,75.59) and (570.79,74.32) .. (569.23,74.32) .. controls (567.67,74.32) and (566.4,75.59) .. (566.4,77.15) .. controls (566.4,78.7) and (567.67,79.97) .. (569.23,79.97) .. controls (570.79,79.97) and (572.05,78.7) .. (572.05,77.15) -- cycle ;
+%Shape: Ellipse [id:dp1308322076118198] 
+\draw  [fill={rgb, 255:red, 23; green, 23; blue, 23 }  ,fill opacity=1 ] (572.05,90.71) .. controls (572.05,89.15) and (570.79,87.89) .. (569.23,87.89) .. controls (567.67,87.89) and (566.4,89.15) .. (566.4,90.71) .. controls (566.4,92.27) and (567.67,93.53) .. (569.23,93.53) .. controls (570.79,93.53) and (572.05,92.27) .. (572.05,90.71) -- cycle ;
+%Shape: Rectangle [id:dp9448682582571526] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (631,54) -- (645.31,54) -- (645.31,66.89) -- (631,66.89) -- cycle ;
+%Shape: Arc [id:dp6025287049900989] 
+\draw  [draw opacity=0] (633,63.46) .. controls (633.66,61.45) and (635.58,59.99) .. (637.85,59.99) .. controls (640.09,59.99) and (641.99,61.42) .. (642.67,63.4) -- (637.85,64.99) -- cycle ; \draw   (633,63.46) .. controls (633.66,61.45) and (635.58,59.99) .. (637.85,59.99) .. controls (640.09,59.99) and (641.99,61.42) .. (642.67,63.4) ;  
+%Straight Lines [id:da9621169108737466] 
+\draw    (636.23,64.05) -- (642.01,57.93) ;
+
+%Shape: Rectangle [id:dp8456249751436042] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (631,70) -- (645.31,70) -- (645.31,82.89) -- (631,82.89) -- cycle ;
+%Shape: Arc [id:dp6872176468265798] 
+\draw  [draw opacity=0] (633,79.46) .. controls (633.66,77.45) and (635.58,75.99) .. (637.85,75.99) .. controls (640.09,75.99) and (641.99,77.42) .. (642.67,79.4) -- (637.85,80.99) -- cycle ; \draw   (633,79.46) .. controls (633.66,77.45) and (635.58,75.99) .. (637.85,75.99) .. controls (640.09,75.99) and (641.99,77.42) .. (642.67,79.4) ;  
+%Straight Lines [id:da22030238059614682] 
+\draw    (636.23,80.05) -- (642.01,73.93) ;
+
+%Shape: Rectangle [id:dp9986297297496598] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (631,85) -- (645.31,85) -- (645.31,97.89) -- (631,97.89) -- cycle ;
+%Shape: Arc [id:dp2669409113008976] 
+\draw  [draw opacity=0] (633,94.46) .. controls (633.66,92.45) and (635.58,90.99) .. (637.85,90.99) .. controls (640.09,90.99) and (641.99,92.42) .. (642.67,94.4) -- (637.85,95.99) -- cycle ; \draw   (633,94.46) .. controls (633.66,92.45) and (635.58,90.99) .. (637.85,90.99) .. controls (640.09,90.99) and (641.99,92.42) .. (642.67,94.4) ;  
+%Straight Lines [id:da8265064248803267] 
+\draw    (636.23,95.05) -- (642.01,88.93) ;
+
+%Shape: Rectangle [id:dp2121543467011926] 
+\draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (631,100) -- (645.31,100) -- (645.31,112.89) -- (631,112.89) -- cycle ;
+%Shape: Arc [id:dp3800461471157577] 
+\draw  [draw opacity=0] (633,109.46) .. controls (633.66,107.45) and (635.58,105.99) .. (637.85,105.99) .. controls (640.09,105.99) and (641.99,107.42) .. (642.67,109.4) -- (637.85,110.99) -- cycle ; \draw   (633,109.46) .. controls (633.66,107.45) and (635.58,105.99) .. (637.85,105.99) .. controls (640.09,105.99) and (641.99,107.42) .. (642.67,109.4) ;  
+%Straight Lines [id:da19874720549745684] 
+\draw    (636.23,110.05) -- (642.01,103.93) ;
+
+%Shape: Brace [id:dp2789289493567011] 
+\draw   (145.31,194.01) .. controls (145.31,198.68) and (147.64,201.01) .. (152.31,201.01) -- (319.31,201.01) .. controls (325.98,201.01) and (329.31,203.34) .. (329.31,208.01) .. controls (329.31,203.34) and (332.64,201.01) .. (339.31,201.01)(336.31,201.01) -- (506.31,201.01) .. controls (510.98,201.01) and (513.31,198.68) .. (513.31,194.01) ;
+%Shape: Brace [id:dp7047362506004486] 
+\draw   (612.31,48.01) .. controls (612.26,43.34) and (609.9,41.04) .. (605.23,41.09) -- (577.73,41.4) .. controls (571.06,41.47) and (567.7,39.18) .. (567.65,34.51) .. controls (567.7,39.18) and (564.4,41.55) .. (557.73,41.62)(560.73,41.59) -- (530.23,41.93) .. controls (525.56,41.98) and (523.26,44.33) .. (523.31,49) ;
+
+% Text Node
+\draw (83.7,55.19) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle \ket{V_{0}}$};
+% Text Node
+\draw (84.43,118.38) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle \ket{c_{0}}$};
+% Text Node
+\draw (83.7,83.27) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle \ket{V_{2}}$};
+% Text Node
+\draw (83.7,69.23) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle \ket{V_{1}}$};
+% Text Node
+\draw (83.7,97.32) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle \ket{V_{3}}$};
+% Text Node
+\draw (84.43,132.43) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle \ket{c_{1}}$};
+% Text Node
+\draw (84.43,146.47) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle \ket{c_{2}}$};
+% Text Node
+\draw (84.43,159.69) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle \ket{c_{3}}$};
+% Text Node
+\draw (83.27,181.65) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle \ket{out}$};
+% Text Node
+\draw (32.03,72.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle Inputs$};
+% Text Node
+\draw (6.05,134.77) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle Conditions$};
+% Text Node
+\draw (22.36,179.9) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {$\displaystyle Verifier$};
+% Text Node
+\draw (121.39,56.44) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (121.39,85.51) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (121.39,100.04) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (121.39,70.97) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (521.58,70.01) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (521.58,99.07) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (521.58,84.54) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (521.58,55.47) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (604.91,70.01) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (604.91,99.07) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (604.91,84.54) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (604.91,55.47) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (162.37,181.67) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle Z$};
+% Text Node
+\draw (142.99,181.41) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle H$};
+% Text Node
+\draw (563.67,99.34) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle Z$};
+% Text Node
+\draw (290,211) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle The\ Oracle$};
+% Text Node
+\draw (535,16) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle Diffuser$};
+
+
+\end{tikzpicture}
+    \caption{Sudoku Circuit Diagram 3}
+    \label{fig:my_label}
+\end{figure}
+
+The rest of the \textit{2x2} Sudoku implementation is essentially the same as the classical Grover's Algorithm we went over in \ref{Implement Grovers}; we implement a series of Hadamard gates across the first 4 input qubits, then we apply the Oracle and Diffusion gates a set number of times and finally we measure our states to, hopefully, get a solution to the Sudoku Board.
+\pagebreak
 
 \subsection{Phase Estimation}
 \subsubsection{Constructor}
@@ -2220,50 +2940,396 @@ Now that we got everything ready, we can combine the parts and form the total ma
 
 \pagebreak
 
-\section{Issues and Challenges}
+
+\subsection{\label{testing}Testing and Debugging}
+
+\begin{figure}
+\begin{verbatim}
+---------- coverage: platform linux, python 3.8.10-final-0 -----------
+Name                                                  Stmts   Miss Branch BrPart  Cover
+---------------------------------------------------------------------------------------
+qcp/__init__.py                                           1      0      0      0   100%
+qcp/algorithms/__init__.py                                4      0      0      0   100%
+qcp/algorithms/abstract_algorithm.py                     32      2     10      2    90%
+qcp/algorithms/grovers_algorithm.py                      51      5     20      0    90%
+qcp/algorithms/phase_estimation.py                       86     64     24      0    22%
+qcp/algorithms/phase_estimation_unitary_matrices.py      32     18     16      0    33%
+qcp/algorithms/sudoku.py                                 44     32     10      0    26%
+qcp/cli/__init__.py                                       1      0      0      0   100%
+qcp/cli/constants.py                                     20      0      0      0   100%
+qcp/cli/interpret.py                                     79     44     26      5    38%
+qcp/cli/options.py                                       25     12     16      0    41%
+qcp/cli/parser.py                                        57     13     22      4    78%
+qcp/cli/progress_bar.py                                  13      8      0      0    38%
+qcp/cli/usage.py                                          7      0      0      0   100%
+qcp/constants.py                                         11      0      0      0   100%
+qcp/gates.py                                            120      0     36      0   100%
+qcp/main.py                                              48     30      6      2    37%
+qcp/matrices/__init__.py                                  6      0      0      0   100%
+qcp/matrices/dense_matrix.py                            102     13     52      1    86%
+qcp/matrices/matrix.py                                   49     16      2      0    69%
+qcp/matrices/sparse_matrix.py                           218     30    140     11    84%
+qcp/matrices/types.py                                     6      0      0      0   100%
+qcp/register.py                                          17      1      8      1    92%
+qcp/tensor_product.py                                    44      1     24      1    94%
+---------------------------------------------------------------------------------------
+TOTAL                                                  1073    289    412     27    72%
+Coverage XML written to file coverage/python/coverage.xml
+
+\end{verbatim}
+\caption{\label{tox-coverage} Example output of \textit{tox} coverage, with the \textbf{qcp/gui/} code coverage removed for the sake of brevity}
+\end{figure}
+
+Testing on our codebase was automated using the \textit{tox}\cite{noauthor_welcome_nodate} test automation framework.
+\textit{tox} is a test automation tool that can discover and run all tests in the codebase in parallel to speed up the develop/test/debug implementation cycle. 
+Using \textit{tox} allowed us to setup test configuration files within the code repository to standardise the testing framework. The \textit{Github Actions} running on the repository would then enforce the testing checks on the codebase using these configuration files. 
+Team members were assigned to writing tests for new functionality in parallel to their creation. 
+This allowed the team to work more efficiently as bugs were spotted earlier and code functionality was verified as it was implemented. 
+The allowed other team members to reliably use the code implemented by other team members, with the knowledge that that code will work as expected. 
+\textit{tox} can then flag failing tests and highlights the line in the test code at fault, along with any relevant error codes and stack-traces, this allows the developer to quickly pin point the section in their code that is at fault if the test coverage is thorough enough. 
+It also reports the overall test coverage on the codebase (Figure \ref{tox-coverage}). 
+Test code was implemented in a separate \textit{tests} folder of the repository, with a module structure mirroring that of the main \textit{qcp} code module, so that it was easy to tell which test files corresponded to which implementation code file.
+
+\medskip
+
+Another tool that was used extensively was the IBM Quantum simulator\cite{noauthor_programming_nodate}, this tool was used as a reference implementation of a quantum computer simulator, against which we could compare our calculated quantum gates and quantum circuits, to verify that our quantum algorithms were working as expected.
+
+\subsubsection{\label{testing}Testing Implementation}
+
+The actual test code was implemented using the \textit{pytest}\cite{noauthor_pytest_nodate} Python testing utility. 
+As mentioned above, tests were implemented in parallel with the implementation of code functionality.
+We will give an example of how tests were implemented by talking about the implementation of the tensor product (section \ref{tensor-product}) code.
+These tests were implemented in a \verb#test_tensor_product.py# test file.
+The tests worked by implementing Matrix class instances of various dimensions and content types (\textit{int}/\textit{float}/\textit{complex}/\textit{str}) and calculating the tensor product of two matrices, and verifying that the resultant matrix is the matrix expected, with the intention of catching edge case scenarios in the code.
+Initially almost all the tests were passed except for the tests for non-square matrices, highlighting a logical flaw in the tensor product code related to column matrices.
+These bugs were fixed once highlighted and the \textit{tox} command in the terminal let us know that we covered 94\% of the tensor product code.
+
+\medskip
+
+A helper functions file \verb#test_helpers.py# was introduced to assist with further tests, however the only function that was present in this file was compare matrices which tests if two matrices are roughly equal at each element to within $1x10^{-9}$ decimal places, to account for rounding errors when calculating matrices.
+This helper function \verb#compare_matrices()# was used throughout the test files, and helped to drastically reduced the amount of repeated code and increase test readability.
+
+\medskip
+
+Similar tests were then constructed for the single qubit gates in the file \verb#test_gates.py#.
+Single qubit gates such as the Hadamard were easy to construct tests for since finding the answers to the inputs $\ket{0}$ and $\ket{1}$ was usually enough to prove that the gate worked.
+In order to find a balance between test performance and test coverage, the tests generally covered the simple 2 qubit case for $4x4$.
+We tested code to what we deemed a satisfactory level and only then moved on to the next piece of the project.
+
+\medskip
+
+Tests were also extended initially to the \verb#Grovers# algorithm class implementation.
+With the two other algorithm implementations, \verb#PhaseEstimation# and \verb#Sudoku#, some simple tests were later implemented on this code.
+Most of the test functions work the same as described before, by verifying that the calculated output of the code matched to expected outputs.
+Tests for the other code implemented, such as for the matrix classes, and the command line interface (CLI) were also implemented.
+Of course all of this was being developed in parallel to the actual functions to spot bugs sooner and all tests were reported with the \textit{tox} utility.
 
 \pagebreak
+
+\section{Running and Usage}
+
+The code implemented could be run either using a command line interface (CLI) or via a Graphical User Interface (GUI) implemented using the \textit{PySide6}\cite{noauthor_qt_nodate} graphics library for Python.
+The \href{https://github.com/Tiernan8r/quantum_computing_project/blob/master/README.md}{README.md} file on the Github code repository outlines the steps required to get the code setup and ready to run.
+Once you have the repository set up on your system, you can run the code using the following methods.
+
+\subsection{CLI Usage}
+
+The help message (Figure \ref{cli-help}) for the CLI gives an overview of how to use the program from the command line.
+
+\begin{figure}[h]
+\begin{footnotesize}
+\begin{verbatim}
+$ ./qcp/main.py -h
+USAGE:
+./qcp/main.py [FLAGS] nqbits
+FLAGS:
+    -a/--algorithm  The quantum algorithm to simulate, can be one of:
+                        g   = Grover's Algorithm
+                        pe  = Phase Estimation
+                        s   = Toy Sudoku solver
+                    Defaults to 'g' if unset
+    -h/--help       Display this prompt
+    -g/--gui        Display the GUI (if supported).
+
+The CLI options vary by choice of algorithm:
+
+GROVERS:
+    USAGE:
+    ./qcp/main.py --algorithm g [FLAGS] nqbits
+    ARGS:
+        nqbits          The number of qbit states to simulate, must be >= 2.
+    FLAGS:
+        -t/--target     The target state, defaults to 0
+
+PHASE ESTIMATION:
+    USAGE:
+    ./qcp/main.py --algorithm pe [FLAGS] nqbits
+    ARGS:
+        nqbits          The number of qbit states to simulate, must be >= 2.
+    FLAGS:
+        -p/--phase      The phase to use for the Phase Shift Gate (if using).
+                        defaults to 0.25.
+        -u/--unitary    The choice of unitary gate to simulate with, can be
+                        one of the following:
+                            * hadamard = Hadamard Gate
+                            * phase_shift = Phase Shift Gate (requires the -p flag)
+                        Defaults to 'hadamard' if unset
+        -e/--eigen      The choice of eigenvector to use in the simulation.
+                        If using the HADAMARD gate, can be one of:
+                            * +
+                            * -
+                            Default is +
+                        If using the PHASE SHIFT gate, can be one of:
+                            * 0
+                            * 1
+                            Default is 0
+SUDOKU:
+    USAGE:
+    ./qcp/main.py --algorithm s
+    ARGS:
+        None
+    FLAGS:
+        None
+\end{verbatim}
+\end{footnotesize}
+\caption{\label{cli-help} The help message displayed by the CLI implementation.}
+\end{figure}
+
+As you can see, the program is capable of simulating one of the three different quantum algorithms and use cases.
+
+\begin{enumerate}
+    \item Grover's Algorithm
+    \item Phase Estimation Algorithm
+    \item Sample Sudoku Application
+\end{enumerate}
+
+\subsubsection{Running Grover's Algorithm}
+
+\verb#nqbits#: is a required parameter, and controls the number of qubits to use in the simulation.\footnote{\textbf{Note:}
+The quantum simulator calculates matrices of size $2^{nqbits}$, so be aware that the simulation takes exponentially longer for each extra qubit simulated.
+}
+
+\medskip
+
+\verb#-t#/\verb#--target#: is the target state to search for, must be bounded within $1 < t < 2^{nqbits}$
+
+A sample of running the Grover's Algorithm code can be run using:
+
+\begin{verbatim}
+$ ./qcp/main.py -a g -t 1 2
+\end{verbatim}
+
+\subsubsection{Running the Phase Estimation Algorithm}
+
+\verb#nqbits#: As with the Grover's Algorithm, \verb#nqbits# controls the number of qubits to use in the simulation.
+
+\medskip
+
+\verb#-u#/\verb#--unitary# is the unitary matrix to use in the phase estimation algorithm, as of the time of writing this report, there are two choices implemented:
+\begin{itemize}
+    \item hadamard = Hadamard Gate
+    \item phase\_shift = Phase Shift Gate
+\end{itemize}
+
+\medskip
+
+\verb#-e#\verb#--eigen# is the eigenvector to use in the calculation of the phase, these are simple pre-defined matrices to help in running the algorithm from the terminal.
+
+\begin{verbatim}
+$ ./qcp/main.py -a pe -u hadamard -e + 2
+\end{verbatim}
+
+\subsubsection{Running the Sudoku Application}
+
+A sample application of Grover's Algorithm, where we solve the toy problem of a \textit{2x2} sudoku. Takes no input
+
+\pagebreak
+
+\subsection{GUI}
+
+A Graphical User Interface (GUI) is provided with the program to make interaction with it easier and more user friendly.
+
+The GUI can be initialised with the following command:
+
+\begin{verbatim}
+$ ./qcp/main.py -g
+\end{verbatim}
+
+This will bring up the default user interface, which shows the input for Grover's Algorithm (Figure \ref{fig:gui-overview-grover}.
+
+At the top of the GUI is a drop down list, with the options for the algorithms to simulate.
+Choosing an algorithm from the list will update the GUI to reflect the input parameters of that algorithm.
+
+\subsubsection{Grover's Algorithm}
+
+\begin{figure}[H]
+\includegraphics[width=15cm]{docs/images/gui_overview_grovers.png}
+\caption{\label{fig:gui-overview-grover} Initial GUI window view}
+\end{figure}
+
+The user interface for Grover's Algorithm can be seen in Figure \ref{fig:gui-overview-grover} has two input fields.
+The first field sets the number of qubits to use in the simulation.
+The second is the state to target in the Grover's search, and is bounded within $0 < t < 2^{nqbits}$.
+
+Once the input has been set, the \textit{Search} button can be clicked and the GUI will run the simulation on a separate thread. Figure \ref{fig:gui-calculation-grovers} shows an example simulation result.
+Grover's Algorithm also outputs the number of iterations that the quantum simulator took to find the result, and compares it to the equivalent for a classical algorithm.
+
+\begin{figure}[H]
+\includegraphics[width=15cm]{docs/images/gui_calculation_grovers.png}
+\caption{\label{fig:gui-calculation-grovers} Sample calculation result for the Grover's Algorithm.}
+\end{figure}
+
+Once the search is completed, a plot of the probability of the quantum state 
+being in the target state will be shown on the right.
+
+\subsubsection{Phase Estimation}
+
+\begin{figure}[H]
+\includegraphics[width=15cm]{docs/images/gui_overview_phase_estimation.png}
+\caption{\label{gui-overview-phase} Overview of the Phase Estimation GUI}
+\end{figure}
+
+The phase estimation user interface is the most complicated GUI element.
+As with Grover's Algorithm, the first input field is the number of qubits to use in the simulation.
+The phase estimation then requires input of two matrices, a \textit{unitary matrix}, and an \textit{eigenvector}.
+To help with this input, the GUI has helper elements to select some defaults.
+
+\medskip
+
+For the \textit{Unitary Matrix}, a dropdown element is present that allows the user to select two pre-defined
+matrices, the \verb#HADAMARD# gate, or the \verb#PHASE_SHIFT# gate.
+When the drop down list is changed, the table showing the matrix is updated with the appropriate values for that Unitary Matrix.
+
+\medskip
+
+For the \verb#PHASE SHIFT# gate, two new GUI elements also appear, that allows the user to set the
+phases in the two diagonal elements (Figure \ref{fig:gui-overview-phase-2}).
+
+\begin{figure}[H]
+\includegraphics[width=15cm]{docs/images/gui_overview_phase_estimation_2.png}
+\caption{\label{fig:gui-overview-phase-2} The phase estimation GUI showing the $\phi_1$ \& $\phi_2$ input fields.}
+\end{figure}
+
+\medskip
+
+Once the user has selected a unitary matrix, they can then follow similar steps to select an eigenvector.
+The dropdown list for the eigenvectors changes per choice of unitary matrix.
+
+\medskip
+
+For the \verb#HADAMARD# gate, the two choices are the bases $\ket{+}$ & $\ket{-}$.
+
+\medskip
+
+For the \verb#PHASE SHIFT# gate, the two choices are the bases $\ket{0}$ & $\ket{1}$.
+
+\medskip
+
+Of course, the user can always input custom matrices manually into the matrix fields displayed in the GUI, and the GUI will perform checks on the validity of the matrices before beginning the simulation.
+Any \textit{integer}/\textit{float}/\textit{complex} numeric type is an acceptable parameter.
+If there are any issues with the inputs of the two matrices once the simulation is set to start, the simulation will quit and a useful error message will appear beside the matrix at fault with a message pin-pointing the entry at fault.
+
+\medskip
+
+At the bottom of the UI element, there are two extra fields:
+\textit{Precision} and \textit{Success Rate}, these determine the number of decimal points we want to estimate the phase to (the "precision"), and the acceptable rate that the results could be inaccurate ("success rate").
+If the user wishes to get a more acceptable answer, they can input their parameters, and click the \textit{Determine} button, in which case the GUI will calculate the number of qubits to use to get this accuracy, and auto-set the number of qubits field.
+
+\begin{figure}[H]
+\includegraphics[width=15cm]{docs/images/gui_calculation_phase_estimation.png}
+\caption{\label{gui-calculation-phase} Sample calculation result for the Phase Estimation Algorithm.}
+\end{figure}
+
+When the phase estimation result is computed, the probabilities are shown in the graph on the right for each state.
+
+\subsubsection{Sudoku}
+
+\begin{figure}[H]
+\includegraphics[width=15cm]{docs/images/gui_calculation_sudoku.png}
+\caption{\label{fig:gui-calculation-sudoku} Sample calculation result for the Sudoku Algorithm.}
+\end{figure}
+
+The Sudoku algorithm takes no explicit input, so the simulation can be run straight away using the \textit{Simulate Simple Sudoku Solver} button.
+
+\begin{figure}[H]
+\includegraphics[width=15cm]{docs/images/gui_calculation_sudoku.png}
+\caption{\label{gui-calculation-sudoku} Sample calculation result for the Sudoku solver Algorithm.}
+\end{figure}
+
+Sudoku also outputs a probability distribution in the graph on the right.
+For the simple \textit{2x2} sudoku problem, a sample layout is also shown in a table, with the probability calculated by the algorithm for that state to be the accepted result.
+
+\pagebreak
+
+\section{Issues and Challenges}
+
+Over the course of the project we experienced few challenges:
+Some team members had little experience with quantum mechanics, programming, or tertiary tool, like GitHub, which meant that time was spent having to learn those skills beforehand.
+As with solving any programming task bugs that were discovered. Meeting in person was considered ideal, However it was difficult for the team to all organise to meet together, and of course there were technical issues.
+All of these challenges are not unique to our project and are an inevitability when programming in a team.
+However, there were two major problems that needed immediate attention when implementing our project.
+
+\subsection{Debugging large matrices}
+
+A Sudoku is usually solved on a \textit{9x9} grid, to simplify the task of implementing an algorithm to solve Sudoku based on the \textit{Grover's} Algorithm, it was only possible to simulate solving a simple \textit{2x2} Sudoku problem.
+However, even with this simple \textit{2x2} restriction, it still lead to an algorithm that needed 9 qubits which in turn translated to square matrices representing gates of size 512.
+This makes a full Sudoku solving algorithm impossible to run on a classical computer, since even with the simple restriction of \textit{2x2} we are running close to the upper limit of the number of qubits that can be simulated on a classical laptop computer.
+The rate at which new qubits are added is not linear which increases the computing power necessary even further.
+This means that this algorithm is impractical on anything other than an actual quantum computer and even for smaller Sudoku puzzles it places a strain on both the user and developer. 
+
+\subsection{Convention for applying Gates}
+
+While syntax, run-time, and most logical errors were easily caught by the tests (section \ref{testing}) that were designed by the team, there was one logical error that was not discovered and fixed until a week before the March 23rd deadline.
+By convention quantum gates are applied from right to left (little-endian notation), however the development team at the time made a mistake by implementing the logic that generates the gates using Big-endian (left to right) notation.
+This flipped some of the logic gates implementation logic, and was first noticed in the Sudoku Algorithm.
+This was not a technical error since the algorithm still worked correctly however it was deemed as an error since it went against the natural convention in an unintended manner.
+With all that being said these bugs were fixed and they helped the team catch more errors in the future.
+
+\pagebreak
+
 \section{State of the Art: Quantum Computers}
 
 \noindent
-The idea of combining quantum mechanics and information theory appeared in the 1970s, but received little attention until 1981, when physicist Richard Feynman gave a presentation arguing that computation based on classical logic could not process calculations representing quantum phenomena in a tractable manner. %https://www.ncbi.nlm.nih.gov/books/NBK538701/
-“Nature isn’t classical, dammit, and if you want to make a simulation of nature, you’d better make it
+The idea of combining quantum mechanics and information theory appeared in the 1970s, but received little attention until 1981, when physicist Richard Feynman gave a presentation arguing that computation based on classical logic could not process calculations representing quantum phenomena in a tractable manner. \cite{gamble2019quantum} “Nature isn’t classical, dammit, and if you want to make a simulation of nature, you’d better make it
 quantum mechanical”, the physicist Richard Feynman famously quipped. “And by golly it’s a
-wonderful problem, because it doesn’t look so easy.” %https://link.springer.com/content/pdf/10.1007/s11432-020-2881-9.pdf#page27
-Later in 1994, quantum computing received even more attention when mathematicial Peter Shor developed a quantum algorithm. The algorithm could find the prime factors of large numbers in a time efficient manner, which was far better than the efficiency of the current state-of-the-art of classical algorithms. The press, in the process of popularising quantum computation, often misleads the general public by mediating that the speed gained by quantum computing is by trying every possible  answer to a problem in parallel. In fact, a quantum computer works by considering entanglement between qubits and the probabilities associated with the superpositions to carry out a series of operations, the quantum algorithm, which then enhances certain probabilities and supresses other, leading to the required answer. A measurement is made at the end of the computation, and the algorithm should enhance the probability of measuring the correct answer. This use of entanglement and probabilities sets the quantum computer apart from classical computers. 
-% picture
+wonderful problem, because it doesn’t look so easy.” \cite{huang2020superconducting}
+Later in 1994, quantum computing received even more attention when mathematicial Peter Shor developed a quantum algorithm. The algorithm could find the prime factors of large numbers in a time efficient manner, which was far better than the efficiency of the current state-of-the-art of classical algorithms.
 
 \vspace{5mm}
 
-\noindent
-"Quantum Computing" is just a blanket term describing all computations that work based on the quantum phenomena. There are multiple types of frameworks, like a measurement-based computation framework, in which highly entangled qubits serve as the starting point. Single qubit measurements are performed, leaving the target single qubit in a definitive state. Further measurements are carried out on other qubits based on the previous results, until the answer is reached. In this project, we are concerned with Logical or gate-based quantum computing framework. In this framework, qubits are prepared in initial states, which then are subject to a series of gate operations. Through these gates, the qubits are put into superposition, entangled and then subjected to measurement, which then yields a result. 
-%https://www.ncbi.nlm.nih.gov/books/NBK538701/
+
 Quantum computers can be implemented using a variety of quantum systems, such as trapped ions, superconducting qubits, photons, and silicon. Over last couple of decades, numerous advances have been attempted to try and build large scale quantum computers. Superconducting qubits, in particular, have emerged as a major possibility for such large scale quantum prcessor architecture.
 
 \noindent
 \subsection{Superconducting Quantum Computers}
 \noindent
-Yasunobu Nakamura, in 1999, produced the first simple qubit for superconducting computing. As a result, superconducting quantum computing has advanced significantly in recent years, with the number of qubits rapidly increasing and the quality of qubits rapidly improving. The major milestone, known as quantum supremacy, represents a significant achievement in paving the way towards quantum computing, was first exhibited using the superconducting quantum systems in 2019. Due to this rapid development in the sector of superconducting quantum computers, the worldwide race towards the quantum computer is in full swing.%https://link.springer.com/content/pdf/10.1007/s11432-020-2881-9.pdf
-Many companies like Honeywell, IBM, Google, and Intel are competing for having dominance in the quantum computers region. Up and coming players like IonQ and Rigetti have also stepped into the field to advance the technology. While the field is still evolving, there have been some major advancements by these companies in the fields like pharmaceutical and chemical industries, risk in the finance industry, and aid in cybersecurity across a multitude of industries, suing the power of quantum computation.   %https://www.forbes.com/sites/danielnewman/2022/01/10/quantum-computing-expanded-in-2021-setting-up-a-big-2022/?sh=64386df4581b 
-All of these initiatives have resulted in a bright future for superconducting quantum computing. %https://link.springer.com/content/pdf/10.1007/s11432-020-2881-9.pdf
-\subsection{Quantum Supremacy}
-The goal of quantum supremacy is to show that a programmable quantum device can solve a problem that classical computers cannot solve. in 2019, Google officially made the announcement of the achievement of this milestone.  
-%https://link.springer.com/content/pdf/10.1007/s11432-020-2881-9.pdf#page27
+Yasunobu Nakamura, in 1999, produced the first simple qubit for superconducting computing. As a result, superconducting quantum computing has advanced significantly in recent years, with the number of qubits rapidly increasing and the quality of qubits rapidly improving. The major milestone, known as quantum supremacy, which represents a significant achievement in paving the way towards quantum computing, was first exhibited using the superconducting quantum systems in 2019. Due to this rapid development in the sector of superconducting quantum computers, the worldwide race towards the quantum computer is in full swing.\cite{huang2020superconducting}
+Many companies like Honeywell, IBM, Google, and Intel are competing for having dominance in the quantum computers region. Up and coming players like IonQ and Rigetti have also stepped into the field to advance the technology. While the field is still evolving, there have been some major advancements by these companies in the fields like pharmaceutical and chemical industries, risk in the finance industry, and aid in cybersecurity across a multitude of industries, suing the power of quantum computation.   \cite{noauthor_quantum_nodate-2} 
+All of these initiatives have resulted in a bright future for superconducting quantum computing. 
 
-%picture
-%https://www.nature.com/articles/d41586-019-03213-z
+
+
+\vspace{5mm}
 
 \subsection{IBM: 127 qubit eagle processor}
-IBM, on November 16, 2021, announced its new 127-qubit 'Eagle' processor at the IBM Quantum Summit 2021, the annual event held by IBM to showcase their milestones in quantum hardware, software, and the growth of the quantum ecosystem. 'Eagle' is IBM's first quantum processor developed and deployed to contain more than 100 operational and connected qubits. It is preceded by IBM's 65-qubit 'Hummingbird' processor released in 2020 and the 27-qubit 'Falcon' processo released in 2019.
+IBM, on November 16, 2021, announced its new 127-qubit 'Eagle' processor at the IBM Quantum Summit 2021, the annual event held by IBM to showcase their milestones in quantum hardware, software, and the growth of the quantum ecosystem. 'Eagle' is IBM's first quantum processor developed and deployed to contain more than 100 operational and connected qubits. It is preceded by IBM's 65-qubit 'Hummingbird' processor released in 2020 and the 27-qubit 'Falcon' processor released in 2019.
 
 \noindent
-The new techniques used within Eagle apply control wiring on multiple physical levels within the processor, keeping the qubits on a single layer, which enables a significant increase in qubits.
+The new techniques used within Eagle apply control wiring on multiple physical levels within the processor, keeping the qubits on a single layer, which enables a significant increase in qubits. \cite{noauthor_ibm_nodate}
 
-%https://newsroom.ibm.com/2021-11-16-IBM-Unveils-Breakthrough-127-Qubit-Quantum-Processor
+\begin{figure}[H]
+\includegraphics[width=16cm]{docs/images/IBM.jpg}
+\caption{The innards of an IBM quantum computer show the tangle of cables used to control and read out its qubits. \cite{ball_first_2021}}
+\end{figure}
+
+
 \pagebreak
+
 \section{Conclusion} % Numbered section
 
-\pagebreak
+Every Friday a meeting was held once the group members were assigned. We would discuss the tasks to be completed and the corresponding team members would work on these tasks until the next Friday meeting. Any queries and disputes were discussed and resolved at these meetings. This continued until a working simulator for the project was completed. Of course, these algorithms are not faster than traditional algorithms when simulated on a classical computer and are therefore not practical to be used seriously. However, this was more of an exercise in proving that a quantum algorithm can work without actually using a quantum system. To be able to work as a team, we decided to use GitHub to share files. Getting familiar with this work environment will prove to be helpful in future projects. Team members learned programming and presentation skills from each other, which they were not experienced in prior to this project. A few members that were less experienced with programming learned from the development teams tricks to program more efficiently, while members that were not as familiar with \LaTeX{} learned from the report team. Skills that were weak in every member were strengthened thanks to this project.
+
+
 \section{References and Bibliography}
 \printbibliography[heading=none]
 
